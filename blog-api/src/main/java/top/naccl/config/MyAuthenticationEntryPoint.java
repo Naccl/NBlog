@@ -1,4 +1,4 @@
-package top.naccl.config.authentication;
+package top.naccl.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.AuthenticationException;
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * @Description: 未登录时请求的回调
+ * @Description: 未登录 拒绝访问
  * @Author: Naccl
  * @Date: 2020-07-21
  */
@@ -24,7 +24,7 @@ public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
 			throws IOException, ServletException {
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		Result result = Result.create(401, "请登录");
+		Result result = Result.create(403, "请登录");
 		out.write(new ObjectMapper().writeValueAsString(result));
 		out.flush();
 		out.close();

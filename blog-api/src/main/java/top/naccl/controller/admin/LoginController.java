@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.bean.Result;
 import top.naccl.service.UserServiceImpl;
 
 /**
@@ -18,7 +19,8 @@ public class LoginController {
 	UserServiceImpl userService;
 
 	@GetMapping
-	public String index() {
-		return "123456";
+	public Result index() {
+		Result result = Result.ok("成功",Result.ok("22",Result.ok("22",null)));
+		return result;
 	}
 }
