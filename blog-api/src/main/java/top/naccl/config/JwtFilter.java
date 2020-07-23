@@ -29,8 +29,8 @@ public class JwtFilter extends GenericFilterBean {
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
-		String jwtToken = request.getHeader("authorization");
-		if (jwtToken != null && !"".equals(jwtToken)) {
+		String jwtToken = request.getHeader("Authorization");
+		if (jwtToken != null && !"".equals(jwtToken) && !"null".equals(jwtToken)) {
 			try {
 				Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken.replace("Bearer", "")).getBody();
 				String username = claims.getSubject();//获取当前登录用户名
@@ -44,6 +44,7 @@ public class JwtFilter extends GenericFilterBean {
 				out.write(new ObjectMapper().writeValueAsString(result));
 				out.flush();
 				out.close();
+				return;
 			}
 		}
 		filterChain.doFilter(request, servletResponse);

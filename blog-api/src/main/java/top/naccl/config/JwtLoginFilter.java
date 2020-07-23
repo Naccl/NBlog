@@ -1,6 +1,7 @@
 package top.naccl.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.AccountExpiredException;
@@ -16,6 +17,7 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import top.naccl.bean.Result;
 import top.naccl.bean.User;
+import top.naccl.exception.BadRequestException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -47,13 +49,13 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
 			throws AuthenticationException, IOException, ServletException {
 		try {
 			if (!"POST".equals(request.getMethod())) {
-				throw new Exception();
+				throw new BadRequestException("请求方法错误");
 			}
 			User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
 			return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-		} catch (Exception exception) {
+		} catch (BadRequestException | MismatchedInputException exception) {
 			response.setContentType("application/json;charset=utf-8");
-			Result result = Result.create(403, "非法请求");
+			Result result = Result.create(400, "非法请求");
 			PrintWriter out = response.getWriter();
 			out.write(new ObjectMapper().writeValueAsString(result));
 			out.flush();
@@ -76,7 +78,7 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
 		user.setPassword(null);
 		Map<String, Object> map = new HashMap<>();
 		map.put("user", user);
-		map.put("jwt", jwt);
+		map.put("token", jwt);
 		Result result = Result.ok("登录成功", map);
 		PrintWriter out = response.getWriter();
 		out.write(new ObjectMapper().writeValueAsString(result));
