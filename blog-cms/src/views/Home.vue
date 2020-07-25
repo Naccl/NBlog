@@ -36,7 +36,9 @@
 			</el-aside>
 			<!--右侧内容主体-->
 			<el-main>
-				<router-view/>
+				<keep-alive>
+					<router-view/>
+				</keep-alive>
 			</el-main>
 		</el-container>
 	</el-container>
@@ -57,6 +59,12 @@
 								title: '博客列表',
 								children: [],
 								path: '/blogs'
+							},
+							{
+								id: 12,
+								title: '写文章',
+								children: [],
+								path: '/write'
 							}
 						]
 					},
@@ -146,7 +154,7 @@
 				//被激活的链接地址
 				activePath: '',
 				//默认打开的菜单
-				defaultOpeneds: ['1','2','3','4','5','6']
+				defaultOpeneds: ['1','2','3','4']
 			}
 		},
 		created() {
