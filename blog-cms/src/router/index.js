@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from "@/views/Login";
+import Home from "@/views/Home";
 
 Vue.use(VueRouter)
 
@@ -16,6 +17,10 @@ const routes = [
 			title: '后台管理登录'
 		}
 	},
+	{
+		path: '/home',
+		component: Home,
+	}
 ]
 
 const router = new VueRouter({
@@ -28,8 +33,8 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
 	if (to.path !== '/login'){
 		//获取token
-		// const tokenStr = window.sessionStorage.getItem('token')
-		// if (!tokenStr) return next("/login")
+		const tokenStr = window.sessionStorage.getItem('token')
+		if (!tokenStr) return next("/login")
 	}
 	if (to.meta.title){
 		document.title = to.meta.title
