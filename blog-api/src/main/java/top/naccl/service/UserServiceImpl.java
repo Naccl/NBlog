@@ -5,8 +5,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import top.naccl.dao.UserDao;
-import top.naccl.bean.User;
+import top.naccl.mapper.UserMapper;
+import top.naccl.entity.User;
 
 /**
  * @Description: 用户业务层接口实现类
@@ -16,11 +16,11 @@ import top.naccl.bean.User;
 @Service
 public class UserServiceImpl implements UserDetailsService {
 	@Autowired
-	private UserDao userDao;
+	private UserMapper userMapper;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userDao.findByUsername(username);
+		User user = userMapper.findByUsername(username);
 		if (user == null) {
 			throw new UsernameNotFoundException("用户不存在");
 		}

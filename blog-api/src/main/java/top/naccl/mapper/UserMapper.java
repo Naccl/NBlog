@@ -1,8 +1,8 @@
-package top.naccl.dao;
+package top.naccl.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-import top.naccl.bean.User;
+import top.naccl.entity.User;
 
 /**
  * @Description: 用户持久层接口
@@ -11,6 +11,6 @@ import top.naccl.bean.User;
  */
 @Mapper
 @Repository
-public interface UserDao {
+public interface UserMapper {
 	User findByUsername(String username);
 }

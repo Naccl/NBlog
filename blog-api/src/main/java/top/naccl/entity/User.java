@@ -1,4 +1,4 @@
-package top.naccl.bean;
+package top.naccl.entity;
 
 import java.util.Collection;
 import java.util.Date;
@@ -30,6 +30,7 @@ public class User implements UserDetails {
 	private String email;
 	private Date createTime;
 	private Date updateTime;
+	private Integer role;//0管理员，1普通用户
 
 	@JsonIgnore
 	@Override

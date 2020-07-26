@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
-import top.naccl.bean.Result;
+import top.naccl.util.Result;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

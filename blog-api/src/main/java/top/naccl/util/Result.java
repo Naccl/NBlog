@@ -1,4 +1,4 @@
-package top.naccl.bean;
+package top.naccl.util;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
