@@ -27,7 +27,7 @@
 						<!-- 二级菜单 -->
 						<el-menu-item :index="subItem.path" v-for="subItem in item.children" :key="subItem.id" @click="saveNavState(subItem.path)">
 							<template slot="title">
-								<i class="el-icon-menu"></i>
+								<i :class="iconsObj[subItem.id]"></i>
 								<span>{{ subItem.title }}</span>
 							</template>
 						</el-menu-item>
@@ -56,36 +56,24 @@
 						children: [
 							{
 								id: 11,
-								title: '博客列表',
+								title: '写文章',
+								children: [],
+								path: '/write'
+							},
+							{
+								id: 12,
+								title: '文章列表',
 								children: [],
 								path: '/blogs'
 							},
 							{
-								id: 12,
-								title: '写文章',
-								children: [],
-								path: '/write'
-							}
-						]
-					},
-					{
-						id: 2,
-						title: '分类管理',
-						children: [
-							{
-								id: 21,
+								id: 13,
 								title: '分类列表',
 								children: [],
 								path: '/types'
-							}
-						]
-					},
-					{
-						id: 3,
-						title: '标签管理',
-						children: [
+							},
 							{
-								id: 31,
+								id: 14,
 								title: '标签列表',
 								children: [],
 								path: '/tags'
@@ -93,17 +81,17 @@
 						]
 					},
 					{
-						id: 4,
+						id: 2,
 						title: '留言管理',
 						children: [
 							{
-								id: 41,
+								id: 21,
 								title: '留言列表',
 								children: [],
 								path: '/comments'
 							},
 							{
-								id: 42,
+								id: 22,
 								title: '回收站',
 								children: [],
 								path: '/comments/trashes'
@@ -111,17 +99,17 @@
 						]
 					},
 					{
-						id: 5,
+						id: 3,
 						title: '数据统计',
 						children: [
 							{
-								id: 51,
+								id: 31,
 								title: '访问量',
 								children: [],
 								path: '/pv'
 							},
 							{
-								id: 52,
+								id: 32,
 								title: '实时访客',
 								children: [],
 								path: '/latest'
@@ -129,11 +117,11 @@
 						]
 					},
 					{
-						id: 6,
+						id: 4,
 						title: '系统监控',
 						children: [
 							{
-								id: 61,
+								id: 41,
 								title: '日志',
 								children: [],
 								path: '/log'
@@ -142,12 +130,19 @@
 					},
 				],
 				iconsObj: {
-					'1': 'el-icon-s-cooperation',
-					'2': 'el-icon-s-management',
-					'3': 'el-icon-s-opportunity',
-					'4': 'el-icon-s-order',
-					'5': 'el-icon-s-data',
-					'6': 'el-icon-s-tools',
+					'1': 'el-icon-menu',
+					'2': 'el-icon-s-order',
+					'3': 'el-icon-s-data',
+					'4': 'el-icon-s-tools',
+					'11': 'el-icon-edit',
+					'12': 'el-icon-s-order',
+					'13': 'el-icon-s-opportunity',
+					'14': 'el-icon-discount',
+					'21': 'el-icon-tickets',
+					'22': 'el-icon-delete',
+					'31': 'el-icon-s-marketing',
+					'32': 'el-icon-view',
+					'41': 'el-icon-document',
 				},
 				//是否折叠
 				isCollapse: false,
