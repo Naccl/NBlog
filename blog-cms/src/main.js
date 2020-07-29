@@ -7,6 +7,8 @@ import './assets/css/base.css'
 //element-ui
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+//moment
+import './util/dateTimeFormatUtils.js'
 
 Vue.use(Element)
 
