@@ -36,6 +36,10 @@ public class Result {
 		return new Result(200, msg, data);
 	}
 
+	public static Result ok(String msg) {
+		return new Result(200, msg);
+	}
+
 	public static Result create(Integer code, String msg, Object data) {
 		return new Result(code, msg, data);
 	}

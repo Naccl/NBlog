@@ -15,4 +15,6 @@ import java.util.List;
 @Repository
 public interface BlogMapper {
 	List<Blog> getListByTitleOrType(String query, Integer typeId);
+
+	void deleteBlogById(Long id);
 }

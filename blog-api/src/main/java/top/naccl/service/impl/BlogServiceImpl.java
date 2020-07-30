@@ -2,6 +2,7 @@ package top.naccl.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import top.naccl.entity.Blog;
 import top.naccl.mapper.BlogMapper;
 import top.naccl.service.BlogService;
@@ -21,5 +22,11 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public List<Blog> getListByTitleOrType(String query, Integer typeId) {
 		return blogMapper.getListByTitleOrType(query, typeId);
+	}
+
+	@Transactional
+	@Override
+	public void deleteBlogById(Long id) {
+		blogMapper.deleteBlogById(id);
 	}
 }

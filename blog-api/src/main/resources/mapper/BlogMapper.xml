@@ -40,6 +40,7 @@
         </collection>
     </resultMap>
 
+    <!--按标题和分类查询博客列表-->
     <select id="getListByTitleOrType" resultMap="blog">
         <bind name="queryPattern" value="'%' + query + '%'"/>
         select b.id, b.title, b.is_recommend, b.is_published, b.create_time, b.update_time,
@@ -54,4 +55,9 @@
             </if>
         </where>
     </select>
+
+    <!--删除博客-->
+    <delete id="deleteBlogById">
+        delete from blog where id = #{id}
+    </delete>
 </mapper>

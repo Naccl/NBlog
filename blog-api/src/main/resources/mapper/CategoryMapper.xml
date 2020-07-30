@@ -8,6 +8,6 @@
     </resultMap>
 
     <select id="getCategoryList" resultMap="category">
-        select id, category_name from category
+        select id, category_name from category order by id desc
     </select>
 </mapper>

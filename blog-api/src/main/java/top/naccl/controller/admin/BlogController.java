@@ -3,6 +3,7 @@ package top.naccl.controller.admin;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,6 +46,17 @@ public class BlogController {
 			map.put("blogs", pageInfo);
 			map.put("categories", categories);
 			return Result.ok("请求成功", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Result.create(500, "异常错误");
+		}
+	}
+
+	@DeleteMapping("/blogs")
+	public Result delete(@RequestParam Long id) {
+		try {
+			blogService.deleteBlogById(id);
+			return Result.ok("删除成功");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Result.create(500, "异常错误");

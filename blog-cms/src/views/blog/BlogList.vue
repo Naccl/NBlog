@@ -43,7 +43,7 @@
 				<el-table-column label="操作" width="200">
 					<template v-slot="scope">
 						<el-button type="primary" icon="el-icon-edit" size="mini" @click="goBlogEditPage(scope.row.id)">编辑</el-button>
-						<el-popconfirm title="确定删除吗？" icon="el-icon-delete" iconColor="red" @onConfirm="removeBlogById(scope.row.id)">
+						<el-popconfirm title="确定删除吗？" icon="el-icon-delete" iconColor="red" @onConfirm="deleteBlogById(scope.row.id)">
 							<el-button size="mini" type="danger" icon="el-icon-delete" slot="reference">删除</el-button>
 						</el-popconfirm>
 					</template>
@@ -118,7 +118,7 @@
 			goBlogEditPage(id) {
 				this.$router.push(`/blogs/edit/${id}`)
 			},
-			removeBlogById(id) {
+			deleteBlogById(id) {
 				deleteBlogById(id).then(res => {
 					console.log(res)
 					if (res.code === 200) {
