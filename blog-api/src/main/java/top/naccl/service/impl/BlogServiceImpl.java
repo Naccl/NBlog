@@ -19,7 +19,7 @@ public class BlogServiceImpl implements BlogService {
 	BlogMapper blogMapper;
 
 	@Override
-	public List<Blog> getBlogList() {
-		return blogMapper.getBlogList();
+	public List<Blog> getListByTitleOrType(String query, Integer typeId) {
+		return blogMapper.getListByTitleOrType(query, typeId);
 	}
 }

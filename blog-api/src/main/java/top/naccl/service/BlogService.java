@@ -5,5 +5,5 @@ import top.naccl.entity.Blog;
 import java.util.List;
 
 public interface BlogService {
-	List<Blog> getBlogList();
+	List<Blog> getListByTitleOrType(String query, Integer typeId);
 }

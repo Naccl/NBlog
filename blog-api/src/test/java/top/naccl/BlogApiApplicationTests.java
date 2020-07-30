@@ -21,8 +21,8 @@ class BlogApiApplicationTests {
 
 	@Test
 	void test() {
-		List<Blog> blogs = blogMapper.getBlogList();
-		System.out.println(blogs);
+//		List<Blog> blogs = blogMapper.getBlogList();
+//		System.out.println(blogs);
 	}
 
 }

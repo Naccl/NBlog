@@ -11,12 +11,9 @@
 			<!--搜索-->
 			<el-row>
 				<el-col :span="8">
-					<el-input placeholder="请输入标题" v-model="queryInfo.query" :clearable="true" @clear="getBlogList">
-						<el-select class="select" v-model="queryInfo.typeId" slot="prepend" placeholder="请选择分类" :clearable="true" style="width: 160px">
-							<el-option label="分类1" value="1"></el-option>
-							<el-option label="分类2" value="2"></el-option>
-							<el-option label="分类3" value="3"></el-option>
-							<el-option label="分类4" value="4"></el-option>
+					<el-input placeholder="请输入标题" v-model="queryInfo.query" :clearable="true" @clear="getBlogList" style="min-width: 500px" @keyup.native.enter="getBlogList">
+						<el-select class="select" v-model="queryInfo.typeId" slot="prepend" placeholder="请选择分类" :clearable="true" @change="getBlogList" style="width: 160px">
+							<el-option :label="item.name" :value="item.id" v-for="item in categoryList" :key="item.id"></el-option>
 						</el-select>
 						<el-button slot="append" icon="el-icon-search" @click="getBlogList"></el-button>
 					</el-input>
@@ -76,6 +73,7 @@
 					pageSize: 10
 				},
 				blogList: [],
+				categoryList: [],
 				total: 0,
 			}
 		},
@@ -90,6 +88,7 @@
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
 						this.blogList = res.data.blogs.list
+						this.categoryList = res.data.categories
 						this.total = res.data.blogs.total
 					} else {
 						this.msgError(res.msg)

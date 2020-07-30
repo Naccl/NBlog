@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.naccl.entity.Blog;
+import top.naccl.entity.Category;
 import top.naccl.service.BlogService;
+import top.naccl.service.CategoryService;
 import top.naccl.util.Result;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,6 +27,8 @@ import java.util.Map;
 public class BlogController {
 	@Autowired
 	BlogService blogService;
+	@Autowired
+	CategoryService categoryService;
 
 	@GetMapping("/blogs")
 	public Result blogs(@RequestParam(defaultValue = "") String query,
@@ -33,12 +38,15 @@ public class BlogController {
 		try {
 			String orderBy = "create_time desc";
 			PageHelper.startPage(pageNum, pageSize, orderBy);
-			PageInfo<Blog> pageInfo = new PageInfo<>(blogService.getBlogList());
+			PageInfo<Blog> pageInfo = new PageInfo<>(blogService.getListByTitleOrType(query, typeId));
+			List<Category> categories = categoryService.getCategoryList();
 
 			Map<String, Object> map = new HashMap<>();
 			map.put("blogs", pageInfo);
+			map.put("categories", categories);
 			return Result.ok("请求成功", map);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return Result.create(500, "异常错误");
 		}
 	}
