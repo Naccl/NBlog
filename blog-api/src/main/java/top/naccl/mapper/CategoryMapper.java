@@ -15,4 +15,8 @@ import java.util.List;
 @Repository
 public interface CategoryMapper {
 	List<Category> getCategoryList();
+
+	int saveCategory(Category category);
+
+	Category getCategoryById(Long id);
 }

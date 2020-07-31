@@ -1,12 +1,12 @@
 import axios from '@/plugins/axios'
 
-export function blogs(query, typeId, pageNum, pageSize) {
+export function getDataByQuery(query, CategoryId, pageNum, pageSize) {
 	return axios({
 		url: 'blogs',
 		method: 'GET',
 		params: {
 			query,
-			typeId,
+			CategoryId,
 			pageNum,
 			pageSize
 		}
@@ -19,6 +19,23 @@ export function deleteBlogById(id) {
 		method: 'DELETE',
 		params: {
 			id
+		}
+	})
+}
+
+export function getCategoryAndTag() {
+	return axios({
+		url: 'categoryAndTag',
+		method: 'GET'
+	})
+}
+
+export function saveBlog(blog) {
+	return axios({
+		url: 'blog',
+		method: 'POST',
+		data: {
+			blog
 		}
 	})
 }

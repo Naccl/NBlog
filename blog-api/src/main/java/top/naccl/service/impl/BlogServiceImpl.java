@@ -7,6 +7,7 @@ import top.naccl.entity.Blog;
 import top.naccl.mapper.BlogMapper;
 import top.naccl.service.BlogService;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,13 +21,35 @@ public class BlogServiceImpl implements BlogService {
 	BlogMapper blogMapper;
 
 	@Override
-	public List<Blog> getListByTitleOrType(String query, Integer typeId) {
-		return blogMapper.getListByTitleOrType(query, typeId);
+	public List<Blog> getListByTitleOrCategory(String query, Integer CategoryId) {
+		return blogMapper.getListByTitleOrCategory(query, CategoryId);
 	}
 
 	@Transactional
 	@Override
-	public void deleteBlogById(Long id) {
-		blogMapper.deleteBlogById(id);
+	public int deleteBlogById(Long id) {
+		return blogMapper.deleteBlogById(id);
+	}
+
+	@Transactional
+	@Override
+	public int deleteBlogTagByBlogId(Long blogId) {
+		return blogMapper.deleteBlogTagByBlogId(blogId);
+	}
+
+	@Transactional
+	@Override
+	public int saveBlog(Blog blog) {
+		Date date = new Date();
+		blog.setCreateTime(date);
+		blog.setUpdateTime(date);
+		blog.setViews(0);
+		return blogMapper.saveBlog(blog);
+	}
+
+	@Transactional
+	@Override
+	public int saveBlogTag(Long blogId, Long tagId) {
+		return blogMapper.saveBlogTag(blogId, tagId);
 	}
 }

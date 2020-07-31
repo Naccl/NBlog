@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.naccl.mapper.TagMapper">
+
+    <resultMap id="tag" type="top.naccl.entity.Tag">
+        <id property="id" column="id"/>
+        <result property="name" column="tag_name"/>
+        <result property="color" column="color"/>
+    </resultMap>
+
+    <!--获取所有标签List-->
+    <select id="getTagList" resultMap="tag">
+        select id, tag_name, color from tag order by id desc
+    </select>
+
+    <!--添加标签-->
+    <insert id="saveTag" parameterType="top.naccl.entity.Tag" useGeneratedKeys="true" keyProperty="id">
+        insert into tag (tag_name, color) values (#{name}, #{color})
+    </insert>
+
+    <!--按id查询标签-->
+    <select id="getTagById" resultMap="tag">
+        select id, tag_name, color from tag where id=#{id}
+    </select>
+</mapper>

@@ -36,9 +36,7 @@
 			</el-aside>
 			<!--右侧内容主体-->
 			<el-main>
-				<keep-alive>
-					<router-view/>
-				</keep-alive>
+				<router-view/>
 			</el-main>
 		</el-container>
 	</el-container>
@@ -70,7 +68,7 @@
 								id: 13,
 								title: '分类列表',
 								children: [],
-								path: '/types'
+								path: '/categories'
 							},
 							{
 								id: 14,
@@ -149,7 +147,7 @@
 				//被激活的链接地址
 				activePath: '',
 				//默认打开的菜单
-				defaultOpeneds: ['1','2','3','4']
+				defaultOpeneds: ['1', '2', '3', '4']
 			}
 		},
 		created() {

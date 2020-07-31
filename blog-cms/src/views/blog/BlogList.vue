@@ -11,11 +11,11 @@
 			<!--搜索-->
 			<el-row>
 				<el-col :span="8">
-					<el-input placeholder="请输入标题" v-model="queryInfo.query" :clearable="true" @clear="getBlogList" style="min-width: 500px" @keyup.native.enter="getBlogList">
-						<el-select class="select" v-model="queryInfo.typeId" slot="prepend" placeholder="请选择分类" :clearable="true" @change="getBlogList" style="width: 160px">
+					<el-input placeholder="请输入标题" v-model="queryInfo.query" :clearable="true" @clear="search" style="min-width: 500px" @keyup.native.enter="search">
+						<el-select v-model="queryInfo.CategoryId" slot="prepend" placeholder="请选择分类" :clearable="true" @change="search" style="width: 160px">
 							<el-option :label="item.name" :value="item.id" v-for="item in categoryList" :key="item.id"></el-option>
 						</el-select>
-						<el-button slot="append" icon="el-icon-search" @click="getBlogList"></el-button>
+						<el-button slot="append" icon="el-icon-search" @click="search"></el-button>
 					</el-input>
 				</el-col>
 			</el-row>
@@ -60,7 +60,7 @@
 </template>
 
 <script>
-	import {blogs, deleteBlogById} from '@/network/blog'
+	import {getDataByQuery, deleteBlogById} from '@/network/blog'
 
 	export default {
 		name: "BlogList",
@@ -68,7 +68,7 @@
 			return {
 				queryInfo: {
 					query: '',
-					typeId: null,
+					CategoryId: null,
 					pageNum: 1,
 					pageSize: 10
 				},
@@ -78,11 +78,11 @@
 			}
 		},
 		created() {
-			this.getBlogList()
+			this.getData()
 		},
 		methods: {
-			getBlogList() {
-				blogs(this.queryInfo.query, this.queryInfo.typeId, this.queryInfo.pageNum, this.queryInfo.pageSize)
+			getData() {
+				getDataByQuery(this.queryInfo.query, this.queryInfo.CategoryId, this.queryInfo.pageNum, this.queryInfo.pageSize)
 				.then(res => {
 					console.log(res)
 					if (res.code === 200) {
@@ -97,6 +97,11 @@
 					this.msgError("请求失败")
 				})
 			},
+			search() {
+				this.queryInfo.pageNum = 1
+				this.queryInfo.pageSize = 10
+				this.getData()
+			},
 			//切换博客推荐状态
 			blogRecommendChanged() {
 
@@ -108,12 +113,12 @@
 			//监听 pageSize 改变事件
 			handleSizeChange(newSize) {
 				this.queryInfo.pageSize = newSize
-				this.getBlogList()
+				this.getData()
 			},
 			//监听页码改变的事件
 			handleCurrentChange(newPage) {
 				this.queryInfo.pageNum = newPage
-				this.getBlogList()
+				this.getData()
 			},
 			goBlogEditPage(id) {
 				this.$router.push(`/blogs/edit/${id}`)
@@ -123,7 +128,7 @@
 					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
-						this.getBlogList()
+						this.getData()
 					} else {
 						this.msgError(res.msg)
 					}

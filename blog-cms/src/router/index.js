@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from "@/views/Login";
 import Home from "@/views/Home";
 import Welcome from "@/views/Welcome";
+import AddBlog from "@/views/blog/AddBlog";
 import BlogList from "@/views/blog/BlogList";
 
 Vue.use(VueRouter)
@@ -32,10 +33,17 @@ const routes = [
 				}
 			},
 			{
+				path: '/write',
+				component: AddBlog,
+				meta:{
+					title:'写文章'
+				}
+			},
+			{
 				path: '/blogs',
 				component: BlogList,
 				meta: {
-					title: '博客列表'
+					title: '文章列表'
 				}
 			},
 		]

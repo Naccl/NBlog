@@ -40,8 +40,8 @@
         </collection>
     </resultMap>
 
-    <!--按标题和分类查询博客列表-->
-    <select id="getListByTitleOrType" resultMap="blog">
+    <!--按标题和分类查询博客List-->
+    <select id="getListByTitleOrCategory" resultMap="blog">
         <bind name="queryPattern" value="'%' + query + '%'"/>
         select b.id, b.title, b.is_recommend, b.is_published, b.create_time, b.update_time,
                 c.id as category_id, c.category_name
@@ -50,14 +50,32 @@
             <if test="query!=null and query!=''">
                 b.title like #{queryPattern}
             </if>
-            <if test="typeId!=null">
-                and b.category_id=#{typeId}
+            <if test="CategoryId!=null">
+                and b.category_id=#{CategoryId}
             </if>
         </where>
     </select>
 
-    <!--删除博客-->
+    <!--按id删除博客-->
     <delete id="deleteBlogById">
-        delete from blog where id = #{id}
+        delete from blog where id=#{id}
     </delete>
+
+    <!--维护 blog_tag 表(删除)-->
+    <delete id="deleteBlogTagByBlogId">
+        delete from blog_tag where blog_id=#{blogId}
+    </delete>
+
+    <!--添加博客-->
+    <insert id="saveBlog" parameterType="top.naccl.entity.Blog" useGeneratedKeys="true" keyProperty="id">
+        insert into blog (title, content, first_picture, description, flag, is_published, is_recommend, is_appreciation, is_share_statement,
+        is_comment_enabled, create_time, update_time, views, words, read_time, category_id, user_id)
+        values (#{title}, #{content}, #{firstPicture}, #{description}, #{flag}, #{published}, #{recommend}, #{appreciation}, #{shareStatement},
+        #{commentEnabled}, #{createTime}, #{updateTime}, #{views}, #{words}, #{readTime}, #{category.id}, #{user.id})
+    </insert>
+
+    <!--维护 blog_tag 表(添加)-->
+    <insert id="saveBlogTag">
+        insert into blog_tag (blog_id, tag_id) values (#{blogId}, #{tagId})
+    </insert>
 </mapper>

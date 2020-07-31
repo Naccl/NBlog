@@ -35,7 +35,7 @@ import java.util.Map;
  * @Date: 2020-07-21
  */
 public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
-	private int expireTime = 3600;
+	private int expireTime = 3600 * 6;
 
 	private String secretKey = "abcdefghijklmnopqrstuvwxyz";
 
