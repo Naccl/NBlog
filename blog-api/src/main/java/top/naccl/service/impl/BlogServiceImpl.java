@@ -52,4 +52,16 @@ public class BlogServiceImpl implements BlogService {
 	public int saveBlogTag(Long blogId, Long tagId) {
 		return blogMapper.saveBlogTag(blogId, tagId);
 	}
+
+	@Transactional
+	@Override
+	public int updateBlogRecommendById(Long BlogId, Boolean recommend) {
+		return blogMapper.updateBlogRecommendById(BlogId, recommend);
+	}
+
+	@Transactional
+	@Override
+	public int updateBlogPublishedById(Long BlogId, Boolean published) {
+		return blogMapper.updateBlogPublishedById(BlogId, published);
+	}
 }

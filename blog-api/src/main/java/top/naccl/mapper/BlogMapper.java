@@ -23,4 +23,8 @@ public interface BlogMapper {
 	int saveBlog(Blog blog);
 
 	int saveBlogTag(Long blogId, Long tagId);
+
+	int updateBlogRecommendById(Long blogId, Boolean recommend);
+
+	int updateBlogPublishedById(Long blogId, Boolean published);
 }

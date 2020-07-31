@@ -4,7 +4,7 @@
 		<el-breadcrumb separator-class="el-icon-arrow-right">
 			<el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
 			<el-breadcrumb-item>博客管理</el-breadcrumb-item>
-			<el-breadcrumb-item>博客列表</el-breadcrumb-item>
+			<el-breadcrumb-item>文章列表</el-breadcrumb-item>
 		</el-breadcrumb>
 
 		<el-card>
@@ -60,7 +60,7 @@
 </template>
 
 <script>
-	import {getDataByQuery, deleteBlogById} from '@/network/blog'
+	import {getDataByQuery, deleteBlogById, updateRecommend, updatePublished} from '@/network/blog'
 
 	export default {
 		name: "BlogList",
@@ -103,12 +103,31 @@
 				this.getData()
 			},
 			//切换博客推荐状态
-			blogRecommendChanged() {
-
+			blogRecommendChanged(row) {
+				updateRecommend(row.id, row.recommend)
+				.then(res => {
+					console.log(res)
+					if (res.code === 200) {
+						this.msgSuccess(res.msg);
+					} else {
+						this.msgError(res.msg)
+					}
+				}).catch(() => {
+					this.msgError("请求失败")
+				})
 			},
 			//切换博客发布状态
-			blogPublishedChanged() {
-
+			blogPublishedChanged(row) {
+				updatePublished(row.id, row.published)
+				.then(res => {
+					if (res.code === 200) {
+						this.msgSuccess(res.msg);
+					} else {
+						this.msgError(res.msg)
+					}
+				}).catch(() => {
+					this.msgError("请求失败")
+				})
 			},
 			//监听 pageSize 改变事件
 			handleSizeChange(newSize) {

@@ -15,7 +15,7 @@ export function getDataByQuery(query, CategoryId, pageNum, pageSize) {
 
 export function deleteBlogById(id) {
 	return axios({
-		url: 'blogs',
+		url: 'blog',
 		method: 'DELETE',
 		params: {
 			id
@@ -36,6 +36,28 @@ export function saveBlog(blog) {
 		method: 'POST',
 		data: {
 			blog
+		}
+	})
+}
+
+export function updateRecommend(id, recommend) {
+	return axios({
+		url: 'blog/recommend',
+		method: 'PUT',
+		params: {
+			id,
+			recommend
+		}
+	})
+}
+
+export function updatePublished(id, published) {
+	return axios({
+		url: 'blog/published',
+		method: 'PUT',
+		params: {
+			id,
+			published
 		}
 	})
 }

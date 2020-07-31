@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -77,7 +78,7 @@ public class BlogController {
 	 * @param id 文章id
 	 * @return
 	 */
-	@DeleteMapping("/blogs")
+	@DeleteMapping("/blog")
 	public Result delete(@RequestParam Long id) {
 		try {
 			int r = blogService.deleteBlogById(id);
@@ -203,6 +204,36 @@ public class BlogController {
 				return Result.error("添加博客失败");
 			}
 			return Result.ok("添加成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Result.error();
+		}
+	}
+
+	@PutMapping("/blog/recommend")
+	public Result updateRecommend(@RequestParam Long id, @RequestParam Boolean recommend) {
+		try {
+			int r = blogService.updateBlogRecommendById(id, recommend);
+			if (r == 1) {
+				return Result.ok("操作成功");
+			} else {
+				return Result.error("操作失败");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Result.error();
+		}
+	}
+
+	@PutMapping("/blog/published")
+	public Result updatePublished(@RequestParam Long id, @RequestParam Boolean published) {
+		try {
+			int r = blogService.updateBlogPublishedById(id, published);
+			if (r == 1) {
+				return Result.ok("操作成功");
+			} else {
+				return Result.error("操作失败");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Result.error();

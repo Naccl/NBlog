@@ -14,4 +14,8 @@ public interface BlogService {
 	int saveBlog(Blog blog);
 
 	int saveBlogTag(Long blogId, Long tagId);
+
+	int updateBlogRecommendById(Long BlogId, Boolean recommend);
+
+	int updateBlogPublishedById(Long BlogId, Boolean published);
 }

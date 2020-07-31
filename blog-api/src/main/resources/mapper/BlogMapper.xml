@@ -78,4 +78,14 @@
     <insert id="saveBlogTag">
         insert into blog_tag (blog_id, tag_id) values (#{blogId}, #{tagId})
     </insert>
+
+    <!--更新博客推荐状态-->
+    <update id="updateBlogRecommendById">
+        update blog set is_recommend=#{recommend} where id=#{blogId}
+    </update>
+
+    <!--更新博客发布状态-->
+    <update id="updateBlogPublishedById">
+        update blog set is_published=#{published} where id=#{blogId}
+    </update>
 </mapper>
