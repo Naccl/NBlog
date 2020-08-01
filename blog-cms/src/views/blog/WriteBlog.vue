@@ -1,11 +1,7 @@
 <template>
 	<div>
 		<!--面包屑导航-->
-		<el-breadcrumb separator-class="el-icon-arrow-right">
-			<el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-			<el-breadcrumb-item>博客管理</el-breadcrumb-item>
-			<el-breadcrumb-item>{{ $route.meta.title }}</el-breadcrumb-item>
-		</el-breadcrumb>
+		<Breadcrumb parentTitle="博客管理"/>
 
 		<el-card>
 			<el-form :model="form" :rules="formRules" ref="formRef" label-position="top">
@@ -79,11 +75,15 @@
 </template>
 
 <script>
+	import Breadcrumb from "@/components/Breadcrumb";
 	import {getCategoryAndTag, saveBlog, getBlogById, updateBlog} from '@/network/blog'
 	import Vditor from 'vditor'
 
 	export default {
 		name: "WriteBlog",
+		components: {
+			Breadcrumb
+		},
 		data() {
 			return {
 				vditor: null,

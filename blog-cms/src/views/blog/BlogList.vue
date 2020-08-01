@@ -1,11 +1,7 @@
 <template>
 	<div>
 		<!--面包屑导航-->
-		<el-breadcrumb separator-class="el-icon-arrow-right">
-			<el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-			<el-breadcrumb-item>博客管理</el-breadcrumb-item>
-			<el-breadcrumb-item>{{ $route.meta.title }}</el-breadcrumb-item>
-		</el-breadcrumb>
+		<Breadcrumb parentTitle="博客管理"/>
 
 		<el-card>
 			<!--搜索-->
@@ -60,10 +56,14 @@
 </template>
 
 <script>
+	import Breadcrumb from "@/components/Breadcrumb";
 	import {getDataByQuery, deleteBlogById, updateRecommend, updatePublished} from '@/network/blog'
 
 	export default {
 		name: "BlogList",
+		components: {
+			Breadcrumb
+		},
 		data() {
 			return {
 				queryInfo: {
