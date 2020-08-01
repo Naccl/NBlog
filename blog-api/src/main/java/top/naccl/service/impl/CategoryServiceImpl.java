@@ -34,4 +34,21 @@ public class CategoryServiceImpl implements CategoryService {
 	public Category getCategoryById(Long id) {
 		return categoryMapper.getCategoryById(id);
 	}
+
+	@Override
+	public Category getCategoryByName(String name) {
+		return categoryMapper.getCategoryByName(name);
+	}
+
+	@Transactional
+	@Override
+	public int deleteCategoryById(Long id) {
+		return categoryMapper.deleteCategoryById(id);
+	}
+
+	@Transactional
+	@Override
+	public int updateCategory(Category category) {
+		return categoryMapper.updateCategory(category);
+	}
 }

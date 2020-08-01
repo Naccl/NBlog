@@ -22,4 +22,9 @@
     <select id="getTagById" resultMap="tag">
         select id, tag_name, color from tag where id=#{id}
     </select>
+
+    <!--按name查询标签-->
+    <select id="getTagByName" resultMap="tag">
+        select id, tag_name, color from tag where tag_name=#{name}
+    </select>
 </mapper>

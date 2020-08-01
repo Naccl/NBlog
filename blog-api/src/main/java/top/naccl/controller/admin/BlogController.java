@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +20,7 @@ import top.naccl.service.BlogService;
 import top.naccl.service.CategoryService;
 import top.naccl.service.TagService;
 import top.naccl.util.Result;
+import top.naccl.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -206,7 +206,7 @@ public class BlogController {
 	}
 
 	/**
-	 * 执行博客添加或更新操作，校验参数是否合法，添加分类、标签，维护博客标签关联表
+	 * 执行博客添加或更新操作：校验参数是否合法，添加分类、标签，维护博客标签关联表
 	 *
 	 * @param map  博客文章map对象
 	 * @param type 添加或更新
@@ -214,19 +214,17 @@ public class BlogController {
 	 */
 	private Result getResult(Map<String, Object> map, String type) {
 		try {
-			Map<String, Object> blogMap = (Map<String, Object>) map.get("blog");
-			JSONObject blogJsonObject = new JSONObject(blogMap);
+			JSONObject blogJsonObject = new JSONObject(map);
 			Blog blog = JSONObject.toJavaObject(blogJsonObject, Blog.class);
 
 			//验证普通字段
-			if (StringUtils.isEmpty(blog.getTitle()) || StringUtils.isEmpty(blog.getContent())
-					|| StringUtils.isEmpty(blog.getFirstPicture()) || StringUtils.isEmpty(blog.getDescription())
-					|| StringUtils.isEmpty(blog.getFlag()) || blog.getWords() == null || blog.getWords() < 0) {
+			if (StringUtils.isEmpty(blog.getTitle(), blog.getContent(), blog.getFirstPicture(), blog.getDescription(), blog.getFlag())
+					|| blog.getWords() == null || blog.getWords() < 0) {
 				return Result.error("参数有误");
 			}
 
 			//处理分类
-			Object cate = blogMap.get("cate");
+			Object cate = map.get("cate");
 			if (cate == null) {
 				return Result.error("分类不能为空");
 			}
@@ -238,6 +236,11 @@ public class BlogController {
 					return Result.error("分类不存在");
 				}
 			} else if (cate instanceof String) {//添加新分类
+				//查询分类是否已存在
+				Category category = categoryService.getCategoryByName((String) cate);
+				if (category != null) {
+					return Result.error("不可添加已存在的分类");
+				}
 				Category c = new Category();
 				c.setName((String) cate);
 				int r = categoryService.saveCategory(c);
@@ -251,7 +254,7 @@ public class BlogController {
 			}
 
 			//处理标签
-			List<Object> tagList = (List<Object>) blogMap.get("tagList");
+			List<Object> tagList = (List<Object>) map.get("tagList");
 			List<Tag> tags = new ArrayList<>();
 			for (Object t : tagList) {
 				if (t instanceof Integer) {//选择了已存在的标签
@@ -262,6 +265,11 @@ public class BlogController {
 						return Result.error("标签不存在");
 					}
 				} else if (t instanceof String) {//添加新标签
+					//查询标签是否已存在
+					Tag tag1 = tagService.getTagByName((String) t);
+					if (tag1 != null) {
+						return Result.error("不可添加已存在的标签");
+					}
 					Tag tag = new Tag();
 					tag.setName((String) t);
 					int r = tagService.saveTag(tag);

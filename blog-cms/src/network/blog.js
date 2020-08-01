@@ -32,7 +32,7 @@ export function saveBlog(blog) {
 		url: 'blog',
 		method: 'POST',
 		data: {
-			blog
+			...blog
 		}
 	})
 }
@@ -74,7 +74,7 @@ export function updateBlog(blog) {
 		url: 'blog',
 		method: 'PUT',
 		data: {
-			blog
+			...blog
 		}
 	})
 }

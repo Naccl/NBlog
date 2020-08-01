@@ -10,4 +10,6 @@ public interface TagService {
 	int saveTag(Tag tag);
 
 	Tag getTagById(Long id);
+
+	Tag getTagByName(String name);
 }

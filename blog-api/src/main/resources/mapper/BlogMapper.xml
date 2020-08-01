@@ -99,7 +99,7 @@
         where b.id=#{id}
     </select>
 
-    <!--按id更新博客-->
+    <!--更新博客-->
     <update id="updateBlog">
         update blog set title=#{title}, content=#{content}, first_picture=#{firstPicture}, description=#{description}, flag=#{flag},
         is_recommend=#{recommend}, is_published=#{published}, is_appreciation=#{appreciation}, is_share_statement=#{shareStatement},
@@ -107,4 +107,9 @@
         read_time=#{readTime}, category_id=#{category.id}
         where id=#{id}
     </update>
+
+    <!--按分类id查询博客数量-->
+    <select id="countBlogByCategoryId" resultType="java.lang.Integer">
+        select count(*) from blog where category_id=#{categoryId};
+    </select>
 </mapper>
