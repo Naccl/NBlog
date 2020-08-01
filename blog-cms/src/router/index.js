@@ -5,6 +5,7 @@ import Home from "@/views/Home";
 import Welcome from "@/views/Welcome";
 import WriteBlog from "@/views/blog/WriteBlog";
 import BlogList from "@/views/blog/BlogList";
+import CategoryList from "@/views/category/CategoryList";
 
 Vue.use(VueRouter)
 
@@ -51,6 +52,13 @@ const routes = [
 				component: BlogList,
 				meta: {
 					title: '文章列表'
+				}
+			},
+			{
+				path: '/categories',
+				component: CategoryList,
+				meta: {
+					title: '分类列表'
 				}
 			},
 		]

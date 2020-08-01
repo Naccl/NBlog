@@ -70,4 +70,9 @@ public class BlogServiceImpl implements BlogService {
 	public int updateBlog(Blog blog) {
 		return blogMapper.updateBlog(blog);
 	}
+
+	@Override
+	public int countBlogByCategoryId(Long categoryId) {
+		return blogMapper.countBlogByCategoryId(categoryId);
+	}
 }

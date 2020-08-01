@@ -21,4 +21,19 @@
     <select id="getCategoryById" resultMap="category">
         select id, category_name from category where id=#{id}
     </select>
+
+    <!--按name查询分类-->
+    <select id="getCategoryByName" resultMap="category">
+        select id, category_name from category where category_name=#{name}
+    </select>
+
+    <!--按id删除分类-->
+    <delete id="deleteCategoryById">
+        delete from category where id=#{id}
+    </delete>
+
+    <!--更新分类-->
+    <update id="updateCategory">
+        update category set category_name=#{name} where id=#{id}
+    </update>
 </mapper>

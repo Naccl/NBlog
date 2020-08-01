@@ -19,4 +19,10 @@ public interface CategoryMapper {
 	int saveCategory(Category category);
 
 	Category getCategoryById(Long id);
+
+	Category getCategoryByName(String name);
+
+	int deleteCategoryById(Long id);
+
+	int updateCategory(Category category);
 }
