@@ -16,7 +16,7 @@
 				<!--菜单-->
 				<el-menu background-color="#333744" text-color="#fff" active-text-color="#409eff" :default-openeds="defaultOpeneds"
 				         :unique-opened="false" :collapse="isCollapse" :collapse-transition="false"
-				         :router="true" :default-active="activePath">
+				         :router="true" :default-active="$store.state.activePath">
 					<!-- 一级菜单 -->
 					<el-submenu :index="item.id + ''" v-for="item in menuList" :key="item.id">
 						<!-- 一级菜单的模板区域 -->
@@ -25,7 +25,7 @@
 							<span>{{ item.title }}</span>
 						</template>
 						<!-- 二级菜单 -->
-						<el-menu-item :index="subItem.path" v-for="subItem in item.children" :key="subItem.id" @click="saveNavState(subItem.path)">
+						<el-menu-item :index="subItem.path" v-for="subItem in item.children" :key="subItem.id">
 							<template slot="title">
 								<i :class="iconsObj[subItem.id]"></i>
 								<span>{{ subItem.title }}</span>
@@ -36,7 +36,8 @@
 			</el-aside>
 			<!--右侧内容主体-->
 			<el-main>
-				<router-view/>
+				<!--加 key 让组件被重用时 重新执行生命周期-->
+				<router-view :key="$route.fullPath"/>
 			</el-main>
 		</el-container>
 	</el-container>
@@ -56,7 +57,7 @@
 								id: 11,
 								title: '写文章',
 								children: [],
-								path: '/write'
+								path: '/blogs/write'
 							},
 							{
 								id: 12,
@@ -144,25 +145,15 @@
 				},
 				//是否折叠
 				isCollapse: false,
-				//被激活的链接地址
-				activePath: '',
 				//默认打开的菜单
 				defaultOpeneds: ['1', '2', '3', '4']
 			}
-		},
-		created() {
-			this.activePath = window.sessionStorage.getItem('activePath')
 		},
 		methods: {
 			logout() {
 				window.sessionStorage.clear()
 				this.$router.push('/login')
 				this.msgSuccess('退出成功')
-			},
-			//保存链接的激活状态
-			saveNavState(activePath) {
-				this.activePath = activePath
-				window.sessionStorage.setItem('activePath', activePath)
 			}
 		}
 	}

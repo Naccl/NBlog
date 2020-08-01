@@ -23,6 +23,7 @@ import top.naccl.service.TagService;
 import top.naccl.util.Result;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -126,6 +127,92 @@ public class BlogController {
 	 */
 	@PostMapping("/blog")
 	public Result saveBlog(@RequestBody Map<String, Object> map) {
+		return getResult(map, "save");
+	}
+
+	/**
+	 * 更新博客推荐状态
+	 *
+	 * @param id        博客id
+	 * @param recommend 是否推荐
+	 * @return
+	 */
+	@PutMapping("/blog/recommend")
+	public Result updateRecommend(@RequestParam Long id, @RequestParam Boolean recommend) {
+		try {
+			int r = blogService.updateBlogRecommendById(id, recommend);
+			if (r == 1) {
+				return Result.ok("操作成功");
+			} else {
+				return Result.error("操作失败");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Result.error();
+		}
+	}
+
+	/**
+	 * 更新博客发布状态
+	 *
+	 * @param id        博客id
+	 * @param published 是否发布
+	 * @return
+	 */
+	@PutMapping("/blog/published")
+	public Result updatePublished(@RequestParam Long id, @RequestParam Boolean published) {
+		try {
+			int r = blogService.updateBlogPublishedById(id, published);
+			if (r == 1) {
+				return Result.ok("操作成功");
+			} else {
+				return Result.error("操作失败");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Result.error();
+		}
+	}
+
+	/**
+	 * 按id获取博客详情
+	 *
+	 * @param id 博客id
+	 * @return
+	 */
+	@GetMapping("/blog")
+	public Result getBlog(@RequestParam Long id) {
+		try {
+			Blog blog = blogService.getBlogById(id);
+			if (blog == null) {
+				return Result.error("博客不存在");
+			}
+			return Result.ok("获取成功", blog);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Result.error();
+		}
+	}
+
+	/**
+	 * 更新博客
+	 *
+	 * @param map 包含了博客文章 LinkedHashMap 对象的 LinkedHashMap => map = {blog: {...}}
+	 * @return
+	 */
+	@PutMapping("/blog")
+	public Result updateBlog(@RequestBody Map<String, Object> map) {
+		return getResult(map, "update");
+	}
+
+	/**
+	 * 执行博客添加或更新操作，校验参数是否合法，添加分类、标签，维护博客标签关联表
+	 *
+	 * @param map  博客文章map对象
+	 * @param type 添加或更新
+	 * @return
+	 */
+	private Result getResult(Map<String, Object> map, String type) {
 		try {
 			Map<String, Object> blogMap = (Map<String, Object>) map.get("blog");
 			JSONObject blogJsonObject = new JSONObject(blogMap);
@@ -188,51 +275,49 @@ public class BlogController {
 				}
 			}
 
-			User user = new User();
-			user.setId((long) 1);//个人博客只有一个作者
-			blog.setUser(user);
-			blog.setReadTime((int) Math.round(blog.getWords() / 200.0) + 5);//粗略计算阅读时长
+			Date date = new Date();
+			if (blog.getReadTime() == null || blog.getReadTime() < 0) {
+				blog.setReadTime((int) Math.round(blog.getWords() / 200.0));//粗略计算阅读时长
+			}
+			if (blog.getViews() == null || blog.getViews() < 0) {
+				blog.setViews(0);
+			}
+			if ("save".equals(type)) {
+				blog.setCreateTime(date);
+				blog.setUpdateTime(date);
+				User user = new User();
+				user.setId((long) 1);//个人博客默认只有一个作者
+				blog.setUser(user);
 
-			int r = blogService.saveBlog(blog);
-			if (r == 1) {//添加博客成功
-				//关联博客和标签(维护 blog_tag 表)
-				for (Tag t : tags) {
-					int r1 = blogService.saveBlogTag(blog.getId(), t.getId());
-					if (r1 != 1) Result.error("维护博客标签关联表失败");
+				int r = blogService.saveBlog(blog);
+				if (r == 1) {//添加博客成功
+					//关联博客和标签(维护 blog_tag 表)
+					for (Tag t : tags) {
+						int r1 = blogService.saveBlogTag(blog.getId(), t.getId());
+						if (r1 != 1) Result.error("维护博客标签关联表失败");
+					}
+				} else {//添加博客失败
+					return Result.error("添加博客失败");
 				}
-			} else {//添加博客失败
-				return Result.error("添加博客失败");
-			}
-			return Result.ok("添加成功");
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error();
-		}
-	}
-
-	@PutMapping("/blog/recommend")
-	public Result updateRecommend(@RequestParam Long id, @RequestParam Boolean recommend) {
-		try {
-			int r = blogService.updateBlogRecommendById(id, recommend);
-			if (r == 1) {
-				return Result.ok("操作成功");
+				return Result.ok("添加成功");
 			} else {
-				return Result.error("操作失败");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error();
-		}
-	}
-
-	@PutMapping("/blog/published")
-	public Result updatePublished(@RequestParam Long id, @RequestParam Boolean published) {
-		try {
-			int r = blogService.updateBlogPublishedById(id, published);
-			if (r == 1) {
-				return Result.ok("操作成功");
-			} else {
-				return Result.error("操作失败");
+				blog.setUpdateTime(date);
+				int r = blogService.updateBlog(blog);
+				if (r == 1) {//更新博客成功
+					//关联博客和标签(维护 blog_tag 表)
+					int r1 = blogService.deleteBlogTagByBlogId(blog.getId());
+					if (r1 != 0) {
+						for (Tag t : tags) {
+							int r2 = blogService.saveBlogTag(blog.getId(), t.getId());
+							if (r2 != 1) Result.error("维护博客标签关联表失败");
+						}
+					} else {
+						Result.error("维护博客标签关联表失败");
+					}
+				} else {//更新博客失败
+					return Result.error("更新博客失败");
+				}
+				return Result.ok("更新成功");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Login from "@/views/Login";
 import Home from "@/views/Home";
 import Welcome from "@/views/Welcome";
-import AddBlog from "@/views/blog/AddBlog";
+import WriteBlog from "@/views/blog/WriteBlog";
 import BlogList from "@/views/blog/BlogList";
 
 Vue.use(VueRouter)
@@ -33,10 +33,17 @@ const routes = [
 				}
 			},
 			{
-				path: '/write',
-				component: AddBlog,
-				meta:{
-					title:'写文章'
+				path: '/blogs/write',
+				component: WriteBlog,
+				meta: {
+					title: '写文章'
+				}
+			},
+			{
+				path: '/blogs/edit/:id',
+				component: WriteBlog,
+				meta: {
+					title: '编辑文章'
 				}
 			},
 			{
@@ -66,6 +73,7 @@ router.beforeEach((to, from, next) => {
 	if (to.meta.title) {
 		document.title = to.meta.title
 	}
+	router.app.$options.store.dispatch('saveNavState', to.path)
 	next()
 })
 

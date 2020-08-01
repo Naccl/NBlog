@@ -7,7 +7,6 @@ import top.naccl.entity.Blog;
 import top.naccl.mapper.BlogMapper;
 import top.naccl.service.BlogService;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,10 +39,6 @@ public class BlogServiceImpl implements BlogService {
 	@Transactional
 	@Override
 	public int saveBlog(Blog blog) {
-		Date date = new Date();
-		blog.setCreateTime(date);
-		blog.setUpdateTime(date);
-		blog.setViews(0);
 		return blogMapper.saveBlog(blog);
 	}
 
@@ -63,5 +58,16 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public int updateBlogPublishedById(Long BlogId, Boolean published) {
 		return blogMapper.updateBlogPublishedById(BlogId, published);
+	}
+
+	@Override
+	public Blog getBlogById(Long id) {
+		return blogMapper.getBlogById(id);
+	}
+
+	@Transactional
+	@Override
+	public int updateBlog(Blog blog) {
+		return blogMapper.updateBlog(blog);
 	}
 }

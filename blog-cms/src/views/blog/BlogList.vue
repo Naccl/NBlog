@@ -4,7 +4,7 @@
 		<el-breadcrumb separator-class="el-icon-arrow-right">
 			<el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
 			<el-breadcrumb-item>博客管理</el-breadcrumb-item>
-			<el-breadcrumb-item>文章列表</el-breadcrumb-item>
+			<el-breadcrumb-item>{{ $route.meta.title }}</el-breadcrumb-item>
 		</el-breadcrumb>
 
 		<el-card>

@@ -1,0 +1,1 @@
+export const SAVE_NAV_STATE = 'saveNavState'

@@ -18,4 +18,8 @@ public interface BlogService {
 	int updateBlogRecommendById(Long BlogId, Boolean recommend);
 
 	int updateBlogPublishedById(Long BlogId, Boolean published);
+
+	Blog getBlogById(Long id);
+
+	int updateBlog(Blog blog);
 }

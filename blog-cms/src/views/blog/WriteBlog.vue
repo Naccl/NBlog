@@ -4,11 +4,11 @@
 		<el-breadcrumb separator-class="el-icon-arrow-right">
 			<el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
 			<el-breadcrumb-item>博客管理</el-breadcrumb-item>
-			<el-breadcrumb-item>写文章</el-breadcrumb-item>
+			<el-breadcrumb-item>{{ $route.meta.title }}</el-breadcrumb-item>
 		</el-breadcrumb>
 
 		<el-card>
-			<el-form :model="form" :rules="formRules" ref="formRef">
+			<el-form :model="form" :rules="formRules" ref="formRef" label-position="top">
 				<el-form-item prop="title">
 					<el-input v-model="form.title" placeholder="请输入标题" style="min-width: 500px">
 						<el-select v-model="form.flag" placeholder="请选择类型" slot="prepend" :allow-create="true" :filterable="true" style="width: 160px">
@@ -41,8 +41,16 @@
 					<el-input v-model="form.words" placeholder="请输入文章字数" type="number" style="width: 50%;"></el-input>
 				</el-form-item>
 
-				<el-form-item prop="description">
-					<el-input v-model="form.description" type="textarea" placeholder="请输入文章描述..." maxlength="255" show-word-limit></el-input>
+				<el-form-item label="阅读时长(分钟)" prop="readTime">
+					<el-input v-model="form.readTime" placeholder="请输入阅读时长（可选）默认 Math.round(字数 / 200)" type="number" style="width: 50%;"></el-input>
+				</el-form-item>
+
+				<el-form-item label="浏览次数" prop="views">
+					<el-input v-model="form.views" placeholder="请输入文章字数（可选）" type="number" style="width: 50%;"></el-input>
+				</el-form-item>
+
+				<el-form-item label="文章描述" prop="description">
+					<el-input v-model="form.description" type="textarea" placeholder="请输入文章描述..." maxlength="255" show-word-limit style="width: 50%;"></el-input>
 				</el-form-item>
 
 				<el-form-item>
@@ -71,11 +79,11 @@
 </template>
 
 <script>
-	import {getCategoryAndTag, saveBlog} from '@/network/blog'
+	import {getCategoryAndTag, saveBlog, getBlogById, updateBlog} from '@/network/blog'
 	import Vditor from 'vditor'
 
 	export default {
-		name: "AddBlog",
+		name: "WriteBlog",
 		data() {
 			return {
 				vditor: null,
@@ -90,6 +98,8 @@
 					tagList: [],
 					firstPicture: '',
 					words: null,
+					readTime: null,
+					views: 0,
 					description: '',
 					shareStatement: false,
 					appreciation: false,
@@ -107,6 +117,11 @@
 				},
 			}
 		},
+		watch: {
+			'form.words'(newValue) {
+				this.form.readTime = newValue ? Math.round(newValue / 200) : null
+			},
+		},
 		created() {
 			this.getData()
 		},
@@ -117,18 +132,45 @@
 			//初始化md编辑器
 			initVditor() {
 				const options = {
-					value: 'Alt + F4 to continue...',
 					height: 640,
 					mode: 'ir',//即时渲染
 					outline: true,//大纲
-					cache: {//缓存到localStorage
-						enable: true,
+					cache: {//不缓存到localStorage
+						enable: false,
 					},
 					resize: {//可调整高度
 						enable: true
+					},
+					after: () => {
+						if (this.$route.params.id) {
+							this.getBlog(this.$route.params.id)
+						}
 					}
 				}
 				this.vditor = new Vditor('vditor', options)
+			},
+			getBlog(id) {
+				getBlogById(id)
+				.then(res => {
+					console.log(res)
+					if (res.code === 200) {
+						this.computeCategoryAndTag(res.data)
+						this.msgSuccess(res.msg);
+						this.form = res.data
+						this.vditor.setValue(this.form.content)
+					} else {
+						this.msgError(res.msg)
+					}
+				}).catch(() => {
+					this.msgError('请求失败')
+				})
+			},
+			computeCategoryAndTag(blog) {
+				blog.cate = blog.category.id
+				blog.tagList = []
+				blog.tags.forEach(item => {
+					blog.tagList.push(item.id)
+				})
 			},
 			getData() {
 				getCategoryAndTag()
@@ -151,18 +193,35 @@
 						this.form.content = this.vditor.getValue()
 						this.form.published = published
 						console.log(this.form)
-						saveBlog(this.form)
-						.then(res => {
-							console.log(res)
-							if (res.code === 200) {
-								this.msgSuccess(res.msg)
-								this.$router.push('/blogs')
-							} else {
-								this.msgError(res.msg)
-							}
-						}).catch(() => {
-							this.msgError('请求失败')
-						})
+						if (this.$route.params.id) {
+							this.form.category = null
+							this.form.tags = null
+							updateBlog(this.form)
+							.then(res => {
+								console.log(res)
+								if (res.code === 200) {
+									this.msgSuccess(res.msg)
+									this.$router.push('/blogs')
+								} else {
+									this.msgError(res.msg)
+								}
+							}).catch(() => {
+								this.msgError('请求失败')
+							})
+						} else {
+							saveBlog(this.form)
+							.then(res => {
+								console.log(res)
+								if (res.code === 200) {
+									this.msgSuccess(res.msg)
+									this.$router.push('/blogs')
+								} else {
+									this.msgError(res.msg)
+								}
+							}).catch(() => {
+								this.msgError('请求失败')
+							})
+						}
 					} else {
 						return this.msgError('请填写必要的表单项')
 					}

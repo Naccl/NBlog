@@ -27,4 +27,8 @@ public interface BlogMapper {
 	int updateBlogRecommendById(Long blogId, Boolean recommend);
 
 	int updateBlogPublishedById(Long blogId, Boolean published);
+
+	Blog getBlogById(Long id);
+
+	int updateBlog(Blog blog);
 }

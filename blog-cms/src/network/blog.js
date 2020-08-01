@@ -61,3 +61,23 @@ export function updatePublished(id, published) {
 		}
 	})
 }
+
+export function getBlogById(id) {
+	return axios({
+		url: 'blog',
+		method: 'GET',
+		params: {
+			id
+		}
+	})
+}
+
+export function updateBlog(blog) {
+	return axios({
+		url: 'blog',
+		method: 'PUT',
+		data: {
+			blog
+		}
+	})
+}
