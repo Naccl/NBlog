@@ -1,14 +1,11 @@
 import axios from '@/plugins/axios'
 
-export function getDataByQuery(query, CategoryId, pageNum, pageSize) {
+export function getDataByQuery(queryInfo) {
 	return axios({
 		url: 'blogs',
 		method: 'GET',
 		params: {
-			query,
-			CategoryId,
-			pageNum,
-			pageSize
+			...queryInfo
 		}
 	})
 }

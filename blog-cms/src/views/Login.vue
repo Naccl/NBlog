@@ -50,7 +50,7 @@
 			login() {
 				this.$refs.loginFormRef.validate(valid => {
 					if (valid) {
-						login(this.loginForm.username, this.loginForm.password)
+						login(this.loginForm)
 						.then(res => {
 							console.log(res)
 							if (res.code === 200) {

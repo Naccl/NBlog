@@ -82,7 +82,7 @@
 		},
 		methods: {
 			getData() {
-				getDataByQuery(this.queryInfo.query, this.queryInfo.CategoryId, this.queryInfo.pageNum, this.queryInfo.pageSize)
+				getDataByQuery(this.queryInfo)
 				.then(res => {
 					console.log(res)
 					if (res.code === 200) {
