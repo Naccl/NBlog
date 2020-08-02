@@ -81,11 +81,11 @@
 					},
 					{
 						id: 2,
-						title: '留言管理',
+						title: '评论管理',
 						children: [
 							{
 								id: 21,
-								title: '留言列表',
+								title: '评论列表',
 								children: [],
 								path: '/comments'
 							},

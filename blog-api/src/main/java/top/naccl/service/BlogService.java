@@ -5,7 +5,7 @@ import top.naccl.entity.Blog;
 import java.util.List;
 
 public interface BlogService {
-	List<Blog> getListByTitleOrCategory(String query, Integer CategoryId);
+	List<Blog> getListByTitleOrCategoryId(String title, Integer CategoryId);
 
 	int deleteBlogById(Long id);
 
