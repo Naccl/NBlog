@@ -29,37 +29,37 @@
 			               :page-sizes="[5, 10, 15, 20]" :page-size="queryInfo.pageSize" :total="total"
 			               layout="total, sizes, prev, pager, next, jumper" background>
 			</el-pagination>
+		</el-card>
 
-			<!--添加分类对话框-->
-			<el-dialog title="添加分类" width="50%" :visible.sync="addDialogVisible" :close-on-click-modal="false" @close="addDialogClosed">
-				<!--内容主体-->
-				<el-form :model="addForm" :rules="formRules" ref="addFormRef" label-width="80px">
-					<el-form-item label="分类名称" prop="name">
-						<el-input v-model="addForm.name"></el-input>
-					</el-form-item>
-				</el-form>
-				<!--底部-->
-				<span slot="footer">
+		<!--添加分类对话框-->
+		<el-dialog title="添加分类" width="50%" :visible.sync="addDialogVisible" :close-on-click-modal="false" @close="addDialogClosed">
+			<!--内容主体-->
+			<el-form :model="addForm" :rules="formRules" ref="addFormRef" label-width="80px">
+				<el-form-item label="分类名称" prop="name">
+					<el-input v-model="addForm.name"></el-input>
+				</el-form-item>
+			</el-form>
+			<!--底部-->
+			<span slot="footer">
 				<el-button @click="addDialogVisible=false">取 消</el-button>
 				<el-button type="primary" @click="addCategory">确 定</el-button>
 			</span>
-			</el-dialog>
+		</el-dialog>
 
-			<!--编辑分类对话框-->
-			<el-dialog title="编辑分类" width="50%" :visible.sync="editDialogVisible" :close-on-click-modal="false" @close="editDialogClosed">
-				<!--内容主体-->
-				<el-form :model="editForm" :rules="formRules" ref="editFormRef" label-width="80px">
-					<el-form-item label="分类名称" prop="name">
-						<el-input v-model="editForm.name"></el-input>
-					</el-form-item>
-				</el-form>
-				<!--底部-->
-				<span slot="footer">
+		<!--编辑分类对话框-->
+		<el-dialog title="编辑分类" width="50%" :visible.sync="editDialogVisible" :close-on-click-modal="false" @close="editDialogClosed">
+			<!--内容主体-->
+			<el-form :model="editForm" :rules="formRules" ref="editFormRef" label-width="80px">
+				<el-form-item label="分类名称" prop="name">
+					<el-input v-model="editForm.name"></el-input>
+				</el-form-item>
+			</el-form>
+			<!--底部-->
+			<span slot="footer">
 				<el-button @click="editDialogVisible=false">取 消</el-button>
 				<el-button type="primary" @click="editCategory">确 定</el-button>
 			</span>
-			</el-dialog>
-		</el-card>
+		</el-dialog>
 	</div>
 </template>
 
