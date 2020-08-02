@@ -21,4 +21,8 @@ public interface TagMapper {
 	Tag getTagById(Long id);
 
 	Tag getTagByName(String name);
+
+	int deleteTagById(Long id);
+
+	int updateTag(Tag tag);
 }

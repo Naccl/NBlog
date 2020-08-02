@@ -110,6 +110,11 @@
 
     <!--按分类id查询博客数量-->
     <select id="countBlogByCategoryId" resultType="java.lang.Integer">
-        select count(*) from blog where category_id=#{categoryId};
+        select count(*) from blog where category_id=#{categoryId}
+    </select>
+
+    <!--按标签id查询博客数量-->
+    <select id="countBlogByTagId" resultType="java.lang.Integer">
+        select count(*) from blog_tag where tag_id=#{tagId}
     </select>
 </mapper>

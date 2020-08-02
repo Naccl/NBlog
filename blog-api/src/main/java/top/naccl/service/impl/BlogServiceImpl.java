@@ -75,4 +75,9 @@ public class BlogServiceImpl implements BlogService {
 	public int countBlogByCategoryId(Long categoryId) {
 		return blogMapper.countBlogByCategoryId(categoryId);
 	}
+
+	@Override
+	public int countBlogByTagId(Long tagId) {
+		return blogMapper.countBlogByTagId(tagId);
+	}
 }

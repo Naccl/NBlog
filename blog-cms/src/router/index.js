@@ -6,6 +6,7 @@ import Welcome from "@/views/Welcome";
 import WriteBlog from "@/views/blog/WriteBlog";
 import BlogList from "@/views/blog/BlogList";
 import CategoryList from "@/views/category/CategoryList";
+import TagList from "@/views/tag/TagList";
 
 Vue.use(VueRouter)
 
@@ -61,6 +62,13 @@ const routes = [
 					title: '分类列表'
 				}
 			},
+			{
+				path: '/tags',
+				component: TagList,
+				meta: {
+					title: '标签列表'
+				}
+			}
 		]
 	}
 ]
@@ -79,7 +87,7 @@ router.beforeEach((to, from, next) => {
 		if (!tokenStr) return next("/login")
 	}
 	if (to.meta.title) {
-		document.title = to.meta.title
+		document.title = to.meta.title + ' | Naccl\'Blog'
 	}
 	router.app.$options.store.dispatch('saveNavState', to.path)
 	next()
