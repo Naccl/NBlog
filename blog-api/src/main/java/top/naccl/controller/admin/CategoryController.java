@@ -61,28 +61,7 @@ public class CategoryController {
 	 */
 	@PostMapping("/category")
 	public Result saveCategory(@RequestBody Map<String, Object> map) {
-		try {
-			String name = (String) map.get("name");
-			if (StringUtils.isEmpty(name)) {
-				return Result.error("分类名称不能为空");
-			}
-			//查询分类是否已存在
-			Category category = categoryService.getCategoryByName(name);
-			if (category != null) {
-				return Result.error("该分类已存在");
-			}
-			Category c = new Category();
-			c.setName(name);
-			int r = categoryService.saveCategory(c);
-			if (r == 1) {//添加分类成功
-				return Result.ok("添加成功");
-			} else {//添加分类失败
-				return Result.error("添加失败");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error();
-		}
+		return getResult(map, "save");
 	}
 
 	/**
@@ -93,6 +72,17 @@ public class CategoryController {
 	 */
 	@PutMapping("/category")
 	public Result updateCategory(@RequestBody Map<String, Object> map) {
+		return getResult(map, "update");
+	}
+
+	/**
+	 * 执行分类添加或更新操作：校验参数是否合法，分类是否已存在
+	 *
+	 * @param map  分类map对象
+	 * @param type 添加或更新
+	 * @return
+	 */
+	private Result getResult(Map<String, Object> map, String type) {
 		try {
 			JSONObject categoryJsonObject = new JSONObject(map);
 			Category category = JSONObject.toJavaObject(categoryJsonObject, Category.class);
@@ -100,15 +90,24 @@ public class CategoryController {
 				return Result.error("分类名称不能为空");
 			}
 			//查询分类是否已存在
-			Category c = categoryService.getCategoryByName(category.getName());
-			if (c != null) {
+			Category category1 = categoryService.getCategoryByName(category.getName());
+			if (category1 != null && category1.getId() != category.getId()) {
 				return Result.error("该分类已存在");
 			}
-			int r = categoryService.updateCategory(category);
-			if (r == 1) {//更新分类成功
-				return Result.ok("更新成功");
-			} else {//更新分类失败
-				return Result.error("更新失败");
+			if ("save".equals(type)) {
+				int r = categoryService.saveCategory(category);
+				if (r == 1) {//添加分类成功
+					return Result.ok("添加成功");
+				} else {//添加分类失败
+					return Result.error("添加失败");
+				}
+			} else {
+				int r = categoryService.updateCategory(category);
+				if (r == 1) {//更新分类成功
+					return Result.ok("更新成功");
+				} else {//更新分类失败
+					return Result.error("更新失败");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -133,7 +132,7 @@ public class CategoryController {
 			int r = categoryService.deleteCategoryById(id);
 			if (r == 1) {//删除分类成功
 				return Result.ok("删除成功");
-			} else {//删除博客失败
+			} else {//删除分类失败
 				return Result.error("删除失败");
 			}
 		} catch (Exception e) {
