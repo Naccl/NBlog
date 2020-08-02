@@ -39,4 +39,16 @@ public class TagServiceImpl implements TagService {
 	public Tag getTagByName(String name) {
 		return tagMapper.getTagByName(name);
 	}
+
+	@Transactional
+	@Override
+	public int deleteTagById(Long id) {
+		return tagMapper.deleteTagById(id);
+	}
+
+	@Transactional
+	@Override
+	public int updateTag(Tag tag) {
+		return tagMapper.updateTag(tag);
+	}
 }

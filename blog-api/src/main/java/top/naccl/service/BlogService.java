@@ -24,4 +24,6 @@ public interface BlogService {
 	int updateBlog(Blog blog);
 
 	int countBlogByCategoryId(Long categoryId);
+
+	int countBlogByTagId(Long tagId);
 }

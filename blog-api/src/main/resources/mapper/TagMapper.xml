@@ -27,4 +27,14 @@
     <select id="getTagByName" resultMap="tag">
         select id, tag_name, color from tag where tag_name=#{name}
     </select>
+
+    <!--按id删除标签-->
+    <delete id="deleteTagById">
+        delete from tag where id=#{id}
+    </delete>
+
+    <!--更新标签-->
+    <update id="updateTag">
+        update tag set tag_name=#{name}, color=#{color} where id=#{id}
+    </update>
 </mapper>
