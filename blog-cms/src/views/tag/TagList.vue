@@ -14,7 +14,12 @@
 			<el-table :data="tagList" border stripe>
 				<el-table-column label="序号" type="index" width="50"></el-table-column>
 				<el-table-column label="名称" prop="name"></el-table-column>
-				<el-table-column label="颜色" prop="color"></el-table-column>
+				<el-table-column label="颜色">
+					<template v-slot="scope">
+						<span style="float:left;width: 100px;">{{ scope.row.color }}</span>
+						<span style="float:left;width: 100px; height: 23px" :class="'me-'+scope.row.color"></span>
+					</template>
+				</el-table-column>
 				<el-table-column label="操作">
 					<template v-slot="scope">
 						<el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row)">编辑</el-button>
@@ -39,8 +44,14 @@
 				<el-form-item label="标签名称" prop="name">
 					<el-input v-model="addForm.name"></el-input>
 				</el-form-item>
-				<el-form-item label="标签颜色" prop="color">
-					<el-input v-model="addForm.color"></el-input>
+				<el-form-item label="标签颜色">
+					<el-select v-model="addForm.color" placeholder="请选择颜色" :clearable="true" style="width: 100%">
+						<el-option v-for="item in colors" :key="item.value" :label="item.label" :value="item.value">
+							<span style="float: left; width: 100px;">{{ item.label }}</span>
+							<span style="float: left; width: 100px; height: inherit" :class="'me-'+item.value"></span>
+							<span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+						</el-option>
+					</el-select>
 				</el-form-item>
 			</el-form>
 			<!--底部-->
@@ -58,7 +69,13 @@
 					<el-input v-model="editForm.name"></el-input>
 				</el-form-item>
 				<el-form-item label="标签颜色" prop="color">
-					<el-input v-model="editForm.color"></el-input>
+					<el-select v-model="editForm.color" placeholder="请选择颜色" :clearable="true" style="width: 100%">
+						<el-option v-for="item in colors" :key="item.value" :label="item.label" :value="item.value">
+							<span style="float: left; width: 100px;">{{ item.label }}</span>
+							<span style="float: left; width: 100px; height: inherit" :class="'me-'+item.value"></span>
+							<span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+						</el-option>
+					</el-select>
 				</el-form-item>
 			</el-form>
 			<!--底部-->
@@ -96,7 +113,22 @@
 				editForm: {},
 				formRules: {
 					name: [{required: true, message: '请输入标签名称', trigger: 'blur'}]
-				}
+				},
+				colors: [
+					{label: '红色', value: 'red'},
+					{label: '橘黄', value: 'orange'},
+					{label: '黄色', value: 'yellow'},
+					{label: '橄榄绿', value: 'olive'},
+					{label: '纯绿', value: 'green'},
+					{label: '水鸭蓝', value: 'teal'},
+					{label: '纯蓝', value: 'blue'},
+					{label: '紫罗兰', value: 'violet'},
+					{label: '紫色', value: 'purple'},
+					{label: '粉红', value: 'pink'},
+					{label: '棕色', value: 'brown'},
+					{label: '灰色', value: 'grey'},
+					{label: '黑色', value: 'black'},
+				],
 			}
 		},
 		created() {
@@ -129,6 +161,7 @@
 				this.getData()
 			},
 			addDialogClosed() {
+				this.addForm.color = ''
 				this.$refs.addFormRef.resetFields()
 			},
 			editDialogClosed() {
@@ -187,5 +220,57 @@
 <style scoped>
 	.el-button {
 		margin-right: 10px;
+	}
+
+	.me-red {
+		background: #DD3C3C;
+	}
+
+	.me-orange {
+		background: #F27E31;
+	}
+
+	.me-yellow {
+		background: #FAC21F;
+	}
+
+	.me-olive {
+		background: #BBCF2D;
+	}
+
+	.me-green {
+		background: #36BF56;
+	}
+
+	.me-teal {
+		background: #18BBB3;
+	}
+
+	.me-blue {
+		background: #368FD3;
+	}
+
+	.me-violet {
+		background: #7248CD;
+	}
+
+	.me-purple {
+		background: #AB46CC;
+	}
+
+	.me-pink {
+		background: #E14BA0;
+	}
+
+	.me-brown {
+		background: #AC7551;
+	}
+
+	.me-grey {
+		background: #828282;
+	}
+
+	.me-black {
+		background: #303132;
 	}
 </style>
