@@ -218,59 +218,7 @@
 </script>
 
 <style scoped>
-	.el-button {
-		margin-right: 10px;
-	}
-
-	.me-red {
-		background: #DD3C3C;
-	}
-
-	.me-orange {
-		background: #F27E31;
-	}
-
-	.me-yellow {
-		background: #FAC21F;
-	}
-
-	.me-olive {
-		background: #BBCF2D;
-	}
-
-	.me-green {
-		background: #36BF56;
-	}
-
-	.me-teal {
-		background: #18BBB3;
-	}
-
-	.me-blue {
-		background: #368FD3;
-	}
-
-	.me-violet {
-		background: #7248CD;
-	}
-
-	.me-purple {
-		background: #AB46CC;
-	}
-
-	.me-pink {
-		background: #E14BA0;
-	}
-
-	.me-brown {
-		background: #AC7551;
-	}
-
-	.me-grey {
-		background: #828282;
-	}
-
-	.me-black {
-		background: #303132;
+	.el-button+span {
+		margin-left: 10px;
 	}
 </style>

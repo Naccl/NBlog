@@ -160,7 +160,7 @@
 </script>
 
 <style scoped>
-	.el-button {
-		margin-right: 10px;
+	.el-button+span {
+		margin-left: 10px;
 	}
 </style>
