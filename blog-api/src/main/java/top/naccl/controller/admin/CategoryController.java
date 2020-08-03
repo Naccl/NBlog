@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import top.naccl.entity.Category;
+import top.naccl.model.entity.Category;
 import top.naccl.service.BlogService;
 import top.naccl.service.CategoryService;
 import top.naccl.util.Result;

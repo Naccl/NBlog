@@ -2,7 +2,7 @@ package top.naccl.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-import top.naccl.entity.Blog;
+import top.naccl.model.entity.Blog;
 
 import java.util.List;
 

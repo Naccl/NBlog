@@ -1,6 +1,6 @@
 package top.naccl.service;
 
-import top.naccl.entity.Blog;
+import top.naccl.model.entity.Blog;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
-package top.naccl.entity;
+package top.naccl.model.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import top.naccl.vo.BlogIdAndTitle;
+import top.naccl.model.vo.BlogIdAndTitle;
 
 import java.util.ArrayList;
 import java.util.Date;

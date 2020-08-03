@@ -2,7 +2,7 @@ package top.naccl.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import top.naccl.entity.Comment;
+import top.naccl.model.entity.Comment;
 import top.naccl.mapper.CommentMapper;
 import top.naccl.service.CommentService;
 

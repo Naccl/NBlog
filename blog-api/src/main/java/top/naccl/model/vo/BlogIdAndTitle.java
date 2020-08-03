@@ -1,4 +1,4 @@
-package top.naccl.vo;
+package top.naccl.model.vo;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

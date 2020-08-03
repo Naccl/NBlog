@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.naccl.mapper.TagMapper">
 
-    <resultMap id="tag" type="top.naccl.entity.Tag">
+    <resultMap id="tag" type="top.naccl.model.entity.Tag">
         <id property="id" column="id"/>
         <result property="name" column="tag_name"/>
         <result property="color" column="color"/>
@@ -14,7 +14,7 @@
     </select>
 
     <!--添加标签-->
-    <insert id="saveTag" parameterType="top.naccl.entity.Tag" useGeneratedKeys="true" keyProperty="id">
+    <insert id="saveTag" parameterType="top.naccl.model.entity.Tag" useGeneratedKeys="true" keyProperty="id">
         insert into tag (tag_name, color) values (#{name}, #{color})
     </insert>
 
