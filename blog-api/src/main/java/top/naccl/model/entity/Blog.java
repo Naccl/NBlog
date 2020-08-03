@@ -1,4 +1,4 @@
-package top.naccl.entity;
+package top.naccl.model.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

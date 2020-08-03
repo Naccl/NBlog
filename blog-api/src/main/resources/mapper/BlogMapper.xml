@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.naccl.mapper.BlogMapper">
 
-    <resultMap id="blog" type="top.naccl.entity.Blog">
+    <resultMap id="blog" type="top.naccl.model.entity.Blog">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
@@ -19,7 +19,7 @@
         <result property="views" column="views"/>
         <result property="words" column="words"/>
         <result property="readTime" column="read_time"/>
-        <association property="user" javaType="top.naccl.entity.User">
+        <association property="user" javaType="top.naccl.model.entity.User">
             <id property="id" column="user_id"/>
             <result property="username" column="username"/>
             <result property="nickname" column="nickname"/>
@@ -29,15 +29,20 @@
             <result property="updateTime" column="user_update_time"/>
             <result property="role" column="role"/>
         </association>
-        <association property="category" javaType="top.naccl.entity.Category">
+        <association property="category" javaType="top.naccl.model.entity.Category">
             <id property="id" column="category_id"/>
             <result property="name" column="category_name"/>
         </association>
-        <collection property="tags" javaType="top.naccl.entity.Tag">
+        <collection property="tags" javaType="top.naccl.model.entity.Tag">
             <id property="id" column="tag_id"/>
             <result property="name" column="tag_name"/>
             <result property="color" column="color"/>
         </collection>
+    </resultMap>
+
+    <resultMap id="blogIdAndTitle" type="top.naccl.model.vo.BlogIdAndTitle">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
     </resultMap>
 
     <!--按标题和分类查询博客List-->
@@ -56,6 +61,11 @@
         </where>
     </select>
 
+    <!--查询所有博客id和title-->
+    <select id="getIdAndTitleList" resultMap="blogIdAndTitle">
+        select id, title from blog order by create_time desc
+    </select>
+
     <!--按id删除博客-->
     <delete id="deleteBlogById">
         delete from blog where id=#{id}
@@ -72,7 +82,7 @@
     </insert>
 
     <!--添加博客-->
-    <insert id="saveBlog" parameterType="top.naccl.entity.Blog" useGeneratedKeys="true" keyProperty="id">
+    <insert id="saveBlog" parameterType="top.naccl.model.entity.Blog" useGeneratedKeys="true" keyProperty="id">
         insert into blog (title, content, first_picture, description, flag, is_published, is_recommend, is_appreciation, is_share_statement,
         is_comment_enabled, create_time, update_time, views, words, read_time, category_id, user_id)
         values (#{title}, #{content}, #{firstPicture}, #{description}, #{flag}, #{published}, #{recommend}, #{appreciation}, #{shareStatement},

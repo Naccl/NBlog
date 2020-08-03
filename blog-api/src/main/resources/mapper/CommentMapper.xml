@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.naccl.mapper.CommentMapper">
+
+    <resultMap id="comment" type="top.naccl.model.entity.Comment">
+        <id property="id" column="id"/>
+        <result property="nickname" column="nickname"/>
+        <result property="email" column="email"/>
+        <result property="content" column="content"/>
+        <result property="avatar" column="avatar"/>
+        <result property="createTime" column="create_time"/>
+        <result property="ip" column="ip"/>
+        <result property="published" column="is_published"/>
+        <result property="adminComment" column="is_admin_comment"/>
+        <result property="page" column="page"/>
+        <result property="notice" column="is_notice"/>
+        <result property="parentCommentId" column="parent_comment_id"/>
+        <association property="blog" javaType="top.naccl.model.vo.BlogIdAndTitle">
+            <id property="id" column="blog_id"/>
+            <result property="title" column="title"/>
+        </association>
+    </resultMap>
+
+    <!--按页面和父评论id查询评论List-->
+    <select id="getListByPageAndParentCommentId" resultMap="comment">
+        select c.id, c.nickname, c.email, c.content, c.avatar, c.create_time, c.ip, c.is_published, c.is_admin_comment, c.page,
+        c.is_notice, c.parent_comment_id, c.blog_id, b.title
+        from comment as c left join blog as b on c.blog_id=b.id
+        <where>
+            c.page=#{page}
+            <if test="page==0 and blogId!=null">
+                and c.blog_id=#{blogId}
+            </if>
+            and c.parent_comment_id=#{parentCommentId}
+        </where>
+    </select>
+
+    <!--按父评论id查询评论List-->
+    <select id="getListByParentCommentId" resultMap="comment">
+        select c.id, c.nickname, c.email, c.content, c.avatar, c.create_time, c.ip, c.is_published, c.is_admin_comment, c.page,
+        c.is_notice, c.parent_comment_id, c.blog_id, b.title
+        from comment as c left join blog as b on c.blog_id=b.id
+        where c.parent_comment_id=#{parentCommentId}
+    </select>
+
+    <!--更新评论公开状态-->
+    <update id="updateCommentPublishedById">
+        update comment set is_published=#{published} where id=#{commentId}
+    </update>
+
+    <!--更新评论接收邮件提醒状态-->
+    <update id="updateCommentNoticeById">
+        update comment set is_notice=#{notice} where id=#{commentId}
+    </update>
+
+    <!--按id删除评论-->
+    <delete id="deleteCommentById">
+        delete from comment where id=#{commentId}
+    </delete>
+
+    <!--更新评论-->
+    <update id="updateComment">
+        update comment set nickname=#{nickname}, email=#{email}, ip=#{ip}, content=#{content} where id=#{id}
+    </update>
+</mapper>

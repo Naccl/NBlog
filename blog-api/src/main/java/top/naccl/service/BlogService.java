@@ -1,11 +1,13 @@
 package top.naccl.service;
 
-import top.naccl.entity.Blog;
+import top.naccl.model.entity.Blog;
 
 import java.util.List;
 
 public interface BlogService {
 	List<Blog> getListByTitleOrCategoryId(String title, Integer CategoryId);
+
+	List<Blog> getIdAndTitleList();
 
 	int deleteBlogById(Long id);
 

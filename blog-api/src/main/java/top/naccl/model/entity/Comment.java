@@ -1,9 +1,10 @@
-package top.naccl.entity;
+package top.naccl.model.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import top.naccl.model.vo.BlogIdAndTitle;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,8 +31,8 @@ public class Comment {
 	private boolean adminComment;//博主回复
 	private Integer page;//0普通文章，1关于我页面
 	private boolean notice;//接收邮件提醒
+	private Long parentCommentId;//父评论id
 
-	private Blog blog;//所属的文章
-	private Comment parentComment;//父评论
+	private BlogIdAndTitle blog;//所属的文章
 	private List<Comment> replyComments = new ArrayList<>();//回复该评论的评论
 }

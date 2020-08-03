@@ -2,7 +2,7 @@ package top.naccl.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-import top.naccl.entity.Blog;
+import top.naccl.model.entity.Blog;
 
 import java.util.List;
 
@@ -15,6 +15,8 @@ import java.util.List;
 @Repository
 public interface BlogMapper {
 	List<Blog> getListByTitleOrCategoryId(String title, Integer CategoryId);
+
+	List<Blog> getIdAndTitleList();
 
 	int deleteBlogById(Long id);
 

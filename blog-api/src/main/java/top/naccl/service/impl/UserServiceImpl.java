@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import top.naccl.mapper.UserMapper;
-import top.naccl.entity.User;
+import top.naccl.model.entity.User;
 
 /**
  * @Description: 用户业务层接口实现类
