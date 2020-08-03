@@ -7,6 +7,7 @@ import WriteBlog from "@/views/blog/WriteBlog";
 import BlogList from "@/views/blog/BlogList";
 import CategoryList from "@/views/category/CategoryList";
 import TagList from "@/views/tag/TagList";
+import CommentList from "@/views/comment/CommentList";
 
 Vue.use(VueRouter)
 
@@ -68,7 +69,14 @@ const routes = [
 				meta: {
 					title: '标签列表'
 				}
-			}
+			},
+			{
+				path: '/comments',
+				component: CommentList,
+				meta: {
+					title: '评论列表'
+				}
+			},
 		]
 	}
 ]

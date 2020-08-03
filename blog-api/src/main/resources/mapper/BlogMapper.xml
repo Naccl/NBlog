@@ -40,6 +40,11 @@
         </collection>
     </resultMap>
 
+    <resultMap id="blogIdAndTitle" type="top.naccl.vo.BlogIdAndTitle">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+    </resultMap>
+
     <!--按标题和分类查询博客List-->
     <select id="getListByTitleOrCategoryId" resultMap="blog">
         <bind name="titlePattern" value="'%' + title + '%'"/>
@@ -54,6 +59,11 @@
                 and b.category_id=#{CategoryId}
             </if>
         </where>
+    </select>
+
+    <!--查询所有博客id和title-->
+    <select id="getIdAndTitleList" resultMap="blogIdAndTitle">
+        select id, title from blog order by create_time desc
     </select>
 
     <!--按id删除博客-->

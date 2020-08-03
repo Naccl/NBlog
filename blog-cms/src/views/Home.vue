@@ -88,12 +88,6 @@
 								title: '评论列表',
 								children: [],
 								path: '/comments'
-							},
-							{
-								id: 22,
-								title: '回收站',
-								children: [],
-								path: '/comments/trashes'
 							}
 						]
 					},
@@ -138,7 +132,6 @@
 					'13': 'el-icon-s-opportunity',
 					'14': 'el-icon-discount',
 					'21': 'el-icon-tickets',
-					'22': 'el-icon-delete',
 					'31': 'el-icon-s-marketing',
 					'32': 'el-icon-view',
 					'41': 'el-icon-document',

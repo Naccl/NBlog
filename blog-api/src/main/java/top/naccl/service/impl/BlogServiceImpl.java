@@ -24,6 +24,11 @@ public class BlogServiceImpl implements BlogService {
 		return blogMapper.getListByTitleOrCategoryId(title, CategoryId);
 	}
 
+	@Override
+	public List<Blog> getIdAndTitleList() {
+		return blogMapper.getIdAndTitleList();
+	}
+
 	@Transactional
 	@Override
 	public int deleteBlogById(Long id) {

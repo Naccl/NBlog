@@ -7,6 +7,8 @@ import java.util.List;
 public interface BlogService {
 	List<Blog> getListByTitleOrCategoryId(String title, Integer CategoryId);
 
+	List<Blog> getIdAndTitleList();
+
 	int deleteBlogById(Long id);
 
 	int deleteBlogTagByBlogId(Long blogId);

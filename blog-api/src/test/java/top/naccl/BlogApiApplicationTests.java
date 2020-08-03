@@ -3,10 +3,7 @@ package top.naccl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import top.naccl.entity.Blog;
-import top.naccl.mapper.BlogMapper;
-
-import java.util.List;
+import top.naccl.mapper.CommentMapper;
 
 @SpringBootTest
 class BlogApiApplicationTests {
@@ -17,12 +14,10 @@ class BlogApiApplicationTests {
 
 
 	@Autowired
-	BlogMapper blogMapper;
+	CommentMapper commentMapper;
 
 	@Test
 	void test() {
-//		List<Blog> blogs = blogMapper.getBlogList();
-//		System.out.println(blogs);
 	}
 
 }
