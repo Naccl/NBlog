@@ -128,31 +128,39 @@
 				this.$refs.editFormRef.resetFields()
 			},
 			addCategory() {
-				addCategory(this.addForm).then(res => {
-					console.log(res)
-					if (res.code === 200) {
-						this.msgSuccess(res.msg)
-						this.addDialogVisible = false
-						this.getData()
-					} else {
-						this.msgError(res.msg)
+				this.$refs.addFormRef.validate(valid => {
+					if (valid) {
+						addCategory(this.addForm).then(res => {
+							console.log(res)
+							if (res.code === 200) {
+								this.msgSuccess(res.msg)
+								this.addDialogVisible = false
+								this.getData()
+							} else {
+								this.msgError(res.msg)
+							}
+						}).catch(() => {
+							this.msgError("请求失败")
+						})
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			editCategory() {
-				editCategory(this.editForm).then(res => {
-					console.log(res)
-					if (res.code === 200) {
-						this.msgSuccess(res.msg)
-						this.editDialogVisible = false
-						this.getData()
-					} else {
-						this.msgError(res.msg)
+				this.$refs.editFormRef.validate(valid => {
+					if (valid) {
+						editCategory(this.editForm).then(res => {
+							console.log(res)
+							if (res.code === 200) {
+								this.msgSuccess(res.msg)
+								this.editDialogVisible = false
+								this.getData()
+							} else {
+								this.msgError(res.msg)
+							}
+						}).catch(() => {
+							this.msgError("请求失败")
+						})
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			showEditDialog(row) {
@@ -179,7 +187,7 @@
 </script>
 
 <style scoped>
-	.el-button+span {
+	.el-button + span {
 		margin-left: 10px;
 	}
 </style>

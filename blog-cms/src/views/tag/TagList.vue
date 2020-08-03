@@ -169,31 +169,39 @@
 				this.$refs.editFormRef.resetFields()
 			},
 			addTag() {
-				addTag(this.addForm).then(res => {
-					console.log(res)
-					if (res.code === 200) {
-						this.msgSuccess(res.msg)
-						this.addDialogVisible = false
-						this.getData()
-					} else {
-						this.msgError(res.msg)
+				this.$refs.addFormRef.validate(valid => {
+					if (valid) {
+						addTag(this.addForm).then(res => {
+							console.log(res)
+							if (res.code === 200) {
+								this.msgSuccess(res.msg)
+								this.addDialogVisible = false
+								this.getData()
+							} else {
+								this.msgError(res.msg)
+							}
+						}).catch(() => {
+							this.msgError("请求失败")
+						})
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			editTag() {
-				editTag(this.editForm).then(res => {
-					console.log(res)
-					if (res.code === 200) {
-						this.msgSuccess(res.msg)
-						this.editDialogVisible = false
-						this.getData()
-					} else {
-						this.msgError(res.msg)
+				this.$refs.editFormRef.validate(valid => {
+					if (valid) {
+						editTag(this.editForm).then(res => {
+							console.log(res)
+							if (res.code === 200) {
+								this.msgSuccess(res.msg)
+								this.editDialogVisible = false
+								this.getData()
+							} else {
+								this.msgError(res.msg)
+							}
+						}).catch(() => {
+							this.msgError("请求失败")
+						})
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			showEditDialog(row) {
@@ -218,7 +226,7 @@
 </script>
 
 <style scoped>
-	.el-button+span {
+	.el-button + span {
 		margin-left: 10px;
 	}
 </style>
