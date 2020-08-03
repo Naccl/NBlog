@@ -1,11 +1,13 @@
 package top.naccl.controller.admin;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,8 +16,10 @@ import top.naccl.model.entity.Comment;
 import top.naccl.service.BlogService;
 import top.naccl.service.CommentService;
 import top.naccl.util.Result;
+import top.naccl.util.StringUtils;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: 博客评论后台管理
@@ -130,6 +134,34 @@ public class CommentController {
 				return Result.ok("操作成功");
 			} else {
 				return Result.error("操作失败");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Result.error();
+		}
+	}
+
+	/**
+	 * 修改评论
+	 *
+	 * @param map 评论对象map => {id=3, nickname=Naccl, email=admin@naccl.top, ip=127.0.0.1, content=666}
+	 * @return
+	 */
+	@PutMapping("/comment")
+	public Result updateComment(@RequestBody Map<String, Object> map) {
+		try {
+			JSONObject commentJsonObject = new JSONObject(map);
+			Comment comment = JSONObject.toJavaObject(commentJsonObject, Comment.class);
+
+			if (StringUtils.isEmpty(comment.getNickname(), comment.getEmail(), comment.getIp(), comment.getContent())) {
+				return Result.error("参数有误");
+			}
+
+			int r = commentService.updateComment(comment);
+			if (r == 1) {//更新成功
+				return Result.ok("修改成功");
+			} else {//更新失败
+				return Result.error("修改失败");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

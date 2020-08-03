@@ -23,4 +23,6 @@ public interface CommentMapper {
 	int updateCommentNoticeById(Long commentId, Boolean notice);
 
 	int deleteCommentById(Long commentId);
+
+	int updateComment(Comment comment);
 }

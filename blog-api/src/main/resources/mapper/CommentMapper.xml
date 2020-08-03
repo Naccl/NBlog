@@ -57,4 +57,9 @@
     <delete id="deleteCommentById">
         delete from comment where id=#{commentId}
     </delete>
+
+    <!--更新评论-->
+    <update id="updateComment">
+        update comment set nickname=#{nickname}, email=#{email}, ip=#{ip}, content=#{content} where id=#{id}
+    </update>
 </mapper>

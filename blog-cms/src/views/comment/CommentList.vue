@@ -50,7 +50,7 @@
 				</el-table-column>
 				<el-table-column label="操作" width="200">
 					<template v-slot="scope">
-						<el-button type="primary" icon="el-icon-edit" size="mini" @click="">编辑</el-button>
+						<el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row)">编辑</el-button>
 						<el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteCommentById(scope.row.id)">删除</el-button>
 					</template>
 				</el-table-column>
@@ -62,12 +62,37 @@
 			               layout="total, sizes, prev, pager, next, jumper" background>
 			</el-pagination>
 		</el-card>
+
+		<!--编辑评论对话框-->
+		<el-dialog title="编辑评论" width="50%" :visible.sync="editDialogVisible" :close-on-click-modal="false" @close="editDialogClosed">
+			<!--内容主体-->
+			<el-form :model="editForm" :rules="formRules" ref="editFormRef" label-width="80px">
+				<el-form-item label="昵称" prop="nickname">
+					<el-input v-model="editForm.nickname"></el-input>
+				</el-form-item>
+				<el-form-item label="邮箱" prop="email">
+					<el-input v-model="editForm.email"></el-input>
+				</el-form-item>
+				<el-form-item label="ip" prop="ip">
+					<el-input v-model="editForm.ip"></el-input>
+				</el-form-item>
+				<el-form-item label="评论内容" prop="content">
+					<el-input v-model="editForm.content" type="textarea" maxlength="255" show-word-limit></el-input>
+				</el-form-item>
+			</el-form>
+			<!--底部-->
+			<span slot="footer">
+				<el-button @click="editDialogVisible=false">取 消</el-button>
+				<el-button type="primary" @click="editComment">确 定</el-button>
+			</span>
+		</el-dialog>
 	</div>
 </template>
 
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
-	import {getCommentListByQuery, getBlogList, updatePublished, updateNotice, deleteCommentById} from '@/network/comment'
+	import {getCommentListByQuery, getBlogList, updatePublished, updateNotice, deleteCommentById, editComment} from '@/network/comment'
+	import {checkEmail, checkIpv4} from "@/common/reg";
 
 	export default {
 		name: "CommentList",
@@ -85,7 +110,30 @@
 				},
 				total: 0,
 				commentList: [],
-				blogList: []
+				blogList: [],
+				editDialogVisible: false,
+				editForm: {
+					id: null,
+					nickname: '',
+					email: '',
+					ip: '',
+					content: ''
+				},
+				formRules: {
+					nickname: [{required: true, message: '请输入评论昵称', trigger: 'blur'}],
+					email: [
+						{required: true, message: '请输入评论邮箱', trigger: 'blur'},
+						{validator: checkEmail, trigger: 'blur'}
+					],
+					ip: [
+						{required: true, message: '请输入评论ip', trigger: 'blur'},
+						// {validator: checkIpv4, trigger: 'blur'}
+					],
+					content: [
+						{required: true, message: '请输入评论内容', trigger: 'blur'},
+						{max: 255, message: '评论内容不可多于255个字符', trigger: 'blur'}
+					],
+				}
 			}
 		},
 		created() {
@@ -193,6 +241,39 @@
 						message: '已取消删除'
 					});
 				});
+			},
+			showEditDialog(row) {
+				this.editForm = {...row}
+				this.editDialogVisible = true
+			},
+			editDialogClosed() {
+				this.editForm = {}
+				this.$refs.editFormRef.resetFields()
+			},
+			editComment() {
+				this.$refs.editFormRef.validate(valid => {
+					if (valid) {
+						const form = {
+							id: this.editForm.id,
+							nickname: this.editForm.nickname,
+							email: this.editForm.email,
+							ip: this.editForm.ip,
+							content: this.editForm.content,
+						}
+						editComment(form)
+						.then(res => {
+							if (res.code === 200) {
+								this.msgSuccess(res.msg)
+								this.editDialogVisible = false
+								this.getCommentList()
+							} else {
+								this.msgError(res.msg)
+							}
+						}).catch(() => {
+							this.msgError("请求失败")
+						})
+					}
+				})
 			}
 		}
 	}

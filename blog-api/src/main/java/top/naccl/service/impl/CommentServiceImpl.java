@@ -57,6 +57,12 @@ public class CommentServiceImpl implements CommentService {
 		return commentMapper.deleteCommentById(commentId);
 	}
 
+	@Transactional
+	@Override
+	public int updateComment(Comment comment) {
+		return commentMapper.updateComment(comment);
+	}
+
 	/**
 	 * 递归删除子评论
 	 *

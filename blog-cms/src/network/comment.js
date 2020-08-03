@@ -48,3 +48,13 @@ export function deleteCommentById(id) {
 		}
 	})
 }
+
+export function editComment(form) {
+	return axios({
+		url: 'comment',
+		method: 'PUT',
+		data: {
+			...form
+		}
+	})
+}
