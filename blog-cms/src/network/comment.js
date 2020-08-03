@@ -16,3 +16,35 @@ export function getBlogList() {
 		method: 'GET'
 	})
 }
+
+export function updatePublished(id, published) {
+	return axios({
+		url: 'comment/published',
+		method: 'PUT',
+		params: {
+			id,
+			published
+		}
+	})
+}
+
+export function updateNotice(id, notice) {
+	return axios({
+		url: 'comment/notice',
+		method: 'PUT',
+		params: {
+			id,
+			notice
+		}
+	})
+}
+
+export function deleteCommentById(id) {
+	return axios({
+		url: 'comment',
+		method: 'DELETE',
+		params: {
+			id
+		}
+	})
+}

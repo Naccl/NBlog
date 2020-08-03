@@ -15,4 +15,12 @@ import java.util.List;
 @Repository
 public interface CommentMapper {
 	List<Comment> getListByPageAndParentCommentId(Integer page, Long blogId, Long parentCommentId);
+
+	List<Comment> getListByParentCommentId(Long parentCommentId);
+
+	int updateCommentPublishedById(Long commentId, Boolean published);
+
+	int updateCommentNoticeById(Long commentId, Boolean notice);
+
+	int deleteCommentById(Long commentId);
 }
