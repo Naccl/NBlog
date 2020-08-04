@@ -2,6 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+//moment
+import './util/dateTimeFormatUtils.js'
+
 
 Vue.config.productionTip = false
 

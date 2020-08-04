@@ -13,4 +13,12 @@ const router = new VueRouter({
 	routes
 })
 
+//挂载路由守卫
+router.beforeEach((to, from, next) => {
+	if (to.meta.title) {
+		document.title = to.meta.title + ' | Naccl\'s Blog'
+	}
+	next()
+})
+
 export default router
