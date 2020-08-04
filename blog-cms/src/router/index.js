@@ -95,7 +95,7 @@ router.beforeEach((to, from, next) => {
 		if (!tokenStr) return next("/login")
 	}
 	if (to.meta.title) {
-		document.title = to.meta.title + ' | Naccl\'Blog'
+		document.title = to.meta.title + ' | Naccl\'s Blog'
 	}
 	router.app.$options.store.dispatch('saveNavState', to.path)
 	next()
