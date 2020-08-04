@@ -1,12 +1,12 @@
 <template>
 	<div>
-		<h3>Welcome</h3>
+		<h1>仪表盘</h1>
 	</div>
 </template>
 
 <script>
 	export default {
-		name: "Welcome"
+		name: "Dashboard"
 	}
 </script>
 

@@ -11,12 +11,16 @@
 		<!--页面主体-->
 		<el-container>
 			<!--侧边栏-->
-			<el-aside :width="isCollapse? '64px' : '200px'">
+			<el-aside :width="isCollapse? '64px' : '190px'">
 				<div class="toggle-button" @click="isCollapse=!isCollapse"><i :class="isCollapse?'el-icon-s-unfold':'el-icon-s-fold'"></i></div>
 				<!--菜单-->
 				<el-menu background-color="#333744" text-color="#fff" active-text-color="#409eff" :default-openeds="defaultOpeneds"
 				         :unique-opened="false" :collapse="isCollapse" :collapse-transition="false"
 				         :router="true" :default-active="$store.state.activePath">
+					<el-menu-item index="/dashboard">
+						<i class="iconfont ali-iconfont icon-dashboard"></i>
+						<span>仪表盘</span>
+					</el-menu-item>
 					<!-- 一级菜单 -->
 					<el-submenu :index="item.id + ''" v-for="item in menuList" :key="item.id">
 						<!-- 一级菜单的模板区域 -->
@@ -124,7 +128,7 @@
 				],
 				iconsObj: {
 					'1': 'el-icon-menu',
-					'2': 'el-icon-s-order',
+					'2': 'ali-iconfont icon-pinglun',
 					'3': 'el-icon-s-data',
 					'4': 'el-icon-s-tools',
 					'11': 'el-icon-edit',
@@ -184,6 +188,9 @@
 		border-right: none;
 	}
 
+	.el-submenu .el-menu-item {
+		min-width: inherit;
+	}
 
 	.el-main {
 		background-color: #eaedf1;
