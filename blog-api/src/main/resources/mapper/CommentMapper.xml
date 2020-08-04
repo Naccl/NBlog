@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.naccl.mapper.CommentMapper">
 
-    <resultMap id="comment" type="top.naccl.model.entity.Comment">
+    <resultMap id="comment" type="top.naccl.entity.Comment">
         <id property="id" column="id"/>
         <result property="nickname" column="nickname"/>
         <result property="email" column="email"/>

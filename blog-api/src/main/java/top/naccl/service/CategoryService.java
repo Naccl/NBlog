@@ -1,6 +1,6 @@
 package top.naccl.service;
 
-import top.naccl.model.entity.Category;
+import top.naccl.entity.Category;
 
 import java.util.List;
 

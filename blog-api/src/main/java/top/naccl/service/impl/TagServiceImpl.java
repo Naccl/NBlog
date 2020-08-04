@@ -3,7 +3,7 @@ package top.naccl.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import top.naccl.model.entity.Tag;
+import top.naccl.entity.Tag;
 import top.naccl.mapper.TagMapper;
 import top.naccl.service.TagService;
 

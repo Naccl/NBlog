@@ -1,6 +1,6 @@
 package top.naccl.service;
 
-import top.naccl.model.entity.Tag;
+import top.naccl.entity.Tag;
 
 import java.util.List;
 

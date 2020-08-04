@@ -2,7 +2,7 @@ package top.naccl.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-import top.naccl.model.entity.User;
+import top.naccl.entity.User;
 
 /**
  * @Description: 用户持久层接口

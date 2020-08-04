@@ -1,6 +1,6 @@
 package top.naccl.service;
 
-import top.naccl.model.entity.Comment;
+import top.naccl.entity.Comment;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package top.naccl.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import top.naccl.model.entity.Category;
+import top.naccl.entity.Category;
 import top.naccl.mapper.CategoryMapper;
 import top.naccl.service.CategoryService;
 

@@ -1,4 +1,4 @@
-package top.naccl.model.entity;
+package top.naccl.entity;
 
 import java.util.Collection;
 import java.util.Date;
