@@ -1,0 +1,77 @@
+html,
+body,
+#app {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+footer {
+    font-family: 'Varela Round', "Microsoft YaHei", "Source Sans Pro", "Helvetica Neue", Menlo, Monaco, monospace, "Lucida Console", sans-serif, Helvetica, "Hiragino Sans GB", "Hiragino Sans GB W3", Source Han Sans CN Regular, WenQuanYi Micro Hei, Arial, sans-serif;
+}
+
+.m-padded-tb-mini {
+    padding-top: 0.2em !important;
+    padding-bottom: 0.2em !important;
+}
+
+.m-padded-tb-small {
+    padding-top: 0.5em !important;
+    padding-bottom: 0.5em !important;
+}
+
+.m-padded-tb-large {
+    padding-top: 2em !important;
+    padding-bottom: 2em !important;
+}
+
+.m-right-top {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/*------shadow------*/
+.m-shadow-small {
+    -webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+.m-mobile-show {
+    display: none !important;
+}
+
+@media screen and (max-width: 768px) {
+    .m-mobile-hide {
+        display: none !important;
+    }
+
+    .m-mobile-show {
+        display: block !important;
+    }
+}
+
+.m-text-thin {
+    font-weight: 300 !important;
+}
+
+.m-text-spaced {
+    letter-spacing: 1px !important;
+}
+
+/*-----opacity------*/
+.m-opacity {
+    opacity: 0.9 !important;
+}
+
+.m-opacity-mini {
+    opacity: 0.8 !important;
+}
+
+.m-opacity-tiny {
+    opacity: 0.6 !important;
+}
+
+.m-blue {
+    color: #48dbfb !important;
+}
