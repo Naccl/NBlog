@@ -13,8 +13,8 @@
 </template>
 
 <script>
-	import Nav from "./index/Nav";
-	import Footer from "./index/Footer";
+	import Nav from "../components/index/Nav";
+	import Footer from "../components/index/Footer";
 	import {getHitokoto} from '@/network/index'
 
 	export default {
