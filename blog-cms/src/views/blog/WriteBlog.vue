@@ -13,24 +13,24 @@
 					</el-input>
 				</el-form-item>
 
-				<el-form-item prop="content">
-					<div id="vditor"></div>
+				<el-form-item label="文章描述" prop="description">
+					<div id="vditor-description"></div>
+				</el-form-item>
+
+				<el-form-item label="文章正文" prop="content">
+					<div id="vditor-content"></div>
 				</el-form-item>
 
 				<el-form-item label="分类" prop="cate">
-					<el-select v-model="form.cate" placeholder="请选择分类" :allow-create="true" :filterable="true" style="width: 50%;">
+					<el-select v-model="form.cate" placeholder="请选择分类（输入可添加新分类）" :allow-create="true" :filterable="true" style="width: 50%;">
 						<el-option :label="item.name" :value="item.id" v-for="item in categoryList" :key="item.id"></el-option>
 					</el-select>
 				</el-form-item>
 
 				<el-form-item label="标签" prop="tagList">
-					<el-select v-model="form.tagList" placeholder="请选择标签" :allow-create="true" :filterable="true" :multiple="true" style="width: 50%;">
+					<el-select v-model="form.tagList" placeholder="请选择标签（输入可添加新标签）" :allow-create="true" :filterable="true" :multiple="true" style="width: 50%;">
 						<el-option :label="item.name" :value="item.id" v-for="item in tagList" :key="item.id"></el-option>
 					</el-select>
-				</el-form-item>
-
-				<el-form-item label="首图" prop="firstPicture">
-					<el-input v-model="form.firstPicture" placeholder="请输入首图地址" style="width: 50%;"></el-input>
 				</el-form-item>
 
 				<el-form-item label="字数" prop="words">
@@ -43,10 +43,6 @@
 
 				<el-form-item label="浏览次数" prop="views">
 					<el-input v-model="form.views" placeholder="请输入文章字数（可选）" type="number" style="width: 50%;"></el-input>
-				</el-form-item>
-
-				<el-form-item label="文章描述" prop="description">
-					<el-input v-model="form.description" type="textarea" placeholder="请输入文章描述..." maxlength="255" show-word-limit style="width: 50%;"></el-input>
 				</el-form-item>
 
 				<el-form-item>
@@ -86,21 +82,22 @@
 		},
 		data() {
 			return {
-				vditor: null,
+				ready: false,
+				descriptionVditor: null,
+				contentVditor: null,
 				flagList: ['原创', '转载', '翻译'],
 				categoryList: [],
 				tagList: [],
 				form: {
 					title: '',
 					flag: null,
+					description: '',
 					content: '',
 					cate: null,
 					tagList: [],
-					firstPicture: '',
 					words: null,
 					readTime: null,
 					views: 0,
-					description: '',
 					shareStatement: false,
 					appreciation: false,
 					recommend: false,
@@ -111,9 +108,7 @@
 					title: [{required: true, message: '请输入标题', trigger: 'change'}],
 					cate: [{required: true, message: '请选择分类', trigger: 'change'}],
 					tagList: [{required: true, message: '请选择标签', trigger: 'change'}],
-					firstPicture: [{required: true, message: '请输入首图URL', trigger: 'change'}],
 					words: [{required: true, message: '请输入文章字数', trigger: 'change'}],
-					description: [{required: true, message: '请输入文章描述', trigger: 'change'}],
 				},
 			}
 		},
@@ -126,11 +121,33 @@
 			this.getData()
 		},
 		mounted() {
-			this.initVditor()
+			this.initDescriptionVditor()
+			this.initContentVditor()
 		},
 		methods: {
 			//初始化md编辑器
-			initVditor() {
+			initDescriptionVditor() {
+				const options = {
+					height: 320,
+					mode: 'ir',//即时渲染
+					outline: true,//大纲
+					cache: {//不缓存到localStorage
+						enable: false,
+					},
+					resize: {//可调整高度
+						enable: true
+					},
+					after: () => {
+						if (!this.ready) {
+							this.ready = true //两个编辑器都加载完成后执行，避免重复请求
+						} else if (this.$route.params.id) {
+							this.getBlog(this.$route.params.id)
+						}
+					}
+				}
+				this.descriptionVditor = new Vditor('vditor-description', options)
+			},
+			initContentVditor() {
 				const options = {
 					height: 640,
 					mode: 'ir',//即时渲染
@@ -142,12 +159,14 @@
 						enable: true
 					},
 					after: () => {
-						if (this.$route.params.id) {
+						if (!this.ready) {
+							this.ready = true
+						} else if (this.$route.params.id) {
 							this.getBlog(this.$route.params.id)
 						}
 					}
 				}
-				this.vditor = new Vditor('vditor', options)
+				this.contentVditor = new Vditor('vditor-content', options)
 			},
 			getBlog(id) {
 				getBlogById(id)
@@ -157,7 +176,8 @@
 						this.computeCategoryAndTag(res.data)
 						this.msgSuccess(res.msg);
 						this.form = res.data
-						this.vditor.setValue(this.form.content)
+						this.descriptionVditor.setValue(this.form.description)
+						this.contentVditor.setValue(this.form.content)
 					} else {
 						this.msgError(res.msg)
 					}
@@ -190,7 +210,8 @@
 			submit(published) {
 				this.$refs.formRef.validate(valid => {
 					if (valid) {
-						this.form.content = this.vditor.getValue()
+						this.form.description = this.descriptionVditor.getValue()
+						this.form.content = this.contentVditor.getValue()
 						this.form.published = published
 						console.log(this.form)
 						if (this.$route.params.id) {

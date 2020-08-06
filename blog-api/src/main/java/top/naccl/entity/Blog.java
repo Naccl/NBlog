@@ -22,7 +22,6 @@ public class Blog {
 	private Long id;
 	private String title;//文章标题
 	private String content;//文章正文
-	private String firstPicture;//文章首图
 	private String description;//描述
 	private String flag;//原创、转载、翻译
 	private boolean published;//发布或草稿
