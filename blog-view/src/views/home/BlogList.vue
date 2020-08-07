@@ -3,7 +3,7 @@
 		<!--content-->
 		<BlogItem :blogList="blogList"/>
 		<!--分页-->
-		<Pagination/>
+		<Pagination :getBlogList="getBlogList"/>
 	</div>
 </template>
 
@@ -14,6 +14,11 @@
 	export default {
 		name: "BlogList",
 		components: {Pagination, BlogItem},
+		methods: {
+			getBlogList(val) {
+				console.log("getBlogList" + val)
+			}
+		},
 		data() {
 			return {
 				blogList: [
@@ -33,27 +38,27 @@
 							{
 								id: 1,
 								name: 'Java',
-								color:'red'
+								color: 'red'
 							},
 							{
 								id: 2,
 								name: 'Nginx',
-								color:'blue'
+								color: 'blue'
 							},
 							{
 								id: 3,
 								name: 'Spring Boot',
-								color:'purple'
+								color: 'purple'
 							},
 							{
 								id: 4,
 								name: 'Vue',
-								color:'red'
+								color: 'red'
 							},
 							{
 								id: 5,
 								name: '卷积神经网络',
-								color:'purple'
+								color: 'purple'
 							},
 						]
 					},
@@ -73,27 +78,27 @@
 							{
 								id: 1,
 								name: 'Java',
-								color:'red'
+								color: 'red'
 							},
 							{
 								id: 2,
 								name: 'Nginx',
-								color:'blue'
+								color: 'blue'
 							},
 							{
 								id: 3,
 								name: 'Spring Boot',
-								color:'purple'
+								color: 'purple'
 							},
 							{
 								id: 4,
 								name: 'Vue',
-								color:'red'
+								color: 'red'
 							},
 							{
 								id: 5,
 								name: '卷积神经网络',
-								color:'purple'
+								color: 'purple'
 							},
 						]
 					},
@@ -113,27 +118,27 @@
 							{
 								id: 1,
 								name: 'Java',
-								color:'red'
+								color: 'red'
 							},
 							{
 								id: 2,
 								name: 'Nginx',
-								color:'blue'
+								color: 'blue'
 							},
 							{
 								id: 3,
 								name: 'Spring Boot',
-								color:'purple'
+								color: 'purple'
 							},
 							{
 								id: 4,
 								name: 'Vue',
-								color:'red'
+								color: 'red'
 							},
 							{
 								id: 5,
 								name: '卷积神经网络',
-								color:'purple'
+								color: 'purple'
 							},
 						]
 					}

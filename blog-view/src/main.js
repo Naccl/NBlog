@@ -6,10 +6,14 @@ import './assets/css/base.css'
 //semantic-ui-vue
 import SuiVue from 'semantic-ui-vue'
 import 'semantic-ui-css/semantic.min.css'
+//element-ui
+import Element from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 //moment
 import './util/dateTimeFormatUtils.js'
 
 Vue.use(SuiVue)
+Vue.use(Element)
 
 
 Vue.config.productionTip = false
