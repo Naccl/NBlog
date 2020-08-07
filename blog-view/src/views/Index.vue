@@ -4,7 +4,7 @@
 		<Nav :blogName="blogName"/>
 
 		<div class="main">
-
+			<router-view/>
 		</div>
 
 		<!--底部footer-->

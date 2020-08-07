@@ -1,17 +1,28 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Index from "@/views/Index";
+import Home from "@/views/home/Home";
 
 Vue.use(VueRouter)
 
 const routes = [
 	{
 		path: '/',
-		redirect:'/index'
+		redirect: '/index'
 	},
 	{
 		path: '/index',
 		component: Index,
+		redirect: '/home',
+		children: [
+			{
+				path: '/home',
+				component: Home,
+				meta: {
+					title: '首页'
+				}
+			}
+		]
 	},
 ]
 

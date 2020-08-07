@@ -50,7 +50,10 @@
 	export default {
 		name: "Footer",
 		props: {
-			footer: {}
+			footer: {
+				type: Object,
+				required: true
+			}
 		}
 	}
 </script>

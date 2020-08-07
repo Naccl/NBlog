@@ -24,7 +24,10 @@
 	export default {
 		name: "Nav",
 		props: {
-			blogName: ''
+			blogName: {
+				type: String,
+				required: true
+			}
 		},
 		data() {
 			return {
