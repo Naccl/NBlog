@@ -1,7 +1,7 @@
 <template>
-	<div class="ui bottom" v-if="totalPage > 1" style="text-align:center">
+	<div class="ui bottom" style="text-align:center">
 		<el-pagination @current-change="handleCurrentChange" :current-page="pageNum" :page-count="totalPage"
-		               layout="prev, pager, next" background>
+		               layout="prev, pager, next" background hide-on-single-page>
 		</el-pagination>
 	</div>
 </template>
