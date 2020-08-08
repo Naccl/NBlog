@@ -15,7 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import top.naccl.util.Result;
+import top.naccl.model.vo.Result;
 import top.naccl.entity.User;
 import top.naccl.exception.BadRequestException;
 

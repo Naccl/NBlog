@@ -19,7 +19,7 @@ import top.naccl.entity.User;
 import top.naccl.service.BlogService;
 import top.naccl.service.CategoryService;
 import top.naccl.service.TagService;
-import top.naccl.util.Result;
+import top.naccl.model.vo.Result;
 import top.naccl.util.StringUtils;
 
 import java.util.ArrayList;

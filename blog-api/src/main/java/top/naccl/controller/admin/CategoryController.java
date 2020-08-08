@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import top.naccl.entity.Category;
 import top.naccl.service.BlogService;
 import top.naccl.service.CategoryService;
-import top.naccl.util.Result;
+import top.naccl.model.vo.Result;
 import top.naccl.util.StringUtils;
 
 import java.util.Map;

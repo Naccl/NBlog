@@ -15,7 +15,7 @@ import top.naccl.entity.Blog;
 import top.naccl.entity.Comment;
 import top.naccl.service.BlogService;
 import top.naccl.service.CommentService;
-import top.naccl.util.Result;
+import top.naccl.model.vo.Result;
 import top.naccl.util.StringUtils;
 
 import java.util.List;
