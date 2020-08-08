@@ -17,7 +17,7 @@
 </template>
 
 <script>
-	import BlogList from "./BlogList";
+	import BlogList from "@/components/blogList/BlogList";
 	import Introduction from "@/components/sidebar/Introduction";
 
 	export default {

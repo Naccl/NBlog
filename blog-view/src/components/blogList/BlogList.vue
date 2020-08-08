@@ -8,8 +8,8 @@
 </template>
 
 <script>
-	import BlogItem from "@/components/BlogItem";
-	import Pagination from "@/components/Pagination";
+	import BlogItem from "@/components/blogList/BlogItem";
+	import Pagination from "@/components/blogList/Pagination";
 
 	export default {
 		name: "BlogList",
