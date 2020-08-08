@@ -23,19 +23,39 @@
         <li class="dib"><span>Symbol</span></li>
       </ul>
       
+      <a href="https://www.iconfont.cn/manage/index?manage_type=myprojects&projectId=1993836" target="_blank" class="nav-more">查看项目</a>
+      
     </div>
     <div class="tab-container">
       <div class="content unicode" style="display: block;">
           <ul class="icon_lists dib-box">
           
             <li class="dib">
-              <span class="icon iconfont">&#xe63a;</span>
+              <span class="icon ali-iconfont">&#xe706;</span>
+                <div class="name">编辑站点</div>
+                <div class="code-name">&amp;#xe706;</div>
+              </li>
+          
+            <li class="dib">
+              <span class="icon ali-iconfont">&#xe7c0;</span>
+                <div class="name">菜单管理</div>
+                <div class="code-name">&amp;#xe7c0;</div>
+              </li>
+          
+            <li class="dib">
+              <span class="icon ali-iconfont">&#xe62b;</span>
+                <div class="name">标签</div>
+                <div class="code-name">&amp;#xe62b;</div>
+              </li>
+          
+            <li class="dib">
+              <span class="icon ali-iconfont">&#xe63a;</span>
                 <div class="name">评论</div>
                 <div class="code-name">&amp;#xe63a;</div>
               </li>
           
             <li class="dib">
-              <span class="icon iconfont">&#xe6bc;</span>
+              <span class="icon ali-iconfont">&#xe6bc;</span>
                 <div class="name">dashboard</div>
                 <div class="code-name">&amp;#xe6bc;</div>
               </li>
@@ -58,19 +78,19 @@
           <h3 id="-font-face">第一步：拷贝项目下面生成的 <code>@font-face</code></h3>
 <pre><code class="language-css"
 >@font-face {
-  font-family: 'iconfont';
+  font-family: 'ali-iconfont';
   src: url('iconfont.eot');
   src: url('iconfont.eot?#iefix') format('embedded-opentype'),
       url('iconfont.woff2') format('woff2'),
       url('iconfont.woff') format('woff'),
       url('iconfont.ttf') format('truetype'),
-      url('iconfont.svg#iconfont') format('svg');
+      url('iconfont.svg#ali-iconfont') format('svg');
 }
 </code></pre>
           <h3 id="-iconfont-">第二步：定义使用 iconfont 的样式</h3>
 <pre><code class="language-css"
->.iconfont {
-  font-family: "iconfont" !important;
+>.ali-iconfont {
+  font-family: "ali-iconfont" !important;
   font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
@@ -80,10 +100,10 @@
           <h3 id="-">第三步：挑选相应图标并获取字体编码，应用于页面</h3>
 <pre>
 <code class="language-html"
->&lt;span class="iconfont"&gt;&amp;#x33;&lt;/span&gt;
+>&lt;span class="ali-iconfont"&gt;&amp;#x33;&lt;/span&gt;
 </code></pre>
           <blockquote>
-            <p>"iconfont" 是你项目下的 font-family。可以通过编辑项目查看，默认是 "iconfont"。</p>
+            <p>"ali-iconfont" 是你项目下的 font-family。可以通过编辑项目查看，默认是 "iconfont"。</p>
           </blockquote>
           </div>
       </div>
@@ -91,7 +111,34 @@
         <ul class="icon_lists dib-box">
           
           <li class="dib">
-            <span class="icon iconfont icon-pinglun"></span>
+            <span class="icon ali-iconfont icon-bianjizhandian"></span>
+            <div class="name">
+              编辑站点
+            </div>
+            <div class="code-name">.icon-bianjizhandian
+            </div>
+          </li>
+          
+          <li class="dib">
+            <span class="icon ali-iconfont icon-caidanguanli"></span>
+            <div class="name">
+              菜单管理
+            </div>
+            <div class="code-name">.icon-caidanguanli
+            </div>
+          </li>
+          
+          <li class="dib">
+            <span class="icon ali-iconfont icon-biaoqian"></span>
+            <div class="name">
+              标签
+            </div>
+            <div class="code-name">.icon-biaoqian
+            </div>
+          </li>
+          
+          <li class="dib">
+            <span class="icon ali-iconfont icon-pinglun"></span>
             <div class="name">
               评论
             </div>
@@ -100,7 +147,7 @@
           </li>
           
           <li class="dib">
-            <span class="icon iconfont icon-dashboard"></span>
+            <span class="icon ali-iconfont icon-dashboard"></span>
             <div class="name">
               dashboard
             </div>
@@ -126,16 +173,40 @@
 <pre><code class="language-html">&lt;link rel="stylesheet" href="./iconfont.css"&gt;
 </code></pre>
         <h3 id="-">第二步：挑选相应图标并获取类名，应用于页面：</h3>
-<pre><code class="language-html">&lt;span class="iconfont icon-xxx"&gt;&lt;/span&gt;
+<pre><code class="language-html">&lt;span class="ali-iconfont icon-xxx"&gt;&lt;/span&gt;
 </code></pre>
         <blockquote>
           <p>"
-            iconfont" 是你项目下的 font-family。可以通过编辑项目查看，默认是 "iconfont"。</p>
+            ali-iconfont" 是你项目下的 font-family。可以通过编辑项目查看，默认是 "iconfont"。</p>
         </blockquote>
       </div>
       </div>
       <div class="content symbol">
           <ul class="icon_lists dib-box">
+          
+            <li class="dib">
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-bianjizhandian"></use>
+                </svg>
+                <div class="name">编辑站点</div>
+                <div class="code-name">#icon-bianjizhandian</div>
+            </li>
+          
+            <li class="dib">
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-caidanguanli"></use>
+                </svg>
+                <div class="name">菜单管理</div>
+                <div class="code-name">#icon-caidanguanli</div>
+            </li>
+          
+            <li class="dib">
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-biaoqian"></use>
+                </svg>
+                <div class="name">标签</div>
+                <div class="code-name">#icon-biaoqian</div>
+            </li>
           
             <li class="dib">
                 <svg class="icon svg-icon" aria-hidden="true">

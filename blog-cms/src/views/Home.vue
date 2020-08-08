@@ -65,34 +65,46 @@
 							},
 							{
 								id: 12,
-								title: '文章列表',
+								title: '文章管理',
 								children: [],
 								path: '/blogs'
 							},
 							{
 								id: 13,
-								title: '分类列表',
+								title: '分类管理',
 								children: [],
 								path: '/categories'
 							},
 							{
 								id: 14,
-								title: '标签列表',
+								title: '标签管理',
 								children: [],
 								path: '/tags'
+							},
+							{
+								id: 15,
+								title: '评论管理',
+								children: [],
+								path: '/comments'
 							}
 						]
 					},
 					{
 						id: 2,
-						title: '评论管理',
+						title: '系统管理',
 						children: [
 							{
 								id: 21,
-								title: '评论列表',
+								title: '菜单管理',
 								children: [],
-								path: '/comments'
-							}
+								path: '/menus'
+							},
+							{
+								id: 22,
+								title: '站点管理',
+								children: [],
+								path: '/site'
+							},
 						]
 					},
 					{
@@ -110,15 +122,9 @@
 								title: '实时访客',
 								children: [],
 								path: '/latest'
-							}
-						]
-					},
-					{
-						id: 4,
-						title: '系统监控',
-						children: [
+							},
 							{
-								id: 41,
+								id: 33,
 								title: '日志',
 								children: [],
 								path: '/log'
@@ -128,22 +134,23 @@
 				],
 				iconsObj: {
 					'1': 'el-icon-menu',
-					'2': 'ali-iconfont icon-pinglun',
+					'2': 'el-icon-s-tools',
 					'3': 'el-icon-s-data',
-					'4': 'el-icon-s-tools',
 					'11': 'el-icon-edit',
 					'12': 'el-icon-s-order',
 					'13': 'el-icon-s-opportunity',
-					'14': 'el-icon-discount',
-					'21': 'el-icon-tickets',
+					'14': 'submenu ali-iconfont icon-biaoqian',
+					'15': 'submenu ali-iconfont icon-pinglun',
+					'21': 'submenu ali-iconfont icon-caidanguanli',
+					'22': 'submenu ali-iconfont icon-bianjizhandian',
 					'31': 'el-icon-s-marketing',
 					'32': 'el-icon-view',
-					'41': 'el-icon-document',
+					'33': 'el-icon-document',
 				},
 				//是否折叠
 				isCollapse: false,
 				//默认打开的菜单
-				defaultOpeneds: ['1', '2', '3', '4']
+				defaultOpeneds: ['1', '2', '3']
 			}
 		},
 		methods: {
@@ -199,6 +206,14 @@
 	.iconfont {
 		margin-right: 20px;
 		font-size: 20px;
+	}
+
+	.submenu.ali-iconfont {
+		vertical-align: middle;
+		margin-right: 5px;
+		width: 24px;
+		text-align: center;
+		display: inline-block;
 	}
 
 	.toggle-button {

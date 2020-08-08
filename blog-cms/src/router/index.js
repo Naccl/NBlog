@@ -8,6 +8,7 @@ import BlogList from "@/views/blog/BlogList";
 import CategoryList from "@/views/category/CategoryList";
 import TagList from "@/views/tag/TagList";
 import CommentList from "@/views/comment/CommentList";
+import Site from "@/views/site/Site";
 
 Vue.use(VueRouter)
 
@@ -53,28 +54,35 @@ const routes = [
 				path: '/blogs',
 				component: BlogList,
 				meta: {
-					title: '文章列表'
+					title: '文章管理'
 				}
 			},
 			{
 				path: '/categories',
 				component: CategoryList,
 				meta: {
-					title: '分类列表'
+					title: '分类管理'
 				}
 			},
 			{
 				path: '/tags',
 				component: TagList,
 				meta: {
-					title: '标签列表'
+					title: '标签管理'
 				}
 			},
 			{
 				path: '/comments',
 				component: CommentList,
 				meta: {
-					title: '评论列表'
+					title: '评论管理'
+				}
+			},
+			{
+				path: '/site',
+				component: Site,
+				meta: {
+					title: '站点管理'
 				}
 			},
 		]
