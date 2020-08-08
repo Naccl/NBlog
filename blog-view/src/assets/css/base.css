@@ -179,6 +179,7 @@ footer {
 }
 
 .m-description {
+    width: 100%;
     text-align: justify;
 }
 

@@ -27,7 +27,7 @@
 						</div>
 					</div>
 					<a :href="item.id" class="ui orange large ribbon label">
-						<i class="small folder open icon"></i><span>{{ item.category.name }}</span>
+						<i class="small folder open icon"></i><span class="m-text-500">{{ item.category.name }}</span>
 					</a>
 					<!--文章描述-->
 					<div class="m-padded-tb-small m-description" v-html="item.description"></div>
@@ -63,6 +63,7 @@
 
 <style scoped>
 	.ribbon.label {
+		max-height: 30px;
 		margin-bottom: 15px !important;
 		left: -46px !important;
 	}

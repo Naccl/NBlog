@@ -18,7 +18,7 @@
 	import {getHitokoto} from '@/network/index'
 
 	export default {
-		name: "Home",
+		name: "Index",
 		components: {Nav, Footer},
 		data() {
 			return {
@@ -116,7 +116,7 @@
 <style scoped>
 	.site {
 		display: flex;
-		min-height: 100vh;/* 没有元素时，也把页面撑开至100% */
+		min-height: 100vh; /* 没有元素时，也把页面撑开至100% */
 		flex-direction: column;
 	}
 
