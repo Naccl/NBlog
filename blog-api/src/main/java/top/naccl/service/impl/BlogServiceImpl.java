@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.naccl.entity.Blog;
 import top.naccl.mapper.BlogMapper;
+import top.naccl.model.vo.BlogInfo;
 import top.naccl.service.BlogService;
 
 import java.util.List;
@@ -27,6 +28,11 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public List<Blog> getIdAndTitleList() {
 		return blogMapper.getIdAndTitleList();
+	}
+
+	@Override
+	public List<BlogInfo> getBlogInfoListByIsPublished() {
+		return blogMapper.getBlogInfoListByIsPublished();
 	}
 
 	@Transactional
@@ -74,6 +80,11 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public int updateBlog(Blog blog) {
 		return blogMapper.updateBlog(blog);
+	}
+
+	@Override
+	public int countBlog() {
+		return blogMapper.countBlog();
 	}
 
 	@Override

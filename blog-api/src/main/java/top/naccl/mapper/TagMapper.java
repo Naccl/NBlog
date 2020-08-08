@@ -16,6 +16,8 @@ import java.util.List;
 public interface TagMapper {
 	List<Tag> getTagList();
 
+	List<Tag> getTagListByBlogId(Long blogId);
+
 	int saveTag(Tag tag);
 
 	Tag getTagById(Long id);

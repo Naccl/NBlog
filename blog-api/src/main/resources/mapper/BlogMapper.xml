@@ -44,6 +44,25 @@
         <result property="title" column="title"/>
     </resultMap>
 
+    <resultMap id="blogInfo" type="top.naccl.model.vo.BlogInfo">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="createTime" column="create_time"/>
+        <result property="views" column="views"/>
+        <result property="words" column="words"/>
+        <result property="readTime" column="read_time"/>
+        <association property="category" javaType="top.naccl.entity.Category">
+            <id property="id" column="category_id"/>
+            <result property="name" column="category_name"/>
+        </association>
+        <collection property="tags" javaType="top.naccl.entity.Tag">
+            <id property="id" column="tag_id"/>
+            <result property="name" column="tag_name"/>
+            <result property="color" column="color"/>
+        </collection>
+    </resultMap>
+
     <!--按标题和分类查询博客List-->
     <select id="getListByTitleOrCategoryId" resultMap="blog">
         <bind name="titlePattern" value="'%' + title + '%'"/>
@@ -63,6 +82,13 @@
     <!--查询所有博客id和title-->
     <select id="getIdAndTitleList" resultMap="blogIdAndTitle">
         select id, title from blog order by create_time desc
+    </select>
+
+    <!--查询公开博客的简要信息-->
+    <select id="getBlogInfoListByIsPublished" resultMap="blogInfo">
+        select b.id, b.title, b.description, b.create_time, b.views, b.words, b.read_time, c.id as category_id, c.category_name
+        from blog as b left join category as c on b.category_id=c.id
+        where b.is_published=true
     </select>
 
     <!--按id删除博客-->
@@ -116,6 +142,11 @@
         read_time=#{readTime}, category_id=#{category.id}
         where id=#{id}
     </update>
+
+    <!--查询博客总数-->
+    <select id="countBlog" resultType="java.lang.Integer">
+        select count(*) from blog
+    </select>
 
     <!--按分类id查询博客数量-->
     <select id="countBlogByCategoryId" resultType="java.lang.Integer">

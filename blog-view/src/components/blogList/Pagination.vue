@@ -13,12 +13,15 @@
 			getBlogList: {
 				type: Function,
 				required: true
+			},
+			totalPage: {
+				type: Number,
+				required: true
 			}
 		},
 		data() {
 			return {
-				pageNum: 1,
-				totalPage: 10
+				pageNum: 1
 			}
 		},
 		methods: {

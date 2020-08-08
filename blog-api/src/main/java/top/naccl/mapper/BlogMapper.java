@@ -3,6 +3,7 @@ package top.naccl.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import top.naccl.entity.Blog;
+import top.naccl.model.vo.BlogInfo;
 
 import java.util.List;
 
@@ -17,6 +18,8 @@ public interface BlogMapper {
 	List<Blog> getListByTitleOrCategoryId(String title, Integer CategoryId);
 
 	List<Blog> getIdAndTitleList();
+
+	List<BlogInfo> getBlogInfoListByIsPublished();
 
 	int deleteBlogById(Long id);
 
@@ -33,6 +36,8 @@ public interface BlogMapper {
 	Blog getBlogById(Long id);
 
 	int updateBlog(Blog blog);
+
+	int countBlog();
 
 	int countBlogByCategoryId(Long categoryId);
 

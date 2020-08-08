@@ -13,7 +13,7 @@
 					<div class="row m-padded-tb-small">
 						<div class="ui horizontal link list m-center">
 							<div class="item m-datetime">
-								<i class="small calendar icon"></i><span>{{ item.date }}</span>
+								<i class="small calendar icon"></i><span>{{ item.createTime | dateFormat('YYYY-MM-DD')}}</span>
 							</div>
 							<div class="item m-views">
 								<i class="small eye icon"></i><span>{{ item.views }}</span>
