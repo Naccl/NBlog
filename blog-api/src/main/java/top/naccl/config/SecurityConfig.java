@@ -44,8 +44,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.cors().and()
 				//基于Token，不创建会话
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-				//任何经过JWT验证的请求都通过
-				.authorizeRequests().anyRequest().authenticated().and()
+				.authorizeRequests()
+				//任何 /admin 路径下的请求都需要经过JWT验证
+				.antMatchers("/admin/**").authenticated().and()
 				//自定义JWT过滤器
 				.addFilterBefore(new JwtLoginFilter("/admin/login",authenticationManager()), UsernamePasswordAuthenticationFilter.class)
 				.addFilterBefore(new JwtFilter(),UsernamePasswordAuthenticationFilter.class)
