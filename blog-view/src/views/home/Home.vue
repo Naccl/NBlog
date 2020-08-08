@@ -6,10 +6,11 @@
 				<div class="twelve wide column">
 					<BlogList/>
 				</div>
-
 				<!--侧边栏-->
-<!--		<div class="four wide column"></div>-->
-
+				<div class="four wide column">
+					<!--个人简介-->
+					<Introduction/>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -17,9 +18,11 @@
 
 <script>
 	import BlogList from "./BlogList";
+	import Introduction from "@/components/sidebar/Introduction";
+
 	export default {
 		name: "Home",
-		components: {BlogList}
+		components: {Introduction, BlogList},
 	}
 </script>
 

@@ -50,6 +50,10 @@ footer {
     margin-right: 0.5em !important;
 }
 
+.m-margin-top {
+    margin-top: 1em !important;
+}
+
 .m-margin-bottom-big {
     margin-bottom: 3em !important;
 }
