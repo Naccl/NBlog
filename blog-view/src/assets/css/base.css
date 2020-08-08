@@ -11,6 +11,12 @@ body,
     background-repeat: no-repeat;
 }
 
+::selection {
+    color:#ffffff !important;
+    background-color:#383838 !important;
+    text-shadow:none !important;
+}
+
 body::-webkit-scrollbar {
     width: 8px;
     height: 5px;
@@ -122,7 +128,7 @@ footer {
     margin: auto !important;
 }
 
-.m-text-invert {
+.m-text-cover {
     background: #d8eefa;
     color: transparent;
 }
