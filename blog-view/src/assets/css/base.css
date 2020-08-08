@@ -122,6 +122,22 @@ footer {
     margin: auto !important;
 }
 
+.m-text-invert {
+    background: #d8eefa;
+    color: transparent;
+}
+
+.m-text-heimu {
+    background-color: #252525;
+    color: #252525;
+    text-shadow: none;
+    transition: color 0.3s;
+}
+
+.m-text-heimu:active, .m-text-heimu:hover {
+    color: #fff
+}
+
 .m-text-thin {
     font-weight: 300 !important;
 }

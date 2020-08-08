@@ -32,7 +32,7 @@
 					<!--文章描述-->
 					<div class="m-padded-tb-small m-description" v-html="item.description"></div>
 					<!--阅读全文按钮-->
-					<div class="row m-padded-tb-small">
+					<div class="row m-padded-tb-small m-margin-top">
 						<a :href="item.id" class="color-btn">阅读全文</a>
 					</div>
 					<!--横线-->

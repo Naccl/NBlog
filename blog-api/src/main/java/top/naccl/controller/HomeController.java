@@ -34,11 +34,7 @@ public class HomeController {
 		try {
 			String orderBy = "create_time desc";
 			PageHelper.startPage(pageNum, 5, orderBy);
-			List<BlogInfo> blogs = blogService.getBlogInfoListByIsPublished();
-			for (BlogInfo b : blogs) {
-				b.setTags(tagService.getTagListByBlogId(b.getId()));
-			}
-			PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogs);
+			PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogService.getBlogInfoListByIsPublished());
 			PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(),pageInfo.getList());
 			return Result.ok("请求成功", pageResult);
 		} catch (Exception e) {

@@ -7,6 +7,8 @@ import top.naccl.entity.Blog;
 import top.naccl.mapper.BlogMapper;
 import top.naccl.model.vo.BlogInfo;
 import top.naccl.service.BlogService;
+import top.naccl.service.TagService;
+import top.naccl.util.markdown.MarkdownUtils;
 
 import java.util.List;
 
@@ -19,6 +21,8 @@ import java.util.List;
 public class BlogServiceImpl implements BlogService {
 	@Autowired
 	BlogMapper blogMapper;
+	@Autowired
+	TagService tagService;
 
 	@Override
 	public List<Blog> getListByTitleOrCategoryId(String title, Integer CategoryId) {
@@ -32,7 +36,12 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	public List<BlogInfo> getBlogInfoListByIsPublished() {
-		return blogMapper.getBlogInfoListByIsPublished();
+		List<BlogInfo> blogInfos = blogMapper.getBlogInfoListByIsPublished();
+		for (BlogInfo blogInfo : blogInfos) {
+			blogInfo.setDescription(MarkdownUtils.markdownToHtmlExtensions(blogInfo.getDescription()));
+			blogInfo.setTags(tagService.getTagListByBlogId(blogInfo.getId()));
+		}
+		return blogInfos;
 	}
 
 	@Transactional
