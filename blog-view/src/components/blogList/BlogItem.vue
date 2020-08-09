@@ -26,6 +26,7 @@
 							</div>
 						</div>
 					</div>
+					<!--分类-->
 					<a :href="item.id" class="ui orange large ribbon label">
 						<i class="small folder open icon"></i><span class="m-text-500">{{ item.category.name }}</span>
 					</a>
@@ -66,6 +67,8 @@
 		max-height: 30px;
 		margin-bottom: 15px !important;
 		left: -46px !important;
+		padding-left: 1rem !important;
+		padding-right: 1rem !important;
 	}
 
 	.m-datetime {

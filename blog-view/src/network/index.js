@@ -6,3 +6,10 @@ export function getHitokoto() {
 		method: 'GET'
 	})
 }
+
+export function getSite() {
+	return axios({
+		url: 'site',
+		method: 'GET'
+	})
+}

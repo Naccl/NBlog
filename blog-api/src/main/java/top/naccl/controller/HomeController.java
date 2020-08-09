@@ -13,9 +13,6 @@ import top.naccl.service.BlogService;
 import top.naccl.model.vo.Result;
 import top.naccl.service.TagService;
 
-import java.util.List;
-
-
 /**
  * @Description: 主页
  * @Author: Naccl
@@ -35,7 +32,7 @@ public class HomeController {
 			String orderBy = "create_time desc";
 			PageHelper.startPage(pageNum, 5, orderBy);
 			PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogService.getBlogInfoListByIsPublished());
-			PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(),pageInfo.getList());
+			PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
 			return Result.ok("请求成功", pageResult);
 		} catch (Exception e) {
 			e.printStackTrace();

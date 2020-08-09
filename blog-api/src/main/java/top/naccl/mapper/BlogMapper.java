@@ -19,6 +19,8 @@ public interface BlogMapper {
 
 	List<Blog> getIdAndTitleList();
 
+	List<Blog> getIdAndTitleListByIsPublishedAndIsRecommend();
+
 	List<BlogInfo> getBlogInfoListByIsPublished();
 
 	int deleteBlogById(Long id);

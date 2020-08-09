@@ -35,6 +35,11 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
+	public List<Blog> getIdAndTitleListByIsPublishedAndIsRecommend() {
+		return blogMapper.getIdAndTitleListByIsPublishedAndIsRecommend();
+	}
+
+	@Override
 	public List<BlogInfo> getBlogInfoListByIsPublished() {
 		List<BlogInfo> blogInfos = blogMapper.getBlogInfoListByIsPublished();
 		for (BlogInfo blogInfo : blogInfos) {

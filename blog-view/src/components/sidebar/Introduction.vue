@@ -53,7 +53,7 @@
 				</div>
 				<div>
 					<el-collapse accordion>
-						<el-collapse-item :title="item.title" :name="index" v-for="(item,index) in introduction.favorite" :key="index">
+						<el-collapse-item :title="item.title" :name="index" v-for="(item,index) in introduction.favorites" :key="index">
 							<div>{{ item.content }}</div>
 						</el-collapse-item>
 					</el-collapse>
@@ -64,38 +64,17 @@
 </template>
 
 <script>
+	import {mapState} from 'vuex'
+
 	export default {
 		name: "Introduction",
-		data(){
-			return{
-				introduction: {
-					avatar: 'img/avatar.jpg',
-					name: 'Naccl',
-					rollText: ['云鹤当归天，天不迎我妙木仙；', '游龙当归海，海不迎我自来也。'],
-					github: 'https://github.com/Naccl',
-					qq: 'http://sighttp.qq.com/authd?IDKEY=',
-					bilibili: 'https://space.bilibili.com/',
-					netease: 'https://music.163.com/#/user/home?id=',
-					email: 'mailto:admin@naccl.top',
-					favorite: [
-						{
-							title: '最喜欢的动漫',
-							content: '一段文本一段文本一段文本一段文本一段文本'
-						},
-						{
-							title: '最喜欢我的女孩子们',
-							content: '一段文本一段文本一段文本一段文本一段文本'
-						},
-						{
-							title: '最喜欢玩的游戏',
-							content: '一段文本一段文本一段文本一段文本一段文本'
-						},
-					]
-				}
-			}
+		computed: {
+			...mapState(['introduction'])
 		},
-		mounted() {
-			this.rollText()
+		watch: {
+			'introduction.rollText'() {
+				this.rollText()
+			}
 		},
 		methods: {
 			rollText() {
@@ -131,6 +110,7 @@
 					let t = o[c.skillI]
 					c.step ? c.step-- : (c.step = g, c.prefixP < l.length ? (c.prefixP >= 0 && (c.text += l[c.prefixP]), c.prefixP++) : "forward" === c.direction ? c.skillP < t.length ? (c.text += t[c.skillP], c.skillP++) : c.delay ? c.delay-- : (c.direction = "backward", c.delay = a) : c.skillP > 0 ? (c.text = c.text.slice(0, -1), c.skillP--) : (c.skillI = (c.skillI + 1) % o.length, c.direction = "forward")), r.textContent = c.text, r.appendChild(n(c.prefixP < l.length ? Math.min(s, s + c.prefixP) : Math.min(s, t.length - c.skillP))), setTimeout(i, d)
 				}
+
 				i()
 			}
 		}

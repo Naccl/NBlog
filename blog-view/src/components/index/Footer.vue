@@ -5,9 +5,9 @@
 
 				<div class="three wide column">
 					<div class="ui link list">
-						<h4 class="ui inverted header m-text-thin m-text-spaced">手机看本站</h4>
+						<h4 class="ui inverted header m-text-thin m-text-spaced">{{ siteInfo.footerImgTitle }}</h4>
 						<div class="item">
-							<img :src="footer.mobileQRSrc" class="ui rounded image" alt="" style="width: 100px">
+							<img :src="siteInfo.footerImgUrl" class="ui rounded image" alt="" style="width: 100px">
 						</div>
 					</div>
 				</div>
@@ -15,28 +15,28 @@
 				<div class="six wide column">
 					<h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
 					<div class="ui inverted link list">
-						<a :href="item.href" target="_blank" v-for="(item,index) in footer.newBlogList" :key="index" class="item m-text-thin m-padded-tb-small">{{ item.title }}</a>
+						<a :href="item.id" target="_blank" v-for="item in newBlogList" :key="item.id" class="item m-text-thin m-padded-tb-small">{{ item.title }}</a>
 					</div>
 				</div>
 
 				<div class="seven wide column">
-					<p id="hitokotoText" class="m-text-thin m-text-spaced m-opacity-mini">{{ footer.hitokoto.hitokoto }}</p>
-					<p id="hitokotoFrom" class="m-text-thin m-text-spaced m-opacity-mini" style="float: right" v-text="footer.hitokoto.from?'——《'+footer.hitokoto.from+'》':''"></p>
+					<p id="hitokotoText" class="m-text-thin m-text-spaced m-opacity-mini">{{ hitokoto.hitokoto }}</p>
+					<p id="hitokotoFrom" class="m-text-thin m-text-spaced m-opacity-mini" style="float: right" v-text="hitokoto.from?'——《'+hitokoto.from+'》':''"></p>
 				</div>
 			</div>
 
 			<div class="ui inverted section divider"></div>
 
 			<p class="m-text-thin m-text-spaced m-opacity-tiny">
-				<span style="margin-right: 10px">{{ footer.copyright.time }}</span>
-				<a href="/" target="_blank" style="color:#ffe500">{{ footer.copyright.title }}</a>
-				<span style="margin: 0 15px">|</span>
-				<img src="~assets/img/beian.png" alt="" class="beian">
-				<a rel="external nofollow noopener" href="http://www.beian.miit.gov.cn/" target="_blank" style="color:#ffe500">{{ footer.copyright.beianId }}</a>
+				<span style="margin-right: 10px" v-if="siteInfo.copyright">{{ siteInfo.copyright.title }}</span>
+				<a href="/" style="color:#ffe500" v-if="siteInfo.copyright">{{ siteInfo.copyright.siteName }}</a>
+				<span style="margin: 0 15px" v-if="siteInfo.copyright && siteInfo.beian">|</span>
+				<img src="img/beian.png" alt="" class="beian" v-if="siteInfo.beian">
+				<a rel="external nofollow noopener" href="http://www.beian.miit.gov.cn/" target="_blank" style="color:#ffe500">{{ siteInfo.beian }}</a>
 			</p>
 
-			<div class="github-badge" v-for="(item,index) in footer.badges" :key="index">
-				<a rel="external nofollow" :href="item.href" target="_blank" :title="item.title">
+			<div class="github-badge" v-for="(item,index) in badges" :key="index">
+				<a rel="external nofollow" :href="item.url" target="_blank" :title="item.title">
 					<span class="badge-subject">{{ item.subject }}</span>
 					<span class="badge-value" :class="'bg-'+item.color">{{ item.value }}</span>
 				</a>
@@ -50,7 +50,19 @@
 	export default {
 		name: "Footer",
 		props: {
-			footer: {
+			siteInfo: {
+				type: Object,
+				required: true
+			},
+			badges: {
+				type: Array,
+				required: true
+			},
+			newBlogList: {
+				type: Array,
+				required: true
+			},
+			hitokoto: {
 				type: Object,
 				required: true
 			}

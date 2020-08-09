@@ -35,7 +35,6 @@
 		},
 		methods: {
 			getBlogList(pageNum) {
-				console.log(pageNum)
 				getBlogList(pageNum).then(res => {
 					console.log(res)
 					if (res.code === 200) {

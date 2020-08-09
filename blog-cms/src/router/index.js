@@ -8,7 +8,7 @@ import BlogList from "@/views/blog/BlogList";
 import CategoryList from "@/views/category/CategoryList";
 import TagList from "@/views/tag/TagList";
 import CommentList from "@/views/comment/CommentList";
-import Site from "@/views/site/Site";
+import SiteSetting from "@/views/site/SiteSetting";
 
 Vue.use(VueRouter)
 
@@ -79,8 +79,8 @@ const routes = [
 				}
 			},
 			{
-				path: '/site',
-				component: Site,
+				path: '/siteSettings',
+				component: SiteSetting,
 				meta: {
 					title: '站点管理'
 				}

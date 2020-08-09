@@ -84,6 +84,13 @@
         select id, title from blog order by create_time desc
     </select>
 
+    <!--查询公开且推荐-->
+    <select id="getIdAndTitleListByIsPublishedAndIsRecommend" resultMap="blogIdAndTitle">
+        select id, title from blog
+        where is_published=true and is_recommend=true
+        order by create_time desc
+    </select>
+
     <!--查询公开博客的简要信息-->
     <select id="getBlogInfoListByIsPublished" resultMap="blogInfo">
         select b.id, b.title, b.description, b.create_time, b.views, b.words, b.read_time, c.id as category_id, c.category_name

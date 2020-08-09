@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 import Index from "@/views/Index";
 import Home from "@/views/home/Home";
 
@@ -35,7 +36,11 @@ const router = new VueRouter({
 //挂载路由守卫
 router.beforeEach((to, from, next) => {
 	if (to.meta.title) {
-		document.title = to.meta.title + ' | Naccl\'s Blog'
+		if (store.state.webTitleSuffix !== '') {
+			document.title = to.meta.title + ' | ' + store.state.webTitleSuffix
+		} else {
+			document.title = to.meta.title
+		}
 	}
 	next()
 })

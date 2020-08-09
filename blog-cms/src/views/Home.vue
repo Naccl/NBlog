@@ -103,7 +103,7 @@
 								id: 22,
 								title: '站点管理',
 								children: [],
-								path: '/site'
+								path: '/siteSettings'
 							},
 						]
 					},
