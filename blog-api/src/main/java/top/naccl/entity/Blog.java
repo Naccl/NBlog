@@ -24,11 +24,12 @@ public class Blog {
 	private String content;//文章正文
 	private String description;//描述
 	private String flag;//原创、转载、翻译
-	private boolean published;//发布或草稿
-	private boolean recommend;//推荐开关
-	private boolean appreciation;//赞赏开关
-	private boolean shareStatement;//版权声明开关
-	private boolean commentEnabled;//评论开关
+	private Boolean published;//发布或草稿
+	private Boolean recommend;//推荐开关
+	private Boolean appreciation;//赞赏开关
+	private Boolean shareStatement;//版权声明开关
+	private Boolean commentEnabled;//评论开关
+	private Boolean top;//是否置顶
 	private Date createTime;//创建时间
 	private Date updateTime;//更新时间
 	private Integer views;//浏览次数

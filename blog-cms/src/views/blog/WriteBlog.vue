@@ -61,6 +61,10 @@
 					<el-switch v-model="form.commentEnabled" active-text="评论"></el-switch>
 				</el-form-item>
 
+				<el-form-item>
+					<el-switch v-model="form.top" active-text="置顶"></el-switch>
+				</el-form-item>
+
 				<el-form-item style="text-align: right;">
 					<el-button type="info" @click="submit(false)">保存草稿</el-button>
 					<el-button type="primary" @click="submit(true)">发布文章</el-button>
@@ -102,6 +106,7 @@
 					appreciation: false,
 					recommend: false,
 					commentEnabled: false,
+					top: false,
 					published: false
 				},
 				formRules: {

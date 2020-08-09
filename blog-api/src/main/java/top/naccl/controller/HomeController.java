@@ -29,8 +29,9 @@ public class HomeController {
 	@GetMapping("/blogs")
 	public Result blogs(@RequestParam(defaultValue = "1") Integer pageNum) {
 		try {
-			String orderBy = "create_time desc";
-			PageHelper.startPage(pageNum, 5, orderBy);
+			int pageSize = 5;//每页显示5条
+			String orderBy = "is_top desc, create_time desc";
+			PageHelper.startPage(pageNum, pageSize, orderBy);
 			PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogService.getBlogInfoListByIsPublished());
 			PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
 			return Result.ok("请求成功", pageResult);

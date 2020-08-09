@@ -20,6 +20,11 @@
 				<el-table-column label="序号" type="index" width="50"></el-table-column>
 				<el-table-column label="标题" prop="title"></el-table-column>
 				<el-table-column label="分类" prop="category.name" width="150"></el-table-column>
+				<el-table-column label="置顶" width="80">
+					<template v-slot="scope">
+						<el-switch v-model="scope.row.top" @change="blogTopChanged(scope.row)"></el-switch>
+					</template>
+				</el-table-column>
 				<el-table-column label="推荐" width="80">
 					<template v-slot="scope">
 						<el-switch v-model="scope.row.recommend" @change="blogRecommendChanged(scope.row)"></el-switch>
@@ -57,7 +62,7 @@
 
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
-	import {getDataByQuery, deleteBlogById, updateRecommend, updatePublished} from '@/network/blog'
+	import {getDataByQuery, deleteBlogById, updateTop, updateRecommend, updatePublished} from '@/network/blog'
 
 	export default {
 		name: "BlogList",
@@ -101,6 +106,20 @@
 				this.queryInfo.pageNum = 1
 				this.queryInfo.pageSize = 10
 				this.getData()
+			},
+			//切换博客置顶状态
+			blogTopChanged(row) {
+				updateTop(row.id, row.top)
+				.then(res => {
+					console.log(res)
+					if (res.code === 200) {
+						this.msgSuccess(res.msg);
+					} else {
+						this.msgError(res.msg)
+					}
+				}).catch(() => {
+					this.msgError("请求失败")
+				})
 			},
 			//切换博客推荐状态
 			blogRecommendChanged(row) {
@@ -160,7 +179,7 @@
 </script>
 
 <style scoped>
-	.el-button+span {
+	.el-button + span {
 		margin-left: 10px;
 	}
 </style>

@@ -37,6 +37,17 @@ export function saveBlog(blog) {
 	})
 }
 
+export function updateTop(id, top) {
+	return axios({
+		url: 'blog/top',
+		method: 'PUT',
+		params: {
+			id,
+			top
+		}
+	})
+}
+
 export function updateRecommend(id, recommend) {
 	return axios({
 		url: 'blog/recommend',

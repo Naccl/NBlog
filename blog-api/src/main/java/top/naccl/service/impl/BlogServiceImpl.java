@@ -85,6 +85,12 @@ public class BlogServiceImpl implements BlogService {
 		return blogMapper.updateBlogPublishedById(BlogId, published);
 	}
 
+	@Transactional
+	@Override
+	public int updateBlogTopById(Long blogId, Boolean top) {
+		return blogMapper.updateBlogTopById(blogId, top);
+	}
+
 	@Override
 	public Blog getBlogById(Long id) {
 		return blogMapper.getBlogById(id);

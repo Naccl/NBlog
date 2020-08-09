@@ -26,6 +26,8 @@ public interface BlogService {
 
 	int updateBlogPublishedById(Long BlogId, Boolean published);
 
+	int updateBlogTopById(Long blogId, Boolean top);
+
 	Blog getBlogById(Long id);
 
 	int updateBlog(Blog blog);

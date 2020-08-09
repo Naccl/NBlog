@@ -131,6 +131,28 @@ public class BlogController {
 	}
 
 	/**
+	 * 更新博客置顶状态
+	 *
+	 * @param id  博客id
+	 * @param top 是否置顶
+	 * @return
+	 */
+	@PutMapping("/blog/top")
+	public Result updateTop(@RequestParam Long id, @RequestParam Boolean top) {
+		try {
+			int r = blogService.updateBlogTopById(id, top);
+			if (r == 1) {
+				return Result.ok("操作成功");
+			} else {
+				return Result.error("操作失败");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Result.error();
+		}
+	}
+
+	/**
 	 * 更新博客推荐状态
 	 *
 	 * @param id        博客id

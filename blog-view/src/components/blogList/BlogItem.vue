@@ -1,6 +1,9 @@
 <template>
 	<div>
 		<div class="ui padded segment m-padded-tb-large m-margin-bottom-big m-box" v-for="item in blogList" :key="item.id">
+			<a class="ui large red right corner label" v-if="item.top">
+				<i class="arrow alternate circle up icon"></i>
+			</a>
 			<div class="ui middle aligned mobile reversed stackable">
 				<div class="ui grid m-margin-lr">
 					<!--标题-->

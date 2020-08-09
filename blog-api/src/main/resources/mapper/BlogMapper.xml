@@ -13,6 +13,7 @@
         <result property="appreciation" column="is_appreciation"/>
         <result property="shareStatement" column="is_share_statement"/>
         <result property="commentEnabled" column="is_comment_enabled"/>
+        <result property="top" column="is_top"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <result property="views" column="views"/>
@@ -52,6 +53,7 @@
         <result property="views" column="views"/>
         <result property="words" column="words"/>
         <result property="readTime" column="read_time"/>
+        <result property="top" column="is_top"/>
         <association property="category" javaType="top.naccl.entity.Category">
             <id property="id" column="category_id"/>
             <result property="name" column="category_name"/>
@@ -66,7 +68,7 @@
     <!--按标题和分类查询博客List-->
     <select id="getListByTitleOrCategoryId" resultMap="blog">
         <bind name="titlePattern" value="'%' + title + '%'"/>
-        select b.id, b.title, b.is_recommend, b.is_published, b.create_time, b.update_time,
+        select b.id, b.title, b.is_recommend, b.is_published, b.is_top, b.create_time, b.update_time,
                 c.id as category_id, c.category_name
         from blog as b left join category as c on b.category_id=c.id
         <where>
@@ -93,7 +95,7 @@
 
     <!--查询公开博客的简要信息-->
     <select id="getBlogInfoListByIsPublished" resultMap="blogInfo">
-        select b.id, b.title, b.description, b.create_time, b.views, b.words, b.read_time, c.id as category_id, c.category_name
+        select b.id, b.title, b.description, b.is_top, b.create_time, b.views, b.words, b.read_time, c.id as category_id, c.category_name
         from blog as b left join category as c on b.category_id=c.id
         where b.is_published=true
     </select>
@@ -116,9 +118,9 @@
     <!--添加博客-->
     <insert id="saveBlog" parameterType="top.naccl.entity.Blog" useGeneratedKeys="true" keyProperty="id">
         insert into blog (title, content, description, flag, is_published, is_recommend, is_appreciation, is_share_statement,
-        is_comment_enabled, create_time, update_time, views, words, read_time, category_id, user_id)
+        is_comment_enabled, is_top, create_time, update_time, views, words, read_time, category_id, user_id)
         values (#{title}, #{content}, #{description}, #{flag}, #{published}, #{recommend}, #{appreciation}, #{shareStatement},
-        #{commentEnabled}, #{createTime}, #{updateTime}, #{views}, #{words}, #{readTime}, #{category.id}, #{user.id})
+        #{commentEnabled}, #{top}, #{createTime}, #{updateTime}, #{views}, #{words}, #{readTime}, #{category.id}, #{user.id})
     </insert>
 
     <!--更新博客推荐状态-->
@@ -130,11 +132,16 @@
     <update id="updateBlogPublishedById">
         update blog set is_published=#{published} where id=#{blogId}
     </update>
-    
+
+    <!--更新博客置顶状态-->
+    <update id="updateBlogTopById">
+        update blog set is_top=#{top} where id=#{blogId}
+    </update>
+
     <!--按id查询博客-->
     <select id="getBlogById" resultMap="blog">
         select b.id, b.title, b.content, b.description, b.flag, b.is_recommend, b.is_published, b.is_appreciation,
-        b.is_share_statement, b.is_comment_enabled, b.create_time, b.update_time, b.views, b.words, b.read_time,
+        b.is_share_statement, b.is_comment_enabled, b.is_top, b.create_time, b.update_time, b.views, b.words, b.read_time,
         c.id as category_id, c.category_name,
         bt.tag_id as tag_id, t.tag_name as tag_name, t.color
         from (((blog as b left join category as c on b.category_id=c.id) left join blog_tag as bt on b.id=bt.blog_id) left join tag as t on bt.tag_id=t.id)
@@ -145,8 +152,8 @@
     <update id="updateBlog">
         update blog set title=#{title}, content=#{content}, description=#{description}, flag=#{flag},
         is_recommend=#{recommend}, is_published=#{published}, is_appreciation=#{appreciation}, is_share_statement=#{shareStatement},
-        is_comment_enabled=#{commentEnabled}, create_time=#{createTime}, update_time=#{updateTime}, views=#{views}, words=#{words},
-        read_time=#{readTime}, category_id=#{category.id}
+        is_comment_enabled=#{commentEnabled}, is_top=#{top}, create_time=#{createTime}, update_time=#{updateTime}, views=#{views},
+        words=#{words}, read_time=#{readTime}, category_id=#{category.id}
         where id=#{id}
     </update>
 

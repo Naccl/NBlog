@@ -27,10 +27,10 @@ public class Comment {
 	private String avatar;//头像(图片路径)
 	private Date createTime;//评论时间
 	private String ip;//评论者ip地址
-	private boolean published;//公开或回收站
-	private boolean adminComment;//博主回复
+	private Boolean published;//公开或回收站
+	private Boolean adminComment;//博主回复
 	private Integer page;//0普通文章，1关于我页面
-	private boolean notice;//接收邮件提醒
+	private Boolean notice;//接收邮件提醒
 	private Long parentCommentId;//父评论id
 
 	private BlogIdAndTitle blog;//所属的文章
