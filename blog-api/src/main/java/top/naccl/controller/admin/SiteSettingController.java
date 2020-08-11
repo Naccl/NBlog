@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +27,11 @@ public class SiteSettingController {
 	@Autowired
 	SiteSettingService siteSettingService;
 
+	/**
+	 * 获取所有站点配置信息
+	 *
+	 * @return
+	 */
 	@GetMapping("/siteSettings")
 	public Result siteSettings() {
 		try {
@@ -38,12 +43,17 @@ public class SiteSettingController {
 		}
 	}
 
-	@PutMapping("/siteSettings")
+	/**
+	 * 修改、删除(部分配置可为空，但不可删除)、添加(只能添加部分)站点配置
+	 *
+	 * @param map 包含所有站点信息更新后的数据 map => {settings=[更新后的所有配置List], deleteIds=[要删除的配置id List]}
+	 * @return
+	 */
+	@PostMapping("/siteSettings")
 	public Result updateAll(@RequestBody Map<String, Object> map) {
 		try {
 			List<LinkedHashMap> siteSettings = (List<LinkedHashMap>) map.get("settings");
 			List<Integer> deleteIds = (List<Integer>) map.get("deleteIds");
-			System.out.println(deleteIds);
 			for (Integer id : deleteIds) {//删除
 				int r = siteSettingService.deleteSiteSettingById(id);
 				if (r != 1) {

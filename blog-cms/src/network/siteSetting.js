@@ -10,7 +10,7 @@ export function getSiteSettingData() {
 export function update(settings, deleteIds) {
 	return axios({
 		url: 'siteSettings',
-		method: 'PUT',
+		method: 'POST',
 		data: {
 			settings,
 			deleteIds

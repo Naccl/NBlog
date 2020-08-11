@@ -27,11 +27,16 @@ public class IndexController {
 	@Autowired
 	BlogService blogService;
 
+	/**
+	 * 获取站点配置信息 和 最新推荐博客
+	 *
+	 * @return
+	 */
 	@GetMapping("/site")
 	public Result site() {
 		try {
 			Map<String, Object> map = siteSettingService.getSiteInfo();
-			PageHelper.startPage(1,3);
+			PageHelper.startPage(1, 3);
 			List<Blog> newBLogList = blogService.getIdAndTitleListByIsPublishedAndIsRecommend();
 			map.put("newBlogList", newBLogList);
 			return Result.ok("请求成功", map);

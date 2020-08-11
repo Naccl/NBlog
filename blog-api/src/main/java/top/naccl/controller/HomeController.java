@@ -26,6 +26,12 @@ public class HomeController {
 	@Autowired
 	TagService tagService;
 
+	/**
+	 * 按置顶、创建时间排序 分页查询博客详情列表
+	 *
+	 * @param pageNum 页码
+	 * @return
+	 */
 	@GetMapping("/blogs")
 	public Result blogs(@RequestParam(defaultValue = "1") Integer pageNum) {
 		try {
