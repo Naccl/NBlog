@@ -1,29 +1,16 @@
 <template>
-	<div class="m-padded-tb-big">
-		<div class="ui container">
-			<div class="ui stackable grid">
-				<!--左边博客列表-->
-				<div class="twelve wide column">
-					<BlogList :getBlogList="getBlogList" :blogList="blogList" :totalPage="totalPage"/>
-				</div>
-				<!--侧边栏-->
-				<div class="four wide column">
-					<!--个人简介-->
-					<Introduction/>
-				</div>
-			</div>
-		</div>
+	<div>
+		<BlogList :getBlogList="getBlogList" :blogList="blogList" :totalPage="totalPage"/>
 	</div>
 </template>
 
 <script>
 	import BlogList from "@/components/blogList/BlogList";
-	import Introduction from "@/components/sidebar/Introduction";
 	import {getBlogList} from "@/network/home";
 
 	export default {
 		name: "Home",
-		components: {Introduction, BlogList},
+		components: {BlogList},
 		data() {
 			return {
 				blogList: [],

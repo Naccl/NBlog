@@ -4,7 +4,20 @@
 		<Nav :blogName="siteInfo.blogName"/>
 
 		<div class="main">
-			<router-view/>
+			<div class="m-padded-tb-big">
+				<div class="ui container">
+					<div class="ui stackable grid">
+						<!--左侧-->
+						<div class="twelve wide column">
+							<router-view/>
+						</div>
+						<!--右侧-->
+						<div class="four wide column">
+							<Introduction/>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<!--底部footer-->
@@ -15,12 +28,12 @@
 <script>
 	import Nav from "@/components/index/Nav";
 	import Footer from "@/components/index/Footer";
+	import Introduction from "@/components/sidebar/Introduction";
 	import {getHitokoto, getSite} from '@/network/index'
-	import store from "../store";
 
 	export default {
 		name: "Index",
-		components: {Nav, Footer},
+		components: {Nav, Footer, Introduction},
 		data() {
 			return {
 				siteInfo: {
@@ -43,9 +56,9 @@
 						this.siteInfo = res.data.siteInfo
 						this.badges = res.data.badges
 						this.newBlogList = res.data.newBlogList
-						this.$store.dispatch('saveIntroduction',res.data.introduction)
+						this.$store.dispatch('saveIntroduction', res.data.introduction)
 						this.$store.dispatch('saveWebTitleSuffix', this.siteInfo.webTitleSuffix)
-						document.title = this.$route.meta.title + ' | ' + store.state.webTitleSuffix
+						document.title = this.$route.meta.title + ' | ' + this.$store.state.webTitleSuffix
 					}
 				})
 			},
