@@ -80,7 +80,7 @@
 	}
 
 	.main {
-		opacity: 0.9;
+		margin-top: 20px;
 		flex: 1;
 	}
 </style>
