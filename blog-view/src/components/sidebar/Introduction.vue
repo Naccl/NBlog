@@ -8,7 +8,7 @@
 				<div class="content" align="center">
 					<div class="header">{{ introduction.name }}</div>
 					<!--彩色滚动字体-->
-					<div id="rollText" class="m-margin-top" style="font-size: 15px;"></div>
+					<div id="rollText" class="m-margin-top" style="font-size: 15px;" v-if="introduction.rollText.length!=0"></div>
 				</div>
 				<div class="extra content" align="center">
 					<a :href="introduction.github" v-if="introduction.github" target="_blank" class="ui circular icon button">
@@ -53,7 +53,7 @@
 				</div>
 				<div>
 					<el-collapse accordion>
-						<el-collapse-item :title="item.title" :name="index" v-for="(item,index) in introduction.favorites" :key="index">
+						<el-collapse-item :title="item.title" :name="index" v-if="item.title" v-for="(item,index) in introduction.favorites" :key="index">
 							<div>{{ item.content }}</div>
 						</el-collapse-item>
 					</el-collapse>
@@ -73,7 +73,12 @@
 		},
 		watch: {
 			'introduction.rollText'() {
-				this.rollText()
+				if (this.introduction.rollText.length != 0) {
+					//等待 id="rollText"的div加载完毕
+					this.$nextTick(() => {
+						this.rollText()
+					})
+				}
 			}
 		},
 		methods: {

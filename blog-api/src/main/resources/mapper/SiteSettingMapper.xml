@@ -6,4 +6,19 @@
     <select id="getList" resultType="top.naccl.entity.SiteSetting">
         select * from site_setting
     </select>
+
+    <!--更新-->
+    <update id="updateSiteSetting">
+        update site_setting set value=#{value} where id=#{id}
+    </update>
+    
+    <!--删除-->
+    <delete id="deleteSiteSettingById">
+        delete from site_setting where id=#{id}
+    </delete>
+    
+    <!--添加-->
+    <insert id="saveSiteSetting" useGeneratedKeys="true" keyProperty="id">
+        insert into site_setting (name_en, name_zh, value, type) values (#{nameEn}, #{nameZh}, #{value}, #{type})
+    </insert>
 </mapper>

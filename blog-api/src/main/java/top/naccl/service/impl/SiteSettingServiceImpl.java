@@ -3,6 +3,7 @@ package top.naccl.service.impl;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import top.naccl.entity.SiteSetting;
 import top.naccl.mapper.SiteSettingMapper;
 import top.naccl.model.bean.Badge;
@@ -87,7 +88,7 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 				} else if ("favorite".equals(s.getNameEn())) {
 					favorites.add(JSON.parseObject(s.getValue(), Favorite.class));
 				} else if ("rollText".equals(s.getNameEn())) {
-					Pattern p = Pattern.compile("'(.*?)'");
+					Pattern p = Pattern.compile("\"(.*?)\"");
 					Matcher m = p.matcher(s.getValue());
 					while (m.find()) {
 						rollTexts.add(m.group(1));
@@ -101,5 +102,23 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 		map.put("siteInfo", siteInfo);
 		map.put("badges", badges);
 		return map;
+	}
+
+	@Transactional
+	@Override
+	public int updateSiteSetting(SiteSetting siteSetting) {
+		return siteSettingMapper.updateSiteSetting(siteSetting);
+	}
+
+	@Transactional
+	@Override
+	public int deleteSiteSettingById(Integer id) {
+		return siteSettingMapper.deleteSiteSettingById(id);
+	}
+
+	@Transactional
+	@Override
+	public int saveSiteSetting(SiteSetting siteSetting) {
+		return siteSettingMapper.saveSiteSetting(siteSetting);
 	}
 }

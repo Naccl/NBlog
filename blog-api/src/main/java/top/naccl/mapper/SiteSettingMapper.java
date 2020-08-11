@@ -15,4 +15,10 @@ import java.util.List;
 @Repository
 public interface SiteSettingMapper {
 	List<SiteSetting> getList();
+
+	int updateSiteSetting(SiteSetting siteSetting);
+
+	int deleteSiteSettingById(Integer id);
+
+	int saveSiteSetting(SiteSetting siteSetting);
 }

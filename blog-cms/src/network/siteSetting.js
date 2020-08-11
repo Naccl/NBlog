@@ -1,8 +1,19 @@
 import axios from '@/plugins/axios'
 
-export function getSiteSettingList() {
+export function getSiteSettingData() {
 	return axios({
 		url: 'siteSettings',
 		method: 'GET'
+	})
+}
+
+export function update(settings, deleteIds) {
+	return axios({
+		url: 'siteSettings',
+		method: 'PUT',
+		data: {
+			settings,
+			deleteIds
+		}
 	})
 }
