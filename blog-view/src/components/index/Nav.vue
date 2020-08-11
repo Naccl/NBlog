@@ -42,5 +42,9 @@
 </script>
 
 <style scoped>
-
+	.ui.fixed.menu .container {
+		width: 1400px !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
 </style>

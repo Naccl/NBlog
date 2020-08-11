@@ -8,11 +8,17 @@
 				<div class="ui container">
 					<div class="ui stackable grid">
 						<!--左侧-->
-						<div class="twelve wide column">
+						<div class="three wide column fixed">
+							<div class="m-position-sticky">
+								<Introduction/>
+							</div>
+						</div>
+						<!--中间-->
+						<div class="ten wide column">
 							<router-view/>
 						</div>
 						<!--右侧-->
-						<div class="four wide column">
+						<div class="three wide column">
 							<Introduction/>
 						</div>
 					</div>
@@ -80,7 +86,26 @@
 	}
 
 	.main {
-		margin-top: 20px;
+		margin-top: 40px;
 		flex: 1;
+	}
+
+	.main .ui.container {
+		width: 1400px !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
+
+	.ui.grid .three.column {
+		padding: 0;
+	}
+
+	.ui.grid .ten.column {
+		padding-top: 0;
+	}
+
+	.m-position-sticky {
+		position: sticky !important;
+		top: 50px;
 	}
 </style>
