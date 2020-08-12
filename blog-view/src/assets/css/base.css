@@ -51,6 +51,11 @@ footer {
     font-family: 'Varela Round', "Microsoft YaHei", "Source Sans Pro", "Helvetica Neue", Menlo, Monaco, monospace, "Lucida Console", sans-serif, Helvetica, "Hiragino Sans GB", "Hiragino Sans GB W3", Source Han Sans CN Regular, WenQuanYi Micro Hei, Arial, sans-serif;
 }
 
+.m-markdown h1, .m-markdown h2 {
+    padding-bottom: .3em;
+    border-bottom: 1px solid #eaecef;
+}
+
 .m-margin-small {
     margin: 3px 10px !important;
 }

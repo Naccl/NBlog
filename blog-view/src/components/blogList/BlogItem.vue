@@ -33,8 +33,8 @@
 					<a :href="item.id" class="ui orange large ribbon label">
 						<i class="small folder open icon"></i><span class="m-text-500">{{ item.category.name }}</span>
 					</a>
-					<!--文章描述-->
-					<div class="m-padded-tb-small m-description" v-html="item.description"></div>
+					<!--文章Markdown描述-->
+					<div class="m-padded-tb-small m-description m-markdown" v-html="item.description"></div>
 					<!--阅读全文按钮-->
 					<div class="row m-padded-tb-small m-margin-top">
 						<a :href="item.id" class="color-btn">阅读全文</a>
