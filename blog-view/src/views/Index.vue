@@ -106,6 +106,6 @@
 
 	.m-position-sticky {
 		position: sticky !important;
-		top: 50px;
+		top: 68px;
 	}
 </style>

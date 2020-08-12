@@ -1,13 +1,14 @@
 <template>
 	<div class="ui fixed inverted stackable menu">
 		<div class="ui container">
-			<a href="#">
+			<router-link to="/">
 				<h3 class="ui header item m-blue">{{ blogName }}</h3>
-			</a>
-			<a href="#" class="item" :class="{'m-mobile-hide': mobileHide}"><i class="idea icon"></i>分类</a>
-			<a href="#" class="item" :class="{'m-mobile-hide': mobileHide}"><i class="tags icon"></i>标签</a>
-			<a href="#" class="item" :class="{'m-mobile-hide': mobileHide}"><i class="clone icon"></i>归档</a>
-			<a href="#" class="item" :class="{'m-mobile-hide': mobileHide}"><i class="info icon"></i>关于我</a>
+			</router-link>
+			<router-link to="/" class="item" :class="{'m-mobile-hide': mobileHide}"><i class="idea icon"></i>分类</router-link>
+			<router-link to="/" class="item" :class="{'m-mobile-hide': mobileHide}"><i class="tags icon"></i>标签</router-link>
+			<router-link to="/archives" class="item" :class="{'m-mobile-hide': mobileHide}"><i class="clone icon"></i>归档</router-link>
+			<router-link to="/" class="item" :class="{'m-mobile-hide': mobileHide}"><i class="clone icon"></i>动态</router-link>
+			<router-link to="/" class="item" :class="{'m-mobile-hide': mobileHide}"><i class="info icon"></i>关于我</router-link>
 			<div class="right item ui inverted transparent icon input" :class="{'m-mobile-hide': mobileHide}">
 				<input type="text" placeholder="Search...">
 				<i class="search icon"></i>

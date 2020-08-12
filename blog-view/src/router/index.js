@@ -3,16 +3,13 @@ import VueRouter from 'vue-router'
 import store from '../store'
 import Index from "@/views/Index";
 import Home from "@/views/home/Home";
+import Archives from "@/views/archives/Archives";
 
 Vue.use(VueRouter)
 
 const routes = [
 	{
 		path: '/',
-		redirect: '/index'
-	},
-	{
-		path: '/index',
 		component: Index,
 		redirect: '/home',
 		children: [
@@ -22,9 +19,16 @@ const routes = [
 				meta: {
 					title: '首页'
 				}
+			},
+			{
+				path: '/archives',
+				component: Archives,
+				meta: {
+					title: '归档'
+				}
 			}
 		]
-	},
+	}
 ]
 
 const router = new VueRouter({
