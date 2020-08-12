@@ -51,11 +51,6 @@ footer {
     font-family: 'Varela Round', "Microsoft YaHei", "Source Sans Pro", "Helvetica Neue", Menlo, Monaco, monospace, "Lucida Console", sans-serif, Helvetica, "Hiragino Sans GB", "Hiragino Sans GB W3", Source Han Sans CN Regular, WenQuanYi Micro Hei, Arial, sans-serif;
 }
 
-.m-markdown h1, .m-markdown h2 {
-    padding-bottom: .3em;
-    border-bottom: 1px solid #eaecef;
-}
-
 .m-margin-small {
     margin: 3px 10px !important;
 }
@@ -213,21 +208,70 @@ footer {
     transform: scale(1.1) !important;
 }
 
-.m-description {
+.m-markdown {
     width: 100%;
     text-align: justify;
 }
 
-.m-description p {
+.m-markdown p {
     font-size: 14px;
     line-height: 1.8;
     letter-spacing: 0.5px;
 }
 
-.m-description img {
+.m-markdown img {
     display: block;
     margin: 0 auto;
     max-width: 100%;
+}
+
+.m-markdown h1, .m-markdown h2 {
+    padding-bottom: .3em;
+    border-bottom: 1px solid #eaecef;
+}
+
+.ribbon.label {
+    max-height: 30px;
+    margin-bottom: 15px !important;
+    left: -46px !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+.m-datetime {
+    color: #00a7e0 !important;
+}
+
+.m-datetime * {
+    vertical-align: middle !important;
+}
+
+.m-datetime i {
+    margin-right: 3px !important;
+}
+
+.m-views {
+    color: #ff3f1f !important;
+}
+
+.m-views * {
+    vertical-align: middle !important;
+}
+
+.m-views i {
+    margin-right: 3px !important;
+}
+
+.m-common-black {
+    color: #000 !important;
+}
+
+.m-common-black * {
+    vertical-align: middle !important;
+}
+
+.m-common-black i {
+    margin-right: 3px !important;
 }
 
 /*-----------------------Button--------------------------*/

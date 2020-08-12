@@ -2,6 +2,7 @@ package top.naccl.service;
 
 import top.naccl.entity.Blog;
 import top.naccl.model.vo.ArchiveBlog;
+import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.BlogInfo;
 
 import java.util.List;
@@ -33,6 +34,8 @@ public interface BlogService {
 	int updateBlogTopById(Long blogId, Boolean top);
 
 	Blog getBlogById(Long id);
+
+	BlogDetail getBlogByIdAndIsPublished(Long id);
 
 	int updateBlog(Blog blog);
 

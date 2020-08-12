@@ -4,6 +4,7 @@ import store from '../store'
 import Index from "@/views/Index";
 import Home from "@/views/home/Home";
 import Archives from "@/views/archives/Archives";
+import Blog from "@/views/blog/Blog";
 
 Vue.use(VueRouter)
 
@@ -26,6 +27,13 @@ const routes = [
 				meta: {
 					title: '归档'
 				}
+			},
+			{
+				path: '/blog',
+				component: Blog,
+				meta: {
+					title: '博客'
+				}
 			}
 		]
 	}
@@ -41,7 +49,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
 	if (to.meta.title) {
 		if (store.state.webTitleSuffix !== '') {
-			document.title = to.meta.title + ' | ' + store.state.webTitleSuffix
+			document.title = to.meta.title + store.state.webTitleSuffix
 		} else {
 			document.title = to.meta.title
 		}

@@ -30,11 +30,11 @@
 						</div>
 					</div>
 					<!--分类-->
-					<a :href="item.id" class="ui orange large ribbon label">
+					<a :href="item.category.id" class="ui orange large ribbon label">
 						<i class="small folder open icon"></i><span class="m-text-500">{{ item.category.name }}</span>
 					</a>
 					<!--文章Markdown描述-->
-					<div class="m-padded-tb-small m-description m-markdown" v-html="item.description"></div>
+					<div class="m-padded-tb-small m-markdown" v-html="item.description"></div>
 					<!--阅读全文按钮-->
 					<div class="row m-padded-tb-small m-margin-top">
 						<a :href="item.id" class="color-btn">阅读全文</a>
@@ -66,47 +66,5 @@
 </script>
 
 <style scoped>
-	.ribbon.label {
-		max-height: 30px;
-		margin-bottom: 15px !important;
-		left: -46px !important;
-		padding-left: 1rem !important;
-		padding-right: 1rem !important;
-	}
 
-	.m-datetime {
-		color: #00a7e0 !important;
-	}
-
-	.m-datetime * {
-		vertical-align: middle !important;
-	}
-
-	.m-datetime i {
-		margin-right: 3px !important;
-	}
-
-	.m-views {
-		color: #ff3f1f !important;
-	}
-
-	.m-views * {
-		vertical-align: middle !important;
-	}
-
-	.m-views i {
-		margin-right: 3px !important;
-	}
-
-	.m-common-black {
-		color: #000 !important;
-	}
-
-	.m-common-black * {
-		vertical-align: middle !important;
-	}
-
-	.m-common-black i {
-		margin-right: 3px !important;
-	}
 </style>

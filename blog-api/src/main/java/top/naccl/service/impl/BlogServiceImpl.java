@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import top.naccl.entity.Blog;
 import top.naccl.mapper.BlogMapper;
 import top.naccl.model.vo.ArchiveBlog;
+import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.BlogInfo;
 import top.naccl.service.BlogService;
 import top.naccl.service.TagService;
@@ -107,6 +108,13 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public Blog getBlogById(Long id) {
 		return blogMapper.getBlogById(id);
+	}
+
+	@Override
+	public BlogDetail getBlogByIdAndIsPublished(Long id) {
+		BlogDetail blog = blogMapper.getBlogByIdAndIsPublished(id);
+		blog.setContent(MarkdownUtils.markdownToHtmlExtensions(blog.getContent()));
+		return blog;
 	}
 
 	@Transactional

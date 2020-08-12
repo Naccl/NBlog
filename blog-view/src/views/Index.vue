@@ -64,7 +64,7 @@
 						this.newBlogList = res.data.newBlogList
 						this.$store.dispatch('saveIntroduction', res.data.introduction)
 						this.$store.dispatch('saveWebTitleSuffix', this.siteInfo.webTitleSuffix)
-						document.title = this.$route.meta.title + ' | ' + this.$store.state.webTitleSuffix
+						document.title = this.$route.meta.title + this.$store.state.webTitleSuffix
 					}
 				})
 			},
