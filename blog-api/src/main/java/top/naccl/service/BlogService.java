@@ -16,7 +16,7 @@ public interface BlogService {
 
 	List<BlogInfo> getBlogInfoListByIsPublished();
 
-	Map<String, List<ArchiveBlog>> getArchiveBlogList();
+	Map<String, List<ArchiveBlog>> getArchiveBlogMapByIsPublished();
 
 	int deleteBlogById(Long id);
 
@@ -37,6 +37,8 @@ public interface BlogService {
 	int updateBlog(Blog blog);
 
 	int countBlog();
+
+	int countBlogByIsPublished();
 
 	int countBlogByCategoryId(Long categoryId);
 

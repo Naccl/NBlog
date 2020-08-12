@@ -106,19 +106,20 @@
         where b.is_published=true
     </select>
 
-    <!--查询博客年月List-->
-    <select id="getGroupYearMonth" resultType="java.lang.String">
+    <!--查询公开博客年月List-->
+    <select id="getGroupYearMonthByIsPublished" resultType="java.lang.String">
         select date_format(create_time, "%Y年%m月")
         from blog
+        where is_published=true
         group by date_format(create_time, "%Y年%m月")
         order by date_format(create_time, "%Y年%m月") desc
     </select>
 
-    <!--按年月查询博客简要信息List-->
-    <select id="getArchiveBlogListByYearMonth" resultMap="archiveBlog">
+    <!--按年月查询公开博客简要信息List-->
+    <select id="getArchiveBlogListByYearMonthAndIsPublished" resultMap="archiveBlog">
         select id, title, date_format(create_time, "%d日") as create_day
         from blog
-        where date_format(create_time, "%Y年%m月")=#{yearMonth}
+        where date_format(create_time, "%Y年%m月")=#{yearMonth} and is_published=true
         order by create_time desc
     </select>
 
@@ -182,6 +183,11 @@
     <!--查询博客总数-->
     <select id="countBlog" resultType="java.lang.Integer">
         select count(*) from blog
+    </select>
+
+    <!--查询公开博客总数-->
+    <select id="countBlogByIsPublished" resultType="java.lang.Integer">
+        select count(*) from blog where is_published=true
     </select>
 
     <!--按分类id查询博客数量-->

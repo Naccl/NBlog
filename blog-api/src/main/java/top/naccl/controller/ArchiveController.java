@@ -24,15 +24,15 @@ public class ArchiveController {
 	BlogService blogService;
 
 	/**
-	 * 按年月分组归档博客 统计博客总数
+	 * 按年月分组归档公开博客 统计公开博客总数
 	 *
 	 * @return
 	 */
 	@GetMapping("/archives")
 	public Result archives() {
 		try {
-			Map<String, List<ArchiveBlog>> archiveBlogMap = blogService.getArchiveBlogList();
-			Integer count = blogService.countBlog();
+			Map<String, List<ArchiveBlog>> archiveBlogMap = blogService.getArchiveBlogMapByIsPublished();
+			Integer count = blogService.countBlogByIsPublished();
 			Map<String, Object> map = new HashMap<>();
 			map.put("blogMap", archiveBlogMap);
 			map.put("count", count);

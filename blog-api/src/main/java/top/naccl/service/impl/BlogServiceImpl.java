@@ -53,11 +53,11 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public Map<String, List<ArchiveBlog>> getArchiveBlogList() {
-		List<String> groupYearMonth = blogMapper.getGroupYearMonth();
+	public Map<String, List<ArchiveBlog>> getArchiveBlogMapByIsPublished() {
+		List<String> groupYearMonth = blogMapper.getGroupYearMonthByIsPublished();
 		Map<String, List<ArchiveBlog>> map = new LinkedHashMap<>();
 		for (String s : groupYearMonth) {
-			map.put(s, blogMapper.getArchiveBlogListByYearMonth(s));
+			map.put(s, blogMapper.getArchiveBlogListByYearMonthAndIsPublished(s));
 		}
 		return map;
 	}
@@ -118,6 +118,11 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public int countBlog() {
 		return blogMapper.countBlog();
+	}
+
+	@Override
+	public int countBlogByIsPublished() {
+		return blogMapper.countBlogByIsPublished();
 	}
 
 	@Override

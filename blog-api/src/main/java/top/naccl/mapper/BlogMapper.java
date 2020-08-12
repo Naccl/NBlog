@@ -24,9 +24,9 @@ public interface BlogMapper {
 
 	List<BlogInfo> getBlogInfoListByIsPublished();
 
-	List<String> getGroupYearMonth();
+	List<String> getGroupYearMonthByIsPublished();
 
-	List<ArchiveBlog> getArchiveBlogListByYearMonth(String yearMonth);
+	List<ArchiveBlog> getArchiveBlogListByYearMonthAndIsPublished(String yearMonth);
 
 	int deleteBlogById(Long id);
 
@@ -47,6 +47,8 @@ public interface BlogMapper {
 	int updateBlog(Blog blog);
 
 	int countBlog();
+
+	int countBlogByIsPublished();
 
 	int countBlogByCategoryId(Long categoryId);
 
