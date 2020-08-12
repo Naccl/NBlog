@@ -5,12 +5,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.naccl.entity.Blog;
 import top.naccl.mapper.BlogMapper;
+import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.BlogInfo;
 import top.naccl.service.BlogService;
 import top.naccl.service.TagService;
 import top.naccl.util.markdown.MarkdownUtils;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: 博客文章业务层实现
@@ -47,6 +50,16 @@ public class BlogServiceImpl implements BlogService {
 			blogInfo.setTags(tagService.getTagListByBlogId(blogInfo.getId()));
 		}
 		return blogInfos;
+	}
+
+	@Override
+	public Map<String, List<ArchiveBlog>> getArchiveBlogList() {
+		List<String> groupYearMonth = blogMapper.getGroupYearMonth();
+		Map<String, List<ArchiveBlog>> map = new LinkedHashMap<>();
+		for (String s : groupYearMonth) {
+			map.put(s, blogMapper.getArchiveBlogListByYearMonth(s));
+		}
+		return map;
 	}
 
 	@Transactional

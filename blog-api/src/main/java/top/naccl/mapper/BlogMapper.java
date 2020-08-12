@@ -3,6 +3,7 @@ package top.naccl.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import top.naccl.entity.Blog;
+import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.BlogInfo;
 
 import java.util.List;
@@ -22,6 +23,10 @@ public interface BlogMapper {
 	List<Blog> getIdAndTitleListByIsPublishedAndIsRecommend();
 
 	List<BlogInfo> getBlogInfoListByIsPublished();
+
+	List<String> getGroupYearMonth();
+
+	List<ArchiveBlog> getArchiveBlogListByYearMonth(String yearMonth);
 
 	int deleteBlogById(Long id);
 

@@ -1,9 +1,11 @@
 package top.naccl.service;
 
 import top.naccl.entity.Blog;
+import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.BlogInfo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BlogService {
 	List<Blog> getListByTitleOrCategoryId(String title, Integer CategoryId);
@@ -13,6 +15,8 @@ public interface BlogService {
 	List<Blog> getIdAndTitleListByIsPublishedAndIsRecommend();
 
 	List<BlogInfo> getBlogInfoListByIsPublished();
+
+	Map<String, List<ArchiveBlog>> getArchiveBlogList();
 
 	int deleteBlogById(Long id);
 

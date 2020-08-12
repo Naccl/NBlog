@@ -1,19 +1,20 @@
 <template>
 	<div>
-		<h2 class="ui top attached segment header m-text-thin" style="text-align: center">文章归档</h2>
+		<div class="ui top attached segment" style="text-align: center">
+			<h2 class="m-text-500">文章归档</h2>
+			<p>好! 目前共计 {{ count }} 篇日志。 继续努力。</p>
+		</div>
 		<div class="ui attached segment">
 			<div class="timeline">
-				<div class="tl-blue">
+				<div :class="colorObj[index%5]" v-for="(value,key,index) in blogMap" :key="index">
 					<div class="tl-header">
-						<a class="ui large label m-text-500">2020年07月</a>
+						<a class="ui large label m-text-500">{{ key }}</a>
 					</div>
-					<div class="tl-item">
+					<div class="tl-item" v-for="blog in value" :key="blog.id">
 						<div class="tl-wrap">
-							<span class="tl-date">31日</span>
-							<a href="#">
-								<div class="ui left pointing label tl-title">
-									博客标题博客标题博客标题
-								</div>
+							<span class="tl-date">{{ blog.day }}</span>
+							<a :href="blog.id">
+								<div class="ui left pointing label tl-title">{{ blog.title }}</div>
 							</a>
 						</div>
 					</div>
@@ -28,8 +29,40 @@
 </template>
 
 <script>
+	import {getArchives} from "@/network/archives";
+
 	export default {
-		name: "Archives"
+		name: "Archives",
+		data() {
+			return {
+				blogMap: {},
+				count: 0,
+				colorObj: {
+					0: 'tl-blue',
+					1: 'tl-dark',
+					2: 'tl-green',
+					3: 'tl-purple',
+					4: 'tl-red',
+				}
+			}
+		}, created() {
+			this.getArchives()
+		},
+		methods: {
+			getArchives() {
+				getArchives().then(res => {
+					console.log(res)
+					if (res.code === 200) {
+						this.blogMap = res.data.blogMap
+						this.count = res.data.count
+					} else {
+						this.msgError(res.msg);
+					}
+				}).catch(() => {
+					this.msgError("请求失败");
+				})
+			}
+		}
 	}
 </script>
 
@@ -73,7 +106,7 @@
 		border-width: 3px;
 		border-radius: 50%;
 		content: "";
-		box-shadow: 0 0 0 3px #fff;
+		box-shadow: 0 0 0 4px #fff;
 	}
 
 	.tl-wrap:hover:before {

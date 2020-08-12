@@ -65,6 +65,12 @@
         </collection>
     </resultMap>
 
+    <resultMap id="archiveBlog" type="top.naccl.model.vo.ArchiveBlog">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="day" column="create_day"/>
+    </resultMap>
+
     <!--按标题和分类查询博客List-->
     <select id="getListByTitleOrCategoryId" resultMap="blog">
         <bind name="titlePattern" value="'%' + title + '%'"/>
@@ -98,6 +104,22 @@
         select b.id, b.title, b.description, b.is_top, b.create_time, b.views, b.words, b.read_time, c.id as category_id, c.category_name
         from blog as b left join category as c on b.category_id=c.id
         where b.is_published=true
+    </select>
+
+    <!--查询博客年月List-->
+    <select id="getGroupYearMonth" resultType="java.lang.String">
+        select date_format(create_time, "%Y年%m月")
+        from blog
+        group by date_format(create_time, "%Y年%m月")
+        order by date_format(create_time, "%Y年%m月") desc
+    </select>
+
+    <!--按年月查询博客简要信息List-->
+    <select id="getArchiveBlogListByYearMonth" resultMap="archiveBlog">
+        select id, title, date_format(create_time, "%d日") as create_day
+        from blog
+        where date_format(create_time, "%Y年%m月")=#{yearMonth}
+        order by create_time desc
     </select>
 
     <!--按id删除博客-->
