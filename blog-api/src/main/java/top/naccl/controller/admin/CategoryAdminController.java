@@ -27,7 +27,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/admin")
-public class CategoryController {
+public class CategoryAdminController {
 	@Autowired
 	BlogService blogService;
 	@Autowired

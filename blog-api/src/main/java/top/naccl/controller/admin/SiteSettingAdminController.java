@@ -23,7 +23,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/admin")
-public class SiteSettingController {
+public class SiteSettingAdminController {
 	@Autowired
 	SiteSettingService siteSettingService;
 

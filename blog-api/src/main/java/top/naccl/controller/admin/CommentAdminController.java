@@ -28,7 +28,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/admin")
-public class CommentController {
+public class CommentAdminController {
 	@Autowired
 	CommentService commentService;
 	@Autowired
