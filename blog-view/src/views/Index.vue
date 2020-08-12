@@ -8,7 +8,7 @@
 				<div class="ui container">
 					<div class="ui stackable grid">
 						<!--左侧-->
-						<div class="three wide column fixed">
+						<div class="three wide column fixed m-mobile-hide">
 							<div class="m-position-sticky">
 								<Introduction/>
 							</div>
@@ -18,7 +18,7 @@
 							<router-view/>
 						</div>
 						<!--右侧-->
-						<div class="three wide column">
+						<div class="three wide column m-mobile-hide">
 							<Introduction/>
 						</div>
 					</div>
