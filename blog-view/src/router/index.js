@@ -48,8 +48,9 @@ const router = new VueRouter({
 //挂载路由守卫
 router.beforeEach((to, from, next) => {
 	if (to.meta.title) {
-		if (store.state.webTitleSuffix !== '') {
-			document.title = to.meta.title + store.state.webTitleSuffix
+		console.log(store.state.siteInfo.webTitleSuffix)
+		if (store.state.siteInfo.webTitleSuffix) {
+			document.title = to.meta.title + store.state.siteInfo.webTitleSuffix
 		} else {
 			document.title = to.meta.title
 		}

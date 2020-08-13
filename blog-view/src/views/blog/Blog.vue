@@ -35,8 +35,19 @@
 					</a>
 					<!--文章Markdown正文-->
 					<div class="typo m-padded-tb-small line-numbers match-braces rainbow-braces" v-html="blog.content"></div>
+					<!--赞赏-->
+					<el-popover placement="top" width="180" trigger="click" style="margin: 2em auto">
+						<div class="ui orange basic label">
+							<div class="image">
+								<div style="font-size: 12px;text-align: center;margin-bottom: 5px;">一毛是鼓励</div>
+								<img :src="$store.state.siteInfo.reward" alt="" class="ui rounded bordered image" style="width: 180px">
+								<div style="font-size: 12px;text-align: center;margin-top: 5px;">一块是真爱</div>
+							</div>
+						</div>
+						<el-button slot="reference" class="ui orange inverted circular button m-text-500">赞赏</el-button>
+					</el-popover>
 					<!--横线-->
-					<div class="ui section divider m-margin-lr-no"></div>
+					<el-divider></el-divider>
 					<!--标签-->
 					<div class="row m-padded-tb-no">
 						<div class="column m-padding-left-no">
@@ -44,6 +55,18 @@
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+
+		<!--博客信息-->
+		<div class="ui attached positive message">
+			<div class="ui middle aligned grid">
+				<ul class="list">
+					<li>作者：{{ $store.state.introduction.name }}<a href="/about">（联系作者）</a></li>
+					<li>发表时间：{{ blog.createTime | dateFormat('YYYY-MM-DD HH:mm')}}</li>
+					<li>最后修改：{{ blog.updateTime | dateFormat('YYYY-MM-DD HH:mm')}}</li>
+					<li>本站点采用<a href="https://creativecommons.org/licenses/by/4.0/"> 知识共享署名 4.0 </a>国际许可协议进行许可。可自由转载、引用，但需署名作者且注明文章出处。</li>
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -64,7 +87,7 @@
 		},
 		methods: {
 			getBlog() {
-				getBlogById(13).then(res => {
+				getBlogById(12).then(res => {
 					console.log(res)
 					if (res.code === 200) {
 						this.blog = res.data
@@ -83,9 +106,7 @@
 </script>
 
 <style scoped>
-	.ui.section.divider {
-		flex-grow: 1 !important;
-		margin-top: 1rem !important;
-		margin-bottom: 1rem !important;
+	.el-divider {
+		margin: 1rem 0 !important;
 	}
 </style>

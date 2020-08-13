@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {SAVE_WEB_TITLE_SUFFIX, SAVE_INTRODUCTION} from "./mutations-types";
+import {SAVE_INTRODUCTION, SAVE_SITE_INFO} from "./mutations-types";
 
 Vue.use(Vuex)
 
 const state = {
-	webTitleSuffix: '',
+	siteInfo: '',
 	introduction: {
 		avatar: '',
 		name: '',
@@ -14,8 +14,8 @@ const state = {
 }
 
 const actions = {
-	saveWebTitleSuffix({commit}, webTitleSuffix) {
-		commit(SAVE_WEB_TITLE_SUFFIX, {webTitleSuffix})
+	saveSiteInfo({commit}, siteInfo) {
+		commit(SAVE_SITE_INFO, {siteInfo})
 	},
 	saveIntroduction({commit}, introduction) {
 		commit(SAVE_INTRODUCTION, {introduction})
@@ -23,8 +23,8 @@ const actions = {
 }
 
 const mutations = {
-	[SAVE_WEB_TITLE_SUFFIX](state, {webTitleSuffix}) {
-		state.webTitleSuffix = webTitleSuffix
+	[SAVE_SITE_INFO](state, {siteInfo}) {
+		state.siteInfo = siteInfo
 	},
 	[SAVE_INTRODUCTION](state, {introduction}) {
 		state.introduction = introduction
