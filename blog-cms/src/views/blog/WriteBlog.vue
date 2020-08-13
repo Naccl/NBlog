@@ -13,6 +13,8 @@
 					</el-input>
 				</el-form-item>
 
+				<el-alert title="注意：如果从 Typora 中复制 Markdown，粘贴时要选择粘贴为纯文本，否则代码块可能无法被 prismjs 高亮" type="warning" center show-icon></el-alert>
+
 				<el-form-item label="文章描述" prop="description">
 					<div id="vditor-description"></div>
 				</el-form-item>

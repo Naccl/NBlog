@@ -160,11 +160,6 @@
 }
 
 /* 代码片断 */
-/*.typo pre,.typo  code,.typo  pre tt {*/
-/*  font-family: Courier, 'Courier New', monospace;*/
-/*}*/
-
-/* 代码片断 */
 .typo p code {
     margin-left: 5px;
     margin-right: 5px;
@@ -173,14 +168,6 @@
     background: #fdf2f5;
     border-radius: 3px;
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-}
-
-.typo pre {
-    background: #f8f8f8;
-    border: 1px solid #ddd;
-    padding: 1em 1.5em;
-    display: block;
-    -webkit-overflow-scrolling: touch;
 }
 
 /* 一致化 horizontal rule */
@@ -283,7 +270,6 @@
 
 /* 在文章中，应该还原 ul 和 ol 的样式 */
 .typo ul {
-    /*margin-left: 1.3em;*/
     list-style: disc;
     font-size: 16px;
     line-height: 1.8;

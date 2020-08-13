@@ -27,6 +27,9 @@
 					if (res.code === 200) {
 						this.blogList = res.data.list
 						this.totalPage = res.data.totalPage
+						this.$nextTick(() => {
+							Prism.highlightAll()
+						})
 					} else {
 						this.msgError(res.msg)
 					}

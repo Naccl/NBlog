@@ -34,7 +34,7 @@
 						<i class="small folder open icon"></i><span class="m-text-500">{{ blog.category.name }}</span>
 					</a>
 					<!--文章Markdown正文-->
-					<div class="typo m-padded-tb-small m-markdown" v-html="blog.content"></div>
+					<div class="typo m-padded-tb-small line-numbers match-braces rainbow-braces" v-html="blog.content"></div>
 					<!--横线-->
 					<div class="ui section divider m-margin-lr-no"></div>
 					<!--标签-->
@@ -64,10 +64,13 @@
 		},
 		methods: {
 			getBlog() {
-				getBlogById(30).then(res => {
+				getBlogById(13).then(res => {
 					console.log(res)
 					if (res.code === 200) {
 						this.blog = res.data
+						this.$nextTick(() => {
+							Prism.highlightAll()
+						})
 					} else {
 						this.msgError(res.msg)
 					}
