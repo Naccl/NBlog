@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="ui padded segment m-padded-tb-large m-margin-bottom-big m-box">
+		<div class="ui padded segment m-padded-tb-large m-margin-bottom-big">
 			<a class="ui large red right corner label" v-if="blog.top">
 				<i class="arrow alternate circle up icon"></i>
 			</a>
@@ -30,11 +30,11 @@
 						</div>
 					</div>
 					<!--分类-->
-					<a :href="blog.category.id" class="ui orange large ribbon label">
+					<a :href="blog.category.id" class="ui orange large ribbon label" v-if="blog.category">
 						<i class="small folder open icon"></i><span class="m-text-500">{{ blog.category.name }}</span>
 					</a>
 					<!--文章Markdown正文-->
-					<div class="m-padded-tb-small m-markdown" v-html="blog.content"></div>
+					<div class="typo m-padded-tb-small m-markdown" v-html="blog.content"></div>
 					<!--横线-->
 					<div class="ui section divider m-margin-lr-no"></div>
 					<!--标签-->
@@ -64,7 +64,7 @@
 		},
 		methods: {
 			getBlog() {
-				getBlogById(1).then(res => {
+				getBlogById(30).then(res => {
 					console.log(res)
 					if (res.code === 200) {
 						this.blog = res.data

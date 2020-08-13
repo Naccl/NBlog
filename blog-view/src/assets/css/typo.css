@@ -1,0 +1,329 @@
+@charset "utf-8";
+
+.typo {
+    width: 100%;
+    text-align: justify;
+}
+
+.typo img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.typo p {
+    font-size: 15px;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+/* 重设 HTML5 标签, IE 需要在 js 中 createElement(TAG) */
+.typo article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+    display: block;
+}
+
+/* HTML5 媒体文件跟 img 保持一致 */
+.typo audio, canvas, video {
+    display: block;
+}
+
+/* 要注意表单元素并不继承父级 font 的问题 */
+.typo button, input, select, textarea {
+    font: 300 1em/1.8 PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+}
+
+.typo button::-moz-focus-inner,
+.typo input::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+/* 去掉各Table cell 的边距并让其边重合 */
+.typo table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* 去除默认边框 */
+.typo fieldset, img {
+    border: 0;
+}
+
+/* 块/段落引用 */
+.typo blockquote {
+    position: relative;
+    border-left: 1px solid #1abc9c;
+    padding-left: 1em;
+    margin: 0em 1em;
+}
+
+@media only screen and ( max-width: 640px ) {
+    .typo blockquote {
+        margin: 1em 0;
+    }
+}
+
+/* Firefox 以外，元素没有下划线，需添加 */
+.typo acronym, abbr {
+    border-bottom: 1px dotted;
+    font-variant: normal;
+}
+
+/* 添加鼠标问号，进一步确保应用的语义是正确的（要知道，交互他们也有洁癖，如果你不去掉，那得多花点口舌） */
+.typo abbr {
+    cursor: help;
+}
+
+/* 一致的 del 样式 */
+.typo del {
+    text-decoration: line-through;
+}
+
+.typo address, caption, cite, code, dfn, em, th, var {
+    font-style: normal;
+    font-weight: 400;
+}
+
+/* 去掉列表前的标识, li 会继承，大部分网站通常用列表来很多内容，所以应该当去 */
+.typo ul, ol {
+    list-style: none;
+}
+
+/* 对齐是排版最重要的因素, 别让什么都居中 */
+.typo caption, th {
+    text-align: left;
+}
+
+.typo q:before, .typo q:after {
+    content: '';
+}
+
+/* 统一上标和下标 */
+.typo sub, .typo sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+}
+
+.typo :root sub, .typo :root sup {
+    vertical-align: baseline; /* for ie9 and other modern browsers */
+}
+
+.typo sup {
+    top: -0.5em;
+}
+
+.typo sub {
+    bottom: -0.25em;
+}
+
+/* 让链接在 hover 状态下显示下划线 */
+.typo a {
+    color: #1abc9c;
+}
+
+.typo a:hover {
+    text-decoration: underline;
+}
+
+.typo a {
+    border-bottom: 1px solid #1abc9c;
+}
+
+.typo a:hover {
+    border-bottom-color: #555;
+    color: #555;
+    text-decoration: none;
+}
+
+/* 默认不显示下划线，保持页面简洁 */
+.typo ins, .typo a {
+    text-decoration: none;
+}
+
+/* 专名号：虽然 u 已经重回 html5 Draft，但在所有浏览器中都是可以使用的，
+ * 要做到更好，向后兼容的话，添加 class="typo-u" 来显示专名号
+ * 关于 <u> 标签：http://www.whatwg.org/specs/web-apps/current-work/multipage/text-level-semantics.html#the-u-element
+ * 被放弃的是 4，之前一直搞错 http://www.w3.org/TR/html401/appendix/changes.html#idx-deprecated
+ * 一篇关于 <u> 标签的很好文章：http://html5doctor.com/u-element/
+ */
+.typo u {
+    text-decoration: underline;
+}
+
+/* 标记，类似于手写的荧光笔的作用 */
+.typo mark {
+    background: #fffdd1;
+    border-bottom: 1px solid #ffedce;
+    padding: 2px;
+    margin: 0 5px;
+}
+
+/* 代码片断 */
+/*.typo pre,.typo  code,.typo  pre tt {*/
+/*  font-family: Courier, 'Courier New', monospace;*/
+/*}*/
+
+/* 代码片断 */
+.typo p code {
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 1px solid #ddd;
+    color: #e4305e;
+    background: #fdf2f5;
+    border-radius: 3px;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+.typo pre {
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 1em 1.5em;
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 一致化 horizontal rule */
+.typo hr {
+    border: none;
+    border-bottom: 1px solid #cfcfcf;
+    margin-bottom: 0.8em;
+    height: 10px;
+}
+
+/* 底部印刷体、版本等标记 */
+.typo small,
+    /* 图片说明 */
+.typo figcaption {
+    font-size: 0.9em;
+    color: #888;
+}
+
+.typo strong, .typo b {
+    font-weight: bold;
+    color: #000;
+}
+
+/* 可拖动文件添加拖动手势 */
+.typo [draggable] {
+    cursor: move;
+}
+
+.typo .clearfix:before, .typo .clearfix:after {
+    content: "";
+    display: table;
+}
+
+.typo .clearfix:after {
+    clear: both;
+}
+
+.typo .clearfix {
+    zoom: 1;
+}
+
+/* 强制文本换行 */
+.typo .textwrap, .typo .textwrap td, .typo .textwrap th {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.typo .textwrap-table {
+    table-layout: fixed;
+}
+
+/* 提供 serif 版本的字体设置: iOS 下中文自动 fallback 到 sans-serif */
+.typo .serif {
+    font-family: Palatino, Optima, Georgia, serif;
+}
+
+/* 保证块/段落之间的空白隔行 */
+.typo p, .typo pre, .typo ul, .typo ol, .typo dl, .typo form, .typo hr, .typo table, blockquote {
+    margin-bottom: 1.2em
+}
+
+/* 标题应该更贴紧内容，并与其他块区分，margin 值要相应做优化 */
+.typo h1, .typo h2, .typo h3, .typo h4, .typo h5, .typo h6 {
+    color: #000;
+    margin-top: 1.2em;
+    margin-bottom: 0.6em;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.typo h1, .typo h2 {
+    padding-bottom: .3em;
+    border-bottom: 1px solid #eaecef;
+}
+
+.typo h1 {
+    font-size: 2em;
+}
+
+.typo h2 {
+    font-size: 1.5em;
+}
+
+.typo h3 {
+    font-size: 1.25em;
+}
+
+.typo h4 {
+    font-size: 1em;
+}
+
+.typo h5 {
+    font-size: .875em;
+}
+
+.typo h6 {
+    font-size: .85em;
+    color: #6a737d;
+}
+
+/* 在文章中，应该还原 ul 和 ol 的样式 */
+.typo ul {
+    /*margin-left: 1.3em;*/
+    list-style: disc;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.typo ol {
+    list-style: decimal;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.typo li ul, .typo li ol {
+    margin-bottom: 0.8em;
+    margin-left: 2em;
+}
+
+.typo li ul {
+    list-style: circle;
+}
+
+/* 同 ul/ol，在文章中应用 table 基本格式 */
+.typo table th, .typo table td, .typo table caption {
+    border: 1px solid #ddd;
+    padding: 0.5em 1em;
+    color: #666;
+}
+
+.typo table th {
+    background: #fbfbfb;
+}
+
+.typo table thead th {
+    background: #f1f1f1;
+}
+
+.typo table caption {
+    border-bottom: none;
+}
+
+.typo em, legend, caption {
+    color: #000;
+    font-weight: inherit;
+}

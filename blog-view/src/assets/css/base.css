@@ -208,28 +208,6 @@ footer {
     transform: scale(1.1) !important;
 }
 
-.m-markdown {
-    width: 100%;
-    text-align: justify;
-}
-
-.m-markdown p {
-    font-size: 14px;
-    line-height: 1.8;
-    letter-spacing: 0.5px;
-}
-
-.m-markdown img {
-    display: block;
-    margin: 0 auto;
-    max-width: 100%;
-}
-
-.m-markdown h1, .m-markdown h2 {
-    padding-bottom: .3em;
-    border-bottom: 1px solid #eaecef;
-}
-
 .ribbon.label {
     max-height: 30px;
     margin-bottom: 15px !important;

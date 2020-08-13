@@ -2,7 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+//自定义css
 import './assets/css/base.css'
+//typo.css
+import "./assets/css/typo.css";
 //semantic-ui-vue
 import SuiVue from 'semantic-ui-vue'
 import 'semantic-ui-css/semantic.min.css'
