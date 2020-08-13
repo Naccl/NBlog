@@ -5,12 +5,8 @@
 
 		<el-card>
 			<el-form :model="form" :rules="formRules" ref="formRef" label-position="top">
-				<el-form-item prop="title">
-					<el-input v-model="form.title" placeholder="请输入标题" style="min-width: 500px">
-						<el-select v-model="form.flag" placeholder="请选择类型" slot="prepend" :allow-create="true" :filterable="true" style="width: 160px">
-							<el-option :label="item" :value="item" v-for="(item,index) in flagList" :key="index"></el-option>
-						</el-select>
-					</el-input>
+				<el-form-item label="文章标题" prop="title">
+					<el-input v-model="form.title" placeholder="请输入标题"></el-input>
 				</el-form-item>
 
 				<el-alert title="注意：如果从 Typora 中复制 Markdown，粘贴时要选择粘贴为纯文本，否则代码块可能无法被 prismjs 高亮" type="warning" center show-icon></el-alert>
@@ -45,10 +41,6 @@
 
 				<el-form-item label="浏览次数" prop="views">
 					<el-input v-model="form.views" placeholder="请输入文章字数（可选）" type="number" style="width: 50%;"></el-input>
-				</el-form-item>
-
-				<el-form-item>
-					<el-switch v-model="form.shareStatement" active-text="版权声明"></el-switch>
 				</el-form-item>
 
 				<el-form-item>
@@ -91,12 +83,10 @@
 				ready: false,
 				descriptionVditor: null,
 				contentVditor: null,
-				flagList: ['原创', '转载', '翻译'],
 				categoryList: [],
 				tagList: [],
 				form: {
 					title: '',
-					flag: null,
 					description: '',
 					content: '',
 					cate: null,
@@ -104,7 +94,6 @@
 					words: null,
 					readTime: null,
 					views: 0,
-					shareStatement: false,
 					appreciation: false,
 					recommend: false,
 					commentEnabled: false,

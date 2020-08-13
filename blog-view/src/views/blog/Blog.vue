@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="ui padded top attached segment m-padded-tb-large">
+		<div class="ui padded attached segment m-padded-tb-large">
 			<a class="ui large red right corner label" v-if="blog.top">
 				<i class="arrow alternate circle up icon"></i>
 			</a>
@@ -34,7 +34,7 @@
 					<!--文章Markdown正文-->
 					<div class="typo m-padded-tb-small line-numbers match-braces rainbow-braces" v-html="blog.content"></div>
 					<!--赞赏-->
-					<el-popover placement="top" width="180" trigger="click" style="margin: 2em auto">
+					<el-popover placement="top" width="180" trigger="click" style="margin: 2em auto" v-if="blog.appreciation">
 						<div class="ui orange basic label">
 							<div class="image">
 								<div style="font-size: 12px;text-align: center;margin-bottom: 5px;">一毛是鼓励</div>

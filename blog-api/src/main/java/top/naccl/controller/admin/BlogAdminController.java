@@ -240,7 +240,7 @@ public class BlogAdminController {
 			Blog blog = JSONObject.toJavaObject(blogJsonObject, Blog.class);
 
 			//验证普通字段
-			if (StringUtils.isEmpty(blog.getTitle(), blog.getContent(), blog.getDescription(), blog.getFlag())
+			if (StringUtils.isEmpty(blog.getTitle(), blog.getContent(), blog.getDescription())
 					|| blog.getWords() == null || blog.getWords() < 0) {
 				return Result.error("参数有误");
 			}
