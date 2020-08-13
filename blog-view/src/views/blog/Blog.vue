@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="ui padded segment m-padded-tb-large m-margin-bottom-big">
+		<div class="ui padded top attached segment m-padded-tb-large">
 			<a class="ui large red right corner label" v-if="blog.top">
 				<i class="arrow alternate circle up icon"></i>
 			</a>
@@ -8,9 +8,7 @@
 				<div class="ui grid m-margin-lr">
 					<!--标题-->
 					<div class="row m-padded-tb-small">
-						<h2 class="ui header m-center m-scaleup">
-							<a href="#" class="m-black">{{ blog.title }}</a>
-						</h2>
+						<h2 class="ui header m-center">{{ blog.title }}</h2>
 					</div>
 					<!--文章简要信息-->
 					<div class="row m-padded-tb-small">
@@ -57,17 +55,18 @@
 				</div>
 			</div>
 		</div>
-
 		<!--博客信息-->
 		<div class="ui attached positive message">
-			<div class="ui middle aligned grid">
-				<ul class="list">
-					<li>作者：{{ $store.state.introduction.name }}<a href="/about">（联系作者）</a></li>
-					<li>发表时间：{{ blog.createTime | dateFormat('YYYY-MM-DD HH:mm')}}</li>
-					<li>最后修改：{{ blog.updateTime | dateFormat('YYYY-MM-DD HH:mm')}}</li>
-					<li>本站点采用<a href="https://creativecommons.org/licenses/by/4.0/"> 知识共享署名 4.0 </a>国际许可协议进行许可。可自由转载、引用，但需署名作者且注明文章出处。</li>
-				</ul>
-			</div>
+			<ul class="list">
+				<li>作者：{{ $store.state.introduction.name }}<a href="/about">（联系作者）</a></li>
+				<li>发表时间：{{ blog.createTime | dateFormat('YYYY-MM-DD HH:mm')}}</li>
+				<li>最后修改：{{ blog.updateTime | dateFormat('YYYY-MM-DD HH:mm')}}</li>
+				<li>本站点采用<a href="https://creativecommons.org/licenses/by/4.0/"> 知识共享署名 4.0 </a>国际许可协议进行许可。可自由转载、引用，但需署名作者且注明文章出处。</li>
+			</ul>
+		</div>
+		<!--评论-->
+		<div>
+
 		</div>
 	</div>
 </template>
