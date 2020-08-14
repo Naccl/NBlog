@@ -160,7 +160,7 @@
 }
 
 /* 代码片断 */
-.typo p code {
+.typo p code, .typo ul code {
     margin-left: 5px;
     margin-right: 5px;
     border: 1px solid #ddd;

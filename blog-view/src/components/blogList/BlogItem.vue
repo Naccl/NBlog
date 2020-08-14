@@ -1,15 +1,15 @@
 <template>
 	<div>
 		<div class="ui padded attached segment m-padded-tb-large m-margin-bottom-big m-box" v-for="item in blogList" :key="item.id">
-			<a class="ui large red right corner label" v-if="item.top">
+			<div class="ui large red right corner label" v-if="item.top">
 				<i class="arrow alternate circle up icon"></i>
-			</a>
+			</div>
 			<div class="ui middle aligned mobile reversed stackable">
 				<div class="ui grid m-margin-lr">
 					<!--标题-->
 					<div class="row m-padded-tb-small">
 						<h2 class="ui header m-center m-scaleup">
-							<a href="#" class="m-black">{{ item.title }}</a>
+							<router-link :to="'/blog/'+item.id" class="m-black">{{ item.title }}</router-link>
 						</h2>
 					</div>
 					<!--文章简要信息-->
@@ -37,7 +37,7 @@
 					<div class="typo m-padded-tb-small line-numbers match-braces rainbow-braces" v-html="item.description"></div>
 					<!--阅读全文按钮-->
 					<div class="row m-padded-tb-small m-margin-top">
-						<a :href="item.id" class="color-btn">阅读全文</a>
+						<router-link :to="'/blog/'+item.id" class="color-btn">阅读全文</router-link>
 					</div>
 					<!--横线-->
 					<div class="ui section divider m-margin-lr-no"></div>

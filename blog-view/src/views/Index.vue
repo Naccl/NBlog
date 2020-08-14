@@ -25,7 +25,10 @@
 				</div>
 			</div>
 		</div>
-
+		<!--回到顶部-->
+		<el-backtop style="box-shadow: none;background: none;">
+			<img src="/img/paper-plane.png" style="width: 40px;height: 40px;">
+		</el-backtop>
 		<!--底部footer-->
 		<Footer :siteInfo="siteInfo" :badges="badges" :newBlogList="newBlogList" :hitokoto="hitokoto"/>
 	</div>
@@ -48,6 +51,12 @@
 				badges: [],
 				newBlogList: [],
 				hitokoto: {},
+			}
+		},
+		watch:{
+			//路由改变时，页面滚动至顶部
+			'$route.fullPath'(){
+				this.scrollToTop()
 			}
 		},
 		created() {

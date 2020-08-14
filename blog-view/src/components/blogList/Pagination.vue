@@ -27,6 +27,7 @@
 		methods: {
 			//监听页码改变的事件
 			handleCurrentChange(newPage) {
+				this.scrollToTop()
 				this.pageNum = newPage
 				this.getBlogList(newPage)
 			},

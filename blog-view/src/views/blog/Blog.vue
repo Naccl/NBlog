@@ -34,11 +34,11 @@
 					<!--文章Markdown正文-->
 					<div class="typo m-padded-tb-small line-numbers match-braces rainbow-braces" v-html="blog.content"></div>
 					<!--赞赏-->
-					<el-popover placement="top" width="180" trigger="click" style="margin: 2em auto" v-if="blog.appreciation">
-						<div class="ui orange basic label">
+					<el-popover placement="top" width="220" trigger="click" style="margin: 2em auto" v-if="blog.appreciation">
+						<div class="ui orange basic label" style="width: 100%">
 							<div class="image">
 								<div style="font-size: 12px;text-align: center;margin-bottom: 5px;">一毛是鼓励</div>
-								<img :src="$store.state.siteInfo.reward" alt="" class="ui rounded bordered image" style="width: 180px">
+								<img :src="$store.state.siteInfo.reward" alt="" class="ui rounded bordered image" style="width: 100%">
 								<div style="font-size: 12px;text-align: center;margin-top: 5px;">一块是真爱</div>
 							</div>
 						</div>
@@ -86,10 +86,11 @@
 		},
 		methods: {
 			getBlog() {
-				getBlogById(12).then(res => {
+				getBlogById(this.$route.params.id).then(res => {
 					console.log(res)
 					if (res.code === 200) {
 						this.blog = res.data
+						//v-html渲染完毕后，渲染代码块样式
 						this.$nextTick(() => {
 							Prism.highlightAll()
 						})
