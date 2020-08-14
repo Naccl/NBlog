@@ -9,13 +9,13 @@ public interface TagService {
 
 	List<Tag> getTagListByBlogId(Long blogId);
 
-	int saveTag(Tag tag);
+	void saveTag(Tag tag);
 
 	Tag getTagById(Long id);
 
 	Tag getTagByName(String name);
 
-	int deleteTagById(Long id);
+	void deleteTagById(Long id);
 
-	int updateTag(Tag tag);
+	void updateTag(Tag tag);
 }

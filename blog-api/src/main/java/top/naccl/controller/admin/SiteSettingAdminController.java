@@ -34,13 +34,8 @@ public class SiteSettingAdminController {
 	 */
 	@GetMapping("/siteSettings")
 	public Result siteSettings() {
-		try {
-			Map<String, List<SiteSetting>> typeMap = siteSettingService.getList();
-			return Result.ok("请求成功", typeMap);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error();
-		}
+		Map<String, List<SiteSetting>> typeMap = siteSettingService.getList();
+		return Result.ok("请求成功", typeMap);
 	}
 
 	/**
@@ -51,34 +46,20 @@ public class SiteSettingAdminController {
 	 */
 	@PostMapping("/siteSettings")
 	public Result updateAll(@RequestBody Map<String, Object> map) {
-		try {
-			List<LinkedHashMap> siteSettings = (List<LinkedHashMap>) map.get("settings");
-			List<Integer> deleteIds = (List<Integer>) map.get("deleteIds");
-			for (Integer id : deleteIds) {//删除
-				int r = siteSettingService.deleteSiteSettingById(id);
-				if (r != 1) {
-					return Result.error("删除失败");
-				}
-			}
-			for (LinkedHashMap s : siteSettings) {
-				JSONObject siteSettingJsonObject = new JSONObject(s);
-				SiteSetting siteSetting = JSON.toJavaObject(siteSettingJsonObject, SiteSetting.class);
-				if (siteSetting.getId() != null) {//修改
-					int r = siteSettingService.updateSiteSetting(siteSetting);
-					if (r != 1) {
-						return Result.error("修改失败");
-					}
-				} else {//添加
-					int r = siteSettingService.saveSiteSetting(siteSetting);
-					if (r != 1) {
-						return Result.error("添加失败");
-					}
-				}
-			}
-			return Result.ok("更新成功");
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error();
+		List<LinkedHashMap> siteSettings = (List<LinkedHashMap>) map.get("settings");
+		List<Integer> deleteIds = (List<Integer>) map.get("deleteIds");
+		for (Integer id : deleteIds) {//删除
+			siteSettingService.deleteSiteSettingById(id);
 		}
+		for (LinkedHashMap s : siteSettings) {
+			JSONObject siteSettingJsonObject = new JSONObject(s);
+			SiteSetting siteSetting = JSON.toJavaObject(siteSettingJsonObject, SiteSetting.class);
+			if (siteSetting.getId() != null) {//修改
+				siteSettingService.updateSiteSetting(siteSetting);
+			} else {//添加
+				siteSettingService.saveSiteSetting(siteSetting);
+			}
+		}
+		return Result.ok("更新成功");
 	}
 }

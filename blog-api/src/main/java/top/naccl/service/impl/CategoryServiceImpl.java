@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.naccl.entity.Category;
+import top.naccl.exception.NotFoundException;
+import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.CategoryMapper;
 import top.naccl.service.CategoryService;
 
@@ -26,13 +28,19 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Transactional
 	@Override
-	public int saveCategory(Category category) {
-		return categoryMapper.saveCategory(category);
+	public void saveCategory(Category category) {
+		if (categoryMapper.saveCategory(category) != 1) {
+			throw new PersistenceException("分类添加失败");
+		}
 	}
 
 	@Override
 	public Category getCategoryById(Long id) {
-		return categoryMapper.getCategoryById(id);
+		Category category = categoryMapper.getCategoryById(id);
+		if (category == null) {
+			throw new NotFoundException("分类不存在");
+		}
+		return category;
 	}
 
 	@Override
@@ -42,13 +50,17 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Transactional
 	@Override
-	public int deleteCategoryById(Long id) {
-		return categoryMapper.deleteCategoryById(id);
+	public void deleteCategoryById(Long id) {
+		if (categoryMapper.deleteCategoryById(id) != 1) {
+			throw new PersistenceException("删除分类失败");
+		}
 	}
 
 	@Transactional
 	@Override
-	public int updateCategory(Category category) {
-		return categoryMapper.updateCategory(category);
+	public void updateCategory(Category category) {
+		if (categoryMapper.updateCategory(category) != 1) {
+			throw new PersistenceException("分类更新失败");
+		}
 	}
 }

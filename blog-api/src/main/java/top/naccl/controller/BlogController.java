@@ -28,15 +28,7 @@ public class BlogController {
 	 */
 	@GetMapping("/blog")
 	public Result getBlog(@RequestParam Long id) {
-		try {
-			BlogDetail blog = blogService.getBlogByIdAndIsPublished(id);
-			if (blog == null) {
-				return Result.error("博客不存在");
-			}
-			return Result.ok("获取成功", blog);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error();
-		}
+		BlogDetail blog = blogService.getBlogByIdAndIsPublished(id);
+		return Result.ok("获取成功", blog);
 	}
 }

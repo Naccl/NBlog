@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.naccl.entity.Comment;
+import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.CommentMapper;
 import top.naccl.service.CommentService;
 
@@ -37,30 +38,38 @@ public class CommentServiceImpl implements CommentService {
 
 	@Transactional
 	@Override
-	public int updateCommentPublishedById(Long commentId, Boolean published) {
-		return commentMapper.updateCommentPublishedById(commentId, published);
+	public void updateCommentPublishedById(Long commentId, Boolean published) {
+		if (commentMapper.updateCommentPublishedById(commentId, published) != 1) {
+			throw new PersistenceException("操作失败");
+		}
 	}
 
 	@Transactional
 	@Override
-	public int updateCommentNoticeById(Long commentId, Boolean notice) {
-		return commentMapper.updateCommentNoticeById(commentId, notice);
+	public void updateCommentNoticeById(Long commentId, Boolean notice) {
+		if (commentMapper.updateCommentNoticeById(commentId, notice) != 1) {
+			throw new PersistenceException("操作失败");
+		}
 	}
 
 	@Transactional
 	@Override
-	public int deleteCommentById(Long commentId) {
+	public void deleteCommentById(Long commentId) {
 		List<Comment> comments = getAllReplyComments(commentId);
 		for (Comment c : comments) {
 			delete(c);
 		}
-		return commentMapper.deleteCommentById(commentId);
+		if (commentMapper.deleteCommentById(commentId) != 1) {
+			throw new PersistenceException("评论删除失败");
+		}
 	}
 
 	@Transactional
 	@Override
-	public int updateComment(Comment comment) {
-		return commentMapper.updateComment(comment);
+	public void updateComment(Comment comment) {
+		if (commentMapper.updateComment(comment) != 1) {
+			throw new PersistenceException("评论修改失败");
+		}
 	}
 
 	/**
@@ -69,11 +78,13 @@ public class CommentServiceImpl implements CommentService {
 	 * @param comment 需要删除子评论的父评论
 	 * @return
 	 */
-	private int delete(Comment comment) {
+	private void delete(Comment comment) {
 		for (Comment c : comment.getReplyComments()) {
 			delete(c);
 		}
-		return commentMapper.deleteCommentById(comment.getId());
+		if (commentMapper.deleteCommentById(comment.getId()) != 1) {
+			throw new PersistenceException("评论删除失败");
+		}
 	}
 
 	/**

@@ -30,16 +30,11 @@ public class ArchiveController {
 	 */
 	@GetMapping("/archives")
 	public Result archives() {
-		try {
-			Map<String, List<ArchiveBlog>> archiveBlogMap = blogService.getArchiveBlogMapByIsPublished();
-			Integer count = blogService.countBlogByIsPublished();
-			Map<String, Object> map = new HashMap<>();
-			map.put("blogMap", archiveBlogMap);
-			map.put("count", count);
-			return Result.ok("请求成功", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error();
-		}
+		Map<String, List<ArchiveBlog>> archiveBlogMap = blogService.getArchiveBlogMapByIsPublished();
+		Integer count = blogService.countBlogByIsPublished();
+		Map<String, Object> map = new HashMap<>();
+		map.put("blogMap", archiveBlogMap);
+		map.put("count", count);
+		return Result.ok("请求成功", map);
 	}
 }

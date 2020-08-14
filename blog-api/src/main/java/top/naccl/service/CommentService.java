@@ -9,11 +9,11 @@ public interface CommentService {
 
 	List<Comment> getListByParentCommentId(Long parentCommentId);
 
-	int updateCommentPublishedById(Long commentId, Boolean published);
+	void updateCommentPublishedById(Long commentId, Boolean published);
 
-	int updateCommentNoticeById(Long commentId, Boolean notice);
+	void updateCommentNoticeById(Long commentId, Boolean notice);
 
-	int deleteCommentById(Long commentId);
+	void deleteCommentById(Long commentId);
 
-	int updateComment(Comment comment);
+	void updateComment(Comment comment);
 }

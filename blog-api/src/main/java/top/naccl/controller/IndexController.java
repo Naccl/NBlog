@@ -34,15 +34,10 @@ public class IndexController {
 	 */
 	@GetMapping("/site")
 	public Result site() {
-		try {
-			Map<String, Object> map = siteSettingService.getSiteInfo();
-			PageHelper.startPage(1, 3);
-			List<Blog> newBLogList = blogService.getIdAndTitleListByIsPublishedAndIsRecommend();
-			map.put("newBlogList", newBLogList);
-			return Result.ok("请求成功", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error();
-		}
+		Map<String, Object> map = siteSettingService.getSiteInfo();
+		PageHelper.startPage(1, 3);
+		List<Blog> newBLogList = blogService.getIdAndTitleListByIsPublishedAndIsRecommend();
+		map.put("newBlogList", newBLogList);
+		return Result.ok("请求成功", map);
 	}
 }

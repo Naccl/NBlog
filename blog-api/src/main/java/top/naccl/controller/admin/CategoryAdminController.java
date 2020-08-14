@@ -42,15 +42,10 @@ public class CategoryAdminController {
 	 */
 	@GetMapping("/categories")
 	public Result categories(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
-		try {
-			String orderBy = "id desc";
-			PageHelper.startPage(pageNum, pageSize, orderBy);
-			PageInfo<Category> pageInfo = new PageInfo<>(categoryService.getCategoryList());
-			return Result.ok("请求成功", pageInfo);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error();
-		}
+		String orderBy = "id desc";
+		PageHelper.startPage(pageNum, pageSize, orderBy);
+		PageInfo<Category> pageInfo = new PageInfo<>(categoryService.getCategoryList());
+		return Result.ok("请求成功", pageInfo);
 	}
 
 	/**
@@ -83,35 +78,23 @@ public class CategoryAdminController {
 	 * @return
 	 */
 	private Result getResult(Map<String, Object> map, String type) {
-		try {
-			JSONObject categoryJsonObject = new JSONObject(map);
-			Category category = JSONObject.toJavaObject(categoryJsonObject, Category.class);
-			if (StringUtils.isEmpty(category.getName())) {
-				return Result.error("分类名称不能为空");
-			}
-			//查询分类是否已存在
-			Category category1 = categoryService.getCategoryByName(category.getName());
-			if (category1 != null && category1.getId() != category.getId()) {
-				return Result.error("该分类已存在");
-			}
-			if ("save".equals(type)) {
-				int r = categoryService.saveCategory(category);
-				if (r == 1) {//添加分类成功
-					return Result.ok("添加成功");
-				} else {//添加分类失败
-					return Result.error("添加失败");
-				}
-			} else {
-				int r = categoryService.updateCategory(category);
-				if (r == 1) {//更新分类成功
-					return Result.ok("更新成功");
-				} else {//更新分类失败
-					return Result.error("更新失败");
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error();
+		JSONObject categoryJsonObject = new JSONObject(map);
+		Category category = JSONObject.toJavaObject(categoryJsonObject, Category.class);
+		if (StringUtils.isEmpty(category.getName())) {
+			return Result.error("分类名称不能为空");
+		}
+		//查询分类是否已存在
+		Category category1 = categoryService.getCategoryByName(category.getName());
+		//如果 category1.getId() == category.getId() 就是更新分类
+		if (category1 != null && category1.getId() != category.getId()) {
+			return Result.error("该分类已存在");
+		}
+		if ("save".equals(type)) {
+			categoryService.saveCategory(category);
+			return Result.ok("分类添加成功");
+		} else {
+			categoryService.updateCategory(category);
+			return Result.ok("分类更新成功");
 		}
 	}
 
@@ -123,21 +106,12 @@ public class CategoryAdminController {
 	 */
 	@DeleteMapping("/category")
 	public Result delete(@RequestParam Long id) {
-		try {
-			//删除存在博客关联的分类后，该博客的查询会出异常
-			int num = blogService.countBlogByCategoryId(id);
-			if (num != 0) {
-				return Result.error("已有博客与此分类关联，不可删除");
-			}
-			int r = categoryService.deleteCategoryById(id);
-			if (r == 1) {//删除分类成功
-				return Result.ok("删除成功");
-			} else {//删除分类失败
-				return Result.error("删除失败");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error();
+		//删除存在博客关联的分类后，该博客的查询会出异常
+		int num = blogService.countBlogByCategoryId(id);
+		if (num != 0) {
+			return Result.error("已有博客与此分类关联，不可删除");
 		}
+		categoryService.deleteCategoryById(id);
+		return Result.ok("删除成功");
 	}
 }

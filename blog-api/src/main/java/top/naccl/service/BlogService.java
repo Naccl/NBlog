@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface BlogService {
-	List<Blog> getListByTitleOrCategoryId(String title, Integer CategoryId);
+	List<Blog> getListByTitleAndCategoryId(String title, Integer CategoryId);
 
 	List<Blog> getIdAndTitleList();
 
@@ -19,25 +19,25 @@ public interface BlogService {
 
 	Map<String, List<ArchiveBlog>> getArchiveBlogMapByIsPublished();
 
-	int deleteBlogById(Long id);
+	void deleteBlogById(Long id);
 
-	int deleteBlogTagByBlogId(Long blogId);
+	void deleteBlogTagByBlogId(Long blogId);
 
-	int saveBlog(Blog blog);
+	void saveBlog(Blog blog);
 
-	int saveBlogTag(Long blogId, Long tagId);
+	void saveBlogTag(Long blogId, Long tagId);
 
-	int updateBlogRecommendById(Long BlogId, Boolean recommend);
+	void updateBlogRecommendById(Long BlogId, Boolean recommend);
 
-	int updateBlogPublishedById(Long BlogId, Boolean published);
+	void updateBlogPublishedById(Long BlogId, Boolean published);
 
-	int updateBlogTopById(Long blogId, Boolean top);
+	void updateBlogTopById(Long blogId, Boolean top);
 
 	Blog getBlogById(Long id);
 
 	BlogDetail getBlogByIdAndIsPublished(Long id);
 
-	int updateBlog(Blog blog);
+	void updateBlog(Blog blog);
 
 	int countBlog();
 

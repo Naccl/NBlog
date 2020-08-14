@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.naccl.entity.Blog;
+import top.naccl.exception.NotFoundException;
+import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.BlogMapper;
 import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.BlogDetail;
@@ -29,8 +31,8 @@ public class BlogServiceImpl implements BlogService {
 	TagService tagService;
 
 	@Override
-	public List<Blog> getListByTitleOrCategoryId(String title, Integer CategoryId) {
-		return blogMapper.getListByTitleOrCategoryId(title, CategoryId);
+	public List<Blog> getListByTitleAndCategoryId(String title, Integer CategoryId) {
+		return blogMapper.getListByTitleAndCategoryId(title, CategoryId);
 	}
 
 	@Override
@@ -65,62 +67,85 @@ public class BlogServiceImpl implements BlogService {
 
 	@Transactional
 	@Override
-	public int deleteBlogById(Long id) {
-		return blogMapper.deleteBlogById(id);
+	public void deleteBlogById(Long id) {
+		if (blogMapper.deleteBlogById(id) != 1) {
+			throw new NotFoundException("该博客不存在");
+		}
 	}
 
 	@Transactional
 	@Override
-	public int deleteBlogTagByBlogId(Long blogId) {
-		return blogMapper.deleteBlogTagByBlogId(blogId);
+	public void deleteBlogTagByBlogId(Long blogId) {
+		if (blogMapper.deleteBlogTagByBlogId(blogId) == 0) {
+			throw new PersistenceException("维护博客标签关联表失败");
+		}
 	}
 
 	@Transactional
 	@Override
-	public int saveBlog(Blog blog) {
-		return blogMapper.saveBlog(blog);
+	public void saveBlog(Blog blog) {
+		if (blogMapper.saveBlog(blog) != 1) {
+			throw new PersistenceException("添加博客失败");
+		}
 	}
 
 	@Transactional
 	@Override
-	public int saveBlogTag(Long blogId, Long tagId) {
-		return blogMapper.saveBlogTag(blogId, tagId);
+	public void saveBlogTag(Long blogId, Long tagId) {
+		if (blogMapper.saveBlogTag(blogId, tagId) != 1) {
+			throw new PersistenceException("维护博客标签关联表失败");
+		}
 	}
 
 	@Transactional
 	@Override
-	public int updateBlogRecommendById(Long BlogId, Boolean recommend) {
-		return blogMapper.updateBlogRecommendById(BlogId, recommend);
+	public void updateBlogRecommendById(Long BlogId, Boolean recommend) {
+		if (blogMapper.updateBlogRecommendById(BlogId, recommend) != 1) {
+			throw new PersistenceException("操作失败");
+		}
 	}
 
 	@Transactional
 	@Override
-	public int updateBlogPublishedById(Long BlogId, Boolean published) {
-		return blogMapper.updateBlogPublishedById(BlogId, published);
+	public void updateBlogPublishedById(Long BlogId, Boolean published) {
+		if (blogMapper.updateBlogPublishedById(BlogId, published) != 1) {
+			throw new PersistenceException("操作失败");
+		}
 	}
 
 	@Transactional
 	@Override
-	public int updateBlogTopById(Long blogId, Boolean top) {
-		return blogMapper.updateBlogTopById(blogId, top);
+	public void updateBlogTopById(Long blogId, Boolean top) {
+		if (blogMapper.updateBlogTopById(blogId, top) != 1) {
+			throw new PersistenceException("操作失败");
+		}
 	}
 
 	@Override
 	public Blog getBlogById(Long id) {
-		return blogMapper.getBlogById(id);
+		Blog blog = blogMapper.getBlogById(id);
+		if (blog == null) {
+			throw new NotFoundException("博客不存在");
+		}
+		return blog;
 	}
 
 	@Override
 	public BlogDetail getBlogByIdAndIsPublished(Long id) {
 		BlogDetail blog = blogMapper.getBlogByIdAndIsPublished(id);
+		if (blog == null) {
+			throw new NotFoundException("该博客不存在");
+		}
 		blog.setContent(MarkdownUtils.markdownToHtmlExtensions(blog.getContent()));
 		return blog;
 	}
 
 	@Transactional
 	@Override
-	public int updateBlog(Blog blog) {
-		return blogMapper.updateBlog(blog);
+	public void updateBlog(Blog blog) {
+		if (blogMapper.updateBlog(blog) != 1) {
+			throw new PersistenceException("更新博客失败");
+		}
 	}
 
 	@Override

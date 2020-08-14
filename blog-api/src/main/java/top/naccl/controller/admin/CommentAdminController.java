@@ -48,16 +48,11 @@ public class CommentAdminController {
 	                       @RequestParam(defaultValue = "") Long blogId,
 	                       @RequestParam(defaultValue = "1") Integer pageNum,
 	                       @RequestParam(defaultValue = "10") Integer pageSize) {
-		try {
-			String orderBy = "create_time desc";
-			PageHelper.startPage(pageNum, pageSize, orderBy);
-			List<Comment> comments = commentService.getListByPageAndParentCommentId(page, blogId, (long) -1);
-			PageInfo<Comment> pageInfo = new PageInfo<>(comments);
-			return Result.ok("请求成功", pageInfo);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error();
-		}
+		String orderBy = "create_time desc";
+		PageHelper.startPage(pageNum, pageSize, orderBy);
+		List<Comment> comments = commentService.getListByPageAndParentCommentId(page, blogId, (long) -1);
+		PageInfo<Comment> pageInfo = new PageInfo<>(comments);
+		return Result.ok("请求成功", pageInfo);
 	}
 
 	/**
@@ -67,13 +62,8 @@ public class CommentAdminController {
 	 */
 	@GetMapping("/blogIdAndTitle")
 	public Result blogIdAndTitle() {
-		try {
-			List<Blog> blogs = blogService.getIdAndTitleList();
-			return Result.ok("请求成功", blogs);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error();
-		}
+		List<Blog> blogs = blogService.getIdAndTitleList();
+		return Result.ok("请求成功", blogs);
 	}
 
 	/**
@@ -85,17 +75,8 @@ public class CommentAdminController {
 	 */
 	@PutMapping("/comment/published")
 	public Result updatePublished(@RequestParam Long id, @RequestParam Boolean published) {
-		try {
-			int r = commentService.updateCommentPublishedById(id, published);
-			if (r == 1) {
-				return Result.ok("操作成功");
-			} else {
-				return Result.error("操作失败");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error();
-		}
+		commentService.updateCommentPublishedById(id, published);
+		return Result.ok("操作成功");
 	}
 
 	/**
@@ -107,17 +88,8 @@ public class CommentAdminController {
 	 */
 	@PutMapping("/comment/notice")
 	public Result updateNotice(@RequestParam Long id, @RequestParam Boolean notice) {
-		try {
-			int r = commentService.updateCommentNoticeById(id, notice);
-			if (r == 1) {
-				return Result.ok("操作成功");
-			} else {
-				return Result.error("操作失败");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error();
-		}
+		commentService.updateCommentNoticeById(id, notice);
+		return Result.ok("操作成功");
 	}
 
 	/**
@@ -128,17 +100,8 @@ public class CommentAdminController {
 	 */
 	@DeleteMapping("/comment")
 	public Result delete(@RequestParam Long id) {
-		try {
-			int r = commentService.deleteCommentById(id);
-			if (r == 1) {
-				return Result.ok("操作成功");
-			} else {
-				return Result.error("操作失败");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error();
-		}
+		commentService.deleteCommentById(id);
+		return Result.ok("删除成功");
 	}
 
 	/**
@@ -149,23 +112,12 @@ public class CommentAdminController {
 	 */
 	@PutMapping("/comment")
 	public Result updateComment(@RequestBody Map<String, Object> map) {
-		try {
-			JSONObject commentJsonObject = new JSONObject(map);
-			Comment comment = JSONObject.toJavaObject(commentJsonObject, Comment.class);
-
-			if (StringUtils.isEmpty(comment.getNickname(), comment.getEmail(), comment.getIp(), comment.getContent())) {
-				return Result.error("参数有误");
-			}
-
-			int r = commentService.updateComment(comment);
-			if (r == 1) {//更新成功
-				return Result.ok("修改成功");
-			} else {//更新失败
-				return Result.error("修改失败");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Result.error();
+		JSONObject commentJsonObject = new JSONObject(map);
+		Comment comment = JSONObject.toJavaObject(commentJsonObject, Comment.class);
+		if (StringUtils.isEmpty(comment.getNickname(), comment.getEmail(), comment.getIp(), comment.getContent())) {
+			return Result.error("参数有误");
 		}
+		commentService.updateComment(comment);
+		return Result.ok("评论修改成功");
 	}
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.naccl.entity.SiteSetting;
+import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.SiteSettingMapper;
 import top.naccl.model.bean.Badge;
 import top.naccl.model.bean.Copyright;
@@ -106,19 +107,25 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 
 	@Transactional
 	@Override
-	public int updateSiteSetting(SiteSetting siteSetting) {
-		return siteSettingMapper.updateSiteSetting(siteSetting);
+	public void updateSiteSetting(SiteSetting siteSetting) {
+		if (siteSettingMapper.updateSiteSetting(siteSetting) != 1) {
+			throw new PersistenceException("配置修改失败");
+		}
 	}
 
 	@Transactional
 	@Override
-	public int deleteSiteSettingById(Integer id) {
-		return siteSettingMapper.deleteSiteSettingById(id);
+	public void deleteSiteSettingById(Integer id) {
+		if (siteSettingMapper.deleteSiteSettingById(id) != 1) {
+			throw new PersistenceException("配置删除失败");
+		}
 	}
 
 	@Transactional
 	@Override
-	public int saveSiteSetting(SiteSetting siteSetting) {
-		return siteSettingMapper.saveSiteSetting(siteSetting);
+	public void saveSiteSetting(SiteSetting siteSetting) {
+		if (siteSettingMapper.saveSiteSetting(siteSetting) != 1) {
+			throw new PersistenceException("配置添加失败");
+		}
 	}
 }

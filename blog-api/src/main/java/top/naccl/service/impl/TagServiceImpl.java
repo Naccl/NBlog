@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.naccl.entity.Tag;
+import top.naccl.exception.NotFoundException;
+import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.TagMapper;
 import top.naccl.service.TagService;
 
@@ -31,13 +33,19 @@ public class TagServiceImpl implements TagService {
 
 	@Transactional
 	@Override
-	public int saveTag(Tag tag) {
-		return tagMapper.saveTag(tag);
+	public void saveTag(Tag tag) {
+		if (tagMapper.saveTag(tag) != 1) {
+			throw new PersistenceException("标签添加失败");
+		}
 	}
 
 	@Override
 	public Tag getTagById(Long id) {
-		return tagMapper.getTagById(id);
+		Tag tag = tagMapper.getTagById(id);
+		if (tag == null) {
+			throw new NotFoundException("标签不存在");
+		}
+		return tag;
 	}
 
 	@Override
@@ -47,13 +55,17 @@ public class TagServiceImpl implements TagService {
 
 	@Transactional
 	@Override
-	public int deleteTagById(Long id) {
-		return tagMapper.deleteTagById(id);
+	public void deleteTagById(Long id) {
+		if (tagMapper.deleteTagById(id) != 1) {
+			throw new PersistenceException("标签删除失败");
+		}
 	}
 
 	@Transactional
 	@Override
-	public int updateTag(Tag tag) {
-		return tagMapper.updateTag(tag);
+	public void updateTag(Tag tag) {
+		if (tagMapper.updateTag(tag) != 1) {
+			throw new PersistenceException("标签更新失败");
+		}
 	}
 }

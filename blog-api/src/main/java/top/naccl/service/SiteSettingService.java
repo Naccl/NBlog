@@ -10,9 +10,9 @@ public interface SiteSettingService {
 
 	Map<String, Object> getSiteInfo();
 
-	int updateSiteSetting(SiteSetting siteSetting);
+	void updateSiteSetting(SiteSetting siteSetting);
 
-	int deleteSiteSettingById(Integer id);
+	void deleteSiteSettingById(Integer id);
 
-	int saveSiteSetting(SiteSetting siteSetting);
+	void saveSiteSetting(SiteSetting siteSetting);
 }
