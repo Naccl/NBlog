@@ -30,10 +30,10 @@ Vue.prototype.msgInfo = function (msg) {
 	this.$message.info(msg);
 }
 
+const cubic = value => Math.pow(value, 3);
+const easeInOutCubic = value => value < 0.5 ? cubic(value * 2) / 2 : 1 - cubic((1 - value) * 2) / 2;
 //滚动至页面顶部
 Vue.prototype.scrollToTop = function () {
-	const cubic = value => Math.pow(value, 3);
-	const easeInOutCubic = value => value < 0.5 ? cubic(value * 2) / 2 : 1 - cubic((1 - value) * 2) / 2;
 	const el = document.documentElement
 	const beginTime = Date.now()
 	const beginValue = el.scrollTop

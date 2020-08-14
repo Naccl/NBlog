@@ -125,7 +125,7 @@
 			initDescriptionVditor() {
 				const options = {
 					height: 320,
-					mode: 'ir',//即时渲染
+					mode: 'sv',//分屏渲染
 					outline: true,//大纲
 					cache: {//不缓存到localStorage
 						enable: false,
@@ -146,7 +146,7 @@
 			initContentVditor() {
 				const options = {
 					height: 640,
-					mode: 'ir',//即时渲染
+					mode: 'sv',//分屏渲染
 					outline: true,//大纲
 					cache: {//不缓存到localStorage
 						enable: false,

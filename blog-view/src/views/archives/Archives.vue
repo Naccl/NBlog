@@ -13,9 +13,9 @@
 					<div class="tl-item" v-for="blog in value" :key="blog.id">
 						<div class="tl-wrap">
 							<span class="tl-date">{{ blog.day }}</span>
-							<a :href="blog.id">
+							<router-link :to="'/blog/'+blog.id">
 								<div class="ui left pointing label tl-title">{{ blog.title }}</div>
-							</a>
+							</router-link>
 						</div>
 					</div>
 				</div>
@@ -45,7 +45,8 @@
 					4: 'tl-red',
 				}
 			}
-		}, created() {
+		},
+		created() {
 			this.getArchives()
 		},
 		methods: {
