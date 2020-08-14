@@ -13,9 +13,9 @@
 				<input type="text" placeholder="Search...">
 				<i class="search icon"></i>
 			</div>
-			<a class="ui menu black icon button m-right-top m-mobile-show" @click="toggle">
+			<button class="ui menu black icon button m-right-top m-mobile-show" @click="toggle">
 				<i class="sidebar icon"></i>
-			</a>
+			</button>
 		</div>
 	</div>
 </template>

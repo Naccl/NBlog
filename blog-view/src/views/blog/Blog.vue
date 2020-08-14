@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<div class="ui padded attached segment m-padded-tb-large">
-			<a class="ui large red right corner label" v-if="blog.top">
+			<div class="ui large red right corner label" v-if="blog.top">
 				<i class="arrow alternate circle up icon"></i>
-			</a>
+			</div>
 			<div class="ui middle aligned mobile reversed stackable">
 				<div class="ui grid m-margin-lr">
 					<!--标题-->
@@ -28,9 +28,9 @@
 						</div>
 					</div>
 					<!--分类-->
-					<a :href="blog.category.id" class="ui orange large ribbon label" v-if="blog.category">
+					<router-link :to="'/category/'+blog.category.id" class="ui orange large ribbon label" v-if="blog.category">
 						<i class="small folder open icon"></i><span class="m-text-500">{{ blog.category.name }}</span>
-					</a>
+					</router-link>
 					<!--文章Markdown正文-->
 					<div class="typo m-padded-tb-small line-numbers match-braces rainbow-braces" v-html="blog.content"></div>
 					<!--赞赏-->
@@ -49,7 +49,7 @@
 					<!--标签-->
 					<div class="row m-padded-tb-no">
 						<div class="column m-padding-left-no">
-							<a :href="tag.id" class="ui tag label m-text-500 m-margin-small" :class="tag.color" v-for="tag in blog.tags" :key="tag.id">{{ tag.name }}</a>
+							<router-link :to="'/tag/'+tag.id" class="ui tag label m-text-500 m-margin-small" :class="tag.color" v-for="tag in blog.tags" :key="tag.id">{{ tag.name }}</router-link>
 						</div>
 					</div>
 				</div>
@@ -58,10 +58,10 @@
 		<!--博客信息-->
 		<div class="ui attached positive message">
 			<ul class="list">
-				<li>作者：{{ $store.state.introduction.name }}<a href="/about">（联系作者）</a></li>
+				<li>作者：{{ $store.state.introduction.name }}<router-link to="/about">（联系作者）</router-link></li>
 				<li>发表时间：{{ blog.createTime | dateFormat('YYYY-MM-DD HH:mm')}}</li>
 				<li>最后修改：{{ blog.updateTime | dateFormat('YYYY-MM-DD HH:mm')}}</li>
-				<li>本站点采用<a href="https://creativecommons.org/licenses/by/4.0/"> 知识共享署名 4.0 </a>国际许可协议进行许可。可自由转载、引用，但需署名作者且注明文章出处。</li>
+				<li>本站点采用<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"> 知识共享署名 4.0 </a>国际许可协议进行许可。可自由转载、引用，但需署名作者且注明文章出处。</li>
 			</ul>
 		</div>
 		<!--评论-->
@@ -79,6 +79,12 @@
 		data() {
 			return {
 				blog: {}
+			}
+		},
+		watch:{
+			//在当前组件内路由到其它博客文章时，要重新获取文章
+			'$route.fullPath'(){
+				this.getBlog()
 			}
 		},
 		created() {

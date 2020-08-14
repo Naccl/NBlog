@@ -15,7 +15,7 @@
 				<div class="six wide column">
 					<h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
 					<div class="ui inverted link list">
-						<a :href="item.id" target="_blank" v-for="item in newBlogList" :key="item.id" class="item m-text-thin m-padded-tb-small">{{ item.title }}</a>
+						<router-link :to="'/blog/'+item.id" v-for="item in newBlogList" :key="item.id" class="item m-text-thin m-padded-tb-small">{{ item.title }}</router-link>
 					</div>
 				</div>
 
@@ -29,14 +29,14 @@
 
 			<p class="m-text-thin m-text-spaced m-opacity-tiny">
 				<span style="margin-right: 10px" v-if="siteInfo.copyright">{{ siteInfo.copyright.title }}</span>
-				<a href="/" style="color:#ffe500" v-if="siteInfo.copyright">{{ siteInfo.copyright.siteName }}</a>
+				<router-link to="/" style="color:#ffe500" v-if="siteInfo.copyright">{{ siteInfo.copyright.siteName }}</router-link>
 				<span style="margin: 0 15px" v-if="siteInfo.copyright && siteInfo.beian">|</span>
 				<img src="/img/beian.png" alt="" class="beian" v-if="siteInfo.beian">
 				<a rel="external nofollow noopener" href="http://www.beian.miit.gov.cn/" target="_blank" style="color:#ffe500">{{ siteInfo.beian }}</a>
 			</p>
 
 			<div class="github-badge" v-for="(item,index) in badges" :key="index">
-				<a rel="external nofollow" :href="item.url" target="_blank" :title="item.title">
+				<a rel="external nofollow noopener" :href="item.url" target="_blank" :title="item.title">
 					<span class="badge-subject">{{ item.subject }}</span>
 					<span class="badge-value" :class="'bg-'+item.color">{{ item.value }}</span>
 				</a>
