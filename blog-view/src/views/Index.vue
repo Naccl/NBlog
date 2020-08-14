@@ -53,9 +53,9 @@
 				hitokoto: {},
 			}
 		},
-		watch:{
+		watch: {
 			//路由改变时，页面滚动至顶部
-			'$route.fullPath'(){
+			'$route.fullPath'() {
 				this.scrollToTop()
 			}
 		},

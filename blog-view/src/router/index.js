@@ -16,6 +16,7 @@ const routes = [
 		children: [
 			{
 				path: '/home',
+				name: 'home',
 				component: Home,
 				meta: {
 					title: '首页'
@@ -23,6 +24,7 @@ const routes = [
 			},
 			{
 				path: '/archives',
+				name: 'archives',
 				component: Archives,
 				meta: {
 					title: '归档'
@@ -30,6 +32,7 @@ const routes = [
 			},
 			{
 				path: '/blog/:id',
+				name: 'blog',
 				component: Blog,
 				meta: {
 					title: '博客'
