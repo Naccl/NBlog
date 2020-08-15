@@ -26,13 +26,11 @@
         select c.id, c.nickname, c.email, c.content, c.avatar, c.create_time, c.ip, c.is_published, c.is_admin_comment, c.page,
         c.is_notice, c.parent_comment_id, c.blog_id, b.title
         from comment as c left join blog as b on c.blog_id=b.id
-        <where>
-            c.page=#{page}
-            <if test="page==0 and blogId!=null">
-                and c.blog_id=#{blogId}
-            </if>
-            and c.parent_comment_id=#{parentCommentId}
-        </where>
+        where c.page=#{page}
+        <if test="page==0 and blogId!=null">
+            and c.blog_id=#{blogId}
+        </if>
+        and c.parent_comment_id=#{parentCommentId}
     </select>
 
     <!--按父评论id查询评论List-->
@@ -41,6 +39,30 @@
         c.is_notice, c.parent_comment_id, c.blog_id, b.title
         from comment as c left join blog as b on c.blog_id=b.id
         where c.parent_comment_id=#{parentCommentId}
+    </select>
+
+    <resultMap id="pageComment" type="top.naccl.model.vo.PageComment">
+        <id property="id" column="id"/>
+        <result property="nickname" column="nickname"/>
+        <result property="content" column="content"/>
+        <result property="avatar" column="avatar"/>
+        <result property="createTime" column="create_time"/>
+        <result property="adminComment" column="is_admin_comment"/>
+        <result property="parentCommentId" column="parent_comment_id"/>
+        <result property="parentCommentNickname" column="parent_comment_nickname"/>
+    </resultMap>
+
+    <!--查询页面展示的评论List-->
+    <select id="getPageCommentListByPageAndParentCommentId" resultMap="pageComment">
+        select id, nickname, content, avatar, create_time, is_admin_comment
+        from comment
+        where page=#{page}
+        <if test="page==0 and blogId!=null">
+            and blog_id=#{blogId}
+        </if>
+        and parent_comment_id=#{parentCommentId}
+        and is_published=true
+        order by create_time desc
     </select>
 
     <!--更新评论公开状态-->
@@ -62,4 +84,13 @@
     <update id="updateComment">
         update comment set nickname=#{nickname}, email=#{email}, ip=#{ip}, content=#{content} where id=#{id}
     </update>
+
+    <!--按页面查询评论数量-->
+    <select id="countByPageAndIsPublished" resultType="java.lang.Integer">
+        select count(*) from comment
+        where page=#{page}
+        <if test="page==0 and blogId!=0">
+            and blog_id=#{blogId}
+        </if>
+    </select>
 </mapper>

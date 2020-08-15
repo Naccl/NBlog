@@ -6,8 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 import top.naccl.entity.Comment;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.CommentMapper;
+import top.naccl.model.vo.PageComment;
 import top.naccl.service.CommentService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,8 +34,36 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public List<Comment> getListByParentCommentId(Long parentCommentId) {
-		return commentMapper.getListByParentCommentId(parentCommentId);
+	public List<PageComment> getPageCommentList(Integer page, Long blogId, Long parentCommentId) {
+		List<PageComment> comments = getPageCommentListByPageAndParentCommentId(page, blogId, parentCommentId);
+		for (PageComment c : comments) {
+			List<PageComment> tmpComments = new ArrayList<>();
+			getReplyComments(tmpComments, c.getReplyComments());
+			c.setReplyComments(tmpComments);
+		}
+		return comments;
+	}
+
+	/**
+	 * 将所有子评论递归取出到一个List中
+	 *
+	 * @param comments
+	 * @return
+	 */
+	private void getReplyComments(List<PageComment> tmpComments, List<PageComment> comments) {
+		for (PageComment c : comments) {
+			tmpComments.add(c);
+			getReplyComments(tmpComments, c.getReplyComments());
+		}
+	}
+
+	private List<PageComment> getPageCommentListByPageAndParentCommentId(Integer page, Long blogId, Long parentCommentId) {
+		List<PageComment> comments = commentMapper.getPageCommentListByPageAndParentCommentId(page, blogId, parentCommentId);
+		for (PageComment c : comments) {
+			List<PageComment> replyComments = getPageCommentListByPageAndParentCommentId(page, blogId, c.getId());
+			c.setReplyComments(replyComments);
+		}
+		return comments;
 	}
 
 	@Transactional
@@ -70,6 +100,11 @@ public class CommentServiceImpl implements CommentService {
 		if (commentMapper.updateComment(comment) != 1) {
 			throw new PersistenceException("评论修改失败");
 		}
+	}
+
+	@Override
+	public int countByPageAndIsPublished(Integer page, Long blogId) {
+		return commentMapper.countByPageAndIsPublished(page, blogId);
 	}
 
 	/**

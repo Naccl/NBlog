@@ -3,6 +3,7 @@ package top.naccl.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import top.naccl.entity.Comment;
+import top.naccl.model.vo.PageComment;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ public interface CommentMapper {
 
 	List<Comment> getListByParentCommentId(Long parentCommentId);
 
+	List<PageComment> getPageCommentListByPageAndParentCommentId(Integer page, Long blogId, Long parentCommentId);
+
 	int updateCommentPublishedById(Long commentId, Boolean published);
 
 	int updateCommentNoticeById(Long commentId, Boolean notice);
@@ -25,4 +28,6 @@ public interface CommentMapper {
 	int deleteCommentById(Long commentId);
 
 	int updateComment(Comment comment);
+
+	int countByPageAndIsPublished(Integer page, Long blogId);
 }
