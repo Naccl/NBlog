@@ -167,4 +167,9 @@ public class BlogServiceImpl implements BlogService {
 	public int countBlogByTagId(Long tagId) {
 		return blogMapper.countBlogByTagId(tagId);
 	}
+
+	@Override
+	public Boolean getCommentEnabledByBlogId(Long blogId) {
+		return blogMapper.getCommentEnabledByBlogId(blogId);
+	}
 }

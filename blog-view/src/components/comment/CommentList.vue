@@ -1,5 +1,5 @@
 <template>
-	<div class="ui bottom teal attached segment threaded comments">
+	<div>
 		<Comment :count="count" :comments="comments" :parentCommentId="parentCommentId" :setParentCommentId="setParentCommentId"/>
 		<Pagination :page="page" :blogId="blogId" :totalPage="totalPage" :getCommentList="getCommentList" :setParentCommentId="setParentCommentId"/>
 	</div>

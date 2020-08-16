@@ -67,7 +67,10 @@
 			</ul>
 		</div>
 		<!--评论-->
-		<CommentList :page="0" :blogId="blogId"/>
+		<div class="ui bottom teal attached segment threaded comments">
+			<CommentList :page="0" :blogId="blogId" v-if="blog.commentEnabled"/>
+			<h3 class="ui header" v-else>评论已关闭</h3>
+		</div>
 	</div>
 </template>
 
