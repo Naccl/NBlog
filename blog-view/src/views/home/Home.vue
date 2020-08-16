@@ -5,7 +5,7 @@
 </template>
 
 <script>
-	import BlogList from "@/components/blogList/BlogList";
+	import BlogList from "@/components/blog/BlogList";
 	import {getBlogList} from "@/network/home";
 
 	export default {

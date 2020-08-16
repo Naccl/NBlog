@@ -27,6 +27,7 @@
 					</template>
 				</el-table-column>
 				<el-table-column label="邮箱" prop="email"></el-table-column>
+				<el-table-column label="网站" prop="website"></el-table-column>
 				<el-table-column label="ip" prop="ip" width="130"></el-table-column>
 				<el-table-column label="评论内容" prop="content"></el-table-column>
 				<el-table-column label="所在页面">
@@ -73,6 +74,9 @@
 				<el-form-item label="邮箱" prop="email">
 					<el-input v-model="editForm.email"></el-input>
 				</el-form-item>
+				<el-form-item label="网站" prop="website">
+					<el-input v-model="editForm.website"></el-input>
+				</el-form-item>
 				<el-form-item label="ip" prop="ip">
 					<el-input v-model="editForm.ip"></el-input>
 				</el-form-item>
@@ -116,6 +120,7 @@
 					id: null,
 					nickname: '',
 					email: '',
+					website: null,
 					ip: '',
 					content: ''
 				},
@@ -257,6 +262,7 @@
 							id: this.editForm.id,
 							nickname: this.editForm.nickname,
 							email: this.editForm.email,
+							website: this.editForm.website,
 							ip: this.editForm.ip,
 							content: this.editForm.content,
 						}
