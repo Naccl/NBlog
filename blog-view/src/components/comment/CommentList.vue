@@ -1,7 +1,7 @@
 <template>
 	<div class="ui bottom teal attached segment threaded comments">
-		<Comment :count="count" :comments="comments"/>
-		<Pagination :page="page" :blogId="blogId" :totalPage="totalPage" :getCommentList="getCommentList"/>
+		<Comment :count="count" :comments="comments" :parentCommentId="parentCommentId" :setParentCommentId="setParentCommentId"/>
+		<Pagination :page="page" :blogId="blogId" :totalPage="totalPage" :getCommentList="getCommentList" :setParentCommentId="setParentCommentId"/>
 	</div>
 </template>
 
@@ -27,7 +27,8 @@
 			return {
 				count: 0,
 				comments: [],
-				totalPage: 0
+				totalPage: 0,
+				parentCommentId: -1
 			}
 		},
 		methods: {
@@ -44,6 +45,9 @@
 				}).catch(() => {
 					this.msgError("请求失败")
 				})
+			},
+			setParentCommentId(id) {
+				this.parentCommentId = id
 			}
 		}
 	}

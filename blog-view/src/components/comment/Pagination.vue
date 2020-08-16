@@ -24,6 +24,10 @@
 			totalPage: {
 				type: Number,
 				required: true
+			},
+			setParentCommentId: {
+				type: Function,
+				required: true
 			}
 		},
 		computed: {
@@ -55,6 +59,7 @@
 			//监听页码改变的事件
 			handleCurrentChange(newPage) {
 				this.pageNum = newPage
+				this.setParentCommentId(-1)
 				this.getCommentList(this.query)
 			},
 		}
