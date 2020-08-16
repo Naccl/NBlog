@@ -1,7 +1,7 @@
 <template>
 	<!--评论列表-->
 	<div>
-		<SubmitComment v-if="parentCommentId===-1" :parentCommentId="parentCommentId" :setParentCommentId="setParentCommentId"/>
+		<CommentForm v-if="parentCommentId===-1" :parentCommentId="parentCommentId" :setParentCommentId="setParentCommentId"/>
 		<h3 class="ui dividing header">Comments | {{ count }} 条评论</h3>
 		<h3 class="ui header" v-if="count===0">快来抢沙发！</h3>
 		<div class="comment" v-for="comment in comments" :key="comment.id">
@@ -35,20 +35,20 @@
 							<el-button size="mini" type="primary" @click="setParentCommentId(reply.id)">回复</el-button>
 						</div>
 					</div>
-					<SubmitComment v-if="parentCommentId===reply.id" :parentCommentId="parentCommentId" :setParentCommentId="setParentCommentId"/>
+					<CommentForm v-if="parentCommentId===reply.id" :parentCommentId="parentCommentId" :setParentCommentId="setParentCommentId"/>
 				</div>
 			</div>
-			<SubmitComment v-if="parentCommentId===comment.id" :parentCommentId="parentCommentId" :setParentCommentId="setParentCommentId"/>
+			<CommentForm v-if="parentCommentId===comment.id" :parentCommentId="parentCommentId" :setParentCommentId="setParentCommentId"/>
 		</div>
 	</div>
 </template>
 
 <script>
-	import SubmitComment from "./SubmitComment";
+	import CommentForm from "./CommentForm";
 
 	export default {
 		name: "Comment",
-		components: {SubmitComment},
+		components: {CommentForm},
 		props: {
 			count: {
 				type: Number,

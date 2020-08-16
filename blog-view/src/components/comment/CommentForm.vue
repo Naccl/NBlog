@@ -9,17 +9,26 @@
 			<el-input :class="'textarea'" type="textarea" :rows="5" v-model="form.content" placeholder="评论千万条，友善第一条"
 			          maxlength="250" show-word-limit :validate-event="false"></el-input>
 			<el-form-item prop="nickname">
-				<el-input v-model="form.nickname" placeholder="昵称（必填）" :validate-event="false">
+				<el-popover ref="nicknamePopover" placement="bottom" trigger="focus"
+				            content="输入QQ号将自动拉取昵称和头像">
+				</el-popover>
+				<el-input v-model="form.nickname" placeholder="昵称（必填）" :validate-event="false" v-popover:nicknamePopover>
 					<i slot="prefix" class="el-input__icon el-icon-user"></i>
 				</el-input>
 			</el-form-item>
 			<el-form-item prop="email">
-				<el-input v-model="form.email" placeholder="邮箱（必填）" :validate-event="false">
+				<el-popover ref="emailPopover" placement="bottom" trigger="focus"
+				            content="邮箱将保密，用于接收回复邮件，可随时退订">
+				</el-popover>
+				<el-input v-model="form.email" placeholder="邮箱（必填）" :validate-event="false" v-popover:emailPopover>
 					<i slot="prefix" class="el-input__icon el-icon-message"></i>
 				</el-input>
 			</el-form-item>
 			<el-form-item>
-				<el-input v-model="form.website" placeholder="网站或博客（可选）">
+				<el-popover ref="websitePopover" placement="bottom" trigger="focus"
+				            content="可以让我参观一下吗😊">
+				</el-popover>
+				<el-input v-model="form.website" placeholder="网站或博客（可选）" v-popover:websitePopover>
 					<i slot="prefix" class="el-input__icon el-icon-map-location"></i>
 				</el-input>
 			</el-form-item>
@@ -37,7 +46,7 @@
 	import {checkEmail} from "@/common/reg";
 
 	export default {
-		name: "SubmitComment",
+		name: "CommentForm",
 		props: {
 			parentCommentId: {
 				type: Number,
