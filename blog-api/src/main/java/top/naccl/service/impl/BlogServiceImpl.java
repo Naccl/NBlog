@@ -10,6 +10,7 @@ import top.naccl.mapper.BlogMapper;
 import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.BlogInfo;
+import top.naccl.model.vo.RandomBlog;
 import top.naccl.service.BlogService;
 import top.naccl.service.TagService;
 import top.naccl.util.markdown.MarkdownUtils;
@@ -63,6 +64,15 @@ public class BlogServiceImpl implements BlogService {
 			map.put(s, blogMapper.getArchiveBlogListByYearMonthAndIsPublished(s));
 		}
 		return map;
+	}
+
+	@Override
+	public List<RandomBlog> getRandomBlogListByLimitNumAndIsPublished(Integer limitNum) {
+		List<RandomBlog> randomBlogs = blogMapper.getRandomBlogListByLimitNumAndIsPublished(limitNum);
+		for (RandomBlog randomBlog : randomBlogs) {
+			randomBlog.setTags(tagService.getTagListByBlogId(randomBlog.getId()));
+		}
+		return randomBlogs;
 	}
 
 	@Transactional

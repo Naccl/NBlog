@@ -19,7 +19,7 @@
 						</div>
 						<!--右侧-->
 						<div class="three wide column m-mobile-hide">
-
+							<RandomBlog/>
 							<Tags/>
 						</div>
 					</div>
@@ -41,10 +41,11 @@
 	import Introduction from "@/components/sidebar/Introduction";
 	import {getHitokoto, getSite} from '@/network/index'
 	import Tags from "@/components/sidebar/Tags";
+	import RandomBlog from "@/components/sidebar/RandomBlog";
 
 	export default {
 		name: "Index",
-		components: {Tags, Nav, Footer, Introduction},
+		components: {RandomBlog, Tags, Nav, Footer, Introduction},
 		data() {
 			return {
 				siteInfo: {

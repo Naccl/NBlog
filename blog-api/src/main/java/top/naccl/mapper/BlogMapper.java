@@ -6,6 +6,7 @@ import top.naccl.entity.Blog;
 import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.BlogInfo;
+import top.naccl.model.vo.RandomBlog;
 
 import java.util.List;
 
@@ -28,6 +29,8 @@ public interface BlogMapper {
 	List<String> getGroupYearMonthByIsPublished();
 
 	List<ArchiveBlog> getArchiveBlogListByYearMonthAndIsPublished(String yearMonth);
+
+	List<RandomBlog> getRandomBlogListByLimitNumAndIsPublished(Integer limitNum);
 
 	int deleteBlogById(Long id);
 

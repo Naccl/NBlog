@@ -56,11 +56,6 @@
             <id property="id" column="category_id"/>
             <result property="name" column="category_name"/>
         </association>
-        <collection property="tags" javaType="top.naccl.entity.Tag">
-            <id property="id" column="tag_id"/>
-            <result property="name" column="tag_name"/>
-            <result property="color" column="color"/>
-        </collection>
     </resultMap>
 
     <resultMap id="archiveBlog" type="top.naccl.model.vo.ArchiveBlog">
@@ -142,6 +137,24 @@
         from blog
         where date_format(create_time, "%Y年%m月")=#{yearMonth} and is_published=true
         order by create_time desc
+    </select>
+
+    <resultMap id="randomBlog" type="top.naccl.model.vo.RandomBlog">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <association property="category" javaType="top.naccl.entity.Category">
+            <id property="id" column="category_id"/>
+            <result property="name" column="category_name"/>
+        </association>
+    </resultMap>
+
+    <!--查询随机的公开文章-->
+    <select id="getRandomBlogListByLimitNumAndIsPublished" resultMap="randomBlog">
+        select b.id, b.title, c.id as category_id, c.category_name
+        from blog as b left join category as c on b.category_id=c.id
+        where b.is_published=true
+        order by rand()
+        limit #{limitNum}
     </select>
 
     <!--按id删除博客-->

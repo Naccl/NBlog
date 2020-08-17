@@ -4,7 +4,7 @@
 		<el-header>
 			<div>
 				<img src="~assets/img/logo.png" alt="" height="60">
-				<span>博客后台管理系统</span>
+				<span>NBlog 博客后台管理</span>
 			</div>
 			<el-button type="info" @click="logout">退出</el-button>
 		</el-header>

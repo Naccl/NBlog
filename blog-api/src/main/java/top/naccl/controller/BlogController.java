@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.naccl.model.vo.BlogDetail;
+import top.naccl.model.vo.RandomBlog;
 import top.naccl.model.vo.Result;
 import top.naccl.service.BlogService;
+
+import java.util.List;
 
 /**
  * @Description: 博客相关
@@ -30,5 +33,17 @@ public class BlogController {
 	public Result getBlog(@RequestParam Long id) {
 		BlogDetail blog = blogService.getBlogByIdAndIsPublished(id);
 		return Result.ok("获取成功", blog);
+	}
+
+	/**
+	 * 获取随机公开文章
+	 *
+	 * @return
+	 */
+	@GetMapping("/randomBlogs")
+	public Result randomBlogs() {
+		int limitNum = 5;
+		List<RandomBlog> randomBlogs = blogService.getRandomBlogListByLimitNumAndIsPublished(limitNum);
+		return Result.ok("获取成功", randomBlogs);
 	}
 }

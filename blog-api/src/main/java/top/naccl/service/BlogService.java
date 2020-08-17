@@ -4,6 +4,7 @@ import top.naccl.entity.Blog;
 import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.BlogInfo;
+import top.naccl.model.vo.RandomBlog;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,8 @@ public interface BlogService {
 	List<BlogInfo> getBlogInfoListByIsPublished();
 
 	Map<String, List<ArchiveBlog>> getArchiveBlogMapByIsPublished();
+
+	List<RandomBlog> getRandomBlogListByLimitNumAndIsPublished(Integer limitNum);
 
 	void deleteBlogById(Long id);
 
