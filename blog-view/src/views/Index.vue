@@ -26,6 +26,9 @@
 				</div>
 			</div>
 		</div>
+
+		<!--APlayer-->
+		<MyAPlayer/>
 		<!--回到顶部-->
 		<el-backtop style="box-shadow: none;background: none;">
 			<img src="/img/paper-plane.png" style="width: 40px;height: 40px;">
@@ -42,10 +45,11 @@
 	import {getHitokoto, getSite} from '@/network/index'
 	import Tags from "@/components/sidebar/Tags";
 	import RandomBlog from "@/components/sidebar/RandomBlog";
+	import MyAPlayer from "@/components/sidebar/MyAPlayer";
 
 	export default {
 		name: "Index",
-		components: {RandomBlog, Tags, Nav, Footer, Introduction},
+		components: {MyAPlayer, RandomBlog, Tags, Nav, Footer, Introduction},
 		data() {
 			return {
 				siteInfo: {
