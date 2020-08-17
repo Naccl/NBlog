@@ -19,7 +19,8 @@
 						</div>
 						<!--右侧-->
 						<div class="three wide column m-mobile-hide">
-							<Introduction/>
+
+							<Tags/>
 						</div>
 					</div>
 				</div>
@@ -39,10 +40,11 @@
 	import Footer from "@/components/index/Footer";
 	import Introduction from "@/components/sidebar/Introduction";
 	import {getHitokoto, getSite} from '@/network/index'
+	import Tags from "@/components/sidebar/Tags";
 
 	export default {
 		name: "Index",
-		components: {Nav, Footer, Introduction},
+		components: {Tags, Nav, Footer, Introduction},
 		data() {
 			return {
 				siteInfo: {
