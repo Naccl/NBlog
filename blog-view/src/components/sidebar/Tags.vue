@@ -11,7 +11,7 @@
 </template>
 
 <script>
-	import {getTags} from "@/network/tags";
+	import {getTags} from "@/network/index";
 
 	export default {
 		name: "Tags",
