@@ -1,6 +1,7 @@
 package top.naccl.service;
 
 import top.naccl.entity.Tag;
+import top.naccl.model.vo.BlogInfo;
 
 import java.util.List;
 
@@ -8,6 +9,8 @@ public interface TagService {
 	List<Tag> getTagList();
 
 	List<Tag> getTagListByBlogId(Long blogId);
+
+	List<BlogInfo> getBlogInfoListByTagIdAndIsPublished(Long tagId);
 
 	void saveTag(Tag tag);
 

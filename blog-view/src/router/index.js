@@ -5,6 +5,7 @@ import Index from "@/views/Index";
 import Home from "@/views/home/Home";
 import Archives from "@/views/archives/Archives";
 import Blog from "@/views/blog/Blog";
+import Tag from "@/views/tag/Tag";
 
 Vue.use(VueRouter)
 
@@ -36,6 +37,14 @@ const routes = [
 				component: Blog,
 				meta: {
 					title: '博客'
+				}
+			},
+			{
+				path: '/tag/:id',
+				name: 'tag',
+				component: Tag,
+				meta: {
+					title: '标签'
 				}
 			}
 		]
