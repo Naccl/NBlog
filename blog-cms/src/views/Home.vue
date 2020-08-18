@@ -39,7 +39,7 @@
 				</el-menu>
 			</el-aside>
 			<!--右侧内容主体-->
-			<el-main>
+			<el-main :class="isCollapse?'m-el-main-width-64':'m-el-main-width-190'">
 				<!--加 key 让组件被重用时 重新执行生命周期-->
 				<router-view :key="$route.fullPath"/>
 			</el-main>
@@ -189,6 +189,9 @@
 
 	.el-aside {
 		background-color: #333744;
+		position: absolute;
+		top: 60px;
+		bottom: 0;
 	}
 
 	.el-aside .el-menu {
@@ -201,6 +204,19 @@
 
 	.el-main {
 		background-color: #eaedf1;
+		position: absolute;
+		top: 60px;
+		bottom: 0;
+		right: 0;
+		overflow-y: auto;
+	}
+
+	.m-el-main-width-190 {
+		width: calc(100% - 190px);
+	}
+
+	.m-el-main-width-64 {
+		width: calc(100% - 64px);
 	}
 
 	.iconfont {
