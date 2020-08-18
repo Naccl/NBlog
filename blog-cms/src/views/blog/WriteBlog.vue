@@ -70,7 +70,7 @@
 
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
-	import {getCategoryAndTag, saveBlog, getBlogById, updateBlog} from '@/network/blog'
+	import {getCategoryAndTag, saveBlog, getBlogById, updateBlog} from '@/api/blog'
 	import Vditor from 'vditor'
 
 	export default {

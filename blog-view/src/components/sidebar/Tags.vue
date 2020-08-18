@@ -11,7 +11,7 @@
 </template>
 
 <script>
-	import {getTags} from "@/network/index";
+	import {getTags} from "@/api/index";
 
 	export default {
 		name: "Tags",

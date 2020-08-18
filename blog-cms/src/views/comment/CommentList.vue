@@ -95,7 +95,7 @@
 
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
-	import {getCommentListByQuery, getBlogList, updatePublished, updateNotice, deleteCommentById, editComment} from '@/network/comment'
+	import {getCommentListByQuery, getBlogList, updatePublished, updateNotice, deleteCommentById, editComment} from '@/api/comment'
 	import {checkEmail, checkIpv4} from "@/common/reg";
 
 	export default {

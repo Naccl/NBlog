@@ -62,7 +62,7 @@
 
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
-	import {getDataByQuery, deleteBlogById, updateTop, updateRecommend, updatePublished} from '@/network/blog'
+	import {getDataByQuery, deleteBlogById, updateTop, updateRecommend, updatePublished} from '@/api/blog'
 
 	export default {
 		name: "BlogList",

@@ -75,7 +75,7 @@
 </template>
 
 <script>
-	import {getBlogById} from "@/network/blog";
+	import {getBlogById} from "@/api/blog";
 	import CommentList from "@/components/comment/CommentList";
 
 	export default {

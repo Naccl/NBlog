@@ -65,7 +65,7 @@
 
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
-	import {getData, addCategory, editCategory, deleteCategoryById} from '@/network/category'
+	import {getData, addCategory, editCategory, deleteCategoryById} from '@/api/category'
 
 	export default {
 		name: "CategoryList",

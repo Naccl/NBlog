@@ -80,7 +80,7 @@
 
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
-	import {getSiteSettingData, update} from "@/network/siteSetting";
+	import {getSiteSettingData, update} from "@/api/siteSetting";
 	import _ from 'lodash'
 
 	export default {

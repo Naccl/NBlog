@@ -9,7 +9,7 @@ import {
 	SET_COMMENT_QUERY_BLOG_ID
 } from "./mutations-types";
 
-import {getCommentListByQuery, submitComment} from "@/network/comment";
+import {getCommentListByQuery, submitComment} from "@/api/comment";
 import {Message, Notification} from "element-ui";
 
 export default {

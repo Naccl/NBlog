@@ -29,7 +29,7 @@
 </template>
 
 <script>
-	import {getArchives} from "@/network/archives";
+	import {getArchives} from "@/api/archives";
 
 	export default {
 		name: "Archives",

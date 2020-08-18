@@ -41,10 +41,10 @@
 </template>
 
 <script>
+	import {getHitokoto, getSite} from '@/api/index'
 	import Nav from "@/components/index/Nav";
 	import Footer from "@/components/index/Footer";
 	import Introduction from "@/components/sidebar/Introduction";
-	import {getHitokoto, getSite} from '@/network/index'
 	import Tags from "@/components/sidebar/Tags";
 	import RandomBlog from "@/components/sidebar/RandomBlog";
 	import MyAPlayer from "@/components/sidebar/MyAPlayer";

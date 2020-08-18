@@ -26,7 +26,7 @@
 </template>
 
 <script>
-	import {getRandomBlogs} from "@/network/index";
+	import {getRandomBlogs} from "@/api/index";
 
 	export default {
 		name: "RandomBlog",

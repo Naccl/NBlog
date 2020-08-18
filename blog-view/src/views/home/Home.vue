@@ -6,7 +6,7 @@
 
 <script>
 	import BlogList from "@/components/blog/BlogList";
-	import {getBlogList} from "@/network/home";
+	import {getBlogList} from "@/api/home";
 
 	export default {
 		name: "Home",

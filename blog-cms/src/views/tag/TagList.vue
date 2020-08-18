@@ -89,7 +89,7 @@
 
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
-	import {getData, addTag, editTag, deleteTagById} from '@/network/tag'
+	import {getData, addTag, editTag, deleteTagById} from '@/api/tag'
 
 	export default {
 		name: "TagList",
