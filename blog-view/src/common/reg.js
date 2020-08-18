@@ -5,3 +5,11 @@ export const checkEmail = (rule, value, callback) => {
 	}
 	callback(new Error('请输入合法的邮箱'))
 }
+
+export const checkUrl = (rule, value, callback) => {
+	const reg = /^(((ht)tps?):\/\/)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?$/
+	if (reg.test(value)) {
+		return callback()
+	}
+	callback(new Error('请输入合法的 URL'))
+}

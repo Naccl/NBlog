@@ -107,6 +107,13 @@ public class CommentServiceImpl implements CommentService {
 		return commentMapper.countByPageAndIsPublished(page, blogId);
 	}
 
+	@Override
+	public void saveComment(Comment comment) {
+		if (commentMapper.saveComment(comment) != 1) {
+			throw new PersistenceException("评论失败");
+		}
+	}
+
 	/**
 	 * 递归删除子评论
 	 *

@@ -96,4 +96,12 @@
             and blog_id=#{blogId}
         </if>
     </select>
+
+    <!--保存评论-->
+    <insert id="saveComment" useGeneratedKeys="true" keyProperty="id">
+        insert into comment (nickname, email, content, avatar, create_time, website, ip, is_published, is_admin_comment,
+        page, is_notice, parent_comment_id, blog_id)
+        values (#{nickname}, #{email}, #{content}, #{avatar}, #{createTime}, #{website}, #{ip}, #{published}, #{adminComment},
+        #{page}, #{notice}, #{parentCommentId}, #{blog.id})
+    </insert>
 </mapper>

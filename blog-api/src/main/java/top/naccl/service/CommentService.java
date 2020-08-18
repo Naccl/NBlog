@@ -19,4 +19,6 @@ public interface CommentService {
 	void updateComment(Comment comment);
 
 	int countByPageAndIsPublished(Integer page, Long blogId);
+
+	void saveComment(Comment comment);
 }

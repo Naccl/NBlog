@@ -30,4 +30,6 @@ public interface CommentMapper {
 	int updateComment(Comment comment);
 
 	int countByPageAndIsPublished(Integer page, Long blogId);
+
+	int saveComment(Comment comment);
 }

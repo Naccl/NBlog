@@ -1,18 +1,28 @@
 package top.naccl.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.entity.Comment;
+import top.naccl.model.vo.BlogIdAndTitle;
 import top.naccl.model.vo.PageComment;
 import top.naccl.model.vo.PageResult;
 import top.naccl.model.vo.Result;
 import top.naccl.service.BlogService;
 import top.naccl.service.CommentService;
+import top.naccl.util.IpAddressUtils;
+import top.naccl.util.MD5Utils;
+import top.naccl.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,5 +78,53 @@ public class CommentController {
 			return blogService.getCommentEnabledByBlogId(blogId);
 		}
 		return false;
+	}
+
+
+	/**
+	 * 提交评论
+	 *
+	 * @param map     包含comment对象的map
+	 * @param request 请求，用于获取ip和管理员身份（待添加）
+	 * @return
+	 */
+	@PostMapping("/comment")
+	public Result postComment(@RequestBody Map<String, Object> map, HttpServletRequest request) {
+		JSONObject commentJsonObject = new JSONObject(map);
+		Comment comment = JSONObject.toJavaObject(commentJsonObject, Comment.class);
+
+		if (StringUtils.isEmpty(comment.getNickname(), comment.getEmail(), comment.getContent())
+				|| comment.getNickname().length() > 15 || comment.getContent().length() > 250) {
+			return Result.error("参数有误");
+		}
+
+		//set博客id
+		BlogIdAndTitle blog = new BlogIdAndTitle();
+		blog.setId(Long.valueOf((Integer) map.get("blogId")));
+
+		//set 随机头像（获取QQ昵称头像功能待添加）
+		String nicknameMD5 = MD5Utils.getMD5(comment.getNickname());//根据评论昵称取MD5，保证每一个昵称对应一个头像
+		char m = nicknameMD5.charAt(nicknameMD5.length() - 1);//取MD5最后一位
+		int num = m % 6 + 1;//计算对应的头像
+		String avatar = num + ".jpg";
+
+		//set website
+		String website = comment.getWebsite().trim();
+		if (!"".equals(website) && !website.startsWith("http://") && !website.startsWith("https://")) {
+			website = "http://" + website;
+		}
+
+		comment.setBlog(blog);
+		comment.setAvatar(avatar);
+		comment.setWebsite(website);
+		comment.setNickname(comment.getNickname().trim());
+		comment.setEmail(comment.getEmail().trim());
+		comment.setPublished(true);//默认不需要审核
+		comment.setAdminComment(false);//管理员登录功能待添加
+		comment.setCreateTime(new Date());
+		comment.setIp(IpAddressUtils.getIpAddress(request));
+
+		commentService.saveComment(comment);
+		return Result.ok("评论成功");
 	}
 }
