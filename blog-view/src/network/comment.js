@@ -9,3 +9,13 @@ export function getCommentListByQuery(query) {
 		}
 	})
 }
+
+export function submitComment(form) {
+	return axios({
+		url: 'comment',
+		method: 'POST',
+		data: {
+			...form
+		}
+	})
+}

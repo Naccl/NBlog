@@ -1,2 +1,8 @@
 export const SAVE_INTRODUCTION = 'saveIntroduction'
 export const SAVE_SITE_INFO = 'saveSiteInfo'
+export const SAVE_COMMENT_RESULT = 'saveCommentResult'
+export const SET_COMMENT_QUERY_PAGE = 'setCommentQueryPage'
+export const SET_COMMENT_QUERY_BLOG_ID = 'setCommentQueryBlogId'
+export const SET_COMMENT_QUERY_PAGE_NUM = 'setCommentQueryPageNum'
+export const SET_PARENT_COMMENT_ID = 'setParentCommentId'
+export const SET_COMMENT_FORM_EMPTY = 'setCommentFormEmpty'

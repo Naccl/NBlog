@@ -1,14 +1,13 @@
 <template>
 	<div>
-		<Comment :count="count" :comments="comments" :parentCommentId="parentCommentId" :setParentCommentId="setParentCommentId"/>
-		<Pagination :page="page" :blogId="blogId" :totalPage="totalPage" :getCommentList="getCommentList" :setParentCommentId="setParentCommentId"/>
+		<Comment/>
+		<Pagination/>
 	</div>
 </template>
 
 <script>
 	import Comment from "./Comment";
 	import Pagination from "./Pagination";
-	import {getCommentListByQuery} from "@/network/comment";
 
 	export default {
 		name: "CommentList",
@@ -23,31 +22,21 @@
 				required: true
 			}
 		},
-		data() {
-			return {
-				count: 0,
-				comments: [],
-				totalPage: 0,
-				parentCommentId: -1
+		created() {
+			this.init()
+		},
+		watch: {
+			//在博客文章路由到其它含有评论的页面时，要重新获取评论
+			'$route.fullPath'() {
+				this.init()
 			}
 		},
-		methods: {
-			getCommentList(query) {
-				getCommentListByQuery(query).then(res => {
-					console.log(res)
-					if (res.code === 200) {
-						this.count = res.data.count
-						this.comments = res.data.comments.list
-						this.totalPage = res.data.comments.totalPage
-					} else {
-						this.msgError(res.msg)
-					}
-				}).catch(() => {
-					this.msgError("请求失败")
-				})
-			},
-			setParentCommentId(id) {
-				this.parentCommentId = id
+		methods:{
+			init(){
+				this.$store.dispatch('setCommentQueryPage', this.page)
+				this.$store.dispatch('setCommentQueryBlogId', this.blogId)
+				this.$store.dispatch('setCommentQueryPageNum', 1)
+				this.$store.dispatch('getCommentList')
 			}
 		}
 	}
