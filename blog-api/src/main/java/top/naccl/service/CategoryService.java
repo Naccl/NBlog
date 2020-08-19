@@ -1,11 +1,14 @@
 package top.naccl.service;
 
 import top.naccl.entity.Category;
+import top.naccl.model.vo.BlogInfo;
 
 import java.util.List;
 
 public interface CategoryService {
 	List<Category> getCategoryList();
+
+	List<BlogInfo> getBlogInfoListByCategoryIdAndIsPublished(Long categoryId);
 
 	void saveCategory(Category category);
 

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-	import {getTags} from "@/api/index";
+	import {getTagList} from "@/api/tag";
 
 	export default {
 		name: "Tags",
@@ -25,7 +25,7 @@
 		},
 		methods: {
 			getTagList() {
-				getTags().then(res => {
+				getTagList().then(res => {
 					console.log(res)
 					if (res.code === 200) {
 						this.tagList = res.data

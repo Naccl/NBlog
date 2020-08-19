@@ -6,3 +6,14 @@ export function getCategoryList() {
 		method: 'GET'
 	})
 }
+
+export function getBlogListByCategoryId(categoryId, pageNum) {
+	return axios({
+		url: 'category',
+		method: 'GET',
+		params: {
+			categoryId,
+			pageNum
+		}
+	})
+}

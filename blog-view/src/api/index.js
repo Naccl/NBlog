@@ -20,10 +20,3 @@ export function getRandomBlogs() {
 		method: 'GET'
 	})
 }
-
-export function getTags() {
-	return axios({
-		url: 'tags',
-		method: 'GET'
-	})
-}

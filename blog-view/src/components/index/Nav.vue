@@ -13,9 +13,6 @@
 					<sui-dropdown-item @click="categoryRoute(category.id)" v-for="category in categoryList" :key="category.id">{{ category.name }}</sui-dropdown-item>
 				</sui-dropdown-menu>
 			</sui-dropdown>
-			<router-link to="/tag" class="item" :class="{'m-mobile-hide': mobileHide,'active':$route.name==='tag'}">
-				<i class="tags icon"></i>标签
-			</router-link>
 			<router-link to="/archives" class="item" :class="{'m-mobile-hide': mobileHide,'active':$route.name==='archives'}">
 				<i class="clone icon"></i>归档
 			</router-link>

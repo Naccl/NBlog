@@ -6,6 +6,7 @@ import Home from "@/views/home/Home";
 import Archives from "@/views/archives/Archives";
 import Blog from "@/views/blog/Blog";
 import Tag from "@/views/tag/Tag";
+import Category from "@/views/category/Category";
 
 Vue.use(VueRouter)
 
@@ -45,6 +46,14 @@ const routes = [
 				component: Tag,
 				meta: {
 					title: '标签'
+				}
+			},
+			{
+				path: '/category/:id',
+				name: 'category',
+				component: Category,
+				meta: {
+					title: '分类'
 				}
 			}
 		]

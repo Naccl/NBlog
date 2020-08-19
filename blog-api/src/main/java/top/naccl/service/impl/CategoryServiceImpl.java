@@ -7,7 +7,10 @@ import top.naccl.entity.Category;
 import top.naccl.exception.NotFoundException;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.CategoryMapper;
+import top.naccl.model.vo.BlogInfo;
 import top.naccl.service.CategoryService;
+import top.naccl.service.TagService;
+import top.naccl.util.markdown.MarkdownUtils;
 
 import java.util.List;
 
@@ -20,10 +23,22 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
 	@Autowired
 	CategoryMapper categoryMapper;
+	@Autowired
+	TagService tagService;
 
 	@Override
 	public List<Category> getCategoryList() {
 		return categoryMapper.getCategoryList();
+	}
+
+	@Override
+	public List<BlogInfo> getBlogInfoListByCategoryIdAndIsPublished(Long categoryId) {
+		List<BlogInfo> blogInfos = categoryMapper.getBlogInfoListByCategoryIdAndIsPublished(categoryId);
+		for (BlogInfo blogInfo : blogInfos) {
+			blogInfo.setDescription(MarkdownUtils.markdownToHtmlExtensions(blogInfo.getDescription()));
+			blogInfo.setTags(tagService.getTagListByBlogId(blogInfo.getId()));
+		}
+		return blogInfos;
 	}
 
 	@Transactional
