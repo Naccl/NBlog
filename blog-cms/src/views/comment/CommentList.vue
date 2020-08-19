@@ -23,7 +23,7 @@
 				</el-table-column>
 				<el-table-column label="头像" width="80">
 					<template v-slot="scope">
-						<el-avatar shape="square" :size="60" fit="contain" :src="require('@/assets/img/comment-avatar/'+scope.row.avatar)"></el-avatar>
+						<el-avatar shape="square" :size="60" fit="contain" :src="`/img/comment-avatar/${scope.row.avatar}`"></el-avatar>
 					</template>
 				</el-table-column>
 				<el-table-column label="邮箱" prop="email"></el-table-column>
@@ -32,7 +32,7 @@
 				<el-table-column label="评论内容" prop="content"></el-table-column>
 				<el-table-column label="所在页面">
 					<template v-slot="scope">
-						<el-link type="success" :href="'/blog/'+scope.row.blog.id" target="_blank" v-if="scope.row.page==0">{{ scope.row.blog.title }}</el-link>
+						<el-link type="success" :href="`/blog/${scope.row.blog.id}`" target="_blank" v-if="scope.row.page==0">{{ scope.row.blog.title }}</el-link>
 						<el-link type="success" :href="'/about'" target="_blank" v-else-if="scope.row.page==1">关于我</el-link>
 					</template>
 				</el-table-column>

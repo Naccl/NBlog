@@ -9,7 +9,7 @@
 					<!--标题-->
 					<div class="row m-padded-tb-small">
 						<h2 class="ui header m-center m-scaleup">
-							<router-link :to="'/blog/'+item.id" class="m-black">{{ item.title }}</router-link>
+							<router-link :to="`/blog/${item.id}`" class="m-black">{{ item.title }}</router-link>
 						</h2>
 					</div>
 					<!--文章简要信息-->
@@ -30,21 +30,21 @@
 						</div>
 					</div>
 					<!--分类-->
-					<router-link :to="'/category/'+item.category.id" class="ui orange large ribbon label">
+					<router-link :to="`/category/${item.category.id}`" class="ui orange large ribbon label">
 						<i class="small folder open icon"></i><span class="m-text-500">{{ item.category.name }}</span>
 					</router-link>
 					<!--文章Markdown描述-->
 					<div class="typo m-padded-tb-small line-numbers match-braces rainbow-braces" v-html="item.description"></div>
 					<!--阅读全文按钮-->
 					<div class="row m-padded-tb-small m-margin-top">
-						<router-link :to="'/blog/'+item.id" class="color-btn">阅读全文</router-link>
+						<router-link :to="`/blog/${item.id}`" class="color-btn">阅读全文</router-link>
 					</div>
 					<!--横线-->
 					<div class="ui section divider m-margin-lr-no"></div>
 					<!--标签-->
 					<div class="row m-padded-tb-no">
 						<div class="column m-padding-left-no">
-							<router-link :to="'/tag/'+tag.id" class="ui tag label m-text-500 m-margin-small" :class="tag.color" v-for="tag in item.tags" :key="tag.id">{{ tag.name }}</router-link>
+							<router-link :to="`/tag/${tag.id}`" class="ui tag label m-text-500 m-margin-small" :class="tag.color" v-for="tag in item.tags" :key="tag.id">{{ tag.name }}</router-link>
 						</div>
 					</div>
 				</div>

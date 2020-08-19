@@ -5,9 +5,9 @@
 		<h3 class="ui dividing header">Comments | {{ commentCount }} 条评论</h3>
 		<h3 class="ui header" v-if="commentCount===0">快来抢沙发！</h3>
 		<div class="comment" v-for="comment in comments" :key="comment.id">
-			<span class="anchor" :id="'comment-'+comment.id"></span>
+			<span class="anchor" :id="`comment-${comment.id}`"></span>
 			<a class="ui circular image avatar">
-				<img :src="'/img/comment-avatar/'+comment.avatar">
+				<img :src="`/img/comment-avatar/${comment.avatar}`">
 			</a>
 			<div class="content">
 				<a class="nickname" :href="comment.website!=''&&comment.website!=null?comment.website:null" target="_blank" rel="external nofollow noopener">{{ comment.nickname }}</a>
@@ -20,9 +20,9 @@
 			</div>
 			<div class="comments" v-if="comment.replyComments.length>0">
 				<div class="comment" v-for="reply in comment.replyComments" :key="reply.id">
-					<span class="anchor" :id="'comment-'+reply.id"></span>
+					<span class="anchor" :id="`comment-${reply.id}`"></span>
 					<a class="ui circular image avatar">
-						<img :src="'/img/comment-avatar/'+reply.avatar">
+						<img :src="`/img/comment-avatar/${reply.avatar}`">
 					</a>
 					<div class="content">
 						<a class="nickname" :href="reply.website!=''&&reply.website!=null?reply.website:null" target="_blank" rel="external nofollow noopener">{{ reply.nickname }}</a>
@@ -30,7 +30,7 @@
 						<div class="metadata">
 							<strong class="date">{{ reply.createTime | dateFormat('YYYY-MM-DD HH:mm')}}</strong>
 						</div>
-						<div class="text"><strong @click="toComment('comment-'+reply.parentCommentId)">@{{ reply.parentCommentNickname }}</strong>{{ reply.content }}</div>
+						<div class="text"><strong @click="toComment(`comment-${reply.parentCommentId}`)">@{{ reply.parentCommentNickname }}</strong>{{ reply.content }}</div>
 						<div class="actions">
 							<el-button size="mini" type="primary" @click="setReply(reply.id)">回复</el-button>
 						</div>

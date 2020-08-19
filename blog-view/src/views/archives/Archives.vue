@@ -13,7 +13,7 @@
 					<div class="tl-item" v-for="blog in value" :key="blog.id">
 						<div class="tl-wrap">
 							<span class="tl-date">{{ blog.day }}</span>
-							<router-link :to="'/blog/'+blog.id">
+							<router-link :to="`/blog/${blog.id}`">
 								<div class="ui left pointing label tl-title">{{ blog.title }}</div>
 							</router-link>
 						</div>

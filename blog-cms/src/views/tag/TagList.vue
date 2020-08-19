@@ -17,7 +17,7 @@
 				<el-table-column label="颜色">
 					<template v-slot="scope">
 						<span style="float:left;width: 100px;">{{ scope.row.color }}</span>
-						<span style="float:left;width: 100px; height: 23px" :class="'me-'+scope.row.color"></span>
+						<span style="float:left;width: 100px; height: 23px" :class="`me-${scope.row.color}`"></span>
 					</template>
 				</el-table-column>
 				<el-table-column label="操作">
@@ -48,7 +48,7 @@
 					<el-select v-model="addForm.color" placeholder="请选择颜色" :clearable="true" style="width: 100%">
 						<el-option v-for="item in colors" :key="item.value" :label="item.label" :value="item.value">
 							<span style="float: left; width: 100px;">{{ item.label }}</span>
-							<span style="float: left; width: 100px; height: inherit" :class="'me-'+item.value"></span>
+							<span style="float: left; width: 100px; height: inherit" :class="`me-${item.value}`"></span>
 							<span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
 						</el-option>
 					</el-select>
@@ -72,7 +72,7 @@
 					<el-select v-model="editForm.color" placeholder="请选择颜色" :clearable="true" style="width: 100%">
 						<el-option v-for="item in colors" :key="item.value" :label="item.label" :value="item.value">
 							<span style="float: left; width: 100px;">{{ item.label }}</span>
-							<span style="float: left; width: 100px; height: inherit" :class="'me-'+item.value"></span>
+							<span style="float: left; width: 100px; height: inherit" :class="`me-${item.value}`"></span>
 							<span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
 						</el-option>
 					</el-select>

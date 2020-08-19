@@ -15,13 +15,13 @@
 				<div class="six wide column">
 					<h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
 					<div class="ui inverted link list">
-						<router-link :to="'/blog/'+item.id" v-for="item in newBlogList" :key="item.id" class="item m-text-thin m-padded-tb-small">{{ item.title }}</router-link>
+						<router-link :to="`/blog/${item.id}`" v-for="item in newBlogList" :key="item.id" class="item m-text-thin m-padded-tb-small">{{ item.title }}</router-link>
 					</div>
 				</div>
 
 				<div class="seven wide column">
 					<p id="hitokotoText" class="m-text-thin m-text-spaced m-opacity-mini">{{ hitokoto.hitokoto }}</p>
-					<p id="hitokotoFrom" class="m-text-thin m-text-spaced m-opacity-mini" style="float: right" v-text="hitokoto.from?'——《'+hitokoto.from+'》':''"></p>
+					<p id="hitokotoFrom" class="m-text-thin m-text-spaced m-opacity-mini" style="float: right" v-text="hitokoto.from?`——《${hitokoto.from}》`:''"></p>
 				</div>
 			</div>
 
@@ -38,7 +38,7 @@
 			<div class="github-badge" v-for="(item,index) in badges" :key="index">
 				<a rel="external nofollow noopener" :href="item.url" target="_blank" :title="item.title">
 					<span class="badge-subject">{{ item.subject }}</span>
-					<span class="badge-value" :class="'bg-'+item.color">{{ item.value }}</span>
+					<span class="badge-value" :class="`bg-${item.color}`">{{ item.value }}</span>
 				</a>
 			</div>
 

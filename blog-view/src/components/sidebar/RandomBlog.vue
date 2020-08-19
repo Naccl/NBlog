@@ -6,15 +6,15 @@
 			<div class="ui divided items">
 				<div class="item" v-for="blog in blogList" :key="blog.id">
 					<div class="content">
-						<router-link :to="'/blog/'+blog.id" class="header m-text-500">{{ blog.title }}</router-link>
+						<router-link :to="`/blog/${blog.id}`" class="header m-text-500">{{ blog.title }}</router-link>
 						<div class="meta">
-							<router-link :to="'/category/'+blog.category.id">
+							<router-link :to="`/category/${blog.category.id}`">
 								<i class="folder open icon"></i>{{ blog.category.name }}
 							</router-link>
 						</div>
 						<div class="extra">
-							<router-link :to="'/tag/'+tag.id" class="ui label m-text-500" :class="tag.color" v-for="tag in blog.tags" :key="tag.id">{{ tag.name }}</router-link>
-							<router-link :to="'/blog/'+blog.id" class="ui right floated">
+							<router-link :to="`/tag/${tag.id}`" class="ui label m-text-500" :class="tag.color" v-for="tag in blog.tags" :key="tag.id">{{ tag.name }}</router-link>
+							<router-link :to="`/blog/${blog.id}`" class="ui right floated">
 								阅读全文<i class="angle double right icon"></i>
 							</router-link>
 						</div>
