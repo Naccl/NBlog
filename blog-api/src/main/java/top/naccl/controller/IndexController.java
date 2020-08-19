@@ -36,8 +36,8 @@ public class IndexController {
 	public Result site() {
 		Map<String, Object> map = siteSettingService.getSiteInfo();
 		PageHelper.startPage(1, 3);
-		List<Blog> newBLogList = blogService.getIdAndTitleListByIsPublishedAndIsRecommend();
-		map.put("newBlogList", newBLogList);
+		List<Blog> newBlogList = blogService.getIdAndTitleListByIsPublishedAndIsRecommend();
+		map.put("newBlogList", newBlogList);
 		return Result.ok("请求成功", map);
 	}
 }
