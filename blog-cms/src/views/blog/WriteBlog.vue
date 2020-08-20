@@ -19,45 +19,62 @@
 					<div id="vditor-content"></div>
 				</el-form-item>
 
-				<el-form-item label="分类" prop="cate">
-					<el-select v-model="form.cate" placeholder="请选择分类（输入可添加新分类）" :allow-create="true" :filterable="true" style="width: 50%;">
-						<el-option :label="item.name" :value="item.id" v-for="item in categoryList" :key="item.id"></el-option>
-					</el-select>
-				</el-form-item>
+				<el-row :gutter="20">
+					<el-col :span="12">
+						<el-form-item label="分类" prop="cate">
+							<el-select v-model="form.cate" placeholder="请选择分类（输入可添加新分类）" :allow-create="true" :filterable="true" style="width: 100%;">
+								<el-option :label="item.name" :value="item.id" v-for="item in categoryList" :key="item.id"></el-option>
+							</el-select>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<el-form-item label="标签" prop="tagList">
+							<el-select v-model="form.tagList" placeholder="请选择标签（输入可添加新标签）" :allow-create="true" :filterable="true" :multiple="true" style="width: 100%;">
+								<el-option :label="item.name" :value="item.id" v-for="item in tagList" :key="item.id"></el-option>
+							</el-select>
+						</el-form-item>
+					</el-col>
+				</el-row>
 
-				<el-form-item label="标签" prop="tagList">
-					<el-select v-model="form.tagList" placeholder="请选择标签（输入可添加新标签）" :allow-create="true" :filterable="true" :multiple="true" style="width: 50%;">
-						<el-option :label="item.name" :value="item.id" v-for="item in tagList" :key="item.id"></el-option>
-					</el-select>
-				</el-form-item>
-
-				<el-form-item label="字数" prop="words">
-					<el-input v-model="form.words" placeholder="请输入文章字数" type="number" style="width: 50%;"></el-input>
-				</el-form-item>
-
-				<el-form-item label="阅读时长(分钟)" prop="readTime">
-					<el-input v-model="form.readTime" placeholder="请输入阅读时长（可选）默认 Math.round(字数 / 200)" type="number" style="width: 50%;"></el-input>
-				</el-form-item>
+				<el-row :gutter="20">
+					<el-col :span="12">
+						<el-form-item label="字数" prop="words">
+							<el-input v-model="form.words" placeholder="请输入文章字数（自动计算阅读时长）" type="number"></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<el-form-item label="阅读时长(分钟)" prop="readTime">
+							<el-input v-model="form.readTime" placeholder="请输入阅读时长（可选）默认 Math.round(字数 / 200)" type="number"></el-input>
+						</el-form-item>
+					</el-col>
+				</el-row>
 
 				<el-form-item label="浏览次数" prop="views">
-					<el-input v-model="form.views" placeholder="请输入文章字数（可选）" type="number" style="width: 50%;"></el-input>
+					<el-input v-model="form.views" placeholder="请输入文章字数（可选）默认为 0" type="number" style="width: 50%;"></el-input>
 				</el-form-item>
 
-				<el-form-item>
-					<el-switch v-model="form.appreciation" active-text="赞赏"></el-switch>
-				</el-form-item>
-
-				<el-form-item>
-					<el-switch v-model="form.recommend" active-text="推荐"></el-switch>
-				</el-form-item>
-
-				<el-form-item>
-					<el-switch v-model="form.commentEnabled" active-text="评论"></el-switch>
-				</el-form-item>
-
-				<el-form-item>
-					<el-switch v-model="form.top" active-text="置顶"></el-switch>
-				</el-form-item>
+				<el-row style="width: 25%">
+					<el-col :span="6">
+						<el-form-item>
+							<el-switch v-model="form.appreciation" active-text="赞赏"></el-switch>
+						</el-form-item>
+					</el-col>
+					<el-col :span="6">
+						<el-form-item>
+							<el-switch v-model="form.recommend" active-text="推荐"></el-switch>
+						</el-form-item>
+					</el-col>
+					<el-col :span="6">
+						<el-form-item>
+							<el-switch v-model="form.commentEnabled" active-text="评论"></el-switch>
+						</el-form-item>
+					</el-col>
+					<el-col :span="6">
+						<el-form-item>
+							<el-switch v-model="form.top" active-text="置顶"></el-switch>
+						</el-form-item>
+					</el-col>
+				</el-row>
 
 				<el-form-item style="text-align: right;">
 					<el-button type="info" @click="submit(false)">保存草稿</el-button>
