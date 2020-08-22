@@ -32,7 +32,7 @@
 						<i class="small folder open icon"></i><span class="m-text-500">{{ blog.category.name }}</span>
 					</router-link>
 					<!--文章Markdown正文-->
-					<div class="typo m-padded-tb-small line-numbers match-braces rainbow-braces" v-html="blog.content"></div>
+					<div class="typo js-toc-content m-padded-tb-small line-numbers match-braces rainbow-braces" v-html="blog.content"></div>
 					<!--赞赏-->
 					<el-popover placement="top" width="220" trigger="click" style="margin: 2em auto" v-if="blog.appreciation">
 						<div class="ui orange basic label" style="width: 100%">
@@ -86,10 +86,33 @@
 				blog: {}
 			}
 		},
-		watch: {
-			//在当前组件内路由到其它博客文章时，要重新获取文章
-			'$route.fullPath'() {
-				this.getBlog()
+		beforeRouteEnter(to, from, next) {
+			//路由到博客文章页面之前，应将文章的渲染完成状态置为 false
+			next(vm => {
+				// 当 beforeRouteEnter 钩子执行前，组件实例尚未创建
+				// vm 就是当前组件的实例，可以在 next 方法中把 vm 当做 this用
+				vm.$store.dispatch('setIsBlogRenderComplete', false)
+			})
+		},
+		beforeRouteLeave(to, from, next) {
+			// 从文章页面路由到其它页面时，销毁当前组件的同时，要销毁tocbot实例
+			// 否则tocbot一直在监听页面滚动事件，而文章页面的锚点已经不存在了，会报"Uncaught TypeError: Cannot read property 'className' of null"
+			tocbot.destroy()
+			next()
+		},
+		beforeRouteUpdate(to, from, next) {
+			// 一般有两种情况会触发这个钩子
+			// ①当前文章页面跳转到其它文章页面
+			// ②点击目录跳转锚点时，路由hash值会改变，导致当前页面会重新加载，这种情况是不希望出现的
+			// 在路由 beforeRouteUpdate 中判断路径是否改变
+			// 如果跳转到其它页面，to.path!==from.path 就放行 next()
+			// 如果是跳转锚点，path不会改变，hash会改变，to.path===from.path, to.hash!==from.path 不放行路由跳转，就能让锚点正常跳转
+			if (to.path !== from.path) {
+				//在当前组件内路由到其它博客文章时，要重新获取文章
+				this.getBlog(to.params.id)
+				//只要路由路径有改变，且停留在当前Blog组件内，就把文章的渲染完成状态置为 false
+				this.$store.dispatch('setIsBlogRenderComplete', false)
+				next()
 			}
 		},
 		created() {
@@ -101,14 +124,16 @@
 			}
 		},
 		methods: {
-			getBlog() {
-				getBlogById(this.blogId).then(res => {
+			getBlog(id = this.blogId) {
+				getBlogById(id).then(res => {
 					console.log(res)
 					if (res.code === 200) {
 						this.blog = res.data
 						//v-html渲染完毕后，渲染代码块样式
 						this.$nextTick(() => {
 							Prism.highlightAll()
+							//将文章渲染完成状态置为 true
+							this.$store.dispatch('setIsBlogRenderComplete', true)
 						})
 					} else {
 						this.msgError(res.msg)
@@ -124,5 +149,13 @@
 <style scoped>
 	.el-divider {
 		margin: 1rem 0 !important;
+	}
+
+	h1::before, h2::before, h3::before, h4::before, h5::before, h6::before {
+		display: block;
+		content: " ";
+		height: 55px;
+		margin-top: -55px;
+		visibility: hidden;
 	}
 </style>

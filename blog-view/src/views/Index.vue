@@ -21,6 +21,8 @@
 						<div class="three wide column m-mobile-hide">
 							<RandomBlog/>
 							<Tags/>
+							<!--只在文章页面显示目录-->
+							<Tocbot v-if="$route.name==='blog'"/>
 						</div>
 					</div>
 				</div>
@@ -48,10 +50,11 @@
 	import Tags from "@/components/sidebar/Tags";
 	import RandomBlog from "@/components/sidebar/RandomBlog";
 	import MyAPlayer from "@/components/sidebar/MyAPlayer";
+	import Tocbot from "@/components/sidebar/Tocbot";
 
 	export default {
 		name: "Index",
-		components: {MyAPlayer, RandomBlog, Tags, Nav, Footer, Introduction},
+		components: {Tocbot, MyAPlayer, RandomBlog, Tags, Nav, Footer, Introduction},
 		data() {
 			return {
 				siteInfo: {

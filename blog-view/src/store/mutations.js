@@ -6,7 +6,8 @@ import {
 	SET_PARENT_COMMENT_ID,
 	SET_COMMENT_FORM_EMPTY,
 	SET_COMMENT_QUERY_PAGE,
-	SET_COMMENT_QUERY_BLOG_ID
+	SET_COMMENT_QUERY_BLOG_ID,
+	SET_IS_BLOG_RENDER_COMPLETE
 } from "./mutations-types";
 
 export default {
@@ -41,5 +42,8 @@ export default {
 			website: '',
 			notice: true
 		}
-	}
+	},
+	[SET_IS_BLOG_RENDER_COMPLETE](state, {ok}) {
+		state.isBlogRenderComplete = ok
+	},
 }

@@ -4,6 +4,7 @@ import org.commonmark.Extension;
 import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;
 import org.commonmark.ext.gfm.tables.TableBlock;
 import org.commonmark.ext.gfm.tables.TablesExtension;
+import org.commonmark.ext.heading.anchor.HeadingAnchorExtension;
 import org.commonmark.ext.task.list.items.TaskListItemsExtension;
 import org.commonmark.node.Link;
 import org.commonmark.node.Node;
@@ -41,8 +42,8 @@ public class MarkdownUtils {
 	 * 增加扩展
 	 */
 	public static String markdownToHtmlExtensions(String markdown) {
-		//h标题生成id
-//		Set<Extension> headingAnchorExtensions = Collections.singleton(HeadingAnchorExtension.create());
+		//为h标签生成id 供tocbot目录生成
+		Set<Extension> headingAnchorExtensions = Collections.singleton(HeadingAnchorExtension.create());
 		//转换table的HTML
 		List<Extension> tableExtension = Arrays.asList(TablesExtension.create());
 		//任务列表
@@ -62,7 +63,7 @@ public class MarkdownUtils {
 				.build();
 		Node document = parser.parse(markdown);
 		HtmlRenderer renderer = HtmlRenderer.builder()
-//				.extensions(headingAnchorExtensions)
+				.extensions(headingAnchorExtensions)
 				.extensions(tableExtension)
 				.extensions(taskListExtension)
 				.extensions(delExtension)

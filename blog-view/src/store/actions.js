@@ -6,7 +6,8 @@ import {
 	SET_PARENT_COMMENT_ID,
 	SET_COMMENT_FORM_EMPTY,
 	SET_COMMENT_QUERY_PAGE,
-	SET_COMMENT_QUERY_BLOG_ID
+	SET_COMMENT_QUERY_BLOG_ID,
+	SET_IS_BLOG_RENDER_COMPLETE
 } from "./mutations-types";
 
 import {getCommentListByQuery, submitComment} from "@/api/comment";
@@ -75,5 +76,8 @@ export default {
 				type: 'error'
 			})
 		})
-	}
+	},
+	setIsBlogRenderComplete({commit}, ok) {
+		commit(SET_IS_BLOG_RENDER_COMPLETE, {ok})
+	},
 }

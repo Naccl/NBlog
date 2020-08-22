@@ -22,4 +22,6 @@ export default {
 		website: '',
 		notice: true
 	},
+	//博客文章渲染完成的标记
+	isBlogRenderComplete: false
 }
