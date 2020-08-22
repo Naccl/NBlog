@@ -40,7 +40,7 @@
 			</el-aside>
 			<!--右侧内容主体-->
 			<el-main :class="isCollapse?'m-el-main-width-64':'m-el-main-width-190'">
-				<!--加 key 让组件被重用时 重新执行生命周期-->
+				<!--加 key 让组件被重用时 重新执行生命周期 否则在编辑文章页面路由到写文章页面时 数据被重用-->
 				<router-view :key="$route.fullPath"/>
 			</el-main>
 		</el-container>

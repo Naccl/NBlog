@@ -3,7 +3,7 @@
 	<div class="form">
 		<h3>
 			发表评论
-			<el-button class="m-small" size="mini" type="primary" @click="this.$store.dispatch('setParentCommentId', -1)" v-show="parentCommentId!==-1">取消回复</el-button>
+			<el-button class="m-small" size="mini" type="primary" @click="$store.dispatch('setParentCommentId', -1)" v-show="parentCommentId!==-1">取消回复</el-button>
 		</h3>
 		<el-form :inline="true" :model="commentForm" :rules="formRules" ref="formRef" size="small">
 			<el-input :class="'textarea'" type="textarea" :rows="5" v-model="commentForm.content" placeholder="评论千万条，友善第一条"
