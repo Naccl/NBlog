@@ -49,7 +49,7 @@ const routes = [
 				}
 			},
 			{
-				path: '/category/:id',
+				path: '/category/:name',
 				name: 'category',
 				component: Category,
 				meta: {

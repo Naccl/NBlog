@@ -8,7 +8,7 @@
 					<div class="content">
 						<router-link :to="`/blog/${blog.id}`" class="header m-text-500">{{ blog.title }}</router-link>
 						<div class="meta">
-							<router-link :to="`/category/${blog.category.id}`">
+							<router-link :to="`/category/${blog.category.name}`">
 								<i class="folder open icon"></i>{{ blog.category.name }}
 							</router-link>
 						</div>

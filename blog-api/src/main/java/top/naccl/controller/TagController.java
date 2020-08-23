@@ -38,7 +38,7 @@ public class TagController {
 	}
 
 	/**
-	 * 根据标签name分页查询博客列表
+	 * 根据标签name分页查询公开博客列表
 	 *
 	 * @param tagName 标签name
 	 * @param pageNum 页码

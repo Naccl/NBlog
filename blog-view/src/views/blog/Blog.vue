@@ -28,7 +28,7 @@
 						</div>
 					</div>
 					<!--分类-->
-					<router-link :to="`/category/${blog.category.id}`" class="ui orange large ribbon label" v-if="blog.category">
+					<router-link :to="`/category/${blog.category.name}`" class="ui orange large ribbon label" v-if="blog.category">
 						<i class="small folder open icon"></i><span class="m-text-500">{{ blog.category.name }}</span>
 					</router-link>
 					<!--文章Markdown正文-->

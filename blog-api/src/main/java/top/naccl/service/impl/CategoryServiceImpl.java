@@ -32,8 +32,8 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public List<BlogInfo> getBlogInfoListByCategoryIdAndIsPublished(Long categoryId) {
-		List<BlogInfo> blogInfos = categoryMapper.getBlogInfoListByCategoryIdAndIsPublished(categoryId);
+	public List<BlogInfo> getBlogInfoListByCategoryNameAndIsPublished(String categoryName) {
+		List<BlogInfo> blogInfos = categoryMapper.getBlogInfoListByCategoryNameAndIsPublished(categoryName);
 		for (BlogInfo blogInfo : blogInfos) {
 			blogInfo.setDescription(MarkdownUtils.markdownToHtmlExtensions(blogInfo.getDescription()));
 			blogInfo.setTags(tagService.getTagListByBlogId(blogInfo.getId()));

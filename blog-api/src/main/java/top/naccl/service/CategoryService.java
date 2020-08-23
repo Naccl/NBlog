@@ -8,7 +8,7 @@ import java.util.List;
 public interface CategoryService {
 	List<Category> getCategoryList();
 
-	List<BlogInfo> getBlogInfoListByCategoryIdAndIsPublished(Long categoryId);
+	List<BlogInfo> getBlogInfoListByCategoryNameAndIsPublished(String categoryName);
 
 	void saveCategory(Category category);
 

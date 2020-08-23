@@ -33,13 +33,20 @@ public class CategoryController {
 		return Result.ok("请求成功", categoryService.getCategoryList());
 	}
 
+	/**
+	 * 根据分类name分页查询公开博客列表
+	 *
+	 * @param categoryName 分类name
+	 * @param pageNum      页码
+	 * @return
+	 */
 	@GetMapping("/category")
-	public Result category(@RequestParam Long categoryId,
-	                       @RequestParam(defaultValue = "1") Integer pageNum){
+	public Result category(@RequestParam String categoryName,
+	                       @RequestParam(defaultValue = "1") Integer pageNum) {
 		int pageSize = 5;//每页显示5条
 		String orderBy = "is_top desc, create_time desc";
 		PageHelper.startPage(pageNum, pageSize, orderBy);
-		PageInfo<BlogInfo> pageInfo = new PageInfo<>(categoryService.getBlogInfoListByCategoryIdAndIsPublished(categoryId));
+		PageInfo<BlogInfo> pageInfo = new PageInfo<>(categoryService.getBlogInfoListByCategoryNameAndIsPublished(categoryName));
 		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
 		return Result.ok("请求成功", pageResult);
 	}

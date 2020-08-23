@@ -17,7 +17,7 @@ import java.util.List;
 public interface CategoryMapper {
 	List<Category> getCategoryList();
 
-	List<BlogInfo> getBlogInfoListByCategoryIdAndIsPublished(Long categoryId);
+	List<BlogInfo> getBlogInfoListByCategoryNameAndIsPublished(String categoryName);
 
 	int saveCategory(Category category);
 

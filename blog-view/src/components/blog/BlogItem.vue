@@ -30,7 +30,7 @@
 						</div>
 					</div>
 					<!--分类-->
-					<router-link :to="`/category/${item.category.id}`" class="ui orange large ribbon label">
+					<router-link :to="`/category/${item.category.name}`" class="ui orange large ribbon label">
 						<i class="small folder open icon"></i><span class="m-text-500">{{ item.category.name }}</span>
 					</router-link>
 					<!--文章Markdown描述-->

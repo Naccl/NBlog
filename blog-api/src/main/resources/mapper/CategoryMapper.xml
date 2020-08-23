@@ -27,11 +27,11 @@
         </association>
     </resultMap>
 
-    <!--根据分类id查询公开博客List-->
-    <select id="getBlogInfoListByCategoryIdAndIsPublished" resultMap="blogInfo">
+    <!--根据分类name查询公开博客List-->
+    <select id="getBlogInfoListByCategoryNameAndIsPublished" resultMap="blogInfo">
         select b.id, b.title, b.description, b.is_top, b.create_time, b.views, b.words, b.read_time, c.id as category_id, c.category_name
         from category as c left join blog as b on c.id=b.category_id
-        where c.id=#{categoryId} and b.is_published=true
+        where c.category_name=#{categoryName} and b.is_published=true
     </select>
 
     <!--添加分类-->
