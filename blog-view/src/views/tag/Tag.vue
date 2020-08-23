@@ -6,7 +6,7 @@
 
 <script>
 	import BlogList from "@/components/blog/BlogList";
-	import {getBlogListByTagId} from "@/api/tag";
+	import {getBlogListByTagName} from "@/api/tag";
 
 	export default {
 		name: "Tag",
@@ -26,14 +26,9 @@
 		created() {
 			this.getBlogList()
 		},
-		computed: {
-			tagId() {
-				return parseInt(this.$route.params.id)
-			}
-		},
 		methods: {
 			getBlogList(pageNum) {
-				getBlogListByTagId(this.tagId, pageNum).then(res => {
+				getBlogListByTagName(this.$route.params.name, pageNum).then(res => {
 					console.log(res)
 					if (res.code === 200) {
 						this.blogList = res.data.list

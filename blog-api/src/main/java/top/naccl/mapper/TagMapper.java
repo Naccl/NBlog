@@ -19,7 +19,7 @@ public interface TagMapper {
 
 	List<Tag> getTagListByBlogId(Long blogId);
 
-	List<BlogInfo> getBlogInfoListByTagIdAndIsPublished(Long tagId);
+	List<BlogInfo> getBlogInfoListByTagNameAndIsPublished(String tagName);
 
 	int saveTag(Tag tag);
 

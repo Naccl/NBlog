@@ -7,12 +7,12 @@ export function getTagList() {
 	})
 }
 
-export function getBlogListByTagId(tagId, pageNum) {
+export function getBlogListByTagName(tagName, pageNum) {
 	return axios({
 		url: 'tag',
 		method: 'GET',
 		params: {
-			tagId,
+			tagName,
 			pageNum
 		}
 	})

@@ -41,7 +41,7 @@ const routes = [
 				}
 			},
 			{
-				path: '/tag/:id',
+				path: '/tag/:name',
 				name: 'tag',
 				component: Tag,
 				meta: {

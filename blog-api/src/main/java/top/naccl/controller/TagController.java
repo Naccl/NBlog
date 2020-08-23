@@ -38,19 +38,19 @@ public class TagController {
 	}
 
 	/**
-	 * 根据标签id分页查询博客列表
+	 * 根据标签name分页查询博客列表
 	 *
-	 * @param tagId   标签id
+	 * @param tagName 标签name
 	 * @param pageNum 页码
 	 * @return
 	 */
 	@GetMapping("/tag")
-	public Result tag(@RequestParam Long tagId,
+	public Result tag(@RequestParam String tagName,
 	                  @RequestParam(defaultValue = "1") Integer pageNum) {
 		int pageSize = 5;//每页显示5条
 		String orderBy = "is_top desc, create_time desc";
 		PageHelper.startPage(pageNum, pageSize, orderBy);
-		PageInfo<BlogInfo> pageInfo = new PageInfo<>(tagService.getBlogInfoListByTagIdAndIsPublished(tagId));
+		PageInfo<BlogInfo> pageInfo = new PageInfo<>(tagService.getBlogInfoListByTagNameAndIsPublished(tagName));
 		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
 		return Result.ok("请求成功", pageResult);
 	}

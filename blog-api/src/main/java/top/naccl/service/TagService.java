@@ -10,7 +10,7 @@ public interface TagService {
 
 	List<Tag> getTagListByBlogId(Long blogId);
 
-	List<BlogInfo> getBlogInfoListByTagIdAndIsPublished(Long tagId);
+	List<BlogInfo> getBlogInfoListByTagNameAndIsPublished(String tagName);
 
 	void saveTag(Tag tag);
 

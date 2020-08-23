@@ -34,8 +34,8 @@ public class TagServiceImpl implements TagService {
 	}
 
 	@Override
-	public List<BlogInfo> getBlogInfoListByTagIdAndIsPublished(Long tagId) {
-		List<BlogInfo> blogInfos = tagMapper.getBlogInfoListByTagIdAndIsPublished(tagId);
+	public List<BlogInfo> getBlogInfoListByTagNameAndIsPublished(String tagName) {
+		List<BlogInfo> blogInfos = tagMapper.getBlogInfoListByTagNameAndIsPublished(tagName);
 		for (BlogInfo blogInfo : blogInfos) {
 			blogInfo.setDescription(MarkdownUtils.markdownToHtmlExtensions(blogInfo.getDescription()));
 			blogInfo.setTags(getTagListByBlogId(blogInfo.getId()));
