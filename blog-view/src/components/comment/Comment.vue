@@ -11,7 +11,7 @@
 			</a>
 			<div class="content">
 				<a class="nickname" :href="comment.website!=''&&comment.website!=null?comment.website:null" target="_blank" rel="external nofollow noopener">{{ comment.nickname }}</a>
-				<div class="ui black left pointing label" v-if="comment.adminComment">博主</div>
+				<div class="ui black left pointing label" v-if="comment.adminComment">{{ $store.state.siteInfo.commentAdminFlag }}</div>
 				<div class="metadata">
 					<strong class="date">{{ comment.createTime | dateFormat('YYYY-MM-DD HH:mm')}}</strong>
 				</div>
@@ -26,11 +26,11 @@
 					</a>
 					<div class="content">
 						<a class="nickname" :href="reply.website!=''&&reply.website!=null?reply.website:null" target="_blank" rel="external nofollow noopener">{{ reply.nickname }}</a>
-						<div class="ui black left pointing label" v-if="reply.adminComment">博主</div>
+						<div class="ui black left pointing label" v-if="reply.adminComment">{{ $store.state.siteInfo.commentAdminFlag }}</div>
 						<div class="metadata">
 							<strong class="date">{{ reply.createTime | dateFormat('YYYY-MM-DD HH:mm')}}</strong>
 						</div>
-						<div class="text"><strong @click="toComment(`comment-${reply.parentCommentId}`)">@{{ reply.parentCommentNickname }}</strong>{{ reply.content }}</div>
+						<div class="text"><a :href="`#comment-${reply.parentCommentId}`">@{{ reply.parentCommentNickname }}</a>{{ reply.content }}</div>
 						<div class="actions">
 							<el-button size="mini" type="primary" @click="setReply(reply.id)">回复</el-button>
 						</div>
@@ -54,9 +54,6 @@
 			...mapState(['commentCount', 'comments', 'parentCommentId'])
 		},
 		methods: {
-			toComment(id) {
-				document.getElementById(id).scrollIntoView()
-			},
 			setReply(id) {
 				this.$store.dispatch('setParentCommentId', id)
 			}
@@ -97,9 +94,11 @@
 		line-height: 1.5;
 	}
 
-	.ui.comments .comment .text strong {
+	.ui.comments .comment .text a {
 		cursor: pointer;
 		margin-right: 8px;
+		font-weight: bolder;
+		color: rgba(0,0,0,.87);
 	}
 
 	.label {

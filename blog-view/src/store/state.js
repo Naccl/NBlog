@@ -9,7 +9,7 @@ export default {
 		page: 0,
 		blogId: null,
 		pageNum: 1,
-		pageSize: 1
+		pageSize: 5
 	},
 	commentCount: 0,
 	commentTotalPage: 0,
