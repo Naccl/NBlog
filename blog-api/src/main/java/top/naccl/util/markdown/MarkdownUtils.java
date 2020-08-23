@@ -87,6 +87,7 @@ public class MarkdownUtils {
 			//改变a标签的target属性为_blank
 			if (node instanceof Link) {
 				attributes.put("target", "_blank");
+				attributes.put("rel", "external nofollow noopener");
 			}
 			if (node instanceof TableBlock) {
 				attributes.put("class", "ui celled table");
