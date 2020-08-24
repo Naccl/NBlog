@@ -18,7 +18,7 @@
 							<p>动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态</p>
 						</div>
 						<div class="extra content">
-							<span class="left floated like"><i class="like icon"></i>123</span>
+							<a class="left floated"><i class="heart outline icon"></i>123</a>
 						</div>
 					</div>
 				</div>
@@ -98,9 +98,17 @@
 		padding: 5px 14px !important;
 	}
 
-	.extra.content span {
-		color: rgba(0, 0, 0, 0.7);
+	.extra.content a {
+		color: rgba(0, 0, 0, 0.7) !important;
 		font-size: 12px !important;
+	}
+
+	.extra.content a:hover {
+		color: red !important;
+	}
+
+	.extra.content .like-color {
+		color: red !important;
 	}
 
 	.extra.content i {
