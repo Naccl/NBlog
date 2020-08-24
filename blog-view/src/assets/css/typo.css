@@ -271,13 +271,13 @@
 /* 在文章中，应该还原 ul 和 ol 的样式 */
 .typo ul {
     list-style: disc;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.8;
 }
 
 .typo ol {
     list-style: decimal;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.8;
 }
 

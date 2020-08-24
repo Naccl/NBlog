@@ -68,6 +68,10 @@ footer {
     margin-bottom: 3em !important;
 }
 
+.m-padding-bottom-large {
+    padding-bottom: 2em !important;
+}
+
 .m-padding-left-no {
     padding-left: 0 !important;
 }

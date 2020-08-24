@@ -7,6 +7,7 @@ import Archives from "@/views/archives/Archives";
 import Blog from "@/views/blog/Blog";
 import Tag from "@/views/tag/Tag";
 import Category from "@/views/category/Category";
+import Moments from "@/views/moments/Moments";
 
 Vue.use(VueRouter)
 
@@ -54,6 +55,14 @@ const routes = [
 				component: Category,
 				meta: {
 					title: '分类'
+				}
+			},
+			{
+				path: '/moments',
+				name: 'moments',
+				component: Moments,
+				meta: {
+					title: '动态'
 				}
 			}
 		]
