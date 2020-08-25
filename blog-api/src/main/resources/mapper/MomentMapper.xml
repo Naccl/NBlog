@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.naccl.mapper.MomentMapper">
+
+    <resultMap id="moment" type="top.naccl.entity.Moment">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="createTime" column="create_time"/>
+        <result property="likes" column="likes"/>
+        <result property="published" column="is_published"/>
+    </resultMap>
+
+    <resultMap id="momentVO" type="top.naccl.model.vo.Moment">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="createTime" column="create_time"/>
+        <result property="likes" column="likes"/>
+    </resultMap>
+
+    <!--查询动态List-->
+    <select id="getMomentList" resultMap="moment">
+        select id, content, create_time, likes, is_published from moment
+    </select>
+
+    <!--查询公开动态List-->
+    <select id="getMomentListByPublished" resultMap="momentVO">
+        select id, content, create_time, likes from moment where is_published=true
+    </select>
+
+    <!--给动态点赞-->
+    <update id="addLikeByMomentId">
+        update moment set likes=likes+1 where id=#{momentId}
+    </update>
+
+    <!--更新动态发布状态-->
+    <update id="updateMomentPublishedById">
+        update moment set is_published=#{published} where id=#{momentId}
+    </update>
+</mapper>

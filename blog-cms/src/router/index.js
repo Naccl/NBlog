@@ -9,6 +9,7 @@ import CategoryList from "@/views/category/CategoryList";
 import TagList from "@/views/tag/TagList";
 import CommentList from "@/views/comment/CommentList";
 import SiteSetting from "@/views/site/SiteSetting";
+import MomentList from "@/views/moment/MomentList";
 
 Vue.use(VueRouter)
 
@@ -55,6 +56,13 @@ const routes = [
 				component: BlogList,
 				meta: {
 					title: '文章管理'
+				}
+			},
+			{
+				path: '/moments',
+				component: MomentList,
+				meta: {
+					title: '动态管理'
 				}
 			},
 			{

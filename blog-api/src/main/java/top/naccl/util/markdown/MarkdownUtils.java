@@ -90,7 +90,7 @@ public class MarkdownUtils {
 				attributes.put("rel", "external nofollow noopener");
 			}
 			if (node instanceof TableBlock) {
-				attributes.put("class", "ui celled table");
+				attributes.put("class", "ui celled table");//针对 semantic-ui 的class属性
 			}
 		}
 	}

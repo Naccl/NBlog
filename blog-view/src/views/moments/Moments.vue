@@ -5,31 +5,86 @@
 		</div>
 		<div class="ui attached segment m-padding-bottom-large">
 			<div class="moments">
-				<div class="moment">
+				<div class="moment" v-for="(moment,index) in momentList" :key="index">
 					<div class="avatar">
 						<img :src="$store.state.introduction.avatar">
 					</div>
 					<div class="ui card">
 						<div class="content m-top">
-							<span class="right floated">2020-08-24 12:56</span>
-							<div>{{ $store.state.introduction.name }}</div>
+							<span style="font-weight: 700">{{ $store.state.introduction.name }}</span>
+							<span class="right floated">{{ moment.createTime | dateFormat('YYYY-MM-DD HH:mm') }}</span>
 						</div>
-						<div class="content typo">
-							<p>动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态动态</p>
-						</div>
+						<div class="content typo" v-html="moment.content"></div>
 						<div class="extra content">
-							<a class="left floated"><i class="heart outline icon"></i>123</a>
+							<a class="left floated" @click="like(moment.id)"><i class="heart outline icon"></i>{{ moment.likes }}</a>
 						</div>
 					</div>
 				</div>
 			</div>
+
+			<el-pagination @current-change="handleCurrentChange" :current-page="pageNum" :page-count="totalPage"
+			               layout="prev, pager, next" background hide-on-single-page class="pagination">
+			</el-pagination>
 		</div>
 	</div>
 </template>
 
 <script>
+	import {getMomentListByPageNum, likeMoment} from "@/api/moment";
+
 	export default {
-		name: "Moments"
+		name: "Moments",
+		data() {
+			return {
+				momentList: [],
+				pageNum: 1,
+				totalPage: 0
+			}
+		},
+		created() {
+			this.getMomentList()
+		},
+		methods: {
+			getMomentList() {
+				getMomentListByPageNum(this.pageNum).then(res => {
+					console.log(res)
+					if (res.code === 200) {
+						this.momentList = res.data.list
+						this.totalPage = res.data.totalPage
+					} else {
+						this.msgError(res.msg)
+					}
+				}).catch(() => {
+					this.msgError("请求失败")
+				})
+			},
+			handleCurrentChange(newPage) {
+				this.scrollToTop()
+				this.pageNum = newPage
+				this.getMomentList()
+			},
+			like(id) {
+				likeMoment(id).then(res => {
+					if (res.code === 200) {
+						this.$notify({
+							title: res.msg,
+							type: 'success'
+						})
+						this.getMomentList()
+					} else {
+						this.$notify({
+							title: res.msg,
+							type: 'warning'
+						})
+					}
+				}).catch(() => {
+					this.$notify({
+						title: '异常错误',
+						type: 'error'
+					})
+				})
+			}
+		}
 	}
 </script>
 
@@ -113,5 +168,10 @@
 
 	.extra.content i {
 		font-size: 12px !important;
+	}
+
+	.pagination {
+		text-align: center;
+		margin-top: 3em;
 	}
 </style>
