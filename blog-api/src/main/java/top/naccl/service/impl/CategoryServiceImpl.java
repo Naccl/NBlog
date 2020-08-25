@@ -15,7 +15,7 @@ import top.naccl.util.markdown.MarkdownUtils;
 import java.util.List;
 
 /**
- * @Description: 博空分类业务层实现
+ * @Description: 博客分类业务层实现
  * @Author: Naccl
  * @Date: 2020-07-29
  */

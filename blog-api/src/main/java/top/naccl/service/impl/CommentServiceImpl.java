@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Description: 博空评论业务层实现
+ * @Description: 博客评论业务层实现
  * @Author: Naccl
  * @Date: 2020-08-03
  */

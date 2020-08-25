@@ -20,7 +20,7 @@ import java.util.Map;
  */
 
 @RestController
-@RequestMapping("/")
+@RequestMapping
 public class IndexController {
 	@Autowired
 	SiteSettingService siteSettingService;

@@ -21,7 +21,7 @@ import java.util.List;
  * @Date: 2020-08-17
  */
 @RestController
-@RequestMapping("/")
+@RequestMapping
 public class TagController {
 	@Autowired
 	TagService tagService;

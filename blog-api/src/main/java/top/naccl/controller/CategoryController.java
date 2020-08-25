@@ -18,7 +18,7 @@ import top.naccl.service.CategoryService;
  * @Date: 2020-08-19
  */
 @RestController
-@RequestMapping("/")
+@RequestMapping
 public class CategoryController {
 	@Autowired
 	CategoryService categoryService;

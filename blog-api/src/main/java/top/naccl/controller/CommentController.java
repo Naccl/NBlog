@@ -32,7 +32,7 @@ import java.util.Map;
  * @Date: 2020-08-15
  */
 @RestController
-@RequestMapping("/")
+@RequestMapping
 public class CommentController {
 	@Autowired
 	CommentService commentService;
