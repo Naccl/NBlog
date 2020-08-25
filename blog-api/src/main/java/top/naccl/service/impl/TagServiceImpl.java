@@ -29,6 +29,11 @@ public class TagServiceImpl implements TagService {
 	}
 
 	@Override
+	public List<Tag> getTagListNotId() {
+		return tagMapper.getTagListNotId();
+	}
+
+	@Override
 	public List<Tag> getTagListByBlogId(Long blogId) {
 		return tagMapper.getTagListByBlogId(blogId);
 	}

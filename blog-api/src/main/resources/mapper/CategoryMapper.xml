@@ -12,6 +12,11 @@
         select id, category_name from category order by id desc
     </select>
 
+    <!--获取所有分类List不查询id-->
+    <select id="getCategoryListNotId" resultMap="category">
+        select category_name from category order by id desc
+    </select>
+
     <resultMap id="blogInfo" type="top.naccl.model.vo.BlogInfo">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
@@ -22,14 +27,13 @@
         <result property="readTime" column="read_time"/>
         <result property="top" column="is_top"/>
         <association property="category" javaType="top.naccl.entity.Category">
-            <id property="id" column="category_id"/>
             <result property="name" column="category_name"/>
         </association>
     </resultMap>
 
     <!--根据分类name查询公开博客List-->
     <select id="getBlogInfoListByCategoryNameAndIsPublished" resultMap="blogInfo">
-        select b.id, b.title, b.description, b.is_top, b.create_time, b.views, b.words, b.read_time, c.id as category_id, c.category_name
+        select b.id, b.title, b.description, b.is_top, b.create_time, b.views, b.words, b.read_time, c.category_name
         from category as c left join blog as b on c.id=b.category_id
         where c.category_name=#{categoryName} and b.is_published=true
     </select>

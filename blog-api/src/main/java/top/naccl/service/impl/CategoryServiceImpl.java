@@ -32,6 +32,11 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
+	public List<Category> getCategoryListNotId() {
+		return categoryMapper.getCategoryListNotId();
+	}
+
+	@Override
 	public List<BlogInfo> getBlogInfoListByCategoryNameAndIsPublished(String categoryName) {
 		List<BlogInfo> blogInfos = categoryMapper.getBlogInfoListByCategoryNameAndIsPublished(categoryName);
 		for (BlogInfo blogInfo : blogInfos) {

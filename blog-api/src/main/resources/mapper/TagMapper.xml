@@ -13,9 +13,14 @@
         select id, tag_name, color from tag order by id desc
     </select>
 
+    <!--获取所有标签List不查询id-->
+    <select id="getTagListNotId" resultMap="tag">
+        select tag_name, color from tag order by id desc
+    </select>
+
     <!--按博客id查询List-->
     <select id="getTagListByBlogId" resultMap="tag">
-        select t.id, t.tag_name, t.color
+        select t.tag_name, t.color
         from blog_tag as bt left join tag as t on bt.tag_id=t.id
         where bt.blog_id=#{blogId}
     </select>
@@ -37,7 +42,7 @@
 
     <!--根据标签name查询公开博客List-->
     <select id="getBlogInfoListByTagNameAndIsPublished" resultMap="blogInfo">
-        select b.id, b.title, b.description, b.is_top, b.create_time, b.views, b.words, b.read_time, c.id as category_id, c.category_name
+        select b.id, b.title, b.description, b.is_top, b.create_time, b.views, b.words, b.read_time, c.category_name
         from (((tag as t left join blog_tag as bt on t.id=bt.tag_id) left join blog as b on bt.blog_id=b.id) left join category as c on b.category_id=c.id)
         where t.tag_name=#{tagName} and b.is_published=true
     </select>

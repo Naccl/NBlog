@@ -30,7 +30,7 @@ public class CategoryController {
 	 */
 	@GetMapping("/categories")
 	public Result categories() {
-		return Result.ok("请求成功", categoryService.getCategoryList());
+		return Result.ok("请求成功", categoryService.getCategoryListNotId());
 	}
 
 	/**

@@ -33,7 +33,7 @@ public class TagController {
 	 */
 	@GetMapping("/tags")
 	public Result tags() {
-		List<Tag> tags = tagService.getTagList();
+		List<Tag> tags = tagService.getTagListNotId();
 		return Result.ok("获取成功", tags);
 	}
 

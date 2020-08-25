@@ -10,7 +10,7 @@
 			<sui-dropdown icon="idea icon" class="item" :class="{'m-mobile-hide': mobileHide,'active':$route.name==='category'}">
 				分类<i class="caret down icon"></i>
 				<sui-dropdown-menu id="m-dropdown">
-					<sui-dropdown-item @click="categoryRoute(category.name)" v-for="category in categoryList" :key="category.id">{{ category.name }}</sui-dropdown-item>
+					<sui-dropdown-item @click="categoryRoute(category.name)" v-for="(category,index) in categoryList" :key="index">{{ category.name }}</sui-dropdown-item>
 				</sui-dropdown-menu>
 			</sui-dropdown>
 			<router-link to="/archives" class="item" :class="{'m-mobile-hide': mobileHide,'active':$route.name==='archives'}">

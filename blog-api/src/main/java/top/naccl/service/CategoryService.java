@@ -8,6 +8,8 @@ import java.util.List;
 public interface CategoryService {
 	List<Category> getCategoryList();
 
+	List<Category> getCategoryListNotId();
+
 	List<BlogInfo> getBlogInfoListByCategoryNameAndIsPublished(String categoryName);
 
 	void saveCategory(Category category);

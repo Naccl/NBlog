@@ -53,7 +53,6 @@
         <result property="readTime" column="read_time"/>
         <result property="top" column="is_top"/>
         <association property="category" javaType="top.naccl.entity.Category">
-            <id property="id" column="category_id"/>
             <result property="name" column="category_name"/>
         </association>
     </resultMap>
@@ -77,11 +76,9 @@
         <result property="words" column="words"/>
         <result property="readTime" column="read_time"/>
         <association property="category" javaType="top.naccl.entity.Category">
-            <id property="id" column="category_id"/>
             <result property="name" column="category_name"/>
         </association>
         <collection property="tags" javaType="top.naccl.entity.Tag">
-            <id property="id" column="tag_id"/>
             <result property="name" column="tag_name"/>
             <result property="color" column="color"/>
         </collection>
@@ -117,7 +114,7 @@
 
     <!--查询公开博客的简要信息-->
     <select id="getBlogInfoListByIsPublished" resultMap="blogInfo">
-        select b.id, b.title, b.description, b.is_top, b.create_time, b.views, b.words, b.read_time, c.id as category_id, c.category_name
+        select b.id, b.title, b.description, b.is_top, b.create_time, b.views, b.words, b.read_time, c.category_name
         from blog as b left join category as c on b.category_id=c.id
         where b.is_published=true
     </select>
@@ -143,14 +140,13 @@
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <association property="category" javaType="top.naccl.entity.Category">
-            <id property="id" column="category_id"/>
             <result property="name" column="category_name"/>
         </association>
     </resultMap>
 
     <!--查询随机的公开文章-->
     <select id="getRandomBlogListByLimitNumAndIsPublished" resultMap="randomBlog">
-        select b.id, b.title, c.id as category_id, c.category_name
+        select b.id, b.title, c.category_name
         from blog as b left join category as c on b.category_id=c.id
         where b.is_published=true
         order by rand()
@@ -209,8 +205,8 @@
     <select id="getBlogByIdAndIsPublished" resultMap="blogDetail">
         select b.id, b.title, b.content, b.is_appreciation, b.is_comment_enabled, b.is_top,
         b.create_time, b.update_time, b.views, b.words, b.read_time,
-        c.id as category_id, c.category_name,
-        bt.tag_id as tag_id, t.tag_name as tag_name, t.color
+        c.category_name,
+        t.tag_name as tag_name, t.color
         from (((blog as b left join category as c on b.category_id=c.id) left join blog_tag as bt on b.id=bt.blog_id) left join tag as t on bt.tag_id=t.id)
         where b.id=#{id} and b.is_published=true
     </select>
