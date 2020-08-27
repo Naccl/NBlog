@@ -108,7 +108,7 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public void saveComment(Comment comment) {
+	public void saveComment(top.naccl.model.dto.Comment comment) {
 		if (commentMapper.saveComment(comment) != 1) {
 			throw new PersistenceException("评论失败");
 		}

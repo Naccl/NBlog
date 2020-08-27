@@ -20,5 +20,5 @@ public interface CommentService {
 
 	int countByPageAndIsPublished(Integer page, Long blogId);
 
-	void saveComment(Comment comment);
+	void saveComment(top.naccl.model.dto.Comment comment);
 }

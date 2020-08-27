@@ -31,5 +31,5 @@ public interface CommentMapper {
 
 	int countByPageAndIsPublished(Integer page, Long blogId);
 
-	int saveComment(Comment comment);
+	int saveComment(top.naccl.model.dto.Comment comment);
 }

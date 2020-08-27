@@ -1,6 +1,5 @@
 package top.naccl.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import top.naccl.entity.Comment;
-import top.naccl.model.vo.BlogIdAndTitle;
+import top.naccl.model.dto.Comment;
 import top.naccl.model.vo.PageComment;
 import top.naccl.model.vo.PageResult;
 import top.naccl.model.vo.Result;
@@ -84,23 +82,16 @@ public class CommentController {
 	/**
 	 * 提交评论
 	 *
-	 * @param map     包含comment对象的map
+	 * @param comment 评论DTO
 	 * @param request 请求，用于获取ip和管理员身份（待添加）
 	 * @return
 	 */
 	@PostMapping("/comment")
-	public Result postComment(@RequestBody Map<String, Object> map, HttpServletRequest request) {
-		JSONObject commentJsonObject = new JSONObject(map);
-		Comment comment = JSONObject.toJavaObject(commentJsonObject, Comment.class);
-
+	public Result postComment(@RequestBody Comment comment, HttpServletRequest request) {
 		if (StringUtils.isEmpty(comment.getNickname(), comment.getEmail(), comment.getContent())
 				|| comment.getNickname().length() > 15 || comment.getContent().length() > 250) {
 			return Result.error("参数有误");
 		}
-
-		//set博客id
-		BlogIdAndTitle blog = new BlogIdAndTitle();
-		blog.setId(Long.valueOf((Integer) map.get("blogId")));
 
 		//set 随机头像（获取QQ昵称头像功能待添加）
 		String nicknameMD5 = MD5Utils.getMD5(comment.getNickname());//根据评论昵称取MD5，保证每一个昵称对应一个头像
@@ -114,7 +105,6 @@ public class CommentController {
 			website = "http://" + website;
 		}
 
-		comment.setBlog(blog);
 		comment.setAvatar(avatar);
 		comment.setWebsite(website);
 		comment.setNickname(comment.getNickname().trim());
