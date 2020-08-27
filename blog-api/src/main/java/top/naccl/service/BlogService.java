@@ -26,7 +26,7 @@ public interface BlogService {
 
 	void deleteBlogTagByBlogId(Long blogId);
 
-	void saveBlog(Blog blog);
+	void saveBlog(top.naccl.model.dto.Blog blog);
 
 	void saveBlogTag(Long blogId, Long tagId);
 
@@ -40,7 +40,7 @@ public interface BlogService {
 
 	BlogDetail getBlogByIdAndIsPublished(Long id);
 
-	void updateBlog(Blog blog);
+	void updateBlog(top.naccl.model.dto.Blog blog);
 
 	int countBlog();
 

@@ -1,6 +1,5 @@
 package top.naccl.controller.admin;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +15,10 @@ import top.naccl.entity.Blog;
 import top.naccl.entity.Category;
 import top.naccl.entity.Tag;
 import top.naccl.entity.User;
+import top.naccl.model.vo.Result;
 import top.naccl.service.BlogService;
 import top.naccl.service.CategoryService;
 import top.naccl.service.TagService;
-import top.naccl.model.vo.Result;
 import top.naccl.util.StringUtils;
 
 import java.util.ArrayList;
@@ -149,35 +148,33 @@ public class BlogAdminController {
 	/**
 	 * 保存草稿或发布新文章
 	 *
-	 * @param map 包含了博客文章 LinkedHashMap 对象的 LinkedHashMap => map = {blog: {...}}
+	 * @param blog 博客文章DTO
 	 * @return
 	 */
 	@PostMapping("/blog")
-	public Result saveBlog(@RequestBody Map<String, Object> map) {
-		return getResult(map, "save");
+	public Result saveBlog(@RequestBody top.naccl.model.dto.Blog blog) {
+		return getResult(blog, "save");
 	}
 
 	/**
 	 * 更新博客
 	 *
-	 * @param map 包含了博客文章 LinkedHashMap 对象的 LinkedHashMap => map = {blog: {...}}
+	 * @param blog 博客文章DTO
 	 * @return
 	 */
 	@PutMapping("/blog")
-	public Result updateBlog(@RequestBody Map<String, Object> map) {
-		return getResult(map, "update");
+	public Result updateBlog(@RequestBody top.naccl.model.dto.Blog blog) {
+		return getResult(blog, "update");
 	}
 
 	/**
 	 * 执行博客添加或更新操作：校验参数是否合法，添加分类、标签，维护博客标签关联表
 	 *
-	 * @param map  博客文章map对象
+	 * @param blog 博客文章DTO
 	 * @param type 添加或更新
 	 * @return
 	 */
-	private Result getResult(Map<String, Object> map, String type) {
-		JSONObject blogJsonObject = new JSONObject(map);
-		Blog blog = JSONObject.toJavaObject(blogJsonObject, Blog.class);
+	private Result getResult(top.naccl.model.dto.Blog blog, String type) {
 		//验证普通字段
 		if (StringUtils.isEmpty(blog.getTitle(), blog.getContent(), blog.getDescription())
 				|| blog.getWords() == null || blog.getWords() < 0) {
@@ -185,7 +182,7 @@ public class BlogAdminController {
 		}
 
 		//处理分类
-		Object cate = map.get("cate");
+		Object cate = blog.getCate();
 		if (cate == null) {
 			return Result.error("分类不能为空");
 		}
@@ -207,7 +204,7 @@ public class BlogAdminController {
 		}
 
 		//处理标签
-		List<Object> tagList = (List<Object>) map.get("tagList");
+		List<Object> tagList = blog.getTagList();
 		List<Tag> tags = new ArrayList<>();
 		for (Object t : tagList) {
 			if (t instanceof Integer) {//选择了已存在的标签

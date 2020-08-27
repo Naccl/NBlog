@@ -99,7 +99,8 @@
 			deleteMomentById(id) {
 				deleteMomentById(id).then(res => {
 					if (res.code === 200) {
-						this.msgSuccess(res.msg);
+						this.msgSuccess(res.msg)
+						this.getMomentList()
 					} else {
 						this.msgError(res.msg)
 					}

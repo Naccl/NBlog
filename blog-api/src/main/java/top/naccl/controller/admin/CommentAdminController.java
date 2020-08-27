@@ -1,6 +1,5 @@
 package top.naccl.controller.admin;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.naccl.entity.Blog;
 import top.naccl.entity.Comment;
+import top.naccl.model.vo.Result;
 import top.naccl.service.BlogService;
 import top.naccl.service.CommentService;
-import top.naccl.model.vo.Result;
 import top.naccl.util.StringUtils;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Description: 博客评论后台管理
@@ -107,13 +105,11 @@ public class CommentAdminController {
 	/**
 	 * 修改评论
 	 *
-	 * @param map 评论对象map => {id=3, nickname=Naccl, email=admin@naccl.top, ip=127.0.0.1, content=666}
+	 * @param comment 评论实体
 	 * @return
 	 */
 	@PutMapping("/comment")
-	public Result updateComment(@RequestBody Map<String, Object> map) {
-		JSONObject commentJsonObject = new JSONObject(map);
-		Comment comment = JSONObject.toJavaObject(commentJsonObject, Comment.class);
+	public Result updateComment(@RequestBody Comment comment) {
 		if (StringUtils.isEmpty(comment.getNickname(), comment.getEmail(), comment.getIp(), comment.getContent())) {
 			return Result.error("参数有误");
 		}

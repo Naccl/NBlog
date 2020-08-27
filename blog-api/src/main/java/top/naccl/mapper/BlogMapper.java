@@ -36,7 +36,7 @@ public interface BlogMapper {
 
 	int deleteBlogTagByBlogId(Long blogId);
 
-	int saveBlog(Blog blog);
+	int saveBlog(top.naccl.model.dto.Blog blog);
 
 	int saveBlogTag(Long blogId, Long tagId);
 
@@ -50,7 +50,7 @@ public interface BlogMapper {
 
 	BlogDetail getBlogByIdAndIsPublished(Long id);
 
-	int updateBlog(Blog blog);
+	int updateBlog(top.naccl.model.dto.Blog blog);
 
 	int countBlog();
 

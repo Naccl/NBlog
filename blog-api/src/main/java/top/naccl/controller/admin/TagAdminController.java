@@ -1,6 +1,5 @@
 package top.naccl.controller.admin;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.naccl.entity.Tag;
+import top.naccl.model.vo.Result;
 import top.naccl.service.BlogService;
 import top.naccl.service.TagService;
-import top.naccl.model.vo.Result;
 import top.naccl.util.StringUtils;
-
-import java.util.Map;
 
 /**
  * @Description: 博客标签后台管理
@@ -51,35 +48,35 @@ public class TagAdminController {
 	/**
 	 * 添加新标签
 	 *
-	 * @param map 包含标签名称、颜色的map => {name="123", color="red"}
+	 * @param tag 标签实体
 	 * @return
 	 */
 	@PostMapping("/tag")
-	public Result saveTag(@RequestBody Map<String, Object> map) {
-		return getResult(map, "save");
+	public Result saveTag(@RequestBody Tag tag) {
+		System.out.println(tag);
+		return getResult(tag, "save");
 	}
 
 	/**
 	 * 修改标签
 	 *
-	 * @param map 包含标签id、名称、颜色的map => {id=1, name="123", color="red"}
+	 * @param tag 标签实体
 	 * @return
 	 */
 	@PutMapping("/tag")
-	public Result updateTag(@RequestBody Map<String, Object> map) {
-		return getResult(map, "update");
+	public Result updateTag(@RequestBody Tag tag) {
+		System.out.println(tag);
+		return getResult(tag, "update");
 	}
 
 	/**
 	 * 执行标签添加或更新操作：校验参数是否合法，标签是否已存在
 	 *
-	 * @param map  标签map对象
+	 * @param tag  标签实体
 	 * @param type 添加或更新
 	 * @return
 	 */
-	private Result getResult(Map<String, Object> map, String type) {
-		JSONObject tagJsonObject = new JSONObject(map);
-		Tag tag = JSONObject.toJavaObject(tagJsonObject, Tag.class);
+	private Result getResult(Tag tag, String type) {
 		if (StringUtils.isEmpty(tag.getName())) {
 			return Result.error("参数不能为空");
 		}

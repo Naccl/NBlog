@@ -93,7 +93,7 @@ public class BlogServiceImpl implements BlogService {
 
 	@Transactional
 	@Override
-	public void saveBlog(Blog blog) {
+	public void saveBlog(top.naccl.model.dto.Blog blog) {
 		if (blogMapper.saveBlog(blog) != 1) {
 			throw new PersistenceException("添加博客失败");
 		}
@@ -152,7 +152,7 @@ public class BlogServiceImpl implements BlogService {
 
 	@Transactional
 	@Override
-	public void updateBlog(Blog blog) {
+	public void updateBlog(top.naccl.model.dto.Blog blog) {
 		if (blogMapper.updateBlog(blog) != 1) {
 			throw new PersistenceException("更新博客失败");
 		}

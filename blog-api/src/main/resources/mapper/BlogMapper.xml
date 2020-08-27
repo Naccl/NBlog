@@ -169,7 +169,7 @@
     </insert>
 
     <!--添加博客-->
-    <insert id="saveBlog" parameterType="top.naccl.entity.Blog" useGeneratedKeys="true" keyProperty="id">
+    <insert id="saveBlog" parameterType="top.naccl.model.dto.Blog" useGeneratedKeys="true" keyProperty="id">
         insert into blog (title, content, description, is_published, is_recommend, is_appreciation, is_comment_enabled,
         is_top, create_time, update_time, views, words, read_time, category_id, user_id)
         values (#{title}, #{content}, #{description}, #{published}, #{recommend}, #{appreciation}, #{commentEnabled},
