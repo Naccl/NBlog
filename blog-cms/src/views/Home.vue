@@ -65,30 +65,36 @@
 							},
 							{
 								id: 12,
+								title: '写动态',
+								children: [],
+								path: '/moments/write'
+							},
+							{
+								id: 13,
 								title: '文章管理',
 								children: [],
 								path: '/blogs'
 							},
 							{
-								id: 13,
+								id: 14,
 								title: '动态管理',
 								children: [],
 								path: '/moments'
 							},
 							{
-								id: 14,
+								id: 15,
 								title: '分类管理',
 								children: [],
 								path: '/categories'
 							},
 							{
-								id: 15,
+								id: 16,
 								title: '标签管理',
 								children: [],
 								path: '/tags'
 							},
 							{
-								id: 16,
+								id: 17,
 								title: '评论管理',
 								children: [],
 								path: '/comments'
@@ -143,11 +149,12 @@
 					'2': 'el-icon-s-tools',
 					'3': 'el-icon-s-data',
 					'11': 'el-icon-edit',
-					'12': 'el-icon-s-order',
-					'13': 'el-icon-chat-dot-round',
-					'14': 'el-icon-s-opportunity',
-					'15': 'submenu ali-iconfont icon-biaoqian',
-					'16': 'el-icon-s-comment',
+					'12': 'el-icon-edit',
+					'13': 'el-icon-s-order',
+					'14': 'el-icon-chat-dot-round',
+					'15': 'el-icon-s-opportunity',
+					'16': 'submenu ali-iconfont icon-biaoqian',
+					'17': 'el-icon-s-comment',
 					'21': 'submenu ali-iconfont icon-caidanguanli',
 					'22': 'submenu ali-iconfont icon-bianjizhandian',
 					'31': 'el-icon-s-marketing',

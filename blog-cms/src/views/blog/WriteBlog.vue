@@ -182,8 +182,7 @@
 				this.contentVditor = new Vditor('vditor-content', options)
 			},
 			getBlog(id) {
-				getBlogById(id)
-				.then(res => {
+				getBlogById(id).then(res => {
 					console.log(res)
 					if (res.code === 200) {
 						this.computeCategoryAndTag(res.data)
@@ -206,8 +205,7 @@
 				})
 			},
 			getData() {
-				getCategoryAndTag()
-				.then(res => {
+				getCategoryAndTag().then(res => {
 					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
@@ -230,8 +228,7 @@
 						if (this.$route.params.id) {
 							this.form.category = null
 							this.form.tags = null
-							updateBlog(this.form)
-							.then(res => {
+							updateBlog(this.form).then(res => {
 								console.log(res)
 								if (res.code === 200) {
 									this.msgSuccess(res.msg)
@@ -243,8 +240,7 @@
 								this.msgError('请求失败')
 							})
 						} else {
-							saveBlog(this.form)
-							.then(res => {
+							saveBlog(this.form).then(res => {
 								console.log(res)
 								if (res.code === 200) {
 									this.msgSuccess(res.msg)

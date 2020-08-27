@@ -36,4 +36,24 @@
     <update id="updateMomentPublishedById">
         update moment set is_published=#{published} where id=#{momentId}
     </update>
+
+    <!--根据id查询动态-->
+    <select id="getMomentById" resultMap="moment">
+        select id, content, create_time, likes, is_published from moment where id=#{id}
+    </select>
+
+    <!--按id删除动态-->
+    <delete id="deleteMomentById">
+        delete from moment where id=#{id}
+    </delete>
+
+    <!--添加动态-->
+    <insert id="saveMoment" parameterType="top.naccl.entity.Moment" useGeneratedKeys="true" keyProperty="id">
+        insert into moment (content, create_time, likes, is_published) values (#{content}, #{createTime}, #{likes}, #{published})
+    </insert>
+
+    <!--更新动态-->
+    <update id="updateMoment">
+        update moment set content=#{content}, create_time=#{createTime}, likes=#{likes}, is_published=#{published} where id=#{id}
+    </update>
 </mapper>

@@ -10,6 +10,7 @@ import TagList from "@/views/tag/TagList";
 import CommentList from "@/views/comment/CommentList";
 import SiteSetting from "@/views/site/SiteSetting";
 import MomentList from "@/views/moment/MomentList";
+import WriteMoment from "@/views/moment/WriteMoment";
 
 Vue.use(VueRouter)
 
@@ -49,6 +50,20 @@ const routes = [
 				component: WriteBlog,
 				meta: {
 					title: '编辑文章'
+				}
+			},
+			{
+				path: '/moments/write',
+				component: WriteMoment,
+				meta: {
+					title: '写动态'
+				}
+			},
+			{
+				path: '/moments/edit/:id',
+				component: WriteMoment,
+				meta: {
+					title: '编辑动态'
 				}
 			},
 			{
