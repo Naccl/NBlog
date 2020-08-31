@@ -8,6 +8,7 @@ import Blog from "@/views/blog/Blog";
 import Tag from "@/views/tag/Tag";
 import Category from "@/views/category/Category";
 import Moments from "@/views/moments/Moments";
+import About from "@/views/about/About";
 
 Vue.use(VueRouter)
 
@@ -63,6 +64,14 @@ const routes = [
 				component: Moments,
 				meta: {
 					title: '动态'
+				}
+			},
+			{
+				path: '/about',
+				name: 'about',
+				component: About,
+				meta: {
+					title: '关于我'
 				}
 			}
 		]

@@ -64,6 +64,10 @@ footer {
     margin-top: 1em !important;
 }
 
+.m-margin-top-large {
+    margin-top: 1.5em !important;
+}
+
 .m-margin-bottom-big {
     margin-bottom: 3em !important;
 }
@@ -104,6 +108,11 @@ footer {
 .m-padded-tb-big {
     padding-top: 3em !important;
     padding-bottom: 3em !important;
+}
+
+.m-padded-lr-big {
+    padding-left: 2em !important;
+    padding-right: 2em !important;
 }
 
 .m-right-top {

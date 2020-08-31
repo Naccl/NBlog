@@ -238,7 +238,7 @@
     line-height: 1.25;
 }
 
-.typo h1, .typo h2 {
+.typo h1, .typo h2, .typo h3 {
     padding-bottom: .3em;
     border-bottom: 1px solid #eaecef;
 }
@@ -273,12 +273,14 @@
     list-style: disc;
     font-size: 15px;
     line-height: 1.8;
+    padding-left: 1.5em;
 }
 
 .typo ol {
     list-style: decimal;
     font-size: 15px;
     line-height: 1.8;
+    padding-left: 1.5em;
 }
 
 .typo li ul, .typo li ol {

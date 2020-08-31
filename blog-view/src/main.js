@@ -15,6 +15,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 //moment
 import './util/dateTimeFormatUtils.js'
 
+console.log("\n %c Naccl's Blog %c https://naccl.top \n", "color: #48dbfb; background: #1b1c1d; padding:5px 0;", "background: #fadfa3; padding:5px 0;")
+
 Vue.use(SuiVue)
 Vue.use(Element)
 
