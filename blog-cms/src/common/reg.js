@@ -21,3 +21,11 @@ export const checkIpv6 = (rule, value, callback) => {
 	}
 	callback(new Error('请输入合法的 ipv6 地址'))
 }
+
+export const checkNumber = (rule, value, callback) => {
+	const reg = /^\d{1,}$/
+	if (reg.test(value)) {
+		return callback()
+	}
+	callback(new Error('请输入纯数字'))
+}

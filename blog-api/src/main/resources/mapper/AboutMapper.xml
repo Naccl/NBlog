@@ -5,4 +5,9 @@
     <select id="getList" resultType="top.naccl.entity.About">
         select * from about
     </select>
+
+    <!--更新关于我设置-->
+    <update id="updateAbout">
+        update about set value=#{value} where name_en=#{nameEn}
+    </update>
 </mapper>

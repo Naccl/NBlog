@@ -3,6 +3,7 @@ package top.naccl.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.naccl.entity.About;
+import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.AboutMapper;
 import top.naccl.service.AboutService;
 import top.naccl.util.markdown.MarkdownUtils;
@@ -32,5 +33,22 @@ public class AboutServiceImpl implements AboutService {
 			map.put(about.getNameEn(), about.getValue());
 		}
 		return map;
+	}
+
+	@Override
+	public Map<String, String> getAboutSetting() {
+		List<About> abouts = aboutMapper.getList();
+		Map<String, String> map = new HashMap<>();
+		for (About about : abouts) {
+			map.put(about.getNameEn(), about.getValue());
+		}
+		return map;
+	}
+
+	@Override
+	public void updateAbout(String nameEn, String value) {
+		if (aboutMapper.updateAbout(nameEn, value) != 1) {
+			throw new PersistenceException("修改失败");
+		}
 	}
 }
