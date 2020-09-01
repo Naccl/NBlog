@@ -11,6 +11,7 @@ import CommentList from "@/views/comment/CommentList";
 import SiteSetting from "@/views/site/SiteSetting";
 import MomentList from "@/views/moment/MomentList";
 import WriteMoment from "@/views/moment/WriteMoment";
+import About from "@/views/about/About";
 
 Vue.use(VueRouter)
 
@@ -108,6 +109,13 @@ const routes = [
 					title: '站点管理'
 				}
 			},
+			{
+				path: '/about',
+				component: About,
+				meta: {
+					title: '关于我'
+				}
+			}
 		]
 	}
 ]

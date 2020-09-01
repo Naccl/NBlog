@@ -103,16 +103,28 @@
 					},
 					{
 						id: 2,
-						title: '系统管理',
+						title: '页面管理',
 						children: [
 							{
 								id: 21,
+								title: '关于我',
+								children: [],
+								path: '/about'
+							}
+						]
+					},
+					{
+						id: 3,
+						title: '系统管理',
+						children: [
+							{
+								id: 31,
 								title: '菜单管理',
 								children: [],
 								path: '/menus'
 							},
 							{
-								id: 22,
+								id: 32,
 								title: '站点管理',
 								children: [],
 								path: '/siteSettings'
@@ -120,23 +132,23 @@
 						]
 					},
 					{
-						id: 3,
+						id: 4,
 						title: '数据统计',
 						children: [
 							{
-								id: 31,
+								id: 41,
 								title: '访问量',
 								children: [],
 								path: '/pv'
 							},
 							{
-								id: 32,
+								id: 42,
 								title: '实时访客',
 								children: [],
 								path: '/latest'
 							},
 							{
-								id: 33,
+								id: 43,
 								title: '日志',
 								children: [],
 								path: '/log'
@@ -146,8 +158,9 @@
 				],
 				iconsObj: {
 					'1': 'el-icon-menu',
-					'2': 'el-icon-s-tools',
-					'3': 'el-icon-s-data',
+					'2': 'el-icon-document-copy',
+					'3': 'el-icon-s-tools',
+					'4': 'el-icon-s-data',
 					'11': 'el-icon-edit',
 					'12': 'el-icon-edit',
 					'13': 'el-icon-s-order',
@@ -155,16 +168,17 @@
 					'15': 'el-icon-s-opportunity',
 					'16': 'submenu ali-iconfont icon-biaoqian',
 					'17': 'el-icon-s-comment',
-					'21': 'submenu ali-iconfont icon-caidanguanli',
-					'22': 'submenu ali-iconfont icon-bianjizhandian',
-					'31': 'el-icon-s-marketing',
-					'32': 'el-icon-view',
-					'33': 'el-icon-document',
+					'21': 'el-icon-document',
+					'31': 'submenu ali-iconfont icon-caidanguanli',
+					'32': 'submenu ali-iconfont icon-bianjizhandian',
+					'41': 'el-icon-s-marketing',
+					'42': 'el-icon-view',
+					'43': 'el-icon-document-checked',
 				},
 				//是否折叠
 				isCollapse: false,
 				//默认打开的菜单
-				defaultOpeneds: ['1', '2', '3']
+				defaultOpeneds: ['1', '2', '3', '4']
 			}
 		},
 		methods: {
@@ -178,6 +192,27 @@
 </script>
 
 <style scoped>
+	.el-aside::-webkit-scrollbar, .el-main::-webkit-scrollbar {
+		width: 8px;
+		height: 5px;
+	}
+
+	.el-aside::-webkit-scrollbar-thumb, .el-main::-webkit-scrollbar-thumb {
+		-webkit-box-shadow: inset 0 0 6px #48dbfb;
+		box-shadow: inset 0 0 6px #48dbfb;
+		background-color: #48dbfb;
+	}
+
+	.el-aside::-webkit-scrollbar-track, .el-main::-webkit-scrollbar-track {
+		-webkit-box-shadow: inset 0 0 6px transparent;
+		box-shadow: inset 0 0 6px transparent;
+		background-color: transparent;
+	}
+
+	.el-aside::-webkit-scrollbar-track-piece, .el-main::-webkit-scrollbar-track-piece {
+		background-color: transparent;
+	}
+
 	.home-container {
 		height: 100%;
 	}
