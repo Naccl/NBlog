@@ -41,7 +41,6 @@ public class AboutAdminController {
 	 */
 	@PutMapping("/about")
 	public Result updateAbout(@RequestBody Map<String, String> map) {
-		System.out.println(map);
 		Set<String> keySet = map.keySet();
 		for (String key : keySet) {
 			aboutService.updateAbout(key, map.get(key));

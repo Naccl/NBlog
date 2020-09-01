@@ -53,7 +53,6 @@ public class TagAdminController {
 	 */
 	@PostMapping("/tag")
 	public Result saveTag(@RequestBody Tag tag) {
-		System.out.println(tag);
 		return getResult(tag, "save");
 	}
 
@@ -65,7 +64,6 @@ public class TagAdminController {
 	 */
 	@PutMapping("/tag")
 	public Result updateTag(@RequestBody Tag tag) {
-		System.out.println(tag);
 		return getResult(tag, "update");
 	}
 
