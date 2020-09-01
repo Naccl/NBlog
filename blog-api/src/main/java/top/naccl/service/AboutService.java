@@ -8,4 +8,6 @@ public interface AboutService {
 	Map<String, String> getAboutSetting();
 
 	void updateAbout(String nameEn, String value);
+
+	boolean getAboutCommentEnabled();
 }

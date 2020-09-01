@@ -19,7 +19,7 @@
 			},
 			blogId: {
 				type: Number,
-				required: true
+				required: false
 			}
 		},
 		created() {
@@ -31,8 +31,8 @@
 				this.init()
 			}
 		},
-		methods:{
-			init(){
+		methods: {
+			init() {
 				this.$store.dispatch('setCommentQueryPage', this.page)
 				this.$store.dispatch('setCommentQueryBlogId', this.blogId)
 				this.$store.dispatch('setCommentQueryPageNum', 1)

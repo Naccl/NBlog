@@ -13,6 +13,7 @@ import top.naccl.model.dto.Comment;
 import top.naccl.model.vo.PageComment;
 import top.naccl.model.vo.PageResult;
 import top.naccl.model.vo.Result;
+import top.naccl.service.AboutService;
 import top.naccl.service.BlogService;
 import top.naccl.service.CommentService;
 import top.naccl.util.IpAddressUtils;
@@ -36,6 +37,8 @@ public class CommentController {
 	CommentService commentService;
 	@Autowired
 	BlogService blogService;
+	@Autowired
+	AboutService aboutService;
 
 	/**
 	 * 根据页面分页查询评论列表
@@ -74,6 +77,8 @@ public class CommentController {
 	private boolean judgeCommentEnabled(Integer page, Long blogId) {
 		if (page == 0) {//普通博客
 			return blogService.getCommentEnabledByBlogId(blogId);
+		} else if (page == 1) {//关于我页面
+			return aboutService.getAboutCommentEnabled();
 		}
 		return false;
 	}

@@ -2,6 +2,7 @@ package top.naccl.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import top.naccl.entity.About;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.AboutMapper;
@@ -45,10 +46,17 @@ public class AboutServiceImpl implements AboutService {
 		return map;
 	}
 
+	@Transactional
 	@Override
 	public void updateAbout(String nameEn, String value) {
 		if (aboutMapper.updateAbout(nameEn, value) != 1) {
 			throw new PersistenceException("修改失败");
 		}
+	}
+
+	@Override
+	public boolean getAboutCommentEnabled() {
+		String commentEnabledString = aboutMapper.getAboutCommentEnabled();
+		return Boolean.parseBoolean(commentEnabledString);
 	}
 }

@@ -17,4 +17,6 @@ public interface AboutMapper {
 	List<About> getList();
 
 	int updateAbout(String nameEn, String value);
+
+	String getAboutCommentEnabled();
 }
