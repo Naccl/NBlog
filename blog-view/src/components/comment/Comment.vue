@@ -7,7 +7,7 @@
 		<div class="comment" v-for="comment in comments" :key="comment.id">
 			<span class="anchor" :id="`comment-${comment.id}`"></span>
 			<a class="ui circular image avatar">
-				<img :src="`/img/comment-avatar/${comment.avatar}`">
+				<img :src="comment.adminComment ? comment.avatar : `/img/comment-avatar/${comment.avatar}`">
 			</a>
 			<div class="content">
 				<a class="nickname" :href="comment.website!=''&&comment.website!=null?comment.website:null" target="_blank" rel="external nofollow noopener">{{ comment.nickname }}</a>
@@ -22,7 +22,7 @@
 				<div class="comment" v-for="reply in comment.replyComments" :key="reply.id">
 					<span class="anchor" :id="`comment-${reply.id}`"></span>
 					<a class="ui circular image avatar">
-						<img :src="`/img/comment-avatar/${reply.avatar}`">
+						<img :src="reply.adminComment ? reply.avatar : `/img/comment-avatar/${reply.avatar}`">
 					</a>
 					<div class="content">
 						<a class="nickname" :href="reply.website!=''&&reply.website!=null?reply.website:null" target="_blank" rel="external nofollow noopener">{{ reply.nickname }}</a>
@@ -98,7 +98,7 @@
 		cursor: pointer;
 		margin-right: 8px;
 		font-weight: bolder;
-		color: rgba(0,0,0,.87);
+		color: rgba(0, 0, 0, .87);
 	}
 
 	.label {

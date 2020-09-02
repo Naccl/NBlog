@@ -2,6 +2,7 @@ package top.naccl.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import top.naccl.exception.NotFoundException;
@@ -45,6 +46,19 @@ public class ControllerExceptionHandler {
 	public Result persistenceExceptionHandler(HttpServletRequest request, PersistenceException e) {
 		logger.error("Request URL : {}, Exception : {}", request.getRequestURL(), e);
 		return Result.create(500, e.getMessage());
+	}
+
+	/**
+	 * 捕获自定义的登录失败异常
+	 *
+	 * @param request 请求
+	 * @param e       自定义抛出的异常信息
+	 * @return
+	 */
+	@ExceptionHandler(UsernameNotFoundException.class)
+	public Result usernameNotFoundExceptionHandler(HttpServletRequest request, UsernameNotFoundException e) {
+		logger.error("Request URL : {}, Exception : {}", request.getRequestURL(), e);
+		return Result.create(401, "用户名或密码错误！");
 	}
 
 	/**

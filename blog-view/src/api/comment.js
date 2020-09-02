@@ -10,10 +10,13 @@ export function getCommentListByQuery(query) {
 	})
 }
 
-export function submitComment(form) {
+export function submitComment(token, form) {
 	return axios({
 		url: 'comment',
 		method: 'POST',
+		headers: {
+			Authorization: token,
+		},
 		data: {
 			...form
 		}

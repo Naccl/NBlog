@@ -107,6 +107,7 @@ public class CommentServiceImpl implements CommentService {
 		return commentMapper.countByPageAndIsPublished(page, blogId);
 	}
 
+	@Transactional
 	@Override
 	public void saveComment(top.naccl.model.dto.Comment comment) {
 		if (commentMapper.saveComment(comment) != 1) {

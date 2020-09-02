@@ -9,10 +9,18 @@ import Tag from "@/views/tag/Tag";
 import Category from "@/views/category/Category";
 import Moments from "@/views/moments/Moments";
 import About from "@/views/about/About";
+import Login from "@/views/Login";
 
 Vue.use(VueRouter)
 
 const routes = [
+	{
+		path: '/login',
+		component: Login,
+		meta: {
+			title: '登录'
+		}
+	},
 	{
 		path: '/',
 		component: Index,

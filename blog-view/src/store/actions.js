@@ -52,7 +52,9 @@ export default {
 		form.page = rootState.commentQuery.page
 		form.blogId = rootState.commentQuery.blogId
 		form.parentCommentId = rootState.parentCommentId
-		submitComment(form).then(res => {
+		let token = window.sessionStorage.getItem('token')
+		token = token ? token : ''
+		submitComment(token, form).then(res => {
 			console.log(res)
 			if (res.code === 200) {
 				Notification({

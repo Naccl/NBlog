@@ -67,6 +67,12 @@
 		},
 		methods: {
 			postForm() {
+				const token = window.sessionStorage.getItem('token')
+				//博主登录后，sessionStorage中会存储token，在后端设置属性，可以不校验昵称、邮箱
+				if (token || this.commentForm.content === '' || this.commentForm.content.length > 250) {
+					this.$store.dispatch('submitCommentForm')
+					return
+				}
 				this.$refs.formRef.validate(valid => {
 					if (!valid || this.commentForm.content === '' || this.commentForm.content.length > 250) {
 						this.$notify({

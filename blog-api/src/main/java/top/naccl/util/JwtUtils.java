@@ -4,7 +4,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
@@ -34,19 +33,11 @@ public class JwtUtils {
 	/**
 	 * 校验token
 	 *
-	 * @param request
+	 * @param jwtToken
 	 * @return
 	 */
-	public static Boolean validateToken(HttpServletRequest request) {
-		String jwtToken = request.getHeader("Authorization");
-		if (jwtToken != null && !"".equals(jwtToken) && !"null".equals(jwtToken)) {
-			try {
-				Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken.replace("Bearer", "")).getBody();
-				String username = claims.getSubject();//获取当前登录用户名
-			} catch (Exception e) {
-				return false;
-			}
-		}
-		return true;
+	public static String validateToken(String jwtToken) {
+		Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken.replace("Bearer", "")).getBody();
+		return claims.getSubject();//获取当前登录用户名
 	}
 }
