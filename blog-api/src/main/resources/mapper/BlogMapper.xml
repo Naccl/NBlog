@@ -191,6 +191,11 @@
         update blog set is_top=#{top} where id=#{blogId}
     </update>
 
+    <!--更新博客阅读次数-->
+    <update id="updateViews">
+        update blog set views=views+1 where id=#{blogId}
+    </update>
+
     <!--按id查询博客-->
     <select id="getBlogById" resultMap="blog">
         select b.id, b.title, b.content, b.description, b.is_recommend, b.is_published, b.is_appreciation,

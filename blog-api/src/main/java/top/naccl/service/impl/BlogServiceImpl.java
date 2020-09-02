@@ -142,6 +142,8 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	public BlogDetail getBlogByIdAndIsPublished(Long id) {
+		//博客阅读次数+1
+		blogMapper.updateViews(id);
 		BlogDetail blog = blogMapper.getBlogByIdAndIsPublished(id);
 		if (blog == null) {
 			throw new NotFoundException("该博客不存在");
