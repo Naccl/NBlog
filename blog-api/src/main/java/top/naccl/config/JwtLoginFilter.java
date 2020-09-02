@@ -2,8 +2,6 @@ package top.naccl.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,9 +13,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import top.naccl.model.vo.Result;
 import top.naccl.entity.User;
 import top.naccl.exception.BadRequestException;
+import top.naccl.model.vo.Result;
+import top.naccl.util.JwtUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -25,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,10 +33,6 @@ import java.util.Map;
  * @Date: 2020-07-21
  */
 public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
-	private int expireTime = 3600 * 6;
-
-	private String secretKey = "abcdefghijklmnopqrstuvwxyz";
-
 	protected JwtLoginFilter(String defaultFilterProcessesUrl, AuthenticationManager authenticationManager) {
 		super(new AntPathRequestMatcher(defaultFilterProcessesUrl));
 		setAuthenticationManager(authenticationManager);
@@ -67,12 +61,7 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult)
 			throws IOException, ServletException {
-		String jwt = Jwts.builder()
-				.setSubject(authResult.getName())
-				.setExpiration(new Date(System.currentTimeMillis() + expireTime * 1000))
-				.signWith(SignatureAlgorithm.HS512, secretKey)
-				.compact();
-
+		String jwt = JwtUtils.generateToken(authResult.getName());
 		response.setContentType("application/json;charset=utf-8");
 		User user = (User) authResult.getPrincipal();
 		user.setPassword(null);

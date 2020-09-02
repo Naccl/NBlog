@@ -45,12 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				//基于Token，不创建会话
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authorizeRequests()
-				//任何 /admin 路径下的请求都需要经过JWT验证
+				//任何 /admin 开头的路径下的请求都需要经过JWT验证
 				.antMatchers("/admin/**").authenticated().and()
 				//自定义JWT过滤器
-				.addFilterBefore(new JwtLoginFilter("/admin/login",authenticationManager()), UsernamePasswordAuthenticationFilter.class)
-				.addFilterBefore(new JwtFilter(),UsernamePasswordAuthenticationFilter.class)
-				//未登录时，返回json，而不重定向
+				.addFilterBefore(new JwtLoginFilter("/admin/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+				.addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class)
+				//未登录时，返回json，在前端执行重定向
 				.exceptionHandling().authenticationEntryPoint(myAuthenticationEntryPoint);
 	}
 }

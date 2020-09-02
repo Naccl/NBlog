@@ -7,6 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 import top.naccl.model.vo.Result;
+import top.naccl.util.JwtUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -23,18 +24,20 @@ import java.io.PrintWriter;
  * @Date: 2020-07-21
  */
 public class JwtFilter extends GenericFilterBean {
-	private String secretKey = "abcdefghijklmnopqrstuvwxyz";
-
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
+		//后台管理路径外的请求直接跳过
+		if (!request.getRequestURI().startsWith("/admin")) {
+			filterChain.doFilter(request, servletResponse);
+			return;
+		}
 		String jwtToken = request.getHeader("Authorization");
 		if (jwtToken != null && !"".equals(jwtToken) && !"null".equals(jwtToken)) {
 			try {
-				Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken.replace("Bearer", "")).getBody();
+				Claims claims = Jwts.parser().setSigningKey(JwtUtils.secretKey).parseClaimsJws(jwtToken.replace("Bearer", "")).getBody();
 				String username = claims.getSubject();//获取当前登录用户名
-//		        List<GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList((String) claims.get("authorities"));
 				UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, null, null);
 				SecurityContextHolder.getContext().setAuthentication(token);
 			} catch (Exception e) {
