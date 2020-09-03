@@ -171,9 +171,9 @@
     <!--添加博客-->
     <insert id="saveBlog" parameterType="top.naccl.model.dto.Blog" useGeneratedKeys="true" keyProperty="id">
         insert into blog (title, content, description, is_published, is_recommend, is_appreciation, is_comment_enabled,
-        is_top, create_time, update_time, views, words, read_time, category_id, user_id)
+        is_top, create_time, update_time, views, words, read_time, category_id, user_id, password)
         values (#{title}, #{content}, #{description}, #{published}, #{recommend}, #{appreciation}, #{commentEnabled},
-        #{top}, #{createTime}, #{updateTime}, #{views}, #{words}, #{readTime}, #{category.id}, #{user.id})
+        #{top}, #{createTime}, #{updateTime}, #{views}, #{words}, #{readTime}, #{category.id}, #{user.id}, #{password})
     </insert>
 
     <!--更新博客推荐状态-->
@@ -248,5 +248,10 @@
     <!--查询博客是否启用评论-->
     <select id="getCommentEnabledByBlogId" resultType="java.lang.Boolean">
         select is_comment_enabled from blog where id=#{blogId}
+    </select>
+
+    <!--查询博客是否公开-->
+    <select id="getPublishedByBlogId" resultType="java.lang.Boolean">
+        select is_published from blog where id=#{blogId}
     </select>
 </mapper>

@@ -59,7 +59,10 @@ public class CommentController {
 	                       @RequestParam(defaultValue = "") Long blogId,
 	                       @RequestParam(defaultValue = "1") Integer pageNum,
 	                       @RequestParam(defaultValue = "10") Integer pageSize) {
-		if (!judgeCommentEnabled(page, blogId)) {
+		int judgeResult = judgeCommentEnabled(page, blogId);
+		if (judgeResult == 2) {
+			return Result.create(404, "该博客不存在");
+		} else if (judgeResult == 1) {
 			return Result.create(403, "评论已关闭");
 		}
 		Integer count = commentService.countByPageAndIsPublished(page, blogId);
@@ -76,18 +79,27 @@ public class CommentController {
 	 * 查询对应页面评论是否开启
 	 *
 	 * @param page   页面分类（0普通文章，1关于我...）
-	 * @param blogId 如果page==0，需要博客id参数
-	 * @return
+	 * @param blogId 如果page==0，需要博客id参数，校验文章是否公开状态
+	 * @return 0:公开可查询状态 1:评论关闭 2:该博客不存在
 	 */
-	private boolean judgeCommentEnabled(Integer page, Long blogId) {
+	private int judgeCommentEnabled(Integer page, Long blogId) {
 		if (page == 0) {//普通博客
-			return blogService.getCommentEnabledByBlogId(blogId);
+			Boolean commentEnabled = blogService.getCommentEnabledByBlogId(blogId);
+			Boolean published = blogService.getPublishedByBlogId(blogId);
+			if (commentEnabled == null || published == null) {//未查询到此博客
+				return 2;
+			} else if (!blogService.getPublishedByBlogId(blogId)) {//博客未公开
+				return 2;
+			} else if (!blogService.getCommentEnabledByBlogId(blogId)) {//博客评论已关闭
+				return 1;
+			}
 		} else if (page == 1) {//关于我页面
-			return aboutService.getAboutCommentEnabled();
+			if (!aboutService.getAboutCommentEnabled()) {//页面评论已关闭
+				return 1;
+			}
 		}
-		return false;
+		return 0;
 	}
-
 
 	/**
 	 * 提交评论

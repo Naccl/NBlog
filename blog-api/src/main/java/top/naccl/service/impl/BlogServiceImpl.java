@@ -184,4 +184,9 @@ public class BlogServiceImpl implements BlogService {
 	public Boolean getCommentEnabledByBlogId(Long blogId) {
 		return blogMapper.getCommentEnabledByBlogId(blogId);
 	}
+
+	@Override
+	public Boolean getPublishedByBlogId(Long blogId) {
+		return blogMapper.getPublishedByBlogId(blogId);
+	}
 }

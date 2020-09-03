@@ -63,4 +63,6 @@ public interface BlogMapper {
 	int countBlogByTagId(Long tagId);
 
 	Boolean getCommentEnabledByBlogId(Long blogId);
+
+	Boolean getPublishedByBlogId(Long blogId);
 }
