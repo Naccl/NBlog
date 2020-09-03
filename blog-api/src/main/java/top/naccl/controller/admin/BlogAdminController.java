@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import top.naccl.entity.Blog;
 import top.naccl.entity.Category;
 import top.naccl.entity.Tag;
 import top.naccl.entity.User;
+import top.naccl.model.dto.BlogVisibility;
 import top.naccl.model.vo.Result;
 import top.naccl.service.BlogService;
 import top.naccl.service.CategoryService;
@@ -121,15 +123,15 @@ public class BlogAdminController {
 	}
 
 	/**
-	 * 更新博客发布状态
+	 * 更新博客可见性状态
 	 *
-	 * @param id        博客id
-	 * @param published 是否发布
+	 * @param id             博客id
+	 * @param blogVisibility 博客可见性DTO
 	 * @return
 	 */
-	@PutMapping("/blog/published")
-	public Result updatePublished(@RequestParam Long id, @RequestParam Boolean published) {
-		blogService.updateBlogPublishedById(id, published);
+	@PutMapping("blog/{id}/visibility")
+	public Result updateVisibility(@PathVariable Long id, @RequestBody BlogVisibility blogVisibility) {
+		blogService.updateBlogVisibilityById(id, blogVisibility);
 		return Result.ok("操作成功");
 	}
 

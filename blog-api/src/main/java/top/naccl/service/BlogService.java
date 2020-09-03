@@ -1,6 +1,7 @@
 package top.naccl.service;
 
 import top.naccl.entity.Blog;
+import top.naccl.model.dto.BlogVisibility;
 import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.BlogInfo;
@@ -32,7 +33,7 @@ public interface BlogService {
 
 	void updateBlogRecommendById(Long BlogId, Boolean recommend);
 
-	void updateBlogPublishedById(Long BlogId, Boolean published);
+	void updateBlogVisibilityById(Long BlogId, BlogVisibility blogVisibility);
 
 	void updateBlogTopById(Long blogId, Boolean top);
 

@@ -7,6 +7,7 @@ import top.naccl.entity.Blog;
 import top.naccl.exception.NotFoundException;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.BlogMapper;
+import top.naccl.model.dto.BlogVisibility;
 import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.BlogInfo;
@@ -117,8 +118,8 @@ public class BlogServiceImpl implements BlogService {
 
 	@Transactional
 	@Override
-	public void updateBlogPublishedById(Long BlogId, Boolean published) {
-		if (blogMapper.updateBlogPublishedById(BlogId, published) != 1) {
+	public void updateBlogVisibilityById(Long BlogId, BlogVisibility blogVisibility) {
+		if (blogMapper.updateBlogVisibilityById(BlogId, blogVisibility) != 1) {
 			throw new PersistenceException("操作失败");
 		}
 	}

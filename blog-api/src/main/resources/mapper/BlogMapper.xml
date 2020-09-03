@@ -17,6 +17,7 @@
         <result property="views" column="views"/>
         <result property="words" column="words"/>
         <result property="readTime" column="read_time"/>
+        <result property="password" column="password"/>
         <association property="user" javaType="top.naccl.entity.User">
             <id property="id" column="user_id"/>
             <result property="username" column="username"/>
@@ -87,7 +88,8 @@
     <!--按标题和分类查询博客List-->
     <select id="getListByTitleAndCategoryId" resultMap="blog">
         <bind name="titlePattern" value="'%' + title + '%'"/>
-        select b.id, b.title, b.is_recommend, b.is_published, b.is_top, b.create_time, b.update_time,
+        select b.id, b.title, b.create_time, b.update_time, b.is_published, b.is_recommend, b.is_appreciation,
+                b.is_comment_enabled, b.is_top, b.password,
                 c.id as category_id, c.category_name
         from blog as b left join category as c on b.category_id=c.id
         <where>
@@ -181,14 +183,16 @@
         update blog set is_recommend=#{recommend} where id=#{blogId}
     </update>
 
-    <!--更新博客发布状态-->
-    <update id="updateBlogPublishedById">
-        update blog set is_published=#{published} where id=#{blogId}
-    </update>
-
     <!--更新博客置顶状态-->
     <update id="updateBlogTopById">
         update blog set is_top=#{top} where id=#{blogId}
+    </update>
+
+    <!--更新博客可见性状态-->
+    <update id="updateBlogVisibilityById">
+        update blog set is_appreciation=#{bv.appreciation}, is_recommend=#{bv.recommend}, is_comment_enabled=#{bv.commentEnabled},
+        is_top=#{bv.top}, is_published=#{bv.published}, password=#{bv.password}
+        where id=#{blogId}
     </update>
 
     <!--更新博客阅读次数-->
@@ -199,7 +203,7 @@
     <!--按id查询博客-->
     <select id="getBlogById" resultMap="blog">
         select b.id, b.title, b.content, b.description, b.is_recommend, b.is_published, b.is_appreciation,
-        b.is_comment_enabled, b.is_top, b.create_time, b.update_time, b.views, b.words, b.read_time,
+        b.is_comment_enabled, b.is_top, b.create_time, b.update_time, b.views, b.words, b.read_time, b.password,
         c.id as category_id, c.category_name,
         bt.tag_id as tag_id, t.tag_name as tag_name, t.color
         from (((blog as b left join category as c on b.category_id=c.id) left join blog_tag as bt on b.id=bt.blog_id) left join tag as t on bt.tag_id=t.id)
@@ -221,7 +225,7 @@
         update blog set title=#{title}, content=#{content}, description=#{description}, is_recommend=#{recommend},
         is_published=#{published}, is_appreciation=#{appreciation}, is_comment_enabled=#{commentEnabled},
         is_top=#{top}, create_time=#{createTime}, update_time=#{updateTime}, views=#{views},
-        words=#{words}, read_time=#{readTime}, category_id=#{category.id}
+        words=#{words}, read_time=#{readTime}, category_id=#{category.id}, password=#{password}
         where id=#{id}
     </update>
 

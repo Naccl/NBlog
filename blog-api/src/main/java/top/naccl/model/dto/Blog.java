@@ -26,7 +26,7 @@ public class Blog {
 	private String title;//文章标题
 	private String content;//文章正文
 	private String description;//描述
-	private Boolean published;//发布或草稿
+	private Boolean published;//公开或私密
 	private Boolean recommend;//推荐开关
 	private Boolean appreciation;//赞赏开关
 	private Boolean commentEnabled;//评论开关
@@ -36,6 +36,7 @@ public class Blog {
 	private Integer views;//浏览次数
 	private Integer words;//文章字数
 	private Integer readTime;//阅读时长(分钟)
+	private String password;//密码保护
 
 	private User user;//文章作者(因为是个人博客，也可以不加作者字段，暂且加上)
 	private Category category;//文章分类

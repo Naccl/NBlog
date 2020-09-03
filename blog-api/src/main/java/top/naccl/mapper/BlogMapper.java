@@ -3,6 +3,7 @@ package top.naccl.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import top.naccl.entity.Blog;
+import top.naccl.model.dto.BlogVisibility;
 import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.BlogInfo;
@@ -42,7 +43,7 @@ public interface BlogMapper {
 
 	int updateBlogRecommendById(Long blogId, Boolean recommend);
 
-	int updateBlogPublishedById(Long blogId, Boolean published);
+	int updateBlogVisibilityById(Long blogId, BlogVisibility bv);
 
 	int updateBlogTopById(Long blogId, Boolean top);
 

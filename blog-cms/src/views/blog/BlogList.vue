@@ -30,9 +30,11 @@
 						<el-switch v-model="scope.row.recommend" @change="blogRecommendChanged(scope.row)"></el-switch>
 					</template>
 				</el-table-column>
-				<el-table-column label="发布状态" width="80">
+				<el-table-column label="可见性" width="100">
 					<template v-slot="scope">
-						<el-switch v-model="scope.row.published" @change="blogPublishedChanged(scope.row)"></el-switch>
+						<el-link icon="el-icon-edit" :underline="false" @click="editBlogVisibility(scope.row)">
+							{{ scope.row.published ? (scope.row.password !== '' ? '密码保护' : '公开') : '私密' }}
+						</el-link>
 					</template>
 				</el-table-column>
 				<el-table-column label="创建时间" width="170">
@@ -57,12 +59,50 @@
 			               layout="total, sizes, prev, pager, next, jumper" background>
 			</el-pagination>
 		</el-card>
+
+		<!--编辑可见性状态对话框-->
+		<el-dialog title="博客可见性" width="30%" :visible.sync="dialogVisible">
+			<!--内容主体-->
+			<el-form label-width="50px" @submit.native.prevent>
+				<el-form-item>
+					<el-radio-group v-model="radio" @change="radioChange">
+						<el-radio :label="1">公开</el-radio>
+						<el-radio :label="2">私密</el-radio>
+						<el-radio :label="3">密码保护</el-radio>
+					</el-radio-group>
+				</el-form-item>
+				<el-form-item label="密码" v-if="radio===3">
+					<el-input v-model="visForm.password"></el-input>
+				</el-form-item>
+				<el-form-item v-if="radio!==2">
+					<el-row>
+						<el-col :span="6">
+							<el-switch v-model="visForm.appreciation" active-text="赞赏"></el-switch>
+						</el-col>
+						<el-col :span="6">
+							<el-switch v-model="visForm.recommend" active-text="推荐"></el-switch>
+						</el-col>
+						<el-col :span="6">
+							<el-switch v-model="visForm.commentEnabled" active-text="评论"></el-switch>
+						</el-col>
+						<el-col :span="6">
+							<el-switch v-model="visForm.top" active-text="置顶"></el-switch>
+						</el-col>
+					</el-row>
+				</el-form-item>
+			</el-form>
+			<!--底部-->
+			<span slot="footer">
+				<el-button @click="dialogVisible=false">取 消</el-button>
+				<el-button type="primary" @click="saveVisibility">保存</el-button>
+			</span>
+		</el-dialog>
 	</div>
 </template>
 
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
-	import {getDataByQuery, deleteBlogById, updateTop, updateRecommend, updatePublished} from '@/api/blog'
+	import {getDataByQuery, deleteBlogById, updateTop, updateRecommend, updateVisibility} from '@/api/blog'
 
 	export default {
 		name: "BlogList",
@@ -80,6 +120,17 @@
 				blogList: [],
 				categoryList: [],
 				total: 0,
+				dialogVisible: false,
+				blogId: 0,
+				radio: 1,
+				visForm: {
+					appreciation: false,
+					recommend: false,
+					commentEnabled: false,
+					top: false,
+					published: false,
+					password: '',
+				}
 			}
 		},
 		created() {
@@ -87,8 +138,7 @@
 		},
 		methods: {
 			getData() {
-				getDataByQuery(this.queryInfo)
-				.then(res => {
+				getDataByQuery(this.queryInfo).then(res => {
 					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
@@ -109,8 +159,7 @@
 			},
 			//切换博客置顶状态
 			blogTopChanged(row) {
-				updateTop(row.id, row.top)
-				.then(res => {
+				updateTop(row.id, row.top).then(res => {
 					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
@@ -123,8 +172,7 @@
 			},
 			//切换博客推荐状态
 			blogRecommendChanged(row) {
-				updateRecommend(row.id, row.recommend)
-				.then(res => {
+				updateRecommend(row.id, row.recommend).then(res => {
 					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
@@ -135,12 +183,48 @@
 					this.msgError("请求失败")
 				})
 			},
-			//切换博客发布状态
-			blogPublishedChanged(row) {
-				updatePublished(row.id, row.published)
-				.then(res => {
+			radioChange(newValue) {
+				if (newValue === 1) {
+					this.visForm.published = true
+				} else if (newValue === 2) {
+					this.visForm.published = false
+				} else if (newValue === 3) {
+					this.visForm.published = true
+				}
+			},
+			//编辑博客可见性
+			editBlogVisibility(row) {
+				this.visForm = {
+					appreciation: row.appreciation,
+					recommend: row.recommend,
+					commentEnabled: row.commentEnabled,
+					top: row.top,
+					published: row.published,
+					password: row.password,
+				}
+				this.blogId = row.id
+				this.radio = this.visForm.published ? (this.visForm.password !== '' ? 3 : 1) : 2
+				this.dialogVisible = true
+			},
+			//修改博客可见性
+			saveVisibility() {
+				if (this.radio === 3 && (this.visForm.password === '' || this.visForm.password === null)) {
+					return this.msgError("密码保护模式必须填写密码！")
+				}
+				if (this.radio === 2) {
+					this.visForm.appreciation = false
+					this.visForm.recommend = false
+					this.visForm.commentEnabled = false
+					this.visForm.top = false
+				}
+				if (this.radio !== 3) {
+					this.visForm.password = ''
+				}
+				updateVisibility(this.blogId, this.visForm).then(res => {
 					if (res.code === 200) {
-						this.msgSuccess(res.msg);
+						this.msgSuccess(res.msg)
+						this.getData()
+						this.dialogVisible = false
 					} else {
 						this.msgError(res.msg)
 					}

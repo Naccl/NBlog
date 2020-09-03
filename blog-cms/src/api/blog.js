@@ -59,13 +59,12 @@ export function updateRecommend(id, recommend) {
 	})
 }
 
-export function updatePublished(id, published) {
+export function updateVisibility(id, form) {
 	return axios({
-		url: 'blog/published',
+		url: `blog/${id}/visibility`,
 		method: 'PUT',
-		params: {
-			id,
-			published
+		data: {
+			...form
 		}
 	})
 }
