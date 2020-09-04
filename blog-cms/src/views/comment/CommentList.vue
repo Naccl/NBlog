@@ -23,7 +23,7 @@
 				</el-table-column>
 				<el-table-column label="头像" width="80">
 					<template v-slot="scope">
-						<el-avatar shape="square" :size="60" fit="contain" :src="`/img/comment-avatar/${scope.row.avatar}`"></el-avatar>
+						<el-avatar shape="square" :size="60" fit="contain" :src="scope.row.adminComment?scope.row.avatar:`/img/comment-avatar/${scope.row.avatar}`"></el-avatar>
 					</template>
 				</el-table-column>
 				<el-table-column label="邮箱" prop="email"></el-table-column>
