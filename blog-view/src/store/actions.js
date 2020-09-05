@@ -24,8 +24,11 @@ export default {
 		commit(SAVE_INTRODUCTION, {introduction})
 	},
 	getCommentList({commit, rootState}) {
-		let token = window.localStorage.getItem(`blog${rootState.commentQuery.blogId}`)
-		token = token ? token : ''
+		//密码保护的文章，需要发送密码验证通过后保存在localStorage的Token
+		const blogToken = window.localStorage.getItem(`blog${rootState.commentQuery.blogId}`)
+		//如果有则发送博主身份Token
+		const adminToken = window.sessionStorage.getItem('adminToken')
+		const token = adminToken ? adminToken : (blogToken ? blogToken : '')
 		getCommentListByQuery(token, rootState.commentQuery).then(res => {
 			console.log(res)
 			if (res.code === 200) {
