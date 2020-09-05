@@ -1,9 +1,12 @@
 import axios from '@/plugins/axios'
 
-export function getCommentListByQuery(query) {
+export function getCommentListByQuery(token, query) {
 	return axios({
 		url: 'comments',
 		method: 'GET',
+		headers: {
+			Authorization: token,
+		},
 		params: {
 			...query
 		}

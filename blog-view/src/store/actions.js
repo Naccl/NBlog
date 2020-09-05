@@ -24,7 +24,9 @@ export default {
 		commit(SAVE_INTRODUCTION, {introduction})
 	},
 	getCommentList({commit, rootState}) {
-		getCommentListByQuery(rootState.commentQuery).then(res => {
+		let token = window.localStorage.getItem(`blog${rootState.commentQuery.blogId}`)
+		token = token ? token : ''
+		getCommentListByQuery(token, rootState.commentQuery).then(res => {
 			console.log(res)
 			if (res.code === 200) {
 				commit(SAVE_COMMENT_RESULT, res.data)

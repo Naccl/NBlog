@@ -52,18 +52,38 @@ public class CommentController {
 	 * @param blogId   如果page==0，需要博客id参数
 	 * @param pageNum  页码
 	 * @param pageSize 每页个数
+	 * @param request  若文章受密码保护，需要获取访问Token
 	 * @return
 	 */
 	@GetMapping("/comments")
 	public Result comments(@RequestParam Integer page,
 	                       @RequestParam(defaultValue = "") Long blogId,
 	                       @RequestParam(defaultValue = "1") Integer pageNum,
-	                       @RequestParam(defaultValue = "10") Integer pageSize) {
+	                       @RequestParam(defaultValue = "10") Integer pageSize,
+	                       HttpServletRequest request) {
 		int judgeResult = judgeCommentEnabled(page, blogId);
 		if (judgeResult == 2) {
 			return Result.create(404, "该博客不存在");
 		} else if (judgeResult == 1) {
 			return Result.create(403, "评论已关闭");
+		} else if (judgeResult == 3) {//文章受密码保护，需要验证Token
+			String jwtToken = request.getHeader("Authorization");
+			if (jwtToken != null && !"".equals(jwtToken) && !"null".equals(jwtToken)) {
+				try {
+					//获取Token中博客id
+					String tokenBlogIdString = JwtUtils.validateToken(jwtToken);
+					Long tokenBlogId = Long.parseLong(tokenBlogIdString);
+					//博客id不匹配，验证不通过，可能博客id改变或客户端传递了其它密码保护文章的Token
+					if (tokenBlogId != blogId) {
+						return Result.create(403, "Token不匹配，请重新验证密码！");
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					return Result.create(403, "Token已失效，请重新验证密码！");
+				}
+			} else {
+				return Result.create(403, "此文章受密码保护，请验证密码！");
+			}
 		}
 		Integer count = commentService.countByPageAndIsPublished(page, blogId);
 		PageHelper.startPage(pageNum, pageSize);
@@ -80,7 +100,7 @@ public class CommentController {
 	 *
 	 * @param page   页面分类（0普通文章，1关于我...）
 	 * @param blogId 如果page==0，需要博客id参数，校验文章是否公开状态
-	 * @return 0:公开可查询状态 1:评论关闭 2:该博客不存在
+	 * @return 0:公开可查询状态 1:评论关闭 2:该博客不存在 3:文章受密码保护
 	 */
 	private int judgeCommentEnabled(Integer page, Long blogId) {
 		if (page == 0) {//普通博客
@@ -88,10 +108,15 @@ public class CommentController {
 			Boolean published = blogService.getPublishedByBlogId(blogId);
 			if (commentEnabled == null || published == null) {//未查询到此博客
 				return 2;
-			} else if (!blogService.getPublishedByBlogId(blogId)) {//博客未公开
+			} else if (!published) {//博客未公开
 				return 2;
-			} else if (!blogService.getCommentEnabledByBlogId(blogId)) {//博客评论已关闭
+			} else if (!commentEnabled) {//博客评论已关闭
 				return 1;
+			}
+			//判断文章是否存在密码
+			String password = blogService.getBlogPassword(blogId);
+			if (!"".equals(password)) {
+				return 3;
 			}
 		} else if (page == 1) {//关于我页面
 			if (!aboutService.getAboutCommentEnabled()) {//页面评论已关闭
