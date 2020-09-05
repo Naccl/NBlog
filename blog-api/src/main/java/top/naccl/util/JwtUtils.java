@@ -12,7 +12,7 @@ import java.util.Date;
  * @Date: 2020-09-02
  */
 public class JwtUtils {
-	private static int expireTime = 3600 * 6;
+	private static long expireTime = 1000 * 3600 * 6L;
 	public static String secretKey = "abcdefghijklmnopqrstuvwxyz";
 
 	/**
@@ -24,7 +24,23 @@ public class JwtUtils {
 	public static String generateToken(String subject) {
 		String jwt = Jwts.builder()
 				.setSubject(subject)
-				.setExpiration(new Date(System.currentTimeMillis() + expireTime * 1000))
+				.setExpiration(new Date(System.currentTimeMillis() + expireTime))
+				.signWith(SignatureAlgorithm.HS512, secretKey)
+				.compact();
+		return jwt;
+	}
+
+	/**
+	 * 生成自定义过期时间token
+	 *
+	 * @param subject
+	 * @param expireTime
+	 * @return
+	 */
+	public static String generateToken(String subject, long expireTime) {
+		String jwt = Jwts.builder()
+				.setSubject(subject)
+				.setExpiration(new Date(System.currentTimeMillis() + expireTime))
 				.signWith(SignatureAlgorithm.HS512, secretKey)
 				.compact();
 		return jwt;
@@ -38,6 +54,6 @@ public class JwtUtils {
 	 */
 	public static String validateToken(String jwtToken) {
 		Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken.replace("Bearer", "")).getBody();
-		return claims.getSubject();//获取当前登录用户名
+		return claims.getSubject();
 	}
 }

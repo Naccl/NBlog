@@ -23,5 +23,11 @@ export default {
 		notice: true
 	},
 	//博客文章渲染完成的标记
-	isBlogRenderComplete: false
+	isBlogRenderComplete: false,
+	//受保护文章密码对话框
+	blogPasswordDialogVisible: false,
+	blogPasswordForm: {
+		blogId: 0,
+		password: ''
+	}
 }

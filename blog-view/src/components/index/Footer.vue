@@ -15,7 +15,7 @@
 				<div class="six wide column">
 					<h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
 					<div class="ui inverted link list">
-						<router-link :to="`/blog/${item.id}`" v-for="item in newBlogList" :key="item.id" class="item m-text-thin m-padded-tb-small">{{ item.title }}</router-link>
+						<a href="" @click.prevent="toBlog(item)" v-for="item in newBlogList" :key="item.id" class="item m-text-thin m-padded-tb-small">{{ item.title }}</a>
 					</div>
 				</div>
 
@@ -65,6 +65,11 @@
 			hitokoto: {
 				type: Object,
 				required: true
+			}
+		},
+		methods: {
+			toBlog(blog) {
+				this.$store.dispatch('goBlogPage', blog)
 			}
 		}
 	}

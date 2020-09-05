@@ -7,6 +7,7 @@ import top.naccl.model.dto.BlogVisibility;
 import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.BlogInfo;
+import top.naccl.model.vo.NewBlog;
 import top.naccl.model.vo.RandomBlog;
 
 import java.util.List;
@@ -23,9 +24,13 @@ public interface BlogMapper {
 
 	List<Blog> getIdAndTitleList();
 
-	List<Blog> getIdAndTitleListByIsPublishedAndIsRecommend();
+	List<NewBlog> getNewBlogListByIsPublishedAndIsRecommend();
 
 	List<BlogInfo> getBlogInfoListByIsPublished();
+
+	List<BlogInfo> getBlogInfoListByCategoryNameAndIsPublished(String categoryName);
+
+	List<BlogInfo> getBlogInfoListByTagNameAndIsPublished(String tagName);
 
 	List<String> getGroupYearMonthByIsPublished();
 
@@ -52,6 +57,8 @@ public interface BlogMapper {
 	Blog getBlogById(Long id);
 
 	BlogDetail getBlogByIdAndIsPublished(Long id);
+
+	String getBlogPassword(Long blogId);
 
 	int updateBlog(top.naccl.model.dto.Blog blog);
 

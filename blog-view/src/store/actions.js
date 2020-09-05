@@ -7,11 +7,14 @@ import {
 	SET_COMMENT_FORM_EMPTY,
 	SET_COMMENT_QUERY_PAGE,
 	SET_COMMENT_QUERY_BLOG_ID,
-	SET_IS_BLOG_RENDER_COMPLETE
+	SET_IS_BLOG_RENDER_COMPLETE,
+	SET_BLOG_PASSWORD_DIALOG_VISIBLE,
+	SET_BLOG_PASSWORD_FORM
 } from "./mutations-types";
 
 import {getCommentListByQuery, submitComment} from "@/api/comment";
 import {Message, Notification} from "element-ui";
+import router from "../router";
 
 export default {
 	saveSiteInfo({commit}, siteInfo) {
@@ -25,8 +28,6 @@ export default {
 			console.log(res)
 			if (res.code === 200) {
 				commit(SAVE_COMMENT_RESULT, res.data)
-			} else {
-				Message.error(res.msg)
 			}
 		}).catch(() => {
 			Message.error("请求失败")
@@ -81,5 +82,17 @@ export default {
 	},
 	setIsBlogRenderComplete({commit}, ok) {
 		commit(SET_IS_BLOG_RENDER_COMPLETE, {ok})
+	},
+	goBlogPage({commit}, blog) {
+		if (blog.privacy) {
+			const token = window.localStorage.getItem(`blog${blog.id}`)
+			if (token) {
+				return router.push(`/blog/${blog.id}`)
+			}
+			commit(SET_BLOG_PASSWORD_FORM, {blogId: blog.id, password: ''})
+			commit(SET_BLOG_PASSWORD_DIALOG_VISIBLE, true)
+		} else {
+			router.push(`/blog/${blog.id}`)
+		}
 	},
 }

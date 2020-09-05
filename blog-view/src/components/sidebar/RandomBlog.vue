@@ -6,7 +6,7 @@
 			<div class="ui divided items">
 				<div class="item" v-for="blog in blogList" :key="blog.id">
 					<div class="content">
-						<router-link :to="`/blog/${blog.id}`" class="header m-text-500">{{ blog.title }}</router-link>
+						<a href="" @click.prevent="toBlog(blog)" class="header m-text-500">{{ blog.title }}</a>
 						<div class="meta">
 							<router-link :to="`/category/${blog.category.name}`">
 								<i class="folder open icon"></i>{{ blog.category.name }}
@@ -14,9 +14,9 @@
 						</div>
 						<div class="extra">
 							<router-link :to="`/tag/${tag.name}`" class="ui label m-text-500" :class="tag.color" v-for="(tag,index) in blog.tags" :key="index">{{ tag.name }}</router-link>
-							<router-link :to="`/blog/${blog.id}`" class="ui right floated">
+							<a href="" @click.prevent="toBlog(blog)" class="ui right floated">
 								阅读全文<i class="angle double right icon"></i>
-							</router-link>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -50,6 +50,9 @@
 				}).catch(() => {
 					this.msgError("请求失败")
 				})
+			},
+			toBlog(blog) {
+				this.$store.dispatch('goBlogPage', blog)
 			}
 		}
 	}

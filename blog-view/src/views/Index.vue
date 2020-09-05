@@ -29,6 +29,9 @@
 			</div>
 		</div>
 
+		<!--私密文章密码对话框-->
+		<BlogPasswordDialog/>
+
 		<!--APlayer-->
 		<div class="m-mobile-hide">
 			<MyAPlayer/>
@@ -51,10 +54,11 @@
 	import RandomBlog from "@/components/sidebar/RandomBlog";
 	import MyAPlayer from "@/components/sidebar/MyAPlayer";
 	import Tocbot from "@/components/sidebar/Tocbot";
+	import BlogPasswordDialog from "@/components/index/BlogPasswordDialog";
 
 	export default {
 		name: "Index",
-		components: {Tocbot, MyAPlayer, RandomBlog, Tags, Nav, Footer, Introduction},
+		components: {BlogPasswordDialog, Tocbot, MyAPlayer, RandomBlog, Tags, Nav, Footer, Introduction},
 		data() {
 			return {
 				siteInfo: {

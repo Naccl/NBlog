@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import top.naccl.model.vo.BlogInfo;
 import top.naccl.model.vo.PageResult;
 import top.naccl.model.vo.Result;
+import top.naccl.service.BlogService;
 import top.naccl.service.CategoryService;
 
 /**
@@ -22,6 +23,8 @@ import top.naccl.service.CategoryService;
 public class CategoryController {
 	@Autowired
 	CategoryService categoryService;
+	@Autowired
+	BlogService blogService;
 
 	/**
 	 * 获取全部分类List
@@ -46,7 +49,7 @@ public class CategoryController {
 		int pageSize = 5;//每页显示5条
 		String orderBy = "is_top desc, create_time desc";
 		PageHelper.startPage(pageNum, pageSize, orderBy);
-		PageInfo<BlogInfo> pageInfo = new PageInfo<>(categoryService.getBlogInfoListByCategoryNameAndIsPublished(categoryName));
+		PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogService.getBlogInfoListByCategoryNameAndIsPublished(categoryName));
 		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
 		return Result.ok("请求成功", pageResult);
 	}

@@ -11,6 +11,7 @@ import top.naccl.entity.Tag;
 import top.naccl.model.vo.BlogInfo;
 import top.naccl.model.vo.PageResult;
 import top.naccl.model.vo.Result;
+import top.naccl.service.BlogService;
 import top.naccl.service.TagService;
 
 import java.util.List;
@@ -25,6 +26,8 @@ import java.util.List;
 public class TagController {
 	@Autowired
 	TagService tagService;
+	@Autowired
+	BlogService blogService;
 
 	/**
 	 * 标签云
@@ -50,7 +53,7 @@ public class TagController {
 		int pageSize = 5;//每页显示5条
 		String orderBy = "is_top desc, create_time desc";
 		PageHelper.startPage(pageNum, pageSize, orderBy);
-		PageInfo<BlogInfo> pageInfo = new PageInfo<>(tagService.getBlogInfoListByTagNameAndIsPublished(tagName));
+		PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogService.getBlogInfoListByTagNameAndIsPublished(tagName));
 		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
 		return Result.ok("请求成功", pageResult);
 	}

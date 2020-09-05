@@ -7,9 +7,7 @@ import top.naccl.entity.Tag;
 import top.naccl.exception.NotFoundException;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.TagMapper;
-import top.naccl.model.vo.BlogInfo;
 import top.naccl.service.TagService;
-import top.naccl.util.markdown.MarkdownUtils;
 
 import java.util.List;
 
@@ -36,16 +34,6 @@ public class TagServiceImpl implements TagService {
 	@Override
 	public List<Tag> getTagListByBlogId(Long blogId) {
 		return tagMapper.getTagListByBlogId(blogId);
-	}
-
-	@Override
-	public List<BlogInfo> getBlogInfoListByTagNameAndIsPublished(String tagName) {
-		List<BlogInfo> blogInfos = tagMapper.getBlogInfoListByTagNameAndIsPublished(tagName);
-		for (BlogInfo blogInfo : blogInfos) {
-			blogInfo.setDescription(MarkdownUtils.markdownToHtmlExtensions(blogInfo.getDescription()));
-			blogInfo.setTags(getTagListByBlogId(blogInfo.getId()));
-		}
-		return blogInfos;
 	}
 
 	@Transactional

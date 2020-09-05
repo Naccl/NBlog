@@ -3,7 +3,6 @@ package top.naccl.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import top.naccl.entity.Category;
-import top.naccl.model.vo.BlogInfo;
 
 import java.util.List;
 
@@ -18,8 +17,6 @@ public interface CategoryMapper {
 	List<Category> getCategoryList();
 
 	List<Category> getCategoryListNotId();
-
-	List<BlogInfo> getBlogInfoListByCategoryNameAndIsPublished(String categoryName);
 
 	int saveCategory(Category category);
 

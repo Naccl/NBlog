@@ -17,27 +17,6 @@
         select category_name from category order by id desc
     </select>
 
-    <resultMap id="blogInfo" type="top.naccl.model.vo.BlogInfo">
-        <id property="id" column="id"/>
-        <result property="title" column="title"/>
-        <result property="description" column="description"/>
-        <result property="createTime" column="create_time"/>
-        <result property="views" column="views"/>
-        <result property="words" column="words"/>
-        <result property="readTime" column="read_time"/>
-        <result property="top" column="is_top"/>
-        <association property="category" javaType="top.naccl.entity.Category">
-            <result property="name" column="category_name"/>
-        </association>
-    </resultMap>
-
-    <!--根据分类name查询公开博客List-->
-    <select id="getBlogInfoListByCategoryNameAndIsPublished" resultMap="blogInfo">
-        select b.id, b.title, b.description, b.is_top, b.create_time, b.views, b.words, b.read_time, c.category_name
-        from category as c left join blog as b on c.id=b.category_id
-        where c.category_name=#{categoryName} and b.is_published=true
-    </select>
-
     <!--添加分类-->
     <insert id="saveCategory" parameterType="top.naccl.entity.Category" useGeneratedKeys="true" keyProperty="id">
         insert into category (category_name) values (#{name})

@@ -13,9 +13,9 @@
 					<div class="tl-item" v-for="blog in value" :key="blog.id">
 						<div class="tl-wrap">
 							<span class="tl-date">{{ blog.day }}</span>
-							<router-link :to="`/blog/${blog.id}`">
+							<a href="" @click.prevent="toBlog(blog)">
 								<div class="ui left pointing label tl-title">{{ blog.title }}</div>
-							</router-link>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -62,6 +62,9 @@
 				}).catch(() => {
 					this.msgError("请求失败");
 				})
+			},
+			toBlog(blog) {
+				this.$store.dispatch('goBlogPage', blog)
 			}
 		}
 	}

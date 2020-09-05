@@ -125,7 +125,10 @@
 		},
 		methods: {
 			getBlog(id = this.blogId) {
-				getBlogById(id).then(res => {
+				//密码保护的文章，需要发送密码验证通过后，保存在localStorage的Token
+				let token = window.localStorage.getItem(`blog${id}`)
+				token = token ? token : ''
+				getBlogById(token, id).then(res => {
 					console.log(res)
 					if (res.code === 200) {
 						this.blog = res.data

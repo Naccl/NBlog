@@ -11,6 +11,7 @@ import top.naccl.model.dto.BlogVisibility;
 import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.BlogInfo;
+import top.naccl.model.vo.NewBlog;
 import top.naccl.model.vo.RandomBlog;
 import top.naccl.service.BlogService;
 import top.naccl.service.TagService;
@@ -43,15 +44,47 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public List<Blog> getIdAndTitleListByIsPublishedAndIsRecommend() {
-		return blogMapper.getIdAndTitleListByIsPublishedAndIsRecommend();
+	public List<NewBlog> getNewBlogListByIsPublishedAndIsRecommend() {
+		List<NewBlog> newBlogs = blogMapper.getNewBlogListByIsPublishedAndIsRecommend();
+		for (NewBlog newBlog : newBlogs) {
+			if (!"".equals(newBlog.getPassword())) {
+				newBlog.setPrivacy(true);
+				newBlog.setPassword("");
+			} else {
+				newBlog.setPrivacy(false);
+			}
+		}
+		return newBlogs;
 	}
 
 	@Override
 	public List<BlogInfo> getBlogInfoListByIsPublished() {
 		List<BlogInfo> blogInfos = blogMapper.getBlogInfoListByIsPublished();
+		return processBlogInfos(blogInfos);
+	}
+
+	@Override
+	public List<BlogInfo> getBlogInfoListByCategoryNameAndIsPublished(String categoryName) {
+		List<BlogInfo> blogInfos = blogMapper.getBlogInfoListByCategoryNameAndIsPublished(categoryName);
+		return processBlogInfos(blogInfos);
+	}
+
+	@Override
+	public List<BlogInfo> getBlogInfoListByTagNameAndIsPublished(String tagName) {
+		List<BlogInfo> blogInfos = blogMapper.getBlogInfoListByTagNameAndIsPublished(tagName);
+		return processBlogInfos(blogInfos);
+	}
+
+	private List<BlogInfo> processBlogInfos(List<BlogInfo> blogInfos) {
 		for (BlogInfo blogInfo : blogInfos) {
-			blogInfo.setDescription(MarkdownUtils.markdownToHtmlExtensions(blogInfo.getDescription()));
+			if (!"".equals(blogInfo.getPassword())) {
+				blogInfo.setPrivacy(true);
+				blogInfo.setPassword("");
+				blogInfo.setDescription("此文章受密码保护！");
+			} else {
+				blogInfo.setPrivacy(false);
+				blogInfo.setDescription(MarkdownUtils.markdownToHtmlExtensions(blogInfo.getDescription()));
+			}
 			blogInfo.setTags(tagService.getTagListByBlogId(blogInfo.getId()));
 		}
 		return blogInfos;
@@ -62,7 +95,16 @@ public class BlogServiceImpl implements BlogService {
 		List<String> groupYearMonth = blogMapper.getGroupYearMonthByIsPublished();
 		Map<String, List<ArchiveBlog>> map = new LinkedHashMap<>();
 		for (String s : groupYearMonth) {
-			map.put(s, blogMapper.getArchiveBlogListByYearMonthAndIsPublished(s));
+			List<ArchiveBlog> archiveBlogs = blogMapper.getArchiveBlogListByYearMonthAndIsPublished(s);
+			for (ArchiveBlog archiveBlog : archiveBlogs) {
+				if (!"".equals(archiveBlog.getPassword())) {
+					archiveBlog.setPrivacy(true);
+					archiveBlog.setPassword("");
+				} else {
+					archiveBlog.setPrivacy(false);
+				}
+			}
+			map.put(s, archiveBlogs);
 		}
 		return map;
 	}
@@ -71,6 +113,12 @@ public class BlogServiceImpl implements BlogService {
 	public List<RandomBlog> getRandomBlogListByLimitNumAndIsPublished(Integer limitNum) {
 		List<RandomBlog> randomBlogs = blogMapper.getRandomBlogListByLimitNumAndIsPublished(limitNum);
 		for (RandomBlog randomBlog : randomBlogs) {
+			if (!"".equals(randomBlog.getPassword())) {
+				randomBlog.setPrivacy(true);
+				randomBlog.setPassword("");
+			} else {
+				randomBlog.setPrivacy(false);
+			}
 			randomBlog.setTags(tagService.getTagListByBlogId(randomBlog.getId()));
 		}
 		return randomBlogs;
@@ -132,6 +180,13 @@ public class BlogServiceImpl implements BlogService {
 		}
 	}
 
+	@Transactional
+	@Override
+	public int updateViews(Long blogId) {
+		//博客阅读次数+1
+		return blogMapper.updateViews(blogId);
+	}
+
 	@Override
 	public Blog getBlogById(Long id) {
 		Blog blog = blogMapper.getBlogById(id);
@@ -143,14 +198,17 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	public BlogDetail getBlogByIdAndIsPublished(Long id) {
-		//博客阅读次数+1
-		blogMapper.updateViews(id);
 		BlogDetail blog = blogMapper.getBlogByIdAndIsPublished(id);
 		if (blog == null) {
 			throw new NotFoundException("该博客不存在");
 		}
 		blog.setContent(MarkdownUtils.markdownToHtmlExtensions(blog.getContent()));
 		return blog;
+	}
+
+	@Override
+	public String getBlogPassword(Long blogId) {
+		return blogMapper.getBlogPassword(blogId);
 	}
 
 	@Transactional

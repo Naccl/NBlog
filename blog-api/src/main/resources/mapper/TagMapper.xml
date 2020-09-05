@@ -25,28 +25,6 @@
         where bt.blog_id=#{blogId}
     </select>
 
-    <resultMap id="blogInfo" type="top.naccl.model.vo.BlogInfo">
-        <id property="id" column="id"/>
-        <result property="title" column="title"/>
-        <result property="description" column="description"/>
-        <result property="createTime" column="create_time"/>
-        <result property="views" column="views"/>
-        <result property="words" column="words"/>
-        <result property="readTime" column="read_time"/>
-        <result property="top" column="is_top"/>
-        <association property="category" javaType="top.naccl.entity.Category">
-            <id property="id" column="category_id"/>
-            <result property="name" column="category_name"/>
-        </association>
-    </resultMap>
-
-    <!--根据标签name查询公开博客List-->
-    <select id="getBlogInfoListByTagNameAndIsPublished" resultMap="blogInfo">
-        select b.id, b.title, b.description, b.is_top, b.create_time, b.views, b.words, b.read_time, c.category_name
-        from (((tag as t left join blog_tag as bt on t.id=bt.tag_id) left join blog as b on bt.blog_id=b.id) left join category as c on b.category_id=c.id)
-        where t.tag_name=#{tagName} and b.is_published=true
-    </select>
-
     <!--添加标签-->
     <insert id="saveTag" parameterType="top.naccl.entity.Tag" useGeneratedKeys="true" keyProperty="id">
         insert into tag (tag_name, color) values (#{name}, #{color})
