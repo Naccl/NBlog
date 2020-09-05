@@ -107,6 +107,12 @@
 						children: [
 							{
 								id: 21,
+								title: '站点设置',
+								children: [],
+								path: '/siteSettings'
+							},
+							{
+								id: 22,
 								title: '关于我',
 								children: [],
 								path: '/about'
@@ -115,40 +121,22 @@
 					},
 					{
 						id: 3,
-						title: '系统管理',
-						children: [
-							{
-								id: 31,
-								title: '菜单管理',
-								children: [],
-								path: '/menus'
-							},
-							{
-								id: 32,
-								title: '站点管理',
-								children: [],
-								path: '/siteSettings'
-							},
-						]
-					},
-					{
-						id: 4,
 						title: '数据统计',
 						children: [
 							{
-								id: 41,
+								id: 31,
 								title: '访问量',
 								children: [],
 								path: '/pv'
 							},
 							{
-								id: 42,
+								id: 32,
 								title: '实时访客',
 								children: [],
 								path: '/latest'
 							},
 							{
-								id: 43,
+								id: 33,
 								title: '日志',
 								children: [],
 								path: '/log'
@@ -159,8 +147,7 @@
 				iconsObj: {
 					'1': 'el-icon-menu',
 					'2': 'el-icon-document-copy',
-					'3': 'el-icon-s-tools',
-					'4': 'el-icon-s-data',
+					'3': 'el-icon-s-data',
 					'11': 'el-icon-edit',
 					'12': 'el-icon-edit',
 					'13': 'el-icon-s-order',
@@ -168,12 +155,11 @@
 					'15': 'el-icon-s-opportunity',
 					'16': 'submenu ali-iconfont icon-biaoqian',
 					'17': 'el-icon-s-comment',
-					'21': 'el-icon-document',
-					'31': 'submenu ali-iconfont icon-caidanguanli',
-					'32': 'submenu ali-iconfont icon-bianjizhandian',
-					'41': 'el-icon-s-marketing',
-					'42': 'el-icon-view',
-					'43': 'el-icon-document-checked',
+					'21': 'submenu ali-iconfont icon-bianjizhandian',
+					'22': 'el-icon-document',
+					'31': 'el-icon-s-marketing',
+					'32': 'el-icon-view',
+					'33': 'el-icon-document-checked',
 				},
 				//是否折叠
 				isCollapse: false,
