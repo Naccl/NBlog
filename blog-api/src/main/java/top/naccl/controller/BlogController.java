@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.entity.User;
 import top.naccl.model.dto.BlogPassword;
 import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.BlogInfo;
@@ -16,6 +17,7 @@ import top.naccl.model.vo.PageResult;
 import top.naccl.model.vo.RandomBlog;
 import top.naccl.model.vo.Result;
 import top.naccl.service.BlogService;
+import top.naccl.service.impl.UserServiceImpl;
 import top.naccl.util.JwtUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +33,8 @@ import java.util.List;
 public class BlogController {
 	@Autowired
 	BlogService blogService;
+	@Autowired
+	UserServiceImpl userService;
 
 	/**
 	 * 按置顶、创建时间排序 分页查询博客简要信息列表
@@ -63,12 +67,19 @@ public class BlogController {
 			String jwtToken = request.getHeader("Authorization");
 			if (jwtToken != null && !"".equals(jwtToken) && !"null".equals(jwtToken)) {
 				try {
-					//获取Token中博客id
-					String tokenBlogIdString = JwtUtils.validateToken(jwtToken);
-					Long tokenBlogId = Long.parseLong(tokenBlogIdString);
-					//博客id不匹配，验证不通过，可能博客id改变或客户端传递了其它密码保护文章的Token
-					if (tokenBlogId != id) {
-						return Result.create(403, "Token不匹配，请重新验证密码！");
+					String subject = JwtUtils.validateToken(jwtToken);
+					if (subject.startsWith("admin:")) {//博主身份Token
+						String username = subject.replace("admin:","");
+						User admin = (User) userService.loadUserByUsername(username);
+						if (admin == null) {
+							return Result.create(403, "博主身份Token已失效，请重新登录！");
+						}
+					} else {//经密码验证后的Token
+						Long tokenBlogId = Long.parseLong(subject);
+						//博客id不匹配，验证不通过，可能博客id改变或客户端传递了其它密码保护文章的Token
+						if (tokenBlogId != id) {
+							return Result.create(403, "Token不匹配，请重新验证密码！");
+						}
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

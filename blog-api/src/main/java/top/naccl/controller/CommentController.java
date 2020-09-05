@@ -144,7 +144,13 @@ public class CommentController {
 		//检测Token是否存在，存在则为博主评论
 		if (jwtToken != null && !"".equals(jwtToken) && !"null".equals(jwtToken)) {
 			try {
-				setAdminComment(comment, request, jwtToken);
+				String username = JwtUtils.validateToken(jwtToken);
+				//Token验证通过，获取Token中用户名
+				User admin = (User) userService.loadUserByUsername(username);
+				if (admin == null) {
+					return Result.create(403, "博主身份Token已失效，请重新登录！");
+				}
+				setAdminComment(comment, request, admin);
 			} catch (Exception e) {
 				e.printStackTrace();
 				return Result.create(403, "博主身份Token已失效，请重新登录！");
@@ -163,14 +169,11 @@ public class CommentController {
 	/**
 	 * 设置博主评论属性
 	 *
-	 * @param comment  评论DTO
-	 * @param request  用于获取ip和博主身份Token
-	 * @param jwtToken 请求头中的Token
+	 * @param comment 评论DTO
+	 * @param request 用于获取ip和博主身份Token
+	 * @param admin   博主信息
 	 */
-	private void setAdminComment(Comment comment, HttpServletRequest request, String jwtToken) {
-		String username = JwtUtils.validateToken(jwtToken);
-		//Token验证通过，获取Token中用户名
-		User admin = (User) userService.loadUserByUsername(username);
+	private void setAdminComment(Comment comment, HttpServletRequest request, User admin) {
 		comment.setAdminComment(true);
 		comment.setCreateTime(new Date());
 		comment.setPublished(true);

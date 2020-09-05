@@ -67,8 +67,8 @@
 		},
 		methods: {
 			postForm() {
-				const token = window.sessionStorage.getItem('adminToken')
-				if (token) {
+				const adminToken = window.sessionStorage.getItem('adminToken')
+				if (adminToken) {
 					//博主登录后，sessionStorage中会存储token，在后端设置属性，可以不校验昵称、邮箱
 					if (this.commentForm.content === '' || this.commentForm.content.length > 250) {
 						return this.$notify({
@@ -77,7 +77,7 @@
 							type: 'warning'
 						})
 					} else {
-						return this.$store.dispatch('submitCommentForm', token)
+						return this.$store.dispatch('submitCommentForm', adminToken)
 					}
 				}
 				this.$refs.formRef.validate(valid => {

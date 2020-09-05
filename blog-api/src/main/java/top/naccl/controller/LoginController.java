@@ -35,7 +35,7 @@ public class LoginController {
 	public Result login(@RequestBody LoginInfo loginInfo) {
 		User user = (User) userService.loadUserByUsername(loginInfo.getUsername());
 		user.setPassword(null);
-		String jwt = JwtUtils.generateToken(user.getUsername());
+		String jwt = JwtUtils.generateToken("admin:" + user.getUsername());
 		Map<String, Object> map = new HashMap<>();
 		map.put("user", user);
 		map.put("token", jwt);

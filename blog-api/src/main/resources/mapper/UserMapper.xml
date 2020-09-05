@@ -3,6 +3,6 @@
 <mapper namespace="top.naccl.mapper.UserMapper">
     <!--按用户名查询User-->
     <select id="findByUsername" resultType="top.naccl.entity.User">
-        select * from user where username=#{username}
+        select * from user where username=#{username} limit 1
     </select>
 </mapper>
