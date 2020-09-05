@@ -72,7 +72,7 @@ public class CommentController {
 				try {
 					String subject = JwtUtils.validateToken(jwtToken);
 					if (subject.startsWith("admin:")) {//博主身份Token
-						String username = subject.replace("admin:","");
+						String username = subject.replace("admin:", "");
 						User admin = (User) userService.loadUserByUsername(username);
 						if (admin == null) {
 							return Result.create(403, "博主身份Token已失效，请重新登录！");
@@ -134,7 +134,7 @@ public class CommentController {
 	}
 
 	/**
-	 * 提交评论
+	 * 提交评论 又长又臭 能用就不改了:)
 	 *
 	 * @param comment 评论DTO
 	 * @param request 用于获取ip和博主身份Token
@@ -147,27 +147,82 @@ public class CommentController {
 			return Result.error("参数有误");
 		}
 
-		String jwtToken = request.getHeader("Authorization");
-		//检测Token是否存在，存在则为博主评论
-		if (jwtToken != null && !"".equals(jwtToken) && !"null".equals(jwtToken)) {
-			try {
-				String username = JwtUtils.validateToken(jwtToken);
-				//Token验证通过，获取Token中用户名
-				User admin = (User) userService.loadUserByUsername(username);
-				if (admin == null) {
-					return Result.create(403, "博主身份Token已失效，请重新登录！");
+		//判断是否可评论
+		int judgeResult = judgeCommentEnabled(comment.getPage(), comment.getBlogId());
+		if (judgeResult == 2) {
+			return Result.create(404, "该博客不存在");
+		} else if (judgeResult == 1) {
+			return Result.create(403, "评论已关闭");
+		} else if (judgeResult == 3) {//文章受密码保护
+			String jwtToken = request.getHeader("Authorization");
+			//验证Token合法性
+			if (jwtToken != null && !"".equals(jwtToken) && !"null".equals(jwtToken)) {
+				String subject;
+				try {
+					subject = JwtUtils.validateToken(jwtToken);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return Result.create(403, "Token已失效，请重新验证密码！");
 				}
-				setAdminComment(comment, request, admin);
-			} catch (Exception e) {
-				e.printStackTrace();
-				return Result.create(403, "博主身份Token已失效，请重新登录！");
+				//博主评论，不受密码保护限制，根据博主信息设置评论属性
+				if (subject.startsWith("admin:")) {
+					//Token验证通过，获取Token中用户名
+					String username = subject.replace("admin:", "");
+					User admin = (User) userService.loadUserByUsername(username);
+					if (admin == null) {
+						return Result.create(403, "博主身份Token已失效，请重新登录！");
+					}
+					setAdminComment(comment, request, admin);
+				} else {//普通访客经文章密码验证后携带Token
+					//对访客的评论昵称、邮箱合法性校验
+					if (StringUtils.isEmpty(comment.getNickname(), comment.getEmail()) || comment.getNickname().length() > 15) {
+						return Result.error("参数有误");
+					}
+					//对于受密码保护的文章，则Token是必须的
+					Long tokenBlogId = Long.parseLong(subject);
+					//博客id不匹配，验证不通过，可能博客id改变或客户端传递了其它密码保护文章的Token
+					if (tokenBlogId != comment.getBlogId()) {
+						return Result.create(403, "Token不匹配，请重新验证密码！");
+					}
+					setVisitorComment(comment, request);
+				}
+			} else {//不存在Token则无评论权限
+				return Result.create(403, "此文章受密码保护，请验证密码！");
 			}
-		} else {//不存在则为游客评论
-			//评论昵称、邮箱合法性校验
-			if (StringUtils.isEmpty(comment.getNickname(), comment.getEmail()) || comment.getNickname().length() > 15) {
-				return Result.error("参数有误");
+		} else if (judgeResult == 0) {//普通文章
+			String jwtToken = request.getHeader("Authorization");
+			//有Token则为博主评论，或文章原先为密码保护，后取消保护，但客户端仍存在Token
+			if (jwtToken != null && !"".equals(jwtToken) && !"null".equals(jwtToken)) {
+				String subject;
+				try {
+					subject = JwtUtils.validateToken(jwtToken);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return Result.create(403, "Token已失效，请重新验证密码");
+				}
+				//博主评论，根据博主信息设置评论属性
+				if (subject.startsWith("admin:")) {
+					//Token验证通过，获取Token中用户名
+					String username = subject.replace("admin:", "");
+					User admin = (User) userService.loadUserByUsername(username);
+					if (admin == null) {
+						return Result.create(403, "博主身份Token已失效，请重新登录！");
+					}
+					setAdminComment(comment, request, admin);
+				} else {//文章原先为密码保护，后取消保护，但客户端仍存在Token，则忽略Token
+					//对访客的评论昵称、邮箱合法性校验
+					if (StringUtils.isEmpty(comment.getNickname(), comment.getEmail()) || comment.getNickname().length() > 15) {
+						return Result.error("参数有误");
+					}
+					setVisitorComment(comment, request);
+				}
+			} else {//访客评论
+				//对访客的评论昵称、邮箱合法性校验
+				if (StringUtils.isEmpty(comment.getNickname(), comment.getEmail()) || comment.getNickname().length() > 15) {
+					return Result.error("参数有误");
+				}
+				setVisitorComment(comment, request);
 			}
-			setVisitorComment(comment, request);
 		}
 		commentService.saveComment(comment);
 		return Result.ok("评论成功");
@@ -193,7 +248,7 @@ public class CommentController {
 	}
 
 	/**
-	 * 设置游客评论属性
+	 * 设置访客评论属性
 	 *
 	 * @param comment 评论DTO
 	 * @param request 用于获取ip

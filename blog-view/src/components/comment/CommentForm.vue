@@ -49,7 +49,7 @@
 	export default {
 		name: "CommentForm",
 		computed: {
-			...mapState(['parentCommentId', 'commentForm'])
+			...mapState(['parentCommentId', 'commentForm', 'commentQuery'])
 		},
 		data() {
 			return {
@@ -80,6 +80,7 @@
 						return this.$store.dispatch('submitCommentForm', adminToken)
 					}
 				}
+				const blogToken = window.localStorage.getItem(`blog${this.commentQuery.blogId}`)
 				this.$refs.formRef.validate(valid => {
 					if (!valid || this.commentForm.content === '' || this.commentForm.content.length > 250) {
 						this.$notify({
@@ -88,7 +89,7 @@
 							type: 'warning'
 						})
 					} else {
-						this.$store.dispatch('submitCommentForm')
+						this.$store.dispatch('submitCommentForm', blogToken ? blogToken : '')
 					}
 				})
 			}
