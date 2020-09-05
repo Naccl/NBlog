@@ -50,13 +50,11 @@ export default {
 	setCommentFormEmpty({commit}) {
 		commit(SET_COMMENT_FORM_EMPTY)
 	},
-	submitCommentForm({rootState, dispatch}) {
+	submitCommentForm({rootState, dispatch}, token = '') {
 		let form = {...rootState.commentForm}
 		form.page = rootState.commentQuery.page
 		form.blogId = rootState.commentQuery.blogId
 		form.parentCommentId = rootState.parentCommentId
-		let token = window.sessionStorage.getItem('token')
-		token = token ? token : ''
 		submitComment(token, form).then(res => {
 			console.log(res)
 			if (res.code === 200) {

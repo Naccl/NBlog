@@ -67,11 +67,18 @@
 		},
 		methods: {
 			postForm() {
-				const token = window.sessionStorage.getItem('token')
-				//博主登录后，sessionStorage中会存储token，在后端设置属性，可以不校验昵称、邮箱
-				if (token || this.commentForm.content === '' || this.commentForm.content.length > 250) {
-					this.$store.dispatch('submitCommentForm')
-					return
+				const token = window.sessionStorage.getItem('adminToken')
+				if (token) {
+					//博主登录后，sessionStorage中会存储token，在后端设置属性，可以不校验昵称、邮箱
+					if (this.commentForm.content === '' || this.commentForm.content.length > 250) {
+						return this.$notify({
+							title: '评论失败',
+							message: '评论内容有误',
+							type: 'warning'
+						})
+					} else {
+						return this.$store.dispatch('submitCommentForm', token)
+					}
 				}
 				this.$refs.formRef.validate(valid => {
 					if (!valid || this.commentForm.content === '' || this.commentForm.content.length > 250) {
