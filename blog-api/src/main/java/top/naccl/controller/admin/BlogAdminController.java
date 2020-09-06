@@ -20,6 +20,7 @@ import top.naccl.model.dto.BlogVisibility;
 import top.naccl.model.vo.Result;
 import top.naccl.service.BlogService;
 import top.naccl.service.CategoryService;
+import top.naccl.service.CommentService;
 import top.naccl.service.TagService;
 import top.naccl.util.StringUtils;
 
@@ -43,6 +44,8 @@ public class BlogAdminController {
 	CategoryService categoryService;
 	@Autowired
 	TagService tagService;
+	@Autowired
+	CommentService commentService;
 
 	/**
 	 * 获取博客文章列表
@@ -69,7 +72,7 @@ public class BlogAdminController {
 	}
 
 	/**
-	 * 删除博客文章 同时维护 blog_tag 表
+	 * 删除博客文章、删除博客文章下的所有评论、同时维护 blog_tag 表
 	 *
 	 * @param id 文章id
 	 * @return
@@ -78,6 +81,7 @@ public class BlogAdminController {
 	public Result delete(@RequestParam Long id) {
 		blogService.deleteBlogById(id);
 		blogService.deleteBlogTagByBlogId(id);
+		commentService.deleteCommentsByBlogId(id);
 		return Result.ok("删除成功");
 	}
 

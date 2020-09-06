@@ -65,7 +65,7 @@
 			<!--内容主体-->
 			<el-form label-width="50px" @submit.native.prevent>
 				<el-form-item>
-					<el-radio-group v-model="radio" @change="radioChange">
+					<el-radio-group v-model="radio">
 						<el-radio :label="1">公开</el-radio>
 						<el-radio :label="2">私密</el-radio>
 						<el-radio :label="3">密码保护</el-radio>
@@ -183,15 +183,6 @@
 					this.msgError("请求失败")
 				})
 			},
-			radioChange(newValue) {
-				if (newValue === 1) {
-					this.visForm.published = true
-				} else if (newValue === 2) {
-					this.visForm.published = false
-				} else if (newValue === 3) {
-					this.visForm.published = true
-				}
-			},
 			//编辑博客可见性
 			editBlogVisibility(row) {
 				this.visForm = {
@@ -216,6 +207,9 @@
 					this.visForm.recommend = false
 					this.visForm.commentEnabled = false
 					this.visForm.top = false
+					this.visForm.published = false
+				} else {
+					this.visForm.published = true
 				}
 				if (this.radio !== 3) {
 					this.visForm.password = ''
@@ -246,16 +240,28 @@
 				this.$router.push(`/blogs/edit/${id}`)
 			},
 			deleteBlogById(id) {
-				deleteBlogById(id).then(res => {
-					console.log(res)
-					if (res.code === 200) {
-						this.msgSuccess(res.msg)
-						this.getData()
-					} else {
-						this.msgError(res.msg)
-					}
+				this.$confirm('此操作将永久删除该博客<strong style="color: red">及其所有评论</strong>，是否删除?<br>建议将博客置为<strong style="color: red">私密</strong>状态！', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning',
+					dangerouslyUseHTMLString: true
+				}).then(() => {
+					deleteBlogById(id).then(res => {
+						console.log(res)
+						if (res.code === 200) {
+							this.msgSuccess(res.msg)
+							this.getData()
+						} else {
+							this.msgError(res.msg)
+						}
+					}).catch(() => {
+						this.msgError("操作失败")
+					})
 				}).catch(() => {
-					this.msgError("操作失败")
+					this.$message({
+						type: 'info',
+						message: '已取消删除'
+					})
 				})
 			}
 		}

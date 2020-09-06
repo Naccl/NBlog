@@ -96,6 +96,12 @@ public class CommentServiceImpl implements CommentService {
 
 	@Transactional
 	@Override
+	public void deleteCommentsByBlogId(Long blogId) {
+		commentMapper.deleteCommentsByBlogId(blogId);
+	}
+
+	@Transactional
+	@Override
 	public void updateComment(Comment comment) {
 		if (commentMapper.updateComment(comment) != 1) {
 			throw new PersistenceException("评论修改失败");

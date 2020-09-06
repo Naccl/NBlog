@@ -83,6 +83,11 @@
         delete from comment where id=#{commentId}
     </delete>
 
+    <!--按博客id删除博客下所有评论-->
+    <delete id="deleteCommentsByBlogId">
+        delete from comment where blog_id=#{blogId}
+    </delete>
+
     <!--更新评论-->
     <update id="updateComment">
         update comment set nickname=#{nickname}, email=#{email}, ip=#{ip}, content=#{content}, website=#{website} where id=#{id}

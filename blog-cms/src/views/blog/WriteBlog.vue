@@ -64,7 +64,7 @@
 			<!--内容主体-->
 			<el-form label-width="50px" @submit.native.prevent>
 				<el-form-item>
-					<el-radio-group v-model="radio" @change="radioChange">
+					<el-radio-group v-model="radio">
 						<el-radio :label="1">公开</el-radio>
 						<el-radio :label="2">私密</el-radio>
 						<el-radio :label="3">密码保护</el-radio>
@@ -234,15 +234,6 @@
 					this.msgError('请求失败')
 				})
 			},
-			radioChange(newValue) {
-				if (newValue === 1) {
-					this.form.published = true
-				} else if (newValue === 2) {
-					this.form.published = false
-				} else if (newValue === 3) {
-					this.form.published = true
-				}
-			},
 			submit() {
 				if (this.radio === 3 && (this.form.password === '' || this.form.password === null)) {
 					return this.msgError("密码保护模式必须填写密码！")
@@ -256,6 +247,9 @@
 							this.form.recommend = false
 							this.form.commentEnabled = false
 							this.form.top = false
+							this.form.published = false
+						} else {
+							this.form.published = true
 						}
 						if (this.radio !== 3) {
 							this.form.password = ''

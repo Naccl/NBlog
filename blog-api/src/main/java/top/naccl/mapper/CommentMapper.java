@@ -27,6 +27,8 @@ public interface CommentMapper {
 
 	int deleteCommentById(Long commentId);
 
+	int deleteCommentsByBlogId(Long blogId);
+
 	int updateComment(Comment comment);
 
 	int countByPageAndIsPublished(Integer page, Long blogId);
