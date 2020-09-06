@@ -43,8 +43,8 @@
     <select id="getListByTitleAndCategoryId" resultMap="blog">
         <bind name="titlePattern" value="'%' + title + '%'"/>
         select b.id, b.title, b.create_time, b.update_time, b.is_published, b.is_recommend, b.is_appreciation,
-                b.is_comment_enabled, b.is_top, b.password,
-                c.id as category_id, c.category_name
+        b.is_comment_enabled, b.is_top, b.password,
+        c.id as category_id, c.category_name
         from blog as b left join category as c on b.category_id=c.id
         <where>
             <if test="title!=null and title!=''">
@@ -54,6 +54,20 @@
                 and b.category_id=#{CategoryId}
             </if>
         </where>
+    </select>
+
+    <resultMap id="searchBlog" type="top.naccl.model.vo.SearchBlog">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+    </resultMap>
+
+    <!--按关键字根据文章内容搜索公开且无密码保护的博客文章-->
+    <select id="getSearchBlogListByQueryAndIsPublished" resultMap="searchBlog">
+        <bind name="queryPattern" value="'%' + query + '%'"/>
+        select id, title, content
+        from blog
+        where is_published=true and password='' and content like #{queryPattern}
     </select>
 
     <resultMap id="blogIdAndTitle" type="top.naccl.model.vo.BlogIdAndTitle">

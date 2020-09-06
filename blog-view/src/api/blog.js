@@ -22,3 +22,13 @@ export function checkBlogPassword(blogPasswordForm) {
 		}
 	})
 }
+
+export function getSearchBlogList(query) {
+	return axios({
+		url: 'searchBlog',
+		method: 'GET',
+		params: {
+			query
+		}
+	})
+}

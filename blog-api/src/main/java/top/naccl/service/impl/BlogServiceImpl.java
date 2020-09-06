@@ -13,6 +13,7 @@ import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.BlogInfo;
 import top.naccl.model.vo.NewBlog;
 import top.naccl.model.vo.RandomBlog;
+import top.naccl.model.vo.SearchBlog;
 import top.naccl.service.BlogService;
 import top.naccl.service.TagService;
 import top.naccl.util.markdown.MarkdownUtils;
@@ -36,6 +37,21 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public List<Blog> getListByTitleAndCategoryId(String title, Integer CategoryId) {
 		return blogMapper.getListByTitleAndCategoryId(title, CategoryId);
+	}
+
+	@Override
+	public List<SearchBlog> getSearchBlogListByQueryAndIsPublished(String query) {
+		List<SearchBlog> searchBlogs = blogMapper.getSearchBlogListByQueryAndIsPublished(query);
+		for (SearchBlog searchBlog : searchBlogs) {
+			String content = searchBlog.getContent();
+			int contentLength = content.length();
+			int index = content.indexOf(query) - 10;
+			index = index < 0 ? 0 : index;
+			int end = index + 21;//以关键字字符串为中心返回21个字
+			end = end > contentLength - 1 ? contentLength - 1 : end;
+			searchBlog.setContent(content.substring(index, end));
+		}
+		return searchBlogs;
 	}
 
 	@Override

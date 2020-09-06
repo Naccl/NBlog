@@ -16,9 +16,11 @@ import top.naccl.model.vo.BlogInfo;
 import top.naccl.model.vo.PageResult;
 import top.naccl.model.vo.RandomBlog;
 import top.naccl.model.vo.Result;
+import top.naccl.model.vo.SearchBlog;
 import top.naccl.service.BlogService;
 import top.naccl.service.impl.UserServiceImpl;
 import top.naccl.util.JwtUtils;
+import top.naccl.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -69,7 +71,7 @@ public class BlogController {
 				try {
 					String subject = JwtUtils.validateToken(jwtToken);
 					if (subject.startsWith("admin:")) {//博主身份Token
-						String username = subject.replace("admin:","");
+						String username = subject.replace("admin:", "");
 						User admin = (User) userService.loadUserByUsername(username);
 						if (admin == null) {
 							return Result.create(403, "博主身份Token已失效，请重新登录！");
@@ -122,5 +124,21 @@ public class BlogController {
 		int limitNum = 5;
 		List<RandomBlog> randomBlogs = blogService.getRandomBlogListByLimitNumAndIsPublished(limitNum);
 		return Result.ok("获取成功", randomBlogs);
+	}
+
+	/**
+	 * 按关键字根据文章内容搜索公开且无密码保护的博客文章
+	 *
+	 * @param query 关键字字符串
+	 * @return
+	 */
+	@GetMapping("/searchBlog")
+	public Result searchBlog(@RequestParam String query) {
+		//校验关键字字符串合法性
+		if (StringUtils.isEmpty(query) || StringUtils.hasSpecialChar(query) || query.trim().length() > 20) {
+			return Result.error("参数错误");
+		}
+		List<SearchBlog> searchBlogs = blogService.getSearchBlogListByQueryAndIsPublished(query.trim());
+		return Result.ok("获取成功", searchBlogs);
 	}
 }
