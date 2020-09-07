@@ -87,6 +87,7 @@
 						this.form.content = res.data.content
 						this.form.commentEnabled = res.data.commentEnabled === 'true' ? true : false
 						this.vditor.setValue(this.form.content)
+						this.msgSuccess(res.msg)
 					} else {
 						this.msgError(res.msg)
 					}

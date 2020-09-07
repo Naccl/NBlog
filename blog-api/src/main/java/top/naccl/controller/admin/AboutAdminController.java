@@ -30,7 +30,7 @@ public class AboutAdminController {
 	 */
 	@GetMapping("/about")
 	public Result about() {
-		return Result.ok("获取成功", aboutService.getAboutSetting());
+		return Result.ok("请求成功", aboutService.getAboutSetting());
 	}
 
 	/**
