@@ -25,6 +25,11 @@
 							<div class="item m-common-black">
 								<i class="small clock icon"></i><span>阅读时长≈{{ blog.readTime }}分</span>
 							</div>
+							<a class="item m-common-black" @click.prevent="bigFontSize=!bigFontSize">
+								<div data-inverted="" data-tooltip="点击切换字体大小" data-position="top center">
+									<i class="font icon"></i>
+								</div>
+							</a>
 						</div>
 					</div>
 					<!--分类-->
@@ -32,7 +37,7 @@
 						<i class="small folder open icon"></i><span class="m-text-500">{{ blog.category.name }}</span>
 					</router-link>
 					<!--文章Markdown正文-->
-					<div class="typo js-toc-content m-padded-tb-small line-numbers match-braces rainbow-braces" v-html="blog.content"></div>
+					<div class="typo js-toc-content m-padded-tb-small line-numbers match-braces rainbow-braces" :class="{'m-big-fontsize':bigFontSize}" v-html="blog.content"></div>
 					<!--赞赏-->
 					<el-popover placement="top" width="220" trigger="click" style="margin: 2em auto" v-if="blog.appreciation">
 						<div class="ui orange basic label" style="width: 100%">
@@ -83,7 +88,8 @@
 		components: {CommentList},
 		data() {
 			return {
-				blog: {}
+				blog: {},
+				bigFontSize: false,
 			}
 		},
 		beforeRouteEnter(to, from, next) {
