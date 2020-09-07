@@ -14,7 +14,7 @@
 							<span style="font-weight: 700">{{ $store.state.introduction.name }}</span>
 							<span class="right floated">{{ moment.createTime | dateFormat('YYYY-MM-DD HH:mm') }}</span>
 						</div>
-						<div class="content typo" v-html="moment.content"></div>
+						<div class="content typo" v-viewer v-html="moment.content"></div>
 						<div class="extra content">
 							<a class="left floated" @click="like(moment.id)">
 								<i class="heart icon" :class="isLike(moment.id)?'like-color':'outline'"></i>{{ moment.likes }}

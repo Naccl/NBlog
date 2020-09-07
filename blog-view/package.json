@@ -14,6 +14,7 @@
     "nprogress": "^0.2.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-vue": "^0.11.0",
+    "v-viewer": "^1.5.1",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"

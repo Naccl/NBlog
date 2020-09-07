@@ -42,7 +42,7 @@
 						<i class="small folder open icon"></i><span class="m-text-500">{{ blog.category.name }}</span>
 					</router-link>
 					<!--文章Markdown正文-->
-					<div class="typo js-toc-content m-padded-tb-small line-numbers match-braces rainbow-braces" :class="{'m-big-fontsize':bigFontSize}" v-html="blog.content"></div>
+					<div class="typo js-toc-content m-padded-tb-small line-numbers match-braces rainbow-braces" v-viewer :class="{'m-big-fontsize':bigFontSize}" v-html="blog.content"></div>
 					<!--赞赏-->
 					<el-popover placement="top" width="220" trigger="click" style="margin: 2em auto" v-if="blog.appreciation">
 						<div class="ui orange basic label" style="width: 100%">

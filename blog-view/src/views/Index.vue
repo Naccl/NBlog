@@ -50,7 +50,7 @@
 	import Introduction from "@/components/sidebar/Introduction";
 	import Tags from "@/components/sidebar/Tags";
 	import RandomBlog from "@/components/sidebar/RandomBlog";
-	import MyAPlayer from "@/components/sidebar/MyAPlayer";
+	import MyAPlayer from "@/components/index/MyAPlayer";
 	import Tocbot from "@/components/sidebar/Tocbot";
 	import BlogPasswordDialog from "@/components/index/BlogPasswordDialog";
 	import {mapState} from 'vuex'
