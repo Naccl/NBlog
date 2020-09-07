@@ -29,5 +29,6 @@ export default {
 	blogPasswordForm: {
 		blogId: 0,
 		password: ''
-	}
+	},
+	focusMode: false
 }

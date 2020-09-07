@@ -9,7 +9,8 @@ import {
 	SET_COMMENT_QUERY_BLOG_ID,
 	SET_IS_BLOG_RENDER_COMPLETE,
 	SET_BLOG_PASSWORD_DIALOG_VISIBLE,
-	SET_BLOG_PASSWORD_FORM
+	SET_BLOG_PASSWORD_FORM,
+	SET_FOCUS_MODE
 } from "./mutations-types";
 
 export default {
@@ -53,5 +54,8 @@ export default {
 	},
 	[SET_BLOG_PASSWORD_FORM](state, form) {
 		state.blogPasswordForm = form
+	},
+	[SET_FOCUS_MODE](state, focusMode) {
+		state.focusMode = focusMode
 	},
 }

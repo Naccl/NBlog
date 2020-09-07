@@ -30,6 +30,11 @@
 									<i class="font icon"></i>
 								</div>
 							</a>
+							<a class="item m-common-black" @click.prevent="changeFocusMode">
+								<div data-inverted="" data-tooltip="专注模式" data-position="top center">
+									<i class="book icon"></i>
+								</div>
+							</a>
 						</div>
 					</div>
 					<!--分类-->
@@ -82,6 +87,8 @@
 <script>
 	import {getBlogById} from "@/api/blog";
 	import CommentList from "@/components/comment/CommentList";
+	import {mapState} from "vuex";
+	import {SET_FOCUS_MODE} from '../../store/mutations-types';
 
 	export default {
 		name: "Blog",
@@ -92,6 +99,12 @@
 				bigFontSize: false,
 			}
 		},
+		computed: {
+			blogId() {
+				return parseInt(this.$route.params.id)
+			},
+			...mapState(['focusMode'])
+		},
 		beforeRouteEnter(to, from, next) {
 			//路由到博客文章页面之前，应将文章的渲染完成状态置为 false
 			next(vm => {
@@ -101,6 +114,7 @@
 			})
 		},
 		beforeRouteLeave(to, from, next) {
+			this.$store.commit(SET_FOCUS_MODE, false)
 			// 从文章页面路由到其它页面时，销毁当前组件的同时，要销毁tocbot实例
 			// 否则tocbot一直在监听页面滚动事件，而文章页面的锚点已经不存在了，会报"Uncaught TypeError: Cannot read property 'className' of null"
 			tocbot.destroy()
@@ -114,6 +128,7 @@
 			// 如果跳转到其它页面，to.path!==from.path 就放行 next()
 			// 如果是跳转锚点，path不会改变，hash会改变，to.path===from.path, to.hash!==from.path 不放行路由跳转，就能让锚点正常跳转
 			if (to.path !== from.path) {
+				this.$store.commit(SET_FOCUS_MODE, false)
 				//在当前组件内路由到其它博客文章时，要重新获取文章
 				this.getBlog(to.params.id)
 				//只要路由路径有改变，且停留在当前Blog组件内，就把文章的渲染完成状态置为 false
@@ -123,11 +138,6 @@
 		},
 		created() {
 			this.getBlog()
-		},
-		computed: {
-			blogId() {
-				return parseInt(this.$route.params.id)
-			}
 		},
 		methods: {
 			getBlog(id = this.blogId) {
@@ -152,6 +162,9 @@
 				}).catch(() => {
 					this.msgError("请求失败")
 				})
+			},
+			changeFocusMode(){
+				this.$store.commit(SET_FOCUS_MODE, !this.focusMode)
 			}
 		}
 	}
