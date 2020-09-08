@@ -106,9 +106,7 @@
 
 	export default {
 		name: "BlogList",
-		components: {
-			Breadcrumb
-		},
+		components: {Breadcrumb},
 		data() {
 			return {
 				queryInfo: {

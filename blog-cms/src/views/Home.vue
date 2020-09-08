@@ -113,6 +113,12 @@
 							},
 							{
 								id: 22,
+								title: '友链管理',
+								children: [],
+								path: '/friends'
+							},
+							{
+								id: 23,
 								title: '关于我',
 								children: [],
 								path: '/about'
@@ -156,7 +162,8 @@
 					'16': 'submenu ali-iconfont icon-biaoqian',
 					'17': 'el-icon-s-comment',
 					'21': 'submenu ali-iconfont icon-bianjizhandian',
-					'22': 'el-icon-document',
+					'22': 'submenu ali-iconfont icon-friend',
+					'23': 'el-icon-document',
 					'31': 'el-icon-s-marketing',
 					'32': 'el-icon-view',
 					'33': 'el-icon-document-checked',

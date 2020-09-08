@@ -12,6 +12,7 @@ import SiteSetting from "@/views/site/SiteSetting";
 import MomentList from "@/views/moment/MomentList";
 import WriteMoment from "@/views/moment/WriteMoment";
 import About from "@/views/about/About";
+import FriendList from "@/views/friend/FriendList";
 
 Vue.use(VueRouter)
 
@@ -114,6 +115,13 @@ const routes = [
 				component: About,
 				meta: {
 					title: '关于我'
+				}
+			},
+			{
+				path: '/friends',
+				component: FriendList,
+				meta: {
+					title: '友链管理'
 				}
 			}
 		]

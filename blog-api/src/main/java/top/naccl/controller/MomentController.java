@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.naccl.model.vo.Moment;
@@ -44,7 +44,7 @@ public class MomentController {
 	 * @param id 动态id
 	 * @return
 	 */
-	@PutMapping("/moment/like")
+	@PostMapping("/moment/like")
 	public Result like(@RequestParam Long id) {
 		momentService.addLikeByMomentId(id);
 		return Result.ok("点赞成功");

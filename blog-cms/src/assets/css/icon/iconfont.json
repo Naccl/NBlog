@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "36019",
+      "name": "friend",
+      "font_class": "friend",
+      "unicode": "e6cc",
+      "unicode_decimal": 59084
+    },
+    {
       "icon_id": "1259928",
       "name": "编辑站点",
       "font_class": "bianjizhandian",

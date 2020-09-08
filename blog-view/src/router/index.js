@@ -8,6 +8,7 @@ import Blog from "@/views/blog/Blog";
 import Tag from "@/views/tag/Tag";
 import Category from "@/views/category/Category";
 import Moments from "@/views/moments/Moments";
+import Friends from "@/views/friends/Friends";
 import About from "@/views/about/About";
 import Login from "@/views/Login";
 
@@ -72,6 +73,14 @@ const routes = [
 				component: Moments,
 				meta: {
 					title: '动态'
+				}
+			},
+			{
+				path: '/friends',
+				name: 'friends',
+				component: Friends,
+				meta: {
+					title: '朋友们'
 				}
 			},
 			{
