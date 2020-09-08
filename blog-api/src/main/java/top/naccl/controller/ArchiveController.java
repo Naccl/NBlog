@@ -2,7 +2,6 @@ package top.naccl.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.Result;
@@ -18,7 +17,6 @@ import java.util.Map;
  * @Date: 2020-08-12
  */
 @RestController
-@RequestMapping
 public class ArchiveController {
 	@Autowired
 	BlogService blogService;

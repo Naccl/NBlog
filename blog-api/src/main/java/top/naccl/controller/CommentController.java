@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.naccl.entity.User;
@@ -34,7 +33,6 @@ import java.util.Map;
  * @Date: 2020-08-15
  */
 @RestController
-@RequestMapping
 public class CommentController {
 	@Autowired
 	CommentService commentService;

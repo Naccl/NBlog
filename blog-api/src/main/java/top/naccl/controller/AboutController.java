@@ -2,7 +2,6 @@ package top.naccl.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.naccl.model.vo.Result;
 import top.naccl.service.AboutService;
@@ -13,7 +12,6 @@ import top.naccl.service.AboutService;
  * @Date: 2020-08-31
  */
 @RestController
-@RequestMapping
 public class AboutController {
 	@Autowired
 	AboutService aboutService;
