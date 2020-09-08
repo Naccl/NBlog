@@ -80,7 +80,7 @@ const routes = [
 				name: 'friends',
 				component: Friends,
 				meta: {
-					title: '朋友们'
+					title: '友人帐'
 				}
 			},
 			{

@@ -26,7 +26,7 @@
 
     <!--查询友链VO List-->
     <select id="getFriendVOList" resultMap="friendVO">
-        select nickname, description, website, avatar from friend where is_published=true
+        select nickname, description, website, avatar from friend where is_published=true order by rand()
     </select>
 
     <!--更新友链公开状态-->
