@@ -6,8 +6,11 @@
 		<el-card>
 			<!--添加-->
 			<el-row :gutter="10">
-				<el-col :span="6">
-					<el-button type="primary" icon="el-icon-plus" @click="addDialogVisible=true">添加友链</el-button>
+				<el-col :span="2">
+					<el-button type="primary" size="mini" icon="el-icon-plus" @click="addDialogVisible=true">添加友链</el-button>
+				</el-col>
+				<el-col :span="4">
+					<el-switch v-model="infoForm.commentEnabled" active-text="页面评论" @change="commentEnabledChanged"></el-switch>
 				</el-col>
 			</el-row>
 
@@ -45,6 +48,16 @@
 			               :page-sizes="[5, 10, 15, 20]" :page-size="queryInfo.pageSize" :total="total"
 			               layout="total, sizes, prev, pager, next, jumper" background>
 			</el-pagination>
+
+			<!--友链页面信息-->
+			<el-form label-position="top">
+				<el-form-item label="友链页面信息">
+					<div id="vditor"></div>
+				</el-form-item>
+				<el-form-item style="text-align: right;">
+					<el-button type="primary" @click="updateContent">保存</el-button>
+				</el-form-item>
+			</el-form>
 		</el-card>
 
 		<!--添加友链对话框-->
@@ -105,13 +118,22 @@
 
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
-	import {getFriendsByQuery, updatePublished, saveFriend, updateFriend, deleteFriendById} from "@/api/friend";
+	import {
+		getFriendsByQuery, updatePublished, saveFriend, updateFriend,
+		deleteFriendById, getFriendInfo, updateContent, updateCommentEnabled
+	} from "@/api/friend";
+	import Vditor from "vditor";
 
 	export default {
 		name: "FriendList",
 		components: {Breadcrumb},
 		data() {
 			return {
+				vditor: null,
+				infoForm: {
+					content: '',
+					commentEnabled: true,
+				},
 				queryInfo: {
 					pageNum: 1,
 					pageSize: 10
@@ -145,7 +167,67 @@
 		created() {
 			this.getFriendList()
 		},
+		mounted() {
+			this.initVditor()
+		},
 		methods: {
+			//初始化md编辑器
+			initVditor() {
+				const options = {
+					height: 320,
+					mode: 'sv',//分屏渲染
+					outline: false,//大纲
+					cache: {//不缓存到localStorage
+						enable: false,
+					},
+					resize: {//可调整高度
+						enable: true
+					},
+					after: () => {
+						this.getInfo()
+					}
+				}
+				this.vditor = new Vditor('vditor', options)
+			},
+			getInfo() {
+				getFriendInfo().then(res => {
+					console.log(res)
+					if (res.code === 200) {
+						this.msgSuccess(res.msg)
+						this.infoForm = res.data
+						this.vditor.setValue(this.infoForm.content)
+					} else {
+						this.msgError(res.msg)
+					}
+				}).catch(() => {
+					this.msgError("请求失败")
+				})
+			},
+			updateContent() {
+				updateContent(this.vditor.getValue()).then(res => {
+					console.log(res)
+					if (res.code === 200) {
+						this.msgSuccess(res.msg)
+						this.getInfo()
+					} else {
+						this.msgError(res.msg)
+					}
+				}).catch(() => {
+					this.msgError("请求失败")
+				})
+			},
+			commentEnabledChanged() {
+				updateCommentEnabled(this.infoForm.commentEnabled).then(res => {
+					console.log(res)
+					if (res.code === 200) {
+						this.msgSuccess(res.msg)
+					} else {
+						this.msgError(res.msg)
+					}
+				}).catch(() => {
+					this.msgError("请求失败")
+				})
+			},
 			getFriendList() {
 				getFriendsByQuery(this.queryInfo).then(res => {
 					console.log(res)
@@ -247,5 +329,9 @@
 <style scoped>
 	.el-button + span {
 		margin-left: 10px;
+	}
+
+	.el-form {
+		margin-top: 15px !important;
 	}
 </style>

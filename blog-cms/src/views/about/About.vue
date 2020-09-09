@@ -98,6 +98,7 @@
 			submit() {
 				this.$refs.formRef.validate(valid => {
 					if (valid) {
+						//纯数字
 						const reg = /^\d{1,}$/
 						if (!reg.test(this.form.musicId)) {
 							return this.msgError("歌曲ID有误")

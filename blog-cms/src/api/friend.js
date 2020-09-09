@@ -50,3 +50,30 @@ export function deleteFriendById(id) {
 		}
 	})
 }
+
+export function getFriendInfo() {
+	return axios({
+		url: 'friendInfo',
+		method: 'GET'
+	})
+}
+
+export function updateCommentEnabled(commentEnabled) {
+	return axios({
+		url: 'friendInfo/commentEnabled',
+		method: 'PUT',
+		params: {
+			commentEnabled
+		}
+	})
+}
+
+export function updateContent(content) {
+	return axios({
+		url: 'friendInfo/content',
+		method: 'PUT',
+		data: {
+			content
+		}
+	})
+}

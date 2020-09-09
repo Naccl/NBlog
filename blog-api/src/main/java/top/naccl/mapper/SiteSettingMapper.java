@@ -16,9 +16,15 @@ import java.util.List;
 public interface SiteSettingMapper {
 	List<SiteSetting> getList();
 
+	List<SiteSetting> getFriendInfo();
+
 	int updateSiteSetting(SiteSetting siteSetting);
 
 	int deleteSiteSettingById(Integer id);
 
 	int saveSiteSetting(SiteSetting siteSetting);
+
+	int updateFriendInfoContent(String content);
+
+	int updateFriendInfoCommentEnabled(Boolean commentEnabled);
 }

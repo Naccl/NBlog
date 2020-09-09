@@ -1,5 +1,6 @@
 package top.naccl.controller.admin;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,5 +90,39 @@ public class FriendAdminController {
 	public Result deleteFriend(@RequestParam Long id) {
 		friendService.deleteFriend(id);
 		return Result.ok("删除成功");
+	}
+
+	/**
+	 * 获取友链页面信息
+	 *
+	 * @return
+	 */
+	@GetMapping("/friendInfo")
+	public Result friendInfo() {
+		return Result.ok("请求成功", friendService.getFriendInfo(false));
+	}
+
+	/**
+	 * 修改友链页面评论状态
+	 *
+	 * @param commentEnabled 是否开放评论
+	 * @return
+	 */
+	@PutMapping("/friendInfo/commentEnabled")
+	public Result updateFriendInfoCommentEnabled(@RequestParam Boolean commentEnabled) {
+		friendService.updateFriendInfoCommentEnabled(commentEnabled);
+		return Result.ok("修改成功");
+	}
+
+	/**
+	 * 修改友链页面content
+	 *
+	 * @param jsonObject 包含content的JSON对象
+	 * @return
+	 */
+	@PutMapping("/friendInfo/content")
+	public Result updateFriendInfoContent(@RequestBody JSONObject jsonObject) {
+		friendService.updateFriendInfoContent((String) jsonObject.get("content"));
+		return Result.ok("修改成功");
 	}
 }

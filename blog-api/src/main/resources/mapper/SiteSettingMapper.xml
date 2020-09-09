@@ -7,18 +7,33 @@
         select * from site_setting
     </select>
 
+    <!--查询友链页面信息-->
+    <select id="getFriendInfo" resultType="top.naccl.entity.SiteSetting">
+        select * from site_setting where type=4
+    </select>
+
     <!--更新-->
     <update id="updateSiteSetting">
         update site_setting set value=#{value} where id=#{id}
     </update>
-    
+
     <!--删除-->
     <delete id="deleteSiteSettingById">
         delete from site_setting where id=#{id}
     </delete>
-    
+
     <!--添加-->
     <insert id="saveSiteSetting" useGeneratedKeys="true" keyProperty="id">
         insert into site_setting (name_en, name_zh, value, type) values (#{nameEn}, #{nameZh}, #{value}, #{type})
     </insert>
+
+    <!--更新友链页面content-->
+    <update id="updateFriendInfoContent">
+        update site_setting set value=#{content} where name_en='friendContent'
+    </update>
+
+    <!--更新友链页面commentEnabled-->
+    <update id="updateFriendInfoCommentEnabled">
+        update site_setting set value=#{commentEnabled} where name_en='friendCommentEnabled'
+    </update>
 </mapper>

@@ -15,14 +15,25 @@
 				</a>
 			</div>
 		</div>
+		<!--页面描述-->
+		<div class="ui teal attached segment">
+			<div class="typo content" v-viewer v-html="info.content"></div>
+		</div>
+		<!--评论-->
+		<div class="ui bottom teal attached segment threaded comments">
+			<CommentList :page="2" :blogId="null" v-if="info.commentEnabled"/>
+			<h3 class="ui header" v-else>评论已关闭</h3>
+		</div>
 	</div>
 </template>
 
 <script>
-	import {getFriendList, addViewsByNickname} from "@/api/friend";
+	import {getData, addViewsByNickname} from "@/api/friend";
+	import CommentList from "@/components/comment/CommentList";
 
 	export default {
 		name: "Friends",
+		components: {CommentList},
 		data() {
 			return {
 				friendList: [],
@@ -30,18 +41,23 @@
 					'#1abc9c', '#2ecc71', '#3498db', '#9b59b6',
 					'#34495e', '#f1c40f', '#e67e22', '#e74c3c',
 					'#ee5a24', '#9980fa', '#8c7ae6', '#f79f1f'
-				]
+				],
+				info: {
+					content: '',
+					commentEnabled: false
+				}
 			}
 		},
 		created() {
-			this.getFriendList()
+			this.getData()
 		},
 		methods: {
-			getFriendList() {
-				getFriendList().then(res => {
+			getData() {
+				getData().then(res => {
 					console.log(res)
 					if (res.code === 200) {
-						this.friendList = res.data
+						this.friendList = res.data.friendList
+						this.info = res.data.friendInfo
 					} else {
 						this.msgError(res.msg)
 					}
@@ -82,6 +98,14 @@
 
 	.card .content * {
 		color: #fff !important;
+	}
+
+	.card .content .header {
+		font-size: 16px !important;
+	}
+
+	.card .content .description {
+		font-size: 12px !important;
 	}
 
 	.card .content .description {

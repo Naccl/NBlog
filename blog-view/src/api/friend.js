@@ -1,6 +1,6 @@
 import axios from '@/plugins/axios'
 
-export function getFriendList() {
+export function getData() {
 	return axios({
 		url: 'friends',
 		method: 'GET'

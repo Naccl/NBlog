@@ -166,6 +166,7 @@
 					console.log(res)
 					if (res.code === 200) {
 						this.blogList = res.data
+						this.blogList.unshift({id: -2, title: '友人帐'})
 						this.blogList.unshift({id: -1, title: '关于我'})
 					} else {
 						this.msgError(res.msg)
@@ -177,6 +178,9 @@
 			search() {
 				if (this.pageId === -1) {
 					this.queryInfo.page = 1
+					this.queryInfo.blogId = null
+				} else if (this.pageId === -2) {
+					this.queryInfo.page = 2
 					this.queryInfo.blogId = null
 				} else {
 					this.queryInfo.page = 0

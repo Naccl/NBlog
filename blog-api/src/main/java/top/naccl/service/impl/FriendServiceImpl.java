@@ -4,9 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.naccl.entity.Friend;
+import top.naccl.entity.SiteSetting;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.FriendMapper;
+import top.naccl.mapper.SiteSettingMapper;
+import top.naccl.model.vo.FriendInfo;
 import top.naccl.service.FriendService;
+import top.naccl.util.markdown.MarkdownUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -20,6 +24,8 @@ import java.util.List;
 public class FriendServiceImpl implements FriendService {
 	@Autowired
 	FriendMapper friendMapper;
+	@Autowired
+	SiteSettingMapper siteSettingMapper;
 
 	@Override
 	public List<Friend> getFriendList() {
@@ -70,6 +76,44 @@ public class FriendServiceImpl implements FriendService {
 	public void updateViewsByNickname(String nickname) {
 		if (friendMapper.updateViewsByNickname(nickname) != 1) {
 			throw new PersistenceException("操作失败");
+		}
+	}
+
+	@Override
+	public FriendInfo getFriendInfo(Boolean md) {
+		List<SiteSetting> siteSettings = siteSettingMapper.getFriendInfo();
+		FriendInfo friendInfo = new FriendInfo();
+		for (SiteSetting siteSetting : siteSettings) {
+			if ("friendContent".equals(siteSetting.getNameEn())) {
+				if (md) {
+					friendInfo.setContent(MarkdownUtils.markdownToHtmlExtensions(siteSetting.getValue()));
+				} else {
+					friendInfo.setContent(siteSetting.getValue());
+				}
+			} else if ("friendCommentEnabled".equals(siteSetting.getNameEn())) {
+				if ("1".equals(siteSetting.getValue())) {
+					friendInfo.setCommentEnabled(true);
+				} else {
+					friendInfo.setCommentEnabled(false);
+				}
+			}
+		}
+		return friendInfo;
+	}
+
+	@Transactional
+	@Override
+	public void updateFriendInfoContent(String content) {
+		if (siteSettingMapper.updateFriendInfoContent(content) != 1) {
+			throw new PersistenceException("修改失败");
+		}
+	}
+
+	@Transactional
+	@Override
+	public void updateFriendInfoCommentEnabled(Boolean commentEnabled) {
+		if (siteSettingMapper.updateFriendInfoCommentEnabled(commentEnabled) != 1) {
+			throw new PersistenceException("修改失败");
 		}
 	}
 }

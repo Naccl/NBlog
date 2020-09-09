@@ -1,6 +1,7 @@
 package top.naccl.service;
 
 import top.naccl.entity.Friend;
+import top.naccl.model.vo.FriendInfo;
 
 import java.util.List;
 
@@ -18,4 +19,10 @@ public interface FriendService {
 	void deleteFriend(Long id);
 
 	void updateViewsByNickname(String nickname);
+
+	FriendInfo getFriendInfo(Boolean md);
+
+	void updateFriendInfoContent(String content);
+
+	void updateFriendInfoCommentEnabled(Boolean commentEnabled);
 }

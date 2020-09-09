@@ -5,8 +5,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.model.vo.Friend;
+import top.naccl.model.vo.FriendInfo;
 import top.naccl.model.vo.Result;
 import top.naccl.service.FriendService;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: 友链
@@ -19,13 +25,18 @@ public class FriendController {
 	FriendService friendService;
 
 	/**
-	 * 获取友链列表
+	 * 获取友链页面
 	 *
 	 * @return
 	 */
 	@GetMapping("/friends")
 	public Result friends() {
-		return Result.ok("获取成功", friendService.getFriendVOList());
+		List<Friend> friendList = friendService.getFriendVOList();
+		FriendInfo friendInfo = friendService.getFriendInfo(true);
+		Map<String, Object> map = new HashMap<>();
+		map.put("friendList", friendList);
+		map.put("friendInfo", friendInfo);
+		return Result.ok("获取成功", map);
 	}
 
 	/**

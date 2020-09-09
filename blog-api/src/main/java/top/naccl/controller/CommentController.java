@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.naccl.entity.User;
 import top.naccl.model.dto.Comment;
+import top.naccl.model.vo.FriendInfo;
 import top.naccl.model.vo.PageComment;
 import top.naccl.model.vo.PageResult;
 import top.naccl.model.vo.Result;
 import top.naccl.service.AboutService;
 import top.naccl.service.BlogService;
 import top.naccl.service.CommentService;
+import top.naccl.service.FriendService;
 import top.naccl.service.impl.UserServiceImpl;
 import top.naccl.util.IpAddressUtils;
 import top.naccl.util.JwtUtils;
@@ -42,6 +44,8 @@ public class CommentController {
 	AboutService aboutService;
 	@Autowired
 	UserServiceImpl userService;
+	@Autowired
+	FriendService friendService;
 
 	/**
 	 * 根据页面分页查询评论列表
@@ -125,6 +129,11 @@ public class CommentController {
 			}
 		} else if (page == 1) {//关于我页面
 			if (!aboutService.getAboutCommentEnabled()) {//页面评论已关闭
+				return 1;
+			}
+		} else if (page == 2) {//友链页面
+			FriendInfo friendInfo = friendService.getFriendInfo(false);
+			if (!friendInfo.getCommentEnabled()) {
 				return 1;
 			}
 		}
