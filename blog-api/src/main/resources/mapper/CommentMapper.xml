@@ -16,6 +16,7 @@
         <result property="notice" column="is_notice"/>
         <result property="parentCommentId" column="parent_comment_id"/>
         <result property="website" column="website"/>
+        <result property="qq" column="qq"/>
         <association property="blog" javaType="top.naccl.model.vo.BlogIdAndTitle">
             <id property="id" column="blog_id"/>
             <result property="title" column="title"/>
@@ -25,19 +26,23 @@
     <!--按页面和父评论id查询评论List-->
     <select id="getListByPageAndParentCommentId" resultMap="comment">
         select c.id, c.nickname, c.email, c.content, c.avatar, c.create_time, c.ip, c.is_published, c.is_admin_comment, c.page,
-        c.is_notice, c.parent_comment_id, c.website, c.blog_id, b.title
+        c.is_notice, c.parent_comment_id, c.website, c.blog_id, c.qq, b.title
         from comment as c left join blog as b on c.blog_id=b.id
-        where c.page=#{page}
-        <if test="page==0 and blogId!=null">
-            and c.blog_id=#{blogId}
-        </if>
-        and c.parent_comment_id=#{parentCommentId}
+        <where>
+            <if test="page!=null">
+                c.page=#{page}
+            </if>
+            <if test="page==0 and blogId!=null">
+                and c.blog_id=#{blogId}
+            </if>
+            and c.parent_comment_id=#{parentCommentId}
+        </where>
     </select>
 
     <!--按父评论id查询评论List-->
     <select id="getListByParentCommentId" resultMap="comment">
         select c.id, c.nickname, c.email, c.content, c.avatar, c.create_time, c.ip, c.is_published, c.is_admin_comment, c.page,
-        c.is_notice, c.parent_comment_id, c.website, c.blog_id, b.title
+        c.is_notice, c.parent_comment_id, c.website, c.blog_id, c.qq, b.title
         from comment as c left join blog as b on c.blog_id=b.id
         where c.parent_comment_id=#{parentCommentId}
     </select>
@@ -90,7 +95,8 @@
 
     <!--更新评论-->
     <update id="updateComment">
-        update comment set nickname=#{nickname}, email=#{email}, ip=#{ip}, content=#{content}, website=#{website} where id=#{id}
+        update comment set nickname=#{nickname}, avatar=#{avatar}, email=#{email}, ip=#{ip}, content=#{content}, website=#{website}
+        where id=#{id}
     </update>
 
     <!--按页面查询评论数量-->
@@ -105,8 +111,8 @@
     <!--保存评论-->
     <insert id="saveComment" useGeneratedKeys="true" keyProperty="id">
         insert into comment (nickname, email, content, avatar, create_time, website, ip, is_published, is_admin_comment,
-        page, is_notice, parent_comment_id, blog_id)
+        page, is_notice, parent_comment_id, blog_id, qq)
         values (#{nickname}, #{email}, #{content}, #{avatar}, #{createTime}, #{website}, #{ip}, #{published}, #{adminComment},
-        #{page}, #{notice}, #{parentCommentId}, #{blogId})
+        #{page}, #{notice}, #{parentCommentId}, #{blogId}, #{qq})
     </insert>
 </mapper>

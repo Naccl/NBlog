@@ -31,4 +31,5 @@ public class Comment {
 	private Boolean notice;//接收邮件提醒
 	private Long parentCommentId;//父评论id
 	private Long blogId;//所属的文章id
+	private String qq;//如果评论昵称为QQ号，则将昵称和头像置为QQ昵称和QQ头像，并将此字段置为QQ号备份
 }

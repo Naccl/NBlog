@@ -42,7 +42,7 @@ public class CommentAdminController {
 	 * @return
 	 */
 	@GetMapping("/comments")
-	public Result comments(@RequestParam(defaultValue = "0") Integer page,
+	public Result comments(@RequestParam(defaultValue = "") Integer page,
 	                       @RequestParam(defaultValue = "") Long blogId,
 	                       @RequestParam(defaultValue = "1") Integer pageNum,
 	                       @RequestParam(defaultValue = "10") Integer pageSize) {
@@ -110,7 +110,7 @@ public class CommentAdminController {
 	 */
 	@PutMapping("/comment")
 	public Result updateComment(@RequestBody Comment comment) {
-		if (StringUtils.isEmpty(comment.getNickname(), comment.getEmail(), comment.getIp(), comment.getContent())) {
+		if (StringUtils.isEmpty(comment.getNickname(), comment.getAvatar(), comment.getEmail(), comment.getIp(), comment.getContent())) {
 			return Result.error("参数有误");
 		}
 		commentService.updateComment(comment);

@@ -33,6 +33,7 @@ public class Comment {
 	private Integer page;//0普通文章，1关于我页面
 	private Boolean notice;//接收邮件提醒
 	private Long parentCommentId;//父评论id
+	private String qq;//如果评论昵称为QQ号，则将昵称和头像置为QQ昵称和QQ头像，并将此字段置为QQ号备份
 
 	private BlogIdAndTitle blog;//所属的文章
 	private List<Comment> replyComments = new ArrayList<>();//回复该评论的评论

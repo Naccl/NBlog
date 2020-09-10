@@ -22,6 +22,7 @@ import top.naccl.service.impl.UserServiceImpl;
 import top.naccl.util.IpAddressUtils;
 import top.naccl.util.JwtUtils;
 import top.naccl.util.MD5Utils;
+import top.naccl.util.QQInfoUtils;
 import top.naccl.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -261,11 +262,21 @@ public class CommentController {
 	 * @param request 用于获取ip
 	 */
 	private void setVisitorComment(Comment comment, HttpServletRequest request) {
-		//set 随机头像（获取QQ昵称头像功能待添加）
-		String nicknameMD5 = MD5Utils.getMD5(comment.getNickname());//根据评论昵称取MD5，保证每一个昵称对应一个头像
-		char m = nicknameMD5.charAt(nicknameMD5.length() - 1);//取MD5最后一位
-		int num = m % 6 + 1;//计算对应的头像
-		String avatar = num + ".jpg";
+		String commentNickname = comment.getNickname();
+		try {
+			if (QQInfoUtils.isQQNumber(commentNickname)) {
+				comment.setQq(commentNickname);
+				comment.setNickname(QQInfoUtils.getQQNickname(commentNickname));
+				comment.setAvatar(QQInfoUtils.getQQAvatarURL(commentNickname));
+			} else {
+				comment.setNickname(comment.getNickname().trim());
+				setCommentRandomAvatar(comment);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			comment.setNickname(comment.getNickname().trim());
+			setCommentRandomAvatar(comment);
+		}
 
 		//set website
 		String website = comment.getWebsite().trim();
@@ -275,10 +286,22 @@ public class CommentController {
 		comment.setAdminComment(false);
 		comment.setCreateTime(new Date());
 		comment.setPublished(true);//默认不需要审核
-		comment.setAvatar(avatar);
 		comment.setWebsite(website);
-		comment.setNickname(comment.getNickname().trim());
 		comment.setEmail(comment.getEmail().trim());
 		comment.setIp(IpAddressUtils.getIpAddress(request));
+	}
+
+	/**
+	 * 对于昵称不是QQ号的评论，根据昵称MD5设置头像
+	 *
+	 * @param comment 评论DTO
+	 */
+	private void setCommentRandomAvatar(Comment comment) {
+		//set 随机头像
+		String nicknameMD5 = MD5Utils.getMD5(comment.getNickname());//根据评论昵称取MD5，保证每一个昵称对应一个头像
+		char m = nicknameMD5.charAt(nicknameMD5.length() - 1);//取MD5最后一位
+		int num = m % 6 + 1;//计算对应的头像
+		String avatar = "/img/comment-avatar/" + num + ".jpg";
+		comment.setAvatar(avatar);
 	}
 }

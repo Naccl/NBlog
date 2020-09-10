@@ -23,13 +23,14 @@
 				</el-table-column>
 				<el-table-column label="头像" width="80">
 					<template v-slot="scope">
-						<el-avatar shape="square" :size="60" fit="contain" :src="scope.row.adminComment?scope.row.avatar:`/img/comment-avatar/${scope.row.avatar}`"></el-avatar>
+						<el-avatar shape="square" :size="60" fit="contain" :src="scope.row.avatar"></el-avatar>
 					</template>
 				</el-table-column>
 				<el-table-column label="邮箱" prop="email"></el-table-column>
 				<el-table-column label="网站" prop="website"></el-table-column>
 				<el-table-column label="ip" prop="ip" width="130"></el-table-column>
 				<el-table-column label="评论内容" prop="content"></el-table-column>
+				<el-table-column label="QQ" prop="qq" width="100"></el-table-column>
 				<el-table-column label="所在页面">
 					<template v-slot="scope">
 						<el-link type="success" :href="`/blog/${scope.row.blog.id}`" target="_blank" v-if="scope.row.page==0">{{ scope.row.blog.title }}</el-link>
@@ -71,6 +72,9 @@
 				<el-form-item label="昵称" prop="nickname">
 					<el-input v-model="editForm.nickname"></el-input>
 				</el-form-item>
+				<el-form-item label="头像" prop="avatar">
+					<el-input v-model="editForm.avatar"></el-input>
+				</el-form-item>
 				<el-form-item label="邮箱" prop="email">
 					<el-input v-model="editForm.email"></el-input>
 				</el-form-item>
@@ -107,7 +111,7 @@
 			return {
 				pageId: null,
 				queryInfo: {
-					page: 0,
+					page: null,
 					blogId: null,
 					pageNum: 1,
 					pageSize: 10
@@ -119,6 +123,7 @@
 				editForm: {
 					id: null,
 					nickname: '',
+					avatar: '',
 					email: '',
 					website: null,
 					ip: '',
@@ -126,6 +131,7 @@
 				},
 				formRules: {
 					nickname: [{required: true, message: '请输入评论昵称', trigger: 'blur'}],
+					avatar: [{required: true, message: '请输入评论头像', trigger: 'blur'}],
 					email: [
 						{required: true, message: '请输入评论邮箱', trigger: 'blur'},
 						{validator: checkEmail, trigger: 'blur'}
@@ -147,8 +153,7 @@
 		},
 		methods: {
 			getCommentList() {
-				getCommentListByQuery(this.queryInfo)
-				.then(res => {
+				getCommentListByQuery(this.queryInfo).then(res => {
 					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
@@ -176,7 +181,10 @@
 				})
 			},
 			search() {
-				if (this.pageId === -1) {
+				if (this.pageId === '') {
+					this.queryInfo.page = null
+					this.queryInfo.blogId = null
+				} else if (this.pageId === -1) {
 					this.queryInfo.page = 1
 					this.queryInfo.blogId = null
 				} else if (this.pageId === -2) {
@@ -202,8 +210,7 @@
 			},
 			//切换评论公开状态
 			commentPublishedChanged(row) {
-				updatePublished(row.id, row.published)
-				.then(res => {
+				updatePublished(row.id, row.published).then(res => {
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
 					} else {
@@ -215,8 +222,7 @@
 			},
 			//切换评论邮件提醒状态
 			commentNoticeChanged(row) {
-				updateNotice(row.id, row.notice)
-				.then(res => {
+				updateNotice(row.id, row.notice).then(res => {
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
 					} else {
@@ -265,13 +271,13 @@
 						const form = {
 							id: this.editForm.id,
 							nickname: this.editForm.nickname,
+							avatar: this.editForm.avatar,
 							email: this.editForm.email,
 							website: this.editForm.website,
 							ip: this.editForm.ip,
 							content: this.editForm.content,
 						}
-						editComment(form)
-						.then(res => {
+						editComment(form).then(res => {
 							if (res.code === 200) {
 								this.msgSuccess(res.msg)
 								this.editDialogVisible = false
