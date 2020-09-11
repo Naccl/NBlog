@@ -35,6 +35,7 @@
 					<template v-slot="scope">
 						<el-link type="success" :href="`/blog/${scope.row.blog.id}`" target="_blank" v-if="scope.row.page==0">{{ scope.row.blog.title }}</el-link>
 						<el-link type="success" :href="'/about'" target="_blank" v-else-if="scope.row.page==1">关于我</el-link>
+						<el-link type="success" :href="'/friends'" target="_blank" v-else-if="scope.row.page==2">友人帐</el-link>
 					</template>
 				</el-table-column>
 				<el-table-column label="发表时间" width="170">
@@ -85,7 +86,7 @@
 					<el-input v-model="editForm.ip"></el-input>
 				</el-form-item>
 				<el-form-item label="评论内容" prop="content">
-					<el-input v-model="editForm.content" type="textarea" maxlength="255" show-word-limit></el-input>
+					<el-input v-model="editForm.content" type="textarea" maxlength="255" :rows="5" show-word-limit></el-input>
 				</el-form-item>
 			</el-form>
 			<!--底部-->
