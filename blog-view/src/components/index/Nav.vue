@@ -7,12 +7,14 @@
 			<router-link to="/home" class="item" :class="{'m-mobile-hide': mobileHide,'active':$route.name==='home'}">
 				<i class="home icon"></i>首页
 			</router-link>
-			<sui-dropdown icon="idea icon" class="item" :class="{'m-mobile-hide': mobileHide,'active':$route.name==='category'}">
-				分类<i class="caret down icon"></i>
-				<sui-dropdown-menu id="m-dropdown">
-					<sui-dropdown-item @click="categoryRoute(category.name)" v-for="(category,index) in categoryList" :key="index">{{ category.name }}</sui-dropdown-item>
-				</sui-dropdown-menu>
-			</sui-dropdown>
+			<el-dropdown trigger="click" @command="categoryRoute">
+				<span class="el-dropdown-link item" :class="{'m-mobile-hide': mobileHide,'active':$route.name==='category'}">
+					<i class="idea icon"></i>分类<i class="caret down icon"></i>
+				</span>
+				<el-dropdown-menu slot="dropdown">
+					<el-dropdown-item :command="category.name" v-for="(category,index) in categoryList" :key="index">{{ category.name }}</el-dropdown-item>
+				</el-dropdown-menu>
+			</el-dropdown>
 			<router-link to="/archives" class="item" :class="{'m-mobile-hide': mobileHide,'active':$route.name==='archives'}">
 				<i class="clone icon"></i>归档
 			</router-link>
@@ -122,16 +124,35 @@
 		margin-right: auto !important;
 	}
 
-	#m-dropdown {
+	.el-dropdown-link {
+		outline-style: none !important;
+		outline-color: unset !important;
+		height: 100%;
+		cursor: pointer;
+	}
+
+	.el-dropdown-menu {
+		margin: 7px 0 0 0 !important;
+		padding: 0 !important;
+		border: 0 !important;
 		background: #1b1c1d !important;
 	}
 
-	#m-dropdown .item {
+	.el-dropdown-menu__item {
+		padding: 0 15px !important;
 		color: rgba(255, 255, 255, .9) !important;
 	}
 
-	#m-dropdown .item:hover {
+	.el-dropdown-menu__item:hover {
 		background: rgba(255, 255, 255, .08) !important;
+	}
+
+	.el-popper .popper__arrow::after {
+		content: none !important;
+	}
+
+	.popper__arrow {
+		display: none !important;
 	}
 
 	.m-search {
