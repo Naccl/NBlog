@@ -12,8 +12,7 @@ import java.util.Map;
  * @Author: Naccl
  * @Date: 2020-05-13
  */
-public class CoverHtmlNodeRenderer extends CoverNodeRenderer {
-
+public class CoverHtmlNodeRenderer extends AbstractCoverNodeRenderer {
     private final HtmlNodeRendererContext context;
     private final HtmlWriter html;
 

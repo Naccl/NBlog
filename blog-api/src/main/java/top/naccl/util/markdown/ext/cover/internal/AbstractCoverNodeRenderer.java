@@ -7,8 +7,7 @@ import top.naccl.util.markdown.ext.cover.Cover;
 import java.util.Collections;
 import java.util.Set;
 
-abstract class CoverNodeRenderer implements NodeRenderer {
-
+abstract class AbstractCoverNodeRenderer implements NodeRenderer {
     @Override
     public Set<Class<? extends Node>> getNodeTypes() {
         return Collections.<Class<? extends Node>>singleton(Cover.class);

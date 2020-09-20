@@ -21,7 +21,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface BlogMapper {
-	List<Blog> getListByTitleAndCategoryId(String title, Integer CategoryId);
+	List<Blog> getListByTitleAndCategoryId(String title, Integer categoryId);
 
 	List<SearchBlog> getSearchBlogListByQueryAndIsPublished(String query);
 

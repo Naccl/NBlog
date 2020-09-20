@@ -8,7 +8,7 @@
 			<el-row>
 				<el-col :span="8">
 					<el-input placeholder="请输入标题" v-model="queryInfo.title" :clearable="true" @clear="search" style="min-width: 500px" @keyup.native.enter="search">
-						<el-select v-model="queryInfo.CategoryId" slot="prepend" placeholder="请选择分类" :clearable="true" @change="search" style="width: 160px">
+						<el-select v-model="queryInfo.categoryId" slot="prepend" placeholder="请选择分类" :clearable="true" @change="search" style="width: 160px">
 							<el-option :label="item.name" :value="item.id" v-for="item in categoryList" :key="item.id"></el-option>
 						</el-select>
 						<el-button slot="append" icon="el-icon-search" @click="search"></el-button>
@@ -111,7 +111,7 @@
 			return {
 				queryInfo: {
 					title: '',
-					CategoryId: null,
+					categoryId: null,
 					pageNum: 1,
 					pageSize: 10
 				},

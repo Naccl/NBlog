@@ -12,8 +12,7 @@ import java.util.Map;
  * @Author: Naccl
  * @Date: 2020-05-13
  */
-public class HeimuHtmlNodeRenderer extends HeimuNodeRenderer {
-
+public class HeimuHtmlNodeRenderer extends AbstractHeimuNodeRenderer {
 	private final HtmlNodeRendererContext context;
 	private final HtmlWriter html;
 

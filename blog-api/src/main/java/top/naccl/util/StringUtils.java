@@ -14,7 +14,9 @@ public class StringUtils {
 	 */
 	public static boolean isEmpty(String... str) {
 		for (String s : str) {
-			if (s == null || "".equals(s.trim())) return true;
+			if (s == null || "".equals(s.trim())) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -27,7 +29,9 @@ public class StringUtils {
 	 */
 	public static boolean hasSpecialChar(String... str) {
 		for (String s : str) {
-			if (s.contains("%") || s.contains("_") || s.contains("[") || s.contains("#") || s.contains("*")) return true;
+			if (s.contains("%") || s.contains("_") || s.contains("[") || s.contains("#") || s.contains("*")) {
+				return true;
+			}
 		}
 		return false;
 	}

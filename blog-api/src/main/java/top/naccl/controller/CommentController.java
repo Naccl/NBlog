@@ -21,7 +21,7 @@ import top.naccl.service.FriendService;
 import top.naccl.service.impl.UserServiceImpl;
 import top.naccl.util.IpAddressUtils;
 import top.naccl.util.JwtUtils;
-import top.naccl.util.MD5Utils;
+import top.naccl.util.Md5Utils;
 import top.naccl.util.QQInfoUtils;
 import top.naccl.util.StringUtils;
 
@@ -83,7 +83,7 @@ public class CommentController {
 					} else {//经密码验证后的Token
 						Long tokenBlogId = Long.parseLong(subject);
 						//博客id不匹配，验证不通过，可能博客id改变或客户端传递了其它密码保护文章的Token
-						if (tokenBlogId != blogId) {
+						if (!tokenBlogId.equals(blogId)) {
 							return Result.create(403, "Token不匹配，请重新验证密码！");
 						}
 					}
@@ -189,7 +189,7 @@ public class CommentController {
 					//对于受密码保护的文章，则Token是必须的
 					Long tokenBlogId = Long.parseLong(subject);
 					//博客id不匹配，验证不通过，可能博客id改变或客户端传递了其它密码保护文章的Token
-					if (tokenBlogId != comment.getBlogId()) {
+					if (!tokenBlogId.equals(comment.getBlogId())) {
 						return Result.create(403, "Token不匹配，请重新验证密码！");
 					}
 					setVisitorComment(comment, request);
@@ -298,8 +298,8 @@ public class CommentController {
 	 */
 	private void setCommentRandomAvatar(Comment comment) {
 		//set 随机头像
-		String nicknameMD5 = MD5Utils.getMD5(comment.getNickname());//根据评论昵称取MD5，保证每一个昵称对应一个头像
-		char m = nicknameMD5.charAt(nicknameMD5.length() - 1);//取MD5最后一位
+		String nicknameMd5 = Md5Utils.getMd5(comment.getNickname());//根据评论昵称取MD5，保证每一个昵称对应一个头像
+		char m = nicknameMd5.charAt(nicknameMd5.length() - 1);//取MD5最后一位
 		int num = m % 6 + 1;//计算对应的头像
 		String avatar = "/img/comment-avatar/" + num + ".jpg";
 		comment.setAvatar(avatar);

@@ -51,19 +51,19 @@ public class BlogAdminController {
 	 * 获取博客文章列表
 	 *
 	 * @param title      按标题模糊查询
-	 * @param CategoryId 按分类id查询
+	 * @param categoryId 按分类id查询
 	 * @param pageNum    页码
 	 * @param pageSize   每页个数
 	 * @return
 	 */
 	@GetMapping("/blogs")
 	public Result blogs(@RequestParam(defaultValue = "") String title,
-	                    @RequestParam(defaultValue = "") Integer CategoryId,
+	                    @RequestParam(defaultValue = "") Integer categoryId,
 	                    @RequestParam(defaultValue = "1") Integer pageNum,
 	                    @RequestParam(defaultValue = "10") Integer pageSize) {
 		String orderBy = "create_time desc";
 		PageHelper.startPage(pageNum, pageSize, orderBy);
-		PageInfo<Blog> pageInfo = new PageInfo<>(blogService.getListByTitleAndCategoryId(title, CategoryId));
+		PageInfo<Blog> pageInfo = new PageInfo<>(blogService.getListByTitleAndCategoryId(title, categoryId));
 		List<Category> categories = categoryService.getCategoryList();
 		Map<String, Object> map = new HashMap<>();
 		map.put("blogs", pageInfo);

@@ -80,8 +80,8 @@ public class TagAdminController {
 		}
 		//查询标签是否已存在
 		Tag tag1 = tagService.getTagByName(tag.getName());
-		//如果 tag1.getId() == tag.getId() 就是更新标签
-		if (tag1 != null && tag1.getId() != tag.getId()) {
+		//如果 tag1.getId().equals(tag.getId()) == true 就是更新标签
+		if (tag1 != null && !tag1.getId().equals(tag.getId())) {
 			return Result.error("该标签已存在");
 		}
 		if ("save".equals(type)) {

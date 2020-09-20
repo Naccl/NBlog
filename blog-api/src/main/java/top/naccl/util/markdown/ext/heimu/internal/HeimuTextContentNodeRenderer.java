@@ -9,8 +9,7 @@ import org.commonmark.renderer.text.TextContentWriter;
  * @Author: Naccl
  * @Date: 2020-05-13
  */
-public class HeimuTextContentNodeRenderer extends HeimuNodeRenderer {
-
+public class HeimuTextContentNodeRenderer extends AbstractHeimuNodeRenderer {
     private final TextContentNodeRendererContext context;
     private final TextContentWriter textContent;
 

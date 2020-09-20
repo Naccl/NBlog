@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface BlogService {
-	List<Blog> getListByTitleAndCategoryId(String title, Integer CategoryId);
+	List<Blog> getListByTitleAndCategoryId(String title, Integer categoryId);
 
 	List<SearchBlog> getSearchBlogListByQueryAndIsPublished(String query);
 
@@ -39,9 +39,9 @@ public interface BlogService {
 
 	void saveBlogTag(Long blogId, Long tagId);
 
-	void updateBlogRecommendById(Long BlogId, Boolean recommend);
+	void updateBlogRecommendById(Long blogId, Boolean recommend);
 
-	void updateBlogVisibilityById(Long BlogId, BlogVisibility blogVisibility);
+	void updateBlogVisibilityById(Long blogId, BlogVisibility blogVisibility);
 
 	void updateBlogTopById(Long blogId, Boolean top);
 

@@ -12,7 +12,6 @@ import top.naccl.util.markdown.ext.heimu.Heimu;
  * @Date: 2020-05-13
  */
 public class HeimuDelimiterProcessor implements DelimiterProcessor {
-
     @Override
     public char getOpeningCharacter() {
         return '@';

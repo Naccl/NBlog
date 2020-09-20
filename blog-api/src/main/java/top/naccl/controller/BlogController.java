@@ -77,7 +77,7 @@ public class BlogController {
 					} else {//经密码验证后的Token
 						Long tokenBlogId = Long.parseLong(subject);
 						//博客id不匹配，验证不通过，可能博客id改变或客户端传递了其它密码保护文章的Token
-						if (tokenBlogId != id) {
+						if (!tokenBlogId.equals(id)) {
 							return Result.create(403, "Token不匹配，请重新验证密码！");
 						}
 					}

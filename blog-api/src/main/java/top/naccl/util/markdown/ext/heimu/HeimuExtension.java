@@ -19,7 +19,6 @@ import top.naccl.util.markdown.ext.heimu.internal.HeimuTextContentNodeRenderer;
  * @Date: 2020-05-13
  */
 public class HeimuExtension implements Parser.ParserExtension, HtmlRenderer.HtmlRendererExtension, TextContentRenderer.TextContentRendererExtension {
-
 	private HeimuExtension() {
 	}
 

@@ -50,8 +50,8 @@
             <if test="title!=null and title!=''">
                 b.title like #{titlePattern}
             </if>
-            <if test="CategoryId!=null">
-                and b.category_id=#{CategoryId}
+            <if test="categoryId!=null">
+                and b.category_id=#{categoryId}
             </if>
         </where>
     </select>

@@ -27,6 +27,8 @@ import java.util.regex.Pattern;
  */
 @Service
 public class SiteSettingServiceImpl implements SiteSettingService {
+	private static final Pattern PATTERN = Pattern.compile("\"(.*?)\"");
+
 	@Autowired
 	SiteSettingMapper siteSettingMapper;
 
@@ -89,8 +91,7 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 				} else if ("favorite".equals(s.getNameEn())) {
 					favorites.add(JSON.parseObject(s.getValue(), Favorite.class));
 				} else if ("rollText".equals(s.getNameEn())) {
-					Pattern p = Pattern.compile("\"(.*?)\"");
-					Matcher m = p.matcher(s.getValue());
+					Matcher m = PATTERN.matcher(s.getValue());
 					while (m.find()) {
 						rollTexts.add(m.group(1));
 					}

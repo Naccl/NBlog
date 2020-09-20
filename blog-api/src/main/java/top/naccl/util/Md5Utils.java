@@ -7,8 +7,8 @@ import org.springframework.util.DigestUtils;
  * @Author: Naccl
  * @Date: 2020-07-19
  */
-public class MD5Utils {
-	public static String getMD5(CharSequence str) {
+public class Md5Utils {
+	public static String getMd5(CharSequence str) {
 		return DigestUtils.md5DigestAsHex(str.toString().getBytes());
 	}
 

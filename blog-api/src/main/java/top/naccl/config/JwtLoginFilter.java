@@ -81,7 +81,6 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
 		response.setContentType("application/json;charset=utf-8");
 		Result result = Result.create(401, exception.getMessage());
 		//登录不成功时，会抛出对应的异常
-		//可以查看 AuthenticationException 异常的继承关系，源码中有每种异常的解释
 		if (exception instanceof LockedException) {
 			result.setMsg("账号被锁定，请联系管理员！");
 		} else if (exception instanceof CredentialsExpiredException) {

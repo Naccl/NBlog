@@ -19,7 +19,6 @@ import top.naccl.util.markdown.ext.cover.internal.CoverTextContentNodeRenderer;
  * @Date: 2020-05-13
  */
 public class CoverExtension implements Parser.ParserExtension, HtmlRenderer.HtmlRendererExtension, TextContentRenderer.TextContentRendererExtension {
-
 	private CoverExtension() {
 	}
 

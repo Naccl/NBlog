@@ -15,6 +15,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class BlogPassword {
-	private Long BlogId;
+	private Long blogId;
 	private String password;
 }

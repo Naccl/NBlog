@@ -9,7 +9,6 @@ import org.commonmark.node.Delimited;
  * @Date: 2020-05-13
  */
 public class Cover extends CustomNode implements Delimited {
-
 	private static final String DELIMITER = "%%";
 
 	@Override

@@ -70,6 +70,7 @@ public class MarkdownUtils {
 				.extensions(heimuExtension)
 				.extensions(coverExtension)
 				.attributeProviderFactory(new AttributeProviderFactory() {
+					@Override
 					public AttributeProvider create(AttributeProviderContext context) {
 						return new CustomAttributeProvider();
 					}

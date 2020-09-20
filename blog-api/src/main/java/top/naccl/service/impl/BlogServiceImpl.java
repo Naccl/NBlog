@@ -35,8 +35,8 @@ public class BlogServiceImpl implements BlogService {
 	TagService tagService;
 
 	@Override
-	public List<Blog> getListByTitleAndCategoryId(String title, Integer CategoryId) {
-		return blogMapper.getListByTitleAndCategoryId(title, CategoryId);
+	public List<Blog> getListByTitleAndCategoryId(String title, Integer categoryId) {
+		return blogMapper.getListByTitleAndCategoryId(title, categoryId);
 	}
 
 	@Override
@@ -174,16 +174,16 @@ public class BlogServiceImpl implements BlogService {
 
 	@Transactional
 	@Override
-	public void updateBlogRecommendById(Long BlogId, Boolean recommend) {
-		if (blogMapper.updateBlogRecommendById(BlogId, recommend) != 1) {
+	public void updateBlogRecommendById(Long blogId, Boolean recommend) {
+		if (blogMapper.updateBlogRecommendById(blogId, recommend) != 1) {
 			throw new PersistenceException("操作失败");
 		}
 	}
 
 	@Transactional
 	@Override
-	public void updateBlogVisibilityById(Long BlogId, BlogVisibility blogVisibility) {
-		if (blogMapper.updateBlogVisibilityById(BlogId, blogVisibility) != 1) {
+	public void updateBlogVisibilityById(Long blogId, BlogVisibility blogVisibility) {
+		if (blogMapper.updateBlogVisibilityById(blogId, blogVisibility) != 1) {
 			throw new PersistenceException("操作失败");
 		}
 	}

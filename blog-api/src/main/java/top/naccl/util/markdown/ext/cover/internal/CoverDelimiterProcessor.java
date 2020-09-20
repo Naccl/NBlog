@@ -12,7 +12,6 @@ import top.naccl.util.markdown.ext.cover.Cover;
  * @Date: 2020-05-13
  */
 public class CoverDelimiterProcessor implements DelimiterProcessor {
-
     @Override
     public char getOpeningCharacter() {
         return '%';

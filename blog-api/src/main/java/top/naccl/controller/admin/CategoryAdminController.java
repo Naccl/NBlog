@@ -80,8 +80,8 @@ public class CategoryAdminController {
 		}
 		//查询分类是否已存在
 		Category category1 = categoryService.getCategoryByName(category.getName());
-		//如果 category1.getId() == category.getId() 就是更新分类
-		if (category1 != null && category1.getId() != category.getId()) {
+		//如果 category1.getId().equals(category.getId()) == true 就是更新分类
+		if (category1 != null && !category1.getId().equals(category.getId())) {
 			return Result.error("该分类已存在");
 		}
 		if ("save".equals(type)) {

@@ -9,8 +9,7 @@ import org.commonmark.renderer.text.TextContentWriter;
  * @Author: Naccl
  * @Date: 2020-05-13
  */
-public class CoverTextContentNodeRenderer extends CoverNodeRenderer {
-
+public class CoverTextContentNodeRenderer extends AbstractCoverNodeRenderer {
     private final TextContentNodeRendererContext context;
     private final TextContentWriter textContent;
 
