@@ -55,6 +55,7 @@
 							if (res.code === 200) {
 								this.msgSuccess(res.msg);
 								window.sessionStorage.setItem('token', res.data.token)
+								window.sessionStorage.setItem('user', JSON.stringify(res.data.user))
 								this.$router.push('/home')
 							} else {
 								this.msgError(res.msg)

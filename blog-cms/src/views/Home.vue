@@ -2,11 +2,18 @@
 	<el-container class="home-container">
 		<!--头部-->
 		<el-header>
-			<div>
+			<div class="title">
 				<img src="~assets/img/logo.png" alt="" height="60">
 				<span>NBlog 博客后台管理</span>
 			</div>
-			<el-button type="info" @click="logout">退出</el-button>
+			<el-dropdown trigger="click" class="user" v-if="user" @command="logout">
+				<div class="el-dropdown-link">
+					<el-avatar shape="circle" :size="45" fit="contain" :src="user.avatar"></el-avatar>
+				</div>
+				<el-dropdown-menu slot="dropdown">
+					<el-dropdown-item icon="ali-iconfont icon-logout">退出</el-dropdown-item>
+				</el-dropdown-menu>
+			</el-dropdown>
 		</el-header>
 		<!--页面主体-->
 		<el-container>
@@ -171,10 +178,20 @@
 				//是否折叠
 				isCollapse: false,
 				//默认打开的菜单
-				defaultOpeneds: ['1', '2', '3', '4']
+				defaultOpeneds: ['1', '2', '3', '4'],
+				user: null,
 			}
 		},
+		created() {
+			this.getUserInfo()
+		},
 		methods: {
+			getUserInfo() {
+				this.user = JSON.parse(window.sessionStorage.getItem('user') || null)
+				if (!this.user) {
+					this.$router.push('/login')
+				}
+			},
 			logout() {
 				window.sessionStorage.clear()
 				this.$router.push('/login')
@@ -218,6 +235,7 @@
 		align-items: center;
 		color: #ffffff;
 		font-size: 22px;
+		user-select: none;
 	}
 
 	.el-header div {
@@ -225,8 +243,21 @@
 		align-items: center;
 	}
 
-	.el-header div span {
+	.el-header .title span {
 		margin-left: 15px;
+	}
+
+	.el-dropdown-link {
+		outline-style: none !important;
+		outline-color: unset !important;
+		height: 100%;
+		cursor: pointer;
+	}
+
+	.el-dropdown-menu {
+		margin: 7px 0 0 0 !important;
+		padding: 0 !important;
+		border: 0 !important;
 	}
 
 	.el-aside {
@@ -234,6 +265,7 @@
 		position: absolute;
 		top: 60px;
 		bottom: 0;
+		user-select: none;
 	}
 
 	.el-aside .el-menu {

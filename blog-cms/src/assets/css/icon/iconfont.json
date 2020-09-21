@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "309628",
+      "name": "log-out",
+      "font_class": "logout",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
       "icon_id": "36019",
       "name": "friend",
       "font_class": "friend",
