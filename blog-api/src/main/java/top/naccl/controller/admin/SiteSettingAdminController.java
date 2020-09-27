@@ -1,7 +1,6 @@
 package top.naccl.controller.admin;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +25,8 @@ import java.util.Map;
 public class SiteSettingAdminController {
 	@Autowired
 	SiteSettingService siteSettingService;
+	@Autowired
+	ObjectMapper objectMapper;
 
 	/**
 	 * 获取所有站点配置信息
@@ -52,8 +53,7 @@ public class SiteSettingAdminController {
 			siteSettingService.deleteSiteSettingById(id);
 		}
 		for (LinkedHashMap s : siteSettings) {
-			JSONObject siteSettingJsonObject = new JSONObject(s);
-			SiteSetting siteSetting = JSON.toJavaObject(siteSettingJsonObject, SiteSetting.class);
+			SiteSetting siteSetting = objectMapper.convertValue(s, SiteSetting.class);
 			if (siteSetting.getId() != null) {//修改
 				siteSettingService.updateSiteSetting(siteSetting);
 			} else {//添加
