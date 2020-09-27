@@ -97,7 +97,8 @@
 						|| queryString.indexOf('_') !== -1
 						|| queryString.indexOf('[') !== -1
 						|| queryString.indexOf('#') !== -1
-						|| queryString.indexOf('*') !== -1) {
+						|| queryString.indexOf('*') !== -1
+						|| queryString.trim().length > 20) {
 					return
 				}
 				getSearchBlogList(queryString).then(res => {
