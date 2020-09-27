@@ -6,6 +6,7 @@ import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.BlogInfo;
 import top.naccl.model.vo.NewBlog;
+import top.naccl.model.vo.PageResult;
 import top.naccl.model.vo.RandomBlog;
 import top.naccl.model.vo.SearchBlog;
 
@@ -21,11 +22,11 @@ public interface BlogService {
 
 	List<NewBlog> getNewBlogListByIsPublishedAndIsRecommend();
 
-	List<BlogInfo> getBlogInfoListByIsPublished();
+	PageResult<BlogInfo> getBlogInfoListByIsPublished(Integer pageNum);
 
-	List<BlogInfo> getBlogInfoListByCategoryNameAndIsPublished(String categoryName);
+	PageResult<BlogInfo> getBlogInfoListByCategoryNameAndIsPublished(String categoryName, Integer pageNum);
 
-	List<BlogInfo> getBlogInfoListByTagNameAndIsPublished(String tagName);
+	PageResult<BlogInfo> getBlogInfoListByTagNameAndIsPublished(String tagName, Integer pageNum);
 
 	Map<String, List<ArchiveBlog>> getArchiveBlogMapByIsPublished();
 

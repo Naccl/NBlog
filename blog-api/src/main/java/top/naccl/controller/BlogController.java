@@ -1,7 +1,5 @@
 package top.naccl.controller;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,11 +42,7 @@ public class BlogController {
 	 */
 	@GetMapping("/blogs")
 	public Result blogs(@RequestParam(defaultValue = "1") Integer pageNum) {
-		int pageSize = 5;//每页显示5条
-		String orderBy = "is_top desc, create_time desc";
-		PageHelper.startPage(pageNum, pageSize, orderBy);
-		PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogService.getBlogInfoListByIsPublished());
-		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
+		PageResult<BlogInfo> pageResult = blogService.getBlogInfoListByIsPublished(pageNum);
 		return Result.ok("请求成功", pageResult);
 	}
 

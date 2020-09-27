@@ -1,8 +1,11 @@
 package top.naccl.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import top.naccl.config.RedisKeyConfig;
 import top.naccl.entity.Blog;
 import top.naccl.exception.NotFoundException;
 import top.naccl.exception.PersistenceException;
@@ -12,9 +15,11 @@ import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.BlogInfo;
 import top.naccl.model.vo.NewBlog;
+import top.naccl.model.vo.PageResult;
 import top.naccl.model.vo.RandomBlog;
 import top.naccl.model.vo.SearchBlog;
 import top.naccl.service.BlogService;
+import top.naccl.service.RedisService;
 import top.naccl.service.TagService;
 import top.naccl.util.markdown.MarkdownUtils;
 
@@ -33,6 +38,12 @@ public class BlogServiceImpl implements BlogService {
 	BlogMapper blogMapper;
 	@Autowired
 	TagService tagService;
+	@Autowired
+	RedisService redisService;
+	//每页显示5条博客简介
+	static final int pageSize = 5;
+	//博客简介列表排序方式
+	static final String orderBy = "is_top desc, create_time desc";
 
 	@Override
 	public List<Blog> getListByTitleAndCategoryId(String title, Integer categoryId) {
@@ -74,21 +85,57 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public List<BlogInfo> getBlogInfoListByIsPublished() {
-		List<BlogInfo> blogInfos = blogMapper.getBlogInfoListByIsPublished();
-		return processBlogInfos(blogInfos);
+	public PageResult<BlogInfo> getBlogInfoListByIsPublished(Integer pageNum) {
+		String redisHash = RedisKeyConfig.HOME_BLOG_INFO_LIST;
+		//redis已有当前页缓存
+		PageResult<BlogInfo> pageResultFormRedis = redisService.getPageResultByHash(redisHash, pageNum);
+		if (pageResultFormRedis != null) {
+			return pageResultFormRedis;
+		}
+		//redis没有缓存，从数据库查询，并添加缓存
+		PageHelper.startPage(pageNum, pageSize, orderBy);
+		List<BlogInfo> blogInfos = processBlogInfos(blogMapper.getBlogInfoListByIsPublished());
+		PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogInfos);
+		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
+		//添加缓存
+		redisService.setPageResultToHash(redisHash, pageNum, pageResult);
+		return pageResult;
 	}
 
 	@Override
-	public List<BlogInfo> getBlogInfoListByCategoryNameAndIsPublished(String categoryName) {
-		List<BlogInfo> blogInfos = blogMapper.getBlogInfoListByCategoryNameAndIsPublished(categoryName);
-		return processBlogInfos(blogInfos);
+	public PageResult<BlogInfo> getBlogInfoListByCategoryNameAndIsPublished(String categoryName, Integer pageNum) {
+		String redisHash = RedisKeyConfig.Category_BLOG_INFO_LIST + categoryName;
+		//redis已有当前页缓存
+		PageResult<BlogInfo> pageResultFormRedis = redisService.getPageResultByHash(redisHash, pageNum);
+		if (pageResultFormRedis != null) {
+			return pageResultFormRedis;
+		}
+		//redis没有缓存，从数据库查询，并添加缓存
+		PageHelper.startPage(pageNum, pageSize, orderBy);
+		List<BlogInfo> blogInfos = processBlogInfos(blogMapper.getBlogInfoListByCategoryNameAndIsPublished(categoryName));
+		PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogInfos);
+		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
+		//添加缓存
+		redisService.setPageResultToHash(redisHash, pageNum, pageResult);
+		return pageResult;
 	}
 
 	@Override
-	public List<BlogInfo> getBlogInfoListByTagNameAndIsPublished(String tagName) {
-		List<BlogInfo> blogInfos = blogMapper.getBlogInfoListByTagNameAndIsPublished(tagName);
-		return processBlogInfos(blogInfos);
+	public PageResult<BlogInfo> getBlogInfoListByTagNameAndIsPublished(String tagName, Integer pageNum) {
+		String redisHash = RedisKeyConfig.Tag_BLOG_INFO_LIST + tagName;
+		//redis已有当前页缓存
+		PageResult<BlogInfo> pageResultFormRedis = redisService.getPageResultByHash(redisHash, pageNum);
+		if (pageResultFormRedis != null) {
+			return pageResultFormRedis;
+		}
+		//redis没有缓存，从数据库查询，并添加缓存
+		PageHelper.startPage(pageNum, pageSize, orderBy);
+		List<BlogInfo> blogInfos = processBlogInfos(blogMapper.getBlogInfoListByTagNameAndIsPublished(tagName));
+		PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogInfos);
+		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
+		//添加缓存
+		redisService.setPageResultToHash(redisHash, pageNum, pageResult);
+		return pageResult;
 	}
 
 	private List<BlogInfo> processBlogInfos(List<BlogInfo> blogInfos) {
