@@ -27,7 +27,7 @@
 		},
 		watch: {
 			//在博客文章路由到其它含有评论的页面时，要重新获取评论
-			'$route.fullPath'() {
+			'$route.path'() {
 				this.init()
 			}
 		},
