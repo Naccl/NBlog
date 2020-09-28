@@ -14,7 +14,7 @@
 					<div class="row m-padded-tb-small">
 						<div class="ui horizontal link list m-center">
 							<div class="item m-datetime">
-								<i class="small calendar icon"></i><span>{{ blog.createTime | dateFormat('YYYY-MM-DD')}}</span>
+								<i class="small calendar icon"></i><span>{{ blog.createTime | dateFormat('YYYY-MM-DD') }}</span>
 							</div>
 							<div class="item m-views">
 								<i class="small eye icon"></i><span>{{ blog.views }}</span>
@@ -71,8 +71,8 @@
 				<li>作者：{{ $store.state.introduction.name }}
 					<router-link to="/about">（联系作者）</router-link>
 				</li>
-				<li>发表时间：{{ blog.createTime | dateFormat('YYYY-MM-DD HH:mm')}}</li>
-				<li>最后修改：{{ blog.updateTime | dateFormat('YYYY-MM-DD HH:mm')}}</li>
+				<li>发表时间：{{ blog.createTime | dateFormat('YYYY-MM-DD HH:mm') }}</li>
+				<li>最后修改：{{ blog.updateTime | dateFormat('YYYY-MM-DD HH:mm') }}</li>
 				<li>本站点采用<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"> 署名 4.0 国际 (CC BY 4.0) </a>创作共享协议。可自由转载、引用，并且允许商业性使用。但需署名作者且注明文章出处。</li>
 			</ul>
 		</div>
@@ -163,7 +163,7 @@
 					this.msgError("请求失败")
 				})
 			},
-			changeFocusMode(){
+			changeFocusMode() {
 				this.$store.commit(SET_FOCUS_MODE, !this.focusMode)
 			}
 		}

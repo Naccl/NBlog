@@ -30,5 +30,6 @@ export default {
 		blogId: 0,
 		password: ''
 	},
+	//专注模式
 	focusMode: false
 }

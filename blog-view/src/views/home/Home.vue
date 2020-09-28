@@ -17,6 +17,15 @@
 				totalPage: 0
 			}
 		},
+		beforeRouteEnter(to, from, next) {
+			//从文章页面跳转到首页时，使用首页缓存
+			//其它页面跳转到首页时，重新请求数据
+			next(vm => {
+				if (from.name !== 'blog') {
+					vm.getBlogList()
+				}
+			})
+		},
 		created() {
 			this.getBlogList()
 		},

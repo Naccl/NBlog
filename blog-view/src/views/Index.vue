@@ -13,7 +13,9 @@
 						</div>
 						<!--中间-->
 						<div class="ten wide column">
-							<router-view/>
+							<keep-alive include="Home">
+								<router-view/>
+							</keep-alive>
 						</div>
 						<!--右侧-->
 						<div class="three wide column m-mobile-hide">
