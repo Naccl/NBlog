@@ -22,14 +22,17 @@ public class RedisKeyConfig {
 	public static final String TAG_CLOUD_LIST = "tagCloudList";
 
 	//站点信息key
-	public static final String SITE_INFO = "siteInfo";
+	public static final String SITE_INFO_MAP = "siteInfoMap";
 
 	//最新推荐博客key
 	public static final String NEW_BLOG_LIST = "newBlogList";
 
 	//关于我页面key
-	public static final String ABOUT_INFO = "aboutInfo";
+	public static final String ABOUT_INFO_MAP = "aboutInfoMap";
 
 	//友链页面信息key
-	public static final String FRIEND_INFO = "friendInfo";
+	public static final String FRIEND_INFO_MAP = "friendInfoMap";
+
+	//博客归档key
+	public static final String ARCHIVE_BLOG_MAP = "archiveBlogMap";
 }

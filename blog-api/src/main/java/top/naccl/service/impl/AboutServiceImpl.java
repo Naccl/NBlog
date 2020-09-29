@@ -29,7 +29,7 @@ public class AboutServiceImpl implements AboutService {
 
 	@Override
 	public Map<String, String> getAboutInfo() {
-		String redisKey = RedisKeyConfig.ABOUT_INFO;
+		String redisKey = RedisKeyConfig.ABOUT_INFO_MAP;
 		Map<String, String> aboutInfoMapFromRedis = redisService.getMapByValue(redisKey);
 		if (aboutInfoMapFromRedis != null) {
 			return aboutInfoMapFromRedis;

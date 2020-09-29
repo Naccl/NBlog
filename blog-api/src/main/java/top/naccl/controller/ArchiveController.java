@@ -3,12 +3,9 @@ package top.naccl.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.Result;
 import top.naccl.service.BlogService;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,11 +25,7 @@ public class ArchiveController {
 	 */
 	@GetMapping("/archives")
 	public Result archives() {
-		Map<String, List<ArchiveBlog>> archiveBlogMap = blogService.getArchiveBlogMapByIsPublished();
-		Integer count = blogService.countBlogByIsPublished();
-		Map<String, Object> map = new HashMap<>();
-		map.put("blogMap", archiveBlogMap);
-		map.put("count", count);
-		return Result.ok("请求成功", map);
+		Map<String, Object> archiveBlogMap = blogService.getArchiveBlogAndCountByIsPublished();
+		return Result.ok("请求成功", archiveBlogMap);
 	}
 }

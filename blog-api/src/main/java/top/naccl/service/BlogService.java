@@ -2,7 +2,6 @@ package top.naccl.service;
 
 import top.naccl.entity.Blog;
 import top.naccl.model.dto.BlogVisibility;
-import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.BlogInfo;
 import top.naccl.model.vo.NewBlog;
@@ -28,7 +27,7 @@ public interface BlogService {
 
 	PageResult<BlogInfo> getBlogInfoListByTagNameAndIsPublished(String tagName, Integer pageNum);
 
-	Map<String, List<ArchiveBlog>> getArchiveBlogMapByIsPublished();
+	Map<String, Object> getArchiveBlogAndCountByIsPublished();
 
 	List<RandomBlog> getRandomBlogListByLimitNumAndIsPublished(Integer limitNum);
 

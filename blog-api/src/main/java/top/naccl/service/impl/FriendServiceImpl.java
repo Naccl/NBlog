@@ -85,7 +85,7 @@ public class FriendServiceImpl implements FriendService {
 
 	@Override
 	public FriendInfo getFriendInfo(boolean cache, boolean md) {
-		String redisKey = RedisKeyConfig.FRIEND_INFO;
+		String redisKey = RedisKeyConfig.FRIEND_INFO_MAP;
 		if (cache) {
 			FriendInfo friendInfoFromRedis = redisService.getObjectByValue(redisKey, FriendInfo.class);
 			if (friendInfoFromRedis != null) {

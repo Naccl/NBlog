@@ -60,7 +60,7 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 
 	@Override
 	public Map<String, Object> getSiteInfo() {
-		String redisKey = RedisKeyConfig.SITE_INFO;
+		String redisKey = RedisKeyConfig.SITE_INFO_MAP;
 		Map<String, Object> siteInfoMapFromRedis = redisService.getMapByValue(redisKey);
 		if (siteInfoMapFromRedis != null) {
 			return siteInfoMapFromRedis;

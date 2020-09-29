@@ -23,6 +23,7 @@ import top.naccl.service.RedisService;
 import top.naccl.service.TagService;
 import top.naccl.util.markdown.MarkdownUtils;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -163,9 +164,15 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public Map<String, List<ArchiveBlog>> getArchiveBlogMapByIsPublished() {
+	public Map<String, Object> getArchiveBlogAndCountByIsPublished() {
+		String redisKey = RedisKeyConfig.ARCHIVE_BLOG_MAP;
+		Map<String, Object> mapFromRedis = redisService.getMapByValue(redisKey);
+		if (mapFromRedis != null) {
+			return mapFromRedis;
+		}
+		Map<String, Object> map = new HashMap<>();
 		List<String> groupYearMonth = blogMapper.getGroupYearMonthByIsPublished();
-		Map<String, List<ArchiveBlog>> map = new LinkedHashMap<>();
+		Map<String, List<ArchiveBlog>> archiveBlogMap = new LinkedHashMap<>();
 		for (String s : groupYearMonth) {
 			List<ArchiveBlog> archiveBlogs = blogMapper.getArchiveBlogListByYearMonthAndIsPublished(s);
 			for (ArchiveBlog archiveBlog : archiveBlogs) {
@@ -176,8 +183,12 @@ public class BlogServiceImpl implements BlogService {
 					archiveBlog.setPrivacy(false);
 				}
 			}
-			map.put(s, archiveBlogs);
+			archiveBlogMap.put(s, archiveBlogs);
 		}
+		Integer count = countBlogByIsPublished();
+		map.put("blogMap", archiveBlogMap);
+		map.put("count", count);
+		redisService.saveMapToValue(redisKey, map);
 		return map;
 	}
 
