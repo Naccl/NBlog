@@ -88,7 +88,7 @@ public class BlogServiceImpl implements BlogService {
 	public PageResult<BlogInfo> getBlogInfoListByIsPublished(Integer pageNum) {
 		String redisHash = RedisKeyConfig.HOME_BLOG_INFO_LIST;
 		//redis已有当前页缓存
-		PageResult<BlogInfo> pageResultFormRedis = redisService.getPageResultByHash(redisHash, pageNum);
+		PageResult<BlogInfo> pageResultFormRedis = redisService.getBlogInfoPageResultByHash(redisHash, pageNum);
 		if (pageResultFormRedis != null) {
 			return pageResultFormRedis;
 		}
@@ -98,15 +98,15 @@ public class BlogServiceImpl implements BlogService {
 		PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogInfos);
 		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
 		//添加缓存
-		redisService.setPageResultToHash(redisHash, pageNum, pageResult);
+		redisService.setBlogInfoPageResultToHash(redisHash, pageNum, pageResult);
 		return pageResult;
 	}
 
 	@Override
 	public PageResult<BlogInfo> getBlogInfoListByCategoryNameAndIsPublished(String categoryName, Integer pageNum) {
-		String redisHash = RedisKeyConfig.Category_BLOG_INFO_LIST + categoryName;
+		String redisHash = RedisKeyConfig.CATEGORY_BLOG_INFO_LIST + categoryName;
 		//redis已有当前页缓存
-		PageResult<BlogInfo> pageResultFormRedis = redisService.getPageResultByHash(redisHash, pageNum);
+		PageResult<BlogInfo> pageResultFormRedis = redisService.getBlogInfoPageResultByHash(redisHash, pageNum);
 		if (pageResultFormRedis != null) {
 			return pageResultFormRedis;
 		}
@@ -116,15 +116,15 @@ public class BlogServiceImpl implements BlogService {
 		PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogInfos);
 		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
 		//添加缓存
-		redisService.setPageResultToHash(redisHash, pageNum, pageResult);
+		redisService.setBlogInfoPageResultToHash(redisHash, pageNum, pageResult);
 		return pageResult;
 	}
 
 	@Override
 	public PageResult<BlogInfo> getBlogInfoListByTagNameAndIsPublished(String tagName, Integer pageNum) {
-		String redisHash = RedisKeyConfig.Tag_BLOG_INFO_LIST + tagName;
+		String redisHash = RedisKeyConfig.TAG_BLOG_INFO_LIST + tagName;
 		//redis已有当前页缓存
-		PageResult<BlogInfo> pageResultFormRedis = redisService.getPageResultByHash(redisHash, pageNum);
+		PageResult<BlogInfo> pageResultFormRedis = redisService.getBlogInfoPageResultByHash(redisHash, pageNum);
 		if (pageResultFormRedis != null) {
 			return pageResultFormRedis;
 		}
@@ -134,7 +134,7 @@ public class BlogServiceImpl implements BlogService {
 		PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogInfos);
 		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
 		//添加缓存
-		redisService.setPageResultToHash(redisHash, pageNum, pageResult);
+		redisService.setBlogInfoPageResultToHash(redisHash, pageNum, pageResult);
 		return pageResult;
 	}
 

@@ -13,7 +13,7 @@
     </select>
 
     <!--获取所有分类List不查询id-->
-    <select id="getCategoryListNotId" resultMap="category">
+    <select id="getCategoryNameList" resultMap="category">
         select category_name from category order by id desc
     </select>
 

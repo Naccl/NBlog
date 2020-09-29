@@ -29,7 +29,7 @@ public class CategoryController {
 	 */
 	@GetMapping("/categories")
 	public Result categories() {
-		return Result.ok("请求成功", categoryService.getCategoryListNotId());
+		return Result.ok("请求成功", categoryService.getCategoryNameList());
 	}
 
 	/**

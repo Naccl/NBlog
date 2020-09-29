@@ -3,11 +3,13 @@ package top.naccl.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import top.naccl.config.RedisKeyConfig;
 import top.naccl.entity.Category;
 import top.naccl.exception.NotFoundException;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.CategoryMapper;
 import top.naccl.service.CategoryService;
+import top.naccl.service.RedisService;
 import top.naccl.service.TagService;
 
 import java.util.List;
@@ -23,6 +25,8 @@ public class CategoryServiceImpl implements CategoryService {
 	CategoryMapper categoryMapper;
 	@Autowired
 	TagService tagService;
+	@Autowired
+	RedisService redisService;
 
 	@Override
 	public List<Category> getCategoryList() {
@@ -30,8 +34,15 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public List<Category> getCategoryListNotId() {
-		return categoryMapper.getCategoryListNotId();
+	public List<Category> getCategoryNameList() {
+		String redisKey = RedisKeyConfig.CATEGORY_NAME_LIST;
+		List<Category> categoryListFromRedis = redisService.getCategoryNameListByValue(redisKey);
+		if (categoryListFromRedis != null) {
+			return categoryListFromRedis;
+		}
+		List<Category> categoryList = categoryMapper.getCategoryNameList();
+		redisService.setCategoryNameListToValue(redisKey, categoryList);
+		return categoryList;
 	}
 
 	@Transactional

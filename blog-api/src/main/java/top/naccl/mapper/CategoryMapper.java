@@ -16,7 +16,7 @@ import java.util.List;
 public interface CategoryMapper {
 	List<Category> getCategoryList();
 
-	List<Category> getCategoryListNotId();
+	List<Category> getCategoryNameList();
 
 	int saveCategory(Category category);
 
