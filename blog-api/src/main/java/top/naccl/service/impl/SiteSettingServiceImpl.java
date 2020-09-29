@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import top.naccl.config.RedisKeyConfig;
 import top.naccl.entity.SiteSetting;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.SiteSettingMapper;
@@ -11,6 +12,7 @@ import top.naccl.model.bean.Badge;
 import top.naccl.model.bean.Copyright;
 import top.naccl.model.bean.Favorite;
 import top.naccl.model.vo.Introduction;
+import top.naccl.service.RedisService;
 import top.naccl.service.SiteSettingService;
 
 import java.util.ArrayList;
@@ -31,6 +33,8 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 
 	@Autowired
 	SiteSettingMapper siteSettingMapper;
+	@Autowired
+	RedisService redisService;
 
 	@Override
 	public Map<String, List<SiteSetting>> getList() {
@@ -56,6 +60,11 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 
 	@Override
 	public Map<String, Object> getSiteInfo() {
+		String redisKey = RedisKeyConfig.SITE_INFO;
+		Map<String, Object> siteInfoMapFromRedis = redisService.getMapByValue(redisKey);
+		if (siteInfoMapFromRedis != null) {
+			return siteInfoMapFromRedis;
+		}
 		List<SiteSetting> siteSettings = siteSettingMapper.getList();
 		Map<String, Object> map = new HashMap<>();
 		Map<String, Object> siteInfo = new HashMap<>();
@@ -103,6 +112,7 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 		map.put("introduction", introduction);
 		map.put("siteInfo", siteInfo);
 		map.put("badges", badges);
+		redisService.saveMapToValue(redisKey, map);
 		return map;
 	}
 

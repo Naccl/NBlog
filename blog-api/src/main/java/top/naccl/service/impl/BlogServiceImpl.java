@@ -40,10 +40,12 @@ public class BlogServiceImpl implements BlogService {
 	TagService tagService;
 	@Autowired
 	RedisService redisService;
+	//最新推荐博客显示3条
+	private static final int newBlogPageSize = 3;
 	//每页显示5条博客简介
-	static final int pageSize = 5;
+	private static final int pageSize = 5;
 	//博客简介列表排序方式
-	static final String orderBy = "is_top desc, create_time desc";
+	private static final String orderBy = "is_top desc, create_time desc";
 
 	@Override
 	public List<Blog> getListByTitleAndCategoryId(String title, Integer categoryId) {
@@ -72,8 +74,14 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	public List<NewBlog> getNewBlogListByIsPublishedAndIsRecommend() {
-		List<NewBlog> newBlogs = blogMapper.getNewBlogListByIsPublishedAndIsRecommend();
-		for (NewBlog newBlog : newBlogs) {
+		String redisKey = RedisKeyConfig.NEW_BLOG_LIST;
+		List<NewBlog> newBlogListFromRedis = redisService.getListByValue(redisKey);
+		if (newBlogListFromRedis != null) {
+			return newBlogListFromRedis;
+		}
+		PageHelper.startPage(1, newBlogPageSize);
+		List<NewBlog> newBlogList = blogMapper.getNewBlogListByIsPublishedAndIsRecommend();
+		for (NewBlog newBlog : newBlogList) {
 			if (!"".equals(newBlog.getPassword())) {
 				newBlog.setPrivacy(true);
 				newBlog.setPassword("");
@@ -81,7 +89,8 @@ public class BlogServiceImpl implements BlogService {
 				newBlog.setPrivacy(false);
 			}
 		}
-		return newBlogs;
+		redisService.saveListToValue(redisKey, newBlogList);
+		return newBlogList;
 	}
 
 	@Override

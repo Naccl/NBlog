@@ -9,6 +9,7 @@ import top.naccl.model.vo.PageResult;
 import top.naccl.service.RedisService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: 读写Redis相关操作
@@ -47,5 +48,16 @@ public class RedisServiceImpl implements RedisService {
 	@Override
 	public <T> void saveListToValue(String key, List<T> list) {
 		jsonRedisTemplate.opsForValue().set(key, list);
+	}
+
+	@Override
+	public <T> Map<String, T> getMapByValue(String key) {
+		Map<String, T> redisResult = (Map<String, T>) jsonRedisTemplate.opsForValue().get(key);
+		return redisResult;
+	}
+
+	@Override
+	public <T> void saveMapToValue(String key, Map<String, T> map) {
+		jsonRedisTemplate.opsForValue().set(key, map);
 	}
 }

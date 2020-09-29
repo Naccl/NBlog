@@ -20,4 +20,10 @@ public class RedisKeyConfig {
 
 	//标签云列表key
 	public static final String TAG_CLOUD_LIST = "tagCloudList";
+
+	//站点信息key
+	public static final String SITE_INFO = "siteInfo";
+
+	//最新推荐博客key
+	public static final String NEW_BLOG_LIST = "newBlogList";
 }

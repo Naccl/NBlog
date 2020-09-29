@@ -1,6 +1,5 @@
 package top.naccl.controller;
 
-import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +32,6 @@ public class IndexController {
 	@GetMapping("/site")
 	public Result site() {
 		Map<String, Object> map = siteSettingService.getSiteInfo();
-		PageHelper.startPage(1, 3);
 		List<NewBlog> newBlogList = blogService.getNewBlogListByIsPublishedAndIsRecommend();
 		map.put("newBlogList", newBlogList);
 		return Result.ok("请求成功", map);

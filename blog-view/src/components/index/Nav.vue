@@ -88,7 +88,7 @@
 			},
 			debounceQuery(queryString, callback) {
 				this.timer && clearTimeout(this.timer)
-				this.timer = setTimeout(() => this.querySearchAsync(queryString, callback), 500)
+				this.timer = setTimeout(() => this.querySearchAsync(queryString, callback), 1000)
 			},
 			querySearchAsync(queryString, callback) {
 				if (queryString == null
