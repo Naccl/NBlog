@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import top.naccl.entity.Category;
 import top.naccl.model.vo.BlogInfo;
 import top.naccl.model.vo.PageResult;
 import top.naccl.service.RedisService;
@@ -35,18 +34,18 @@ public class RedisServiceImpl implements RedisService {
 	}
 
 	@Override
-	public void setBlogInfoPageResultToHash(String hash, Integer pageNum, Object object) {
+	public void saveBlogInfoPageResultToHash(String hash, Integer pageNum, Object object) {
 		jsonRedisTemplate.opsForHash().put(hash, pageNum, object);
 	}
 
 	@Override
-	public List<Category> getCategoryNameListByValue(String key) {
-		List<Category> redisResult = (List<Category>) jsonRedisTemplate.opsForValue().get(key);
+	public <T> List<T> getListByValue(String key) {
+		List<T> redisResult = (List<T>) jsonRedisTemplate.opsForValue().get(key);
 		return redisResult;
 	}
 
 	@Override
-	public void setCategoryNameListToValue(String key, List<Category> categoryNameList) {
-		jsonRedisTemplate.opsForValue().set(key, categoryNameList);
+	public <T> void saveListToValue(String key, List<T> list) {
+		jsonRedisTemplate.opsForValue().set(key, list);
 	}
 }

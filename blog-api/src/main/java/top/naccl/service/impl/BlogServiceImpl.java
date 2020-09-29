@@ -98,7 +98,7 @@ public class BlogServiceImpl implements BlogService {
 		PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogInfos);
 		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
 		//添加缓存
-		redisService.setBlogInfoPageResultToHash(redisHash, pageNum, pageResult);
+		redisService.saveBlogInfoPageResultToHash(redisHash, pageNum, pageResult);
 		return pageResult;
 	}
 
@@ -116,7 +116,7 @@ public class BlogServiceImpl implements BlogService {
 		PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogInfos);
 		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
 		//添加缓存
-		redisService.setBlogInfoPageResultToHash(redisHash, pageNum, pageResult);
+		redisService.saveBlogInfoPageResultToHash(redisHash, pageNum, pageResult);
 		return pageResult;
 	}
 
@@ -134,7 +134,7 @@ public class BlogServiceImpl implements BlogService {
 		PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogInfos);
 		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
 		//添加缓存
-		redisService.setBlogInfoPageResultToHash(redisHash, pageNum, pageResult);
+		redisService.saveBlogInfoPageResultToHash(redisHash, pageNum, pageResult);
 		return pageResult;
 	}
 

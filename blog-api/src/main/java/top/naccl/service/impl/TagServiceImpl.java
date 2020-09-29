@@ -3,10 +3,12 @@ package top.naccl.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import top.naccl.config.RedisKeyConfig;
 import top.naccl.entity.Tag;
 import top.naccl.exception.NotFoundException;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.TagMapper;
+import top.naccl.service.RedisService;
 import top.naccl.service.TagService;
 
 import java.util.List;
@@ -20,6 +22,8 @@ import java.util.List;
 public class TagServiceImpl implements TagService {
 	@Autowired
 	TagMapper tagMapper;
+	@Autowired
+	RedisService redisService;
 
 	@Override
 	public List<Tag> getTagList() {
@@ -28,7 +32,14 @@ public class TagServiceImpl implements TagService {
 
 	@Override
 	public List<Tag> getTagListNotId() {
-		return tagMapper.getTagListNotId();
+		String redisKey = RedisKeyConfig.TAG_CLOUD_LIST;
+		List<Tag> tagListFromRedis = redisService.getListByValue(redisKey);
+		if (tagListFromRedis != null) {
+			return tagListFromRedis;
+		}
+		List<Tag> tagList = tagMapper.getTagListNotId();
+		redisService.saveListToValue(redisKey, tagList);
+		return tagList;
 	}
 
 	@Override

@@ -36,12 +36,12 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<Category> getCategoryNameList() {
 		String redisKey = RedisKeyConfig.CATEGORY_NAME_LIST;
-		List<Category> categoryListFromRedis = redisService.getCategoryNameListByValue(redisKey);
+		List<Category> categoryListFromRedis = redisService.getListByValue(redisKey);
 		if (categoryListFromRedis != null) {
 			return categoryListFromRedis;
 		}
 		List<Category> categoryList = categoryMapper.getCategoryNameList();
-		redisService.setCategoryNameListToValue(redisKey, categoryList);
+		redisService.saveListToValue(redisKey, categoryList);
 		return categoryList;
 	}
 
