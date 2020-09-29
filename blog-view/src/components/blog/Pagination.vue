@@ -7,6 +7,8 @@
 </template>
 
 <script>
+	import {mapState} from 'vuex'
+
 	export default {
 		name: "Pagination",
 		props: {
@@ -18,6 +20,18 @@
 				type: Number,
 				required: true
 			}
+		},
+		//目前只有首页被缓存，所以这个钩子只会被首页调用
+		activated() {
+			this.$nextTick(() => {
+				if (!this.isBlogToHome) {
+					//从其它页面路由到首页时，让首页的分页组件页码重置到第一页
+					this.pageNum = 1
+				}
+			})
+		},
+		computed: {
+			...mapState(['isBlogToHome'])
 		},
 		data() {
 			return {

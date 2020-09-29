@@ -21,7 +21,7 @@
 			}
 		},
 		watch: {
-			//在当前组件内路由到其它标签页时，要重新获取博客列表
+			//在当前组件被重用时，要重新获取博客列表
 			'$route.fullPath'() {
 				if (this.$route.name === 'tag') {
 					this.getBlogList()

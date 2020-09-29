@@ -10,7 +10,8 @@ import {
 	SET_IS_BLOG_RENDER_COMPLETE,
 	SET_BLOG_PASSWORD_DIALOG_VISIBLE,
 	SET_BLOG_PASSWORD_FORM,
-	SET_FOCUS_MODE
+	SET_FOCUS_MODE,
+	SET_IS_BLOG_TO_HOME
 } from "./mutations-types";
 
 export default {
@@ -58,4 +59,7 @@ export default {
 	[SET_FOCUS_MODE](state, focusMode) {
 		state.focusMode = focusMode
 	},
+	[SET_IS_BLOG_TO_HOME](state, isBlogToHome) {
+		state.isBlogToHome = isBlogToHome
+	}
 }

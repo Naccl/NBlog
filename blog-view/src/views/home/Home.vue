@@ -7,6 +7,7 @@
 <script>
 	import BlogList from "@/components/blog/BlogList";
 	import {getBlogList} from "@/api/home";
+	import {SET_IS_BLOG_TO_HOME} from "../../store/mutations-types";
 
 	export default {
 		name: "Home",
@@ -18,16 +19,17 @@
 			}
 		},
 		beforeRouteEnter(to, from, next) {
-			//从文章页面跳转到首页时，使用首页缓存
-			//其它页面跳转到首页时，重新请求数据
 			next(vm => {
 				if (from.name !== 'blog') {
+					//其它页面跳转到首页时，重新请求数据
+					//设置一个flag，让首页的分页组件指向正确的页码
+					vm.$store.commit(SET_IS_BLOG_TO_HOME, false)
 					vm.getBlogList()
+				} else {
+					//从文章页面跳转到首页时，使用首页缓存
+					vm.$store.commit(SET_IS_BLOG_TO_HOME, true)
 				}
 			})
-		},
-		created() {
-			this.getBlogList()
 		},
 		methods: {
 			getBlogList(pageNum) {
