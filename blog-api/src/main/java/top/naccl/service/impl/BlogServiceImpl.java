@@ -97,9 +97,9 @@ public class BlogServiceImpl implements BlogService {
 	public PageResult<BlogInfo> getBlogInfoListByIsPublished(Integer pageNum) {
 		String redisHash = RedisKeyConfig.HOME_BLOG_INFO_LIST;
 		//redis已有当前页缓存
-		PageResult<BlogInfo> pageResultFormRedis = redisService.getBlogInfoPageResultByHash(redisHash, pageNum);
-		if (pageResultFormRedis != null) {
-			return pageResultFormRedis;
+		PageResult<BlogInfo> pageResultFromRedis = redisService.getBlogInfoPageResultByHash(redisHash, pageNum);
+		if (pageResultFromRedis != null) {
+			return pageResultFromRedis;
 		}
 		//redis没有缓存，从数据库查询，并添加缓存
 		PageHelper.startPage(pageNum, pageSize, orderBy);
@@ -115,9 +115,9 @@ public class BlogServiceImpl implements BlogService {
 	public PageResult<BlogInfo> getBlogInfoListByCategoryNameAndIsPublished(String categoryName, Integer pageNum) {
 		String redisHash = RedisKeyConfig.CATEGORY_BLOG_INFO_LIST + categoryName;
 		//redis已有当前页缓存
-		PageResult<BlogInfo> pageResultFormRedis = redisService.getBlogInfoPageResultByHash(redisHash, pageNum);
-		if (pageResultFormRedis != null) {
-			return pageResultFormRedis;
+		PageResult<BlogInfo> pageResultFromRedis = redisService.getBlogInfoPageResultByHash(redisHash, pageNum);
+		if (pageResultFromRedis != null) {
+			return pageResultFromRedis;
 		}
 		//redis没有缓存，从数据库查询，并添加缓存
 		PageHelper.startPage(pageNum, pageSize, orderBy);
@@ -133,9 +133,9 @@ public class BlogServiceImpl implements BlogService {
 	public PageResult<BlogInfo> getBlogInfoListByTagNameAndIsPublished(String tagName, Integer pageNum) {
 		String redisHash = RedisKeyConfig.TAG_BLOG_INFO_LIST + tagName;
 		//redis已有当前页缓存
-		PageResult<BlogInfo> pageResultFormRedis = redisService.getBlogInfoPageResultByHash(redisHash, pageNum);
-		if (pageResultFormRedis != null) {
-			return pageResultFormRedis;
+		PageResult<BlogInfo> pageResultFromRedis = redisService.getBlogInfoPageResultByHash(redisHash, pageNum);
+		if (pageResultFromRedis != null) {
+			return pageResultFromRedis;
 		}
 		//redis没有缓存，从数据库查询，并添加缓存
 		PageHelper.startPage(pageNum, pageSize, orderBy);

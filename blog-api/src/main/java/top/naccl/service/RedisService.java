@@ -18,4 +18,8 @@ public interface RedisService {
 	<T> Map<String, T> getMapByValue(String key);
 
 	<T> void saveMapToValue(String key, Map<String, T> map);
+
+	<T> T getObjectByValue(String key, Class t);
+
+	void saveObjectToValue(String key, Object object);
 }

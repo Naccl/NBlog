@@ -20,7 +20,7 @@ public interface FriendService {
 
 	void updateViewsByNickname(String nickname);
 
-	FriendInfo getFriendInfo(Boolean md);
+	FriendInfo getFriendInfo(boolean cache, boolean md);
 
 	void updateFriendInfoContent(String content);
 

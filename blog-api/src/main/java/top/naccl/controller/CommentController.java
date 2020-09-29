@@ -133,7 +133,7 @@ public class CommentController {
 				return 1;
 			}
 		} else if (page == 2) {//友链页面
-			FriendInfo friendInfo = friendService.getFriendInfo(false);
+			FriendInfo friendInfo = friendService.getFriendInfo(true, false);
 			if (!friendInfo.getCommentEnabled()) {
 				return 1;
 			}

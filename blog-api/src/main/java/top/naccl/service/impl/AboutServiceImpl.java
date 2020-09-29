@@ -3,10 +3,12 @@ package top.naccl.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import top.naccl.config.RedisKeyConfig;
 import top.naccl.entity.About;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.AboutMapper;
 import top.naccl.service.AboutService;
+import top.naccl.service.RedisService;
 import top.naccl.util.markdown.MarkdownUtils;
 
 import java.util.HashMap;
@@ -22,18 +24,26 @@ import java.util.Map;
 public class AboutServiceImpl implements AboutService {
 	@Autowired
 	AboutMapper aboutMapper;
+	@Autowired
+	RedisService redisService;
 
 	@Override
 	public Map<String, String> getAboutInfo() {
+		String redisKey = RedisKeyConfig.ABOUT_INFO;
+		Map<String, String> aboutInfoMapFromRedis = redisService.getMapByValue(redisKey);
+		if (aboutInfoMapFromRedis != null) {
+			return aboutInfoMapFromRedis;
+		}
 		List<About> abouts = aboutMapper.getList();
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> aboutInfoMap = new HashMap<>();
 		for (About about : abouts) {
 			if ("content".equals(about.getNameEn())) {
 				about.setValue(MarkdownUtils.markdownToHtmlExtensions(about.getValue()));
 			}
-			map.put(about.getNameEn(), about.getValue());
+			aboutInfoMap.put(about.getNameEn(), about.getValue());
 		}
-		return map;
+		redisService.saveMapToValue(redisKey, aboutInfoMap);
+		return aboutInfoMap;
 	}
 
 	@Override

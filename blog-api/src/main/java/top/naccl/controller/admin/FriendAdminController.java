@@ -99,7 +99,7 @@ public class FriendAdminController {
 	 */
 	@GetMapping("/friendInfo")
 	public Result friendInfo() {
-		return Result.ok("请求成功", friendService.getFriendInfo(false));
+		return Result.ok("请求成功", friendService.getFriendInfo(false, false));
 	}
 
 	/**

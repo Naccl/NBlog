@@ -32,7 +32,7 @@ public class FriendController {
 	@GetMapping("/friends")
 	public Result friends() {
 		List<Friend> friendList = friendService.getFriendVOList();
-		FriendInfo friendInfo = friendService.getFriendInfo(true);
+		FriendInfo friendInfo = friendService.getFriendInfo(true, true);
 		Map<String, Object> map = new HashMap<>();
 		map.put("friendList", friendList);
 		map.put("friendInfo", friendInfo);

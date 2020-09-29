@@ -3,6 +3,7 @@ package top.naccl.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import top.naccl.config.RedisKeyConfig;
 import top.naccl.entity.Friend;
 import top.naccl.entity.SiteSetting;
 import top.naccl.exception.PersistenceException;
@@ -10,6 +11,7 @@ import top.naccl.mapper.FriendMapper;
 import top.naccl.mapper.SiteSettingMapper;
 import top.naccl.model.vo.FriendInfo;
 import top.naccl.service.FriendService;
+import top.naccl.service.RedisService;
 import top.naccl.util.markdown.MarkdownUtils;
 
 import java.util.Date;
@@ -26,6 +28,8 @@ public class FriendServiceImpl implements FriendService {
 	FriendMapper friendMapper;
 	@Autowired
 	SiteSettingMapper siteSettingMapper;
+	@Autowired
+	RedisService redisService;
 
 	@Override
 	public List<Friend> getFriendList() {
@@ -80,7 +84,14 @@ public class FriendServiceImpl implements FriendService {
 	}
 
 	@Override
-	public FriendInfo getFriendInfo(Boolean md) {
+	public FriendInfo getFriendInfo(boolean cache, boolean md) {
+		String redisKey = RedisKeyConfig.FRIEND_INFO;
+		if (cache) {
+			FriendInfo friendInfoFromRedis = redisService.getObjectByValue(redisKey, FriendInfo.class);
+			if (friendInfoFromRedis != null) {
+				return friendInfoFromRedis;
+			}
+		}
 		List<SiteSetting> siteSettings = siteSettingMapper.getFriendInfo();
 		FriendInfo friendInfo = new FriendInfo();
 		for (SiteSetting siteSetting : siteSettings) {
@@ -97,6 +108,9 @@ public class FriendServiceImpl implements FriendService {
 					friendInfo.setCommentEnabled(false);
 				}
 			}
+		}
+		if (cache && md) {
+			redisService.saveObjectToValue(redisKey, friendInfo);
 		}
 		return friendInfo;
 	}

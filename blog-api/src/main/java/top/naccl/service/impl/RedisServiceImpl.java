@@ -60,4 +60,16 @@ public class RedisServiceImpl implements RedisService {
 	public <T> void saveMapToValue(String key, Map<String, T> map) {
 		jsonRedisTemplate.opsForValue().set(key, map);
 	}
+
+	@Override
+	public <T> T getObjectByValue(String key, Class t) {
+		Object redisResult = jsonRedisTemplate.opsForValue().get(key);
+		T object = (T) objectMapper.convertValue(redisResult, t);
+		return object;
+	}
+
+	@Override
+	public void saveObjectToValue(String key, Object object) {
+		jsonRedisTemplate.opsForValue().set(key, object);
+	}
 }

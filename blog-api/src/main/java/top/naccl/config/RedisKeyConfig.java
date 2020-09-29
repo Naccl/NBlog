@@ -26,4 +26,10 @@ public class RedisKeyConfig {
 
 	//最新推荐博客key
 	public static final String NEW_BLOG_LIST = "newBlogList";
+
+	//关于我页面key
+	public static final String ABOUT_INFO = "aboutInfo";
+
+	//友链页面信息key
+	public static final String FRIEND_INFO = "friendInfo";
 }
