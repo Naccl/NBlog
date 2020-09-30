@@ -47,6 +47,8 @@ public class BlogServiceImpl implements BlogService {
 	private static final int pageSize = 5;
 	//博客简介列表排序方式
 	private static final String orderBy = "is_top desc, create_time desc";
+	//私密博客提示
+	private static final String PRIVATE_BLOG_DESCRIPTION = "此文章受密码保护！";
 
 	@Override
 	public List<Blog> getListByTitleAndCategoryId(String title, Integer categoryId) {
@@ -153,7 +155,7 @@ public class BlogServiceImpl implements BlogService {
 			if (!"".equals(blogInfo.getPassword())) {
 				blogInfo.setPrivacy(true);
 				blogInfo.setPassword("");
-				blogInfo.setDescription("此文章受密码保护！");
+				blogInfo.setDescription(PRIVATE_BLOG_DESCRIPTION);
 			} else {
 				blogInfo.setPrivacy(false);
 				blogInfo.setDescription(MarkdownUtils.markdownToHtmlExtensions(blogInfo.getDescription()));

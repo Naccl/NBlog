@@ -16,8 +16,6 @@ import java.util.List;
 public interface MomentMapper {
 	List<Moment> getMomentList();
 
-	List<top.naccl.model.vo.Moment> getMomentListByPublished();
-
 	int addLikeByMomentId(Long momentId);
 
 	int updateMomentPublishedById(Long momentId, Boolean published);

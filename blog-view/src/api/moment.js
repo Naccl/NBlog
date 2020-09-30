@@ -1,9 +1,12 @@
 import axios from '@/plugins/axios'
 
-export function getMomentListByPageNum(pageNum) {
+export function getMomentListByPageNum(token, pageNum) {
 	return axios({
 		url: 'moments',
 		method: 'GET',
+		headers: {
+			Authorization: token,
+		},
 		params: {
 			pageNum
 		}

@@ -14,7 +14,7 @@
 							<span style="font-weight: 700">{{ $store.state.introduction.name }}</span>
 							<span class="right floated">{{ moment.createTime | dateFormat('YYYY-MM-DD HH:mm') }}</span>
 						</div>
-						<div class="content typo" v-viewer v-html="moment.content"></div>
+						<div class="content typo" :class="{'privacy':!moment.published}" v-viewer v-html="moment.content"></div>
 						<div class="extra content">
 							<a class="left floated" @click="like(moment.id)">
 								<i class="heart icon" :class="isLike(moment.id)?'like-color':'outline'"></i>{{ moment.likes }}
@@ -63,7 +63,10 @@
 		},
 		methods: {
 			getMomentList() {
-				getMomentListByPageNum(this.pageNum).then(res => {
+				//如果有则发送博主身份Token
+				const adminToken = window.sessionStorage.getItem('adminToken')
+				const token = adminToken ? adminToken : ''
+				getMomentListByPageNum(token, this.pageNum).then(res => {
 					console.log(res)
 					if (res.code === 200) {
 						this.momentList = res.data.list
@@ -202,5 +205,9 @@
 	.pagination {
 		text-align: center;
 		margin-top: 3em;
+	}
+
+	.privacy {
+		background: repeating-linear-gradient(145deg, #f2f2f2, #f2f2f2 15px, #fff 0, #fff 30px) !important;
 	}
 </style>

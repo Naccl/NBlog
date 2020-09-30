@@ -1,5 +1,6 @@
 package top.naccl.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,12 @@ import java.util.List;
 public class MomentServiceImpl implements MomentService {
 	@Autowired
 	MomentMapper momentMapper;
+	//每页显示5条动态
+	private static final int pageSize = 5;
+	//动态列表排序方式
+	private static final String orderBy = "create_time desc";
+	//私密动态提示
+	private static final String PRIVATE_MOMENT_CONTENT = "<p>此条为私密动态，仅发布者可见！</p>";
 
 	@Override
 	public List<Moment> getMomentList() {
@@ -28,10 +35,15 @@ public class MomentServiceImpl implements MomentService {
 	}
 
 	@Override
-	public List<top.naccl.model.vo.Moment> getMomentListByPublished() {
-		List<top.naccl.model.vo.Moment> moments = momentMapper.getMomentListByPublished();
-		for (top.naccl.model.vo.Moment moment : moments) {
-			moment.setContent(MarkdownUtils.markdownToHtmlExtensions(moment.getContent()));
+	public List<Moment> getMomentVOList(Integer pageNum, boolean adminIdentity) {
+		PageHelper.startPage(pageNum, pageSize, orderBy);
+		List<Moment> moments = momentMapper.getMomentList();
+		for (Moment moment : moments) {
+			if (adminIdentity || moment.getPublished()) {
+				moment.setContent(MarkdownUtils.markdownToHtmlExtensions(moment.getContent()));
+			} else {
+				moment.setContent(PRIVATE_MOMENT_CONTENT);
+			}
 		}
 		return moments;
 	}

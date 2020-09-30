@@ -7,7 +7,7 @@ import java.util.List;
 public interface MomentService {
 	List<Moment> getMomentList();
 
-	List<top.naccl.model.vo.Moment> getMomentListByPublished();
+	List<Moment> getMomentVOList(Integer pageNum, boolean adminIdentity);
 
 	void addLikeByMomentId(Long momentId);
 
