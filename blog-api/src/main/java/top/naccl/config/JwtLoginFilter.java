@@ -59,9 +59,9 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
 	}
 
 	@Override
-	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult)
-			throws IOException, ServletException {
-		String jwt = JwtUtils.generateToken(authResult.getName());
+	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+	                                        FilterChain chain, Authentication authResult) throws IOException {
+		String jwt = JwtUtils.generateToken(authResult.getName(), authResult.getAuthorities());
 		response.setContentType("application/json;charset=utf-8");
 		User user = (User) authResult.getPrincipal();
 		user.setPassword(null);
@@ -76,8 +76,8 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
 	}
 
 	@Override
-	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
-			throws IOException, ServletException {
+	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+	                                          AuthenticationException exception) throws IOException {
 		response.setContentType("application/json;charset=utf-8");
 		Result result = Result.create(401, exception.getMessage());
 		//登录不成功时，会抛出对应的异常

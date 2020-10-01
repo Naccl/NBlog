@@ -2,8 +2,9 @@ package top.naccl.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 import top.naccl.model.vo.Result;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * @Description: JWT请求过滤器
@@ -33,14 +35,16 @@ public class JwtFilter extends GenericFilterBean {
 			filterChain.doFilter(request, servletResponse);
 			return;
 		}
-		String jwtToken = request.getHeader("Authorization");
-		if (jwtToken != null && !"".equals(jwtToken) && !"null".equals(jwtToken)) {
+		String jwt = request.getHeader("Authorization");
+		if (JwtUtils.judgeTokenIsExist(jwt)) {
 			try {
-				Claims claims = Jwts.parser().setSigningKey(JwtUtils.secretKey).parseClaimsJws(jwtToken.replace("Bearer", "")).getBody();
-				String username = claims.getSubject();//获取当前登录用户名
-				UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, null, null);
+				Claims claims = JwtUtils.getTokenBody(jwt);
+				String username = claims.getSubject();
+				List<GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList((String) claims.get("authorities"));
+				UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, null, authorities);
 				SecurityContextHolder.getContext().setAuthentication(token);
 			} catch (Exception e) {
+				e.printStackTrace();
 				response.setContentType("application/json;charset=utf-8");
 				Result result = Result.create(403, "凭证已失效，请重新登录！");
 				PrintWriter out = response.getWriter();
@@ -50,6 +54,6 @@ public class JwtFilter extends GenericFilterBean {
 				return;
 			}
 		}
-		filterChain.doFilter(request, servletResponse);
+		filterChain.doFilter(servletRequest, servletResponse);
 	}
 }

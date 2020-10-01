@@ -14,7 +14,7 @@
 				</el-table-column>
 				<el-table-column label="点赞数" prop="likes" width="80"></el-table-column>
 				<el-table-column label="创建时间" width="170">
-					<template v-slot="scope">{{ scope.row.createTime | dateFormat}}</template>
+					<template v-slot="scope">{{ scope.row.createTime | dateFormat }}</template>
 				</el-table-column>
 				<el-table-column label="操作" width="200">
 					<template v-slot="scope">
@@ -85,7 +85,7 @@
 			momentPublishedChanged(row) {
 				updatePublished(row.id, row.published).then(res => {
 					if (res.code === 200) {
-						this.msgSuccess(res.msg);
+						this.msgSuccess(res.msg)
 					} else {
 						this.msgError(res.msg)
 					}

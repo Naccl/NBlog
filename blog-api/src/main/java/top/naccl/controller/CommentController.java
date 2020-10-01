@@ -70,10 +70,10 @@ public class CommentController {
 		} else if (judgeResult == 1) {
 			return Result.create(403, "评论已关闭");
 		} else if (judgeResult == 3) {//文章受密码保护，需要验证Token
-			String jwtToken = request.getHeader("Authorization");
-			if (jwtToken != null && !"".equals(jwtToken) && !"null".equals(jwtToken)) {
+			String jwt = request.getHeader("Authorization");
+			if (JwtUtils.judgeTokenIsExist(jwt)) {
 				try {
-					String subject = JwtUtils.validateToken(jwtToken);
+					String subject = JwtUtils.getTokenBody(jwt).getSubject();
 					if (subject.startsWith("admin:")) {//博主身份Token
 						String username = subject.replace("admin:", "");
 						User admin = (User) userService.loadUserByUsername(username);
@@ -162,12 +162,12 @@ public class CommentController {
 		} else if (judgeResult == 1) {
 			return Result.create(403, "评论已关闭");
 		} else if (judgeResult == 3) {//文章受密码保护
-			String jwtToken = request.getHeader("Authorization");
+			String jwt = request.getHeader("Authorization");
 			//验证Token合法性
-			if (jwtToken != null && !"".equals(jwtToken) && !"null".equals(jwtToken)) {
+			if (JwtUtils.judgeTokenIsExist(jwt)) {
 				String subject;
 				try {
-					subject = JwtUtils.validateToken(jwtToken);
+					subject = JwtUtils.getTokenBody(jwt).getSubject();
 				} catch (Exception e) {
 					e.printStackTrace();
 					return Result.create(403, "Token已失效，请重新验证密码！");
@@ -198,12 +198,12 @@ public class CommentController {
 				return Result.create(403, "此文章受密码保护，请验证密码！");
 			}
 		} else if (judgeResult == 0) {//普通文章
-			String jwtToken = request.getHeader("Authorization");
+			String jwt = request.getHeader("Authorization");
 			//有Token则为博主评论，或文章原先为密码保护，后取消保护，但客户端仍存在Token
-			if (jwtToken != null && !"".equals(jwtToken) && !"null".equals(jwtToken)) {
+			if (JwtUtils.judgeTokenIsExist(jwt)) {
 				String subject;
 				try {
-					subject = JwtUtils.validateToken(jwtToken);
+					subject = JwtUtils.getTokenBody(jwt).getSubject();
 				} catch (Exception e) {
 					e.printStackTrace();
 					return Result.create(403, "Token已失效，请重新验证密码");

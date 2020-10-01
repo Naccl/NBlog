@@ -58,10 +58,10 @@ public class BlogController {
 		BlogDetail blog = blogService.getBlogByIdAndIsPublished(id);
 		//对密码保护的文章校验Token
 		if (!"".equals(blog.getPassword())) {
-			String jwtToken = request.getHeader("Authorization");
-			if (jwtToken != null && !"".equals(jwtToken) && !"null".equals(jwtToken)) {
+			String jwt = request.getHeader("Authorization");
+			if (JwtUtils.judgeTokenIsExist(jwt)) {
 				try {
-					String subject = JwtUtils.validateToken(jwtToken);
+					String subject = JwtUtils.getTokenBody(jwt).getSubject();
 					if (subject.startsWith("admin:")) {//博主身份Token
 						String username = subject.replace("admin:", "");
 						User admin = (User) userService.loadUserByUsername(username);

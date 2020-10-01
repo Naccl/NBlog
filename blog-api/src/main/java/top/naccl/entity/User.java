@@ -1,15 +1,18 @@
 package top.naccl.entity;
 
-import java.util.Collection;
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Description: 用户实体类
@@ -30,12 +33,14 @@ public class User implements UserDetails {
 	private String email;
 	private Date createTime;
 	private Date updateTime;
-	private Integer role;//0管理员，1普通用户
+	private String role;
 
 	@JsonIgnore
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		List<GrantedAuthority> authorityList = new ArrayList<>();
+		authorityList.add(new SimpleGrantedAuthority(role));
+		return authorityList;
 	}
 
 	@JsonIgnore

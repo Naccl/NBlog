@@ -37,10 +37,10 @@ public class MomentController {
 	@GetMapping("/moments")
 	public Result moments(@RequestParam(defaultValue = "1") Integer pageNum, HttpServletRequest request) {
 		boolean adminIdentity = false;
-		String jwtToken = request.getHeader("Authorization");
-		if (jwtToken != null && !"".equals(jwtToken) && !"null".equals(jwtToken)) {
+		String jwt = request.getHeader("Authorization");
+		if (JwtUtils.judgeTokenIsExist(jwt)) {
 			try {
-				String subject = JwtUtils.validateToken(jwtToken);
+				String subject = JwtUtils.getTokenBody(jwt).getSubject();
 				if (subject.startsWith("admin:")) {//博主身份Token
 					String username = subject.replace("admin:", "");
 					User admin = (User) userService.loadUserByUsername(username);

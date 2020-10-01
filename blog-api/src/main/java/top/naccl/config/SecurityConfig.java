@@ -3,6 +3,7 @@ package top.naccl.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -46,7 +47,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authorizeRequests()
 				//任何 /admin 开头的路径下的请求都需要经过JWT验证
-				.antMatchers("/admin/**").authenticated().and()
+				.antMatchers(HttpMethod.GET, "/admin/**").hasAnyRole("admin", "visitor")
+				.antMatchers("/admin/**").hasRole("admin")
+				//其它路径全部放行
+				.anyRequest().permitAll()
+				.and()
 				//自定义JWT过滤器
 				.addFilterBefore(new JwtLoginFilter("/admin/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
 				.addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class)
