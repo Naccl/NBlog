@@ -12,7 +12,7 @@
 					<div class="ui card">
 						<div class="content m-top">
 							<span style="font-weight: 700">{{ $store.state.introduction.name }}</span>
-							<span class="right floated">{{ moment.createTime | dateFormat('YYYY-MM-DD HH:mm') }}</span>
+							<span class="right floated">{{ moment.createTime | dateFromNow }}</span>
 						</div>
 						<div class="content typo" :class="{'privacy':!moment.published}" v-viewer v-html="moment.content"></div>
 						<div class="extra content">
