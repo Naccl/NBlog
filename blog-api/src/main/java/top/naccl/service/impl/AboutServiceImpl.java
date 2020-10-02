@@ -14,6 +14,7 @@ import top.naccl.util.markdown.MarkdownUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @Description: 关于我页面业务层实现
@@ -56,9 +57,17 @@ public class AboutServiceImpl implements AboutService {
 		return map;
 	}
 
-	@Transactional
 	@Override
-	public void updateAbout(String nameEn, String value) {
+	public void updateAbout(Map<String, String> map) {
+		Set<String> keySet = map.keySet();
+		for (String key : keySet) {
+			updateOneAbout(key, map.get(key));
+		}
+		deleteAboutRedisCache();
+	}
+
+	@Transactional
+	public void updateOneAbout(String nameEn, String value) {
 		if (aboutMapper.updateAbout(nameEn, value) != 1) {
 			throw new PersistenceException("修改失败");
 		}
@@ -68,5 +77,12 @@ public class AboutServiceImpl implements AboutService {
 	public boolean getAboutCommentEnabled() {
 		String commentEnabledString = aboutMapper.getAboutCommentEnabled();
 		return Boolean.parseBoolean(commentEnabledString);
+	}
+
+	/**
+	 * 删除关于我页面缓存
+	 */
+	private void deleteAboutRedisCache() {
+		redisService.deleteCacheByKey(RedisKeyConfig.ABOUT_INFO_MAP);
 	}
 }

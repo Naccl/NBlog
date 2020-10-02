@@ -10,7 +10,6 @@ import top.naccl.model.vo.Result;
 import top.naccl.service.AboutService;
 
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @Description: 关于我页面后台管理
@@ -41,10 +40,7 @@ public class AboutAdminController {
 	 */
 	@PutMapping("/about")
 	public Result updateAbout(@RequestBody Map<String, String> map) {
-		Set<String> keySet = map.keySet();
-		for (String key : keySet) {
-			aboutService.updateAbout(key, map.get(key));
-		}
+		aboutService.updateAbout(map);
 		return Result.ok("修改成功");
 	}
 }

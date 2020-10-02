@@ -7,7 +7,7 @@ public interface AboutService {
 
 	Map<String, String> getAboutSetting();
 
-	void updateAbout(String nameEn, String value);
+	void updateAbout(Map<String, String> map);
 
 	boolean getAboutCommentEnabled();
 }

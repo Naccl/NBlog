@@ -72,4 +72,9 @@ public class RedisServiceImpl implements RedisService {
 	public void saveObjectToValue(String key, Object object) {
 		jsonRedisTemplate.opsForValue().set(key, object);
 	}
+
+	@Override
+	public void deleteCacheByKey(String key) {
+		jsonRedisTemplate.delete(key);
+	}
 }

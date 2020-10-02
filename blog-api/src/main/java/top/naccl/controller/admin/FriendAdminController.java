@@ -103,7 +103,7 @@ public class FriendAdminController {
 	}
 
 	/**
-	 * 修改友链页面评论状态
+	 * 修改友链页面评论开放状态
 	 *
 	 * @param commentEnabled 是否开放评论
 	 * @return

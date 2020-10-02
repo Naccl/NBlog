@@ -1,6 +1,7 @@
 package top.naccl.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import top.naccl.service.SiteSettingService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -29,12 +31,14 @@ import java.util.regex.Pattern;
  */
 @Service
 public class SiteSettingServiceImpl implements SiteSettingService {
-	private static final Pattern PATTERN = Pattern.compile("\"(.*?)\"");
-
 	@Autowired
 	SiteSettingMapper siteSettingMapper;
 	@Autowired
 	RedisService redisService;
+	@Autowired
+	ObjectMapper objectMapper;
+
+	private static final Pattern PATTERN = Pattern.compile("\"(.*?)\"");
 
 	@Override
 	public Map<String, List<SiteSetting>> getList() {
@@ -116,27 +120,47 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 		return map;
 	}
 
-	@Transactional
 	@Override
-	public void updateSiteSetting(SiteSetting siteSetting) {
+	public void updateSiteSetting(List<LinkedHashMap> siteSettings, List<Integer> deleteIds) {
+		for (Integer id : deleteIds) {//删除
+			deleteOneSiteSettingById(id);
+		}
+		for (LinkedHashMap s : siteSettings) {
+			SiteSetting siteSetting = objectMapper.convertValue(s, SiteSetting.class);
+			if (siteSetting.getId() != null) {//修改
+				updateOneSiteSetting(siteSetting);
+			} else {//添加
+				saveOneSiteSetting(siteSetting);
+			}
+		}
+		deleteSiteInfoRedisCache();
+	}
+
+	@Transactional
+	public void saveOneSiteSetting(SiteSetting siteSetting) {
+		if (siteSettingMapper.saveSiteSetting(siteSetting) != 1) {
+			throw new PersistenceException("配置添加失败");
+		}
+	}
+
+	@Transactional
+	public void updateOneSiteSetting(SiteSetting siteSetting) {
 		if (siteSettingMapper.updateSiteSetting(siteSetting) != 1) {
 			throw new PersistenceException("配置修改失败");
 		}
 	}
 
 	@Transactional
-	@Override
-	public void deleteSiteSettingById(Integer id) {
+	public void deleteOneSiteSettingById(Integer id) {
 		if (siteSettingMapper.deleteSiteSettingById(id) != 1) {
 			throw new PersistenceException("配置删除失败");
 		}
 	}
 
-	@Transactional
-	@Override
-	public void saveSiteSetting(SiteSetting siteSetting) {
-		if (siteSettingMapper.saveSiteSetting(siteSetting) != 1) {
-			throw new PersistenceException("配置添加失败");
-		}
+	/**
+	 * 删除站点信息缓存
+	 */
+	private void deleteSiteInfoRedisCache() {
+		redisService.deleteCacheByKey(RedisKeyConfig.SITE_INFO_MAP);
 	}
 }

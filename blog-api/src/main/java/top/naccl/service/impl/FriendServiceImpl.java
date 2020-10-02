@@ -121,6 +121,7 @@ public class FriendServiceImpl implements FriendService {
 		if (siteSettingMapper.updateFriendInfoContent(content) != 1) {
 			throw new PersistenceException("修改失败");
 		}
+		deleteFriendInfoRedisCache();
 	}
 
 	@Transactional
@@ -129,5 +130,13 @@ public class FriendServiceImpl implements FriendService {
 		if (siteSettingMapper.updateFriendInfoCommentEnabled(commentEnabled) != 1) {
 			throw new PersistenceException("修改失败");
 		}
+		deleteFriendInfoRedisCache();
+	}
+
+	/**
+	 * 删除友链页面缓存
+	 */
+	private void deleteFriendInfoRedisCache() {
+		redisService.deleteCacheByKey(RedisKeyConfig.FRIEND_INFO_MAP);
 	}
 }

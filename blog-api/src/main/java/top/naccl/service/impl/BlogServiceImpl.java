@@ -197,6 +197,7 @@ public class BlogServiceImpl implements BlogService {
 		if (blogMapper.deleteBlogById(id) != 1) {
 			throw new NotFoundException("该博客不存在");
 		}
+		deleteBlogRedisCache();
 	}
 
 	@Transactional
@@ -213,6 +214,7 @@ public class BlogServiceImpl implements BlogService {
 		if (blogMapper.saveBlog(blog) != 1) {
 			throw new PersistenceException("添加博客失败");
 		}
+		deleteBlogRedisCache();
 	}
 
 	@Transactional
@@ -229,6 +231,7 @@ public class BlogServiceImpl implements BlogService {
 		if (blogMapper.updateBlogRecommendById(blogId, recommend) != 1) {
 			throw new PersistenceException("操作失败");
 		}
+		deleteBlogRedisCache();
 	}
 
 	@Transactional
@@ -237,6 +240,7 @@ public class BlogServiceImpl implements BlogService {
 		if (blogMapper.updateBlogVisibilityById(blogId, blogVisibility) != 1) {
 			throw new PersistenceException("操作失败");
 		}
+		deleteBlogRedisCache();
 	}
 
 	@Transactional
@@ -245,6 +249,7 @@ public class BlogServiceImpl implements BlogService {
 		if (blogMapper.updateBlogTopById(blogId, top) != 1) {
 			throw new PersistenceException("操作失败");
 		}
+		deleteBlogRedisCache();
 	}
 
 	@Transactional
@@ -284,6 +289,7 @@ public class BlogServiceImpl implements BlogService {
 		if (blogMapper.updateBlog(blog) != 1) {
 			throw new PersistenceException("更新博客失败");
 		}
+		deleteBlogRedisCache();
 	}
 
 	@Override
@@ -314,5 +320,14 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public Boolean getPublishedByBlogId(Long blogId) {
 		return blogMapper.getPublishedByBlogId(blogId);
+	}
+
+	/**
+	 * 删除首页缓存、最新推荐缓存、归档页面缓存
+	 */
+	private void deleteBlogRedisCache() {
+		redisService.deleteCacheByKey(RedisKeyConfig.HOME_BLOG_INFO_LIST);
+		redisService.deleteCacheByKey(RedisKeyConfig.NEW_BLOG_LIST);
+		redisService.deleteCacheByKey(RedisKeyConfig.ARCHIVE_BLOG_MAP);
 	}
 }

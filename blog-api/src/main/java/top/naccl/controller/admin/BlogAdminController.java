@@ -79,8 +79,8 @@ public class BlogAdminController {
 	 */
 	@DeleteMapping("/blog")
 	public Result delete(@RequestParam Long id) {
-		blogService.deleteBlogById(id);
 		blogService.deleteBlogTagByBlogId(id);
+		blogService.deleteBlogById(id);
 		commentService.deleteCommentsByBlogId(id);
 		return Result.ok("删除成功");
 	}

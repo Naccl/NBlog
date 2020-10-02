@@ -22,4 +22,6 @@ public interface RedisService {
 	<T> T getObjectByValue(String key, Class t);
 
 	void saveObjectToValue(String key, Object object);
+
+	void deleteCacheByKey(String key);
 }
