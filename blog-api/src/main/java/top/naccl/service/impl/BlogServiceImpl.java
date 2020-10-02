@@ -116,37 +116,19 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	public PageResult<BlogInfo> getBlogInfoListByCategoryNameAndIsPublished(String categoryName, Integer pageNum) {
-		String redisHash = RedisKeyConfig.CATEGORY_BLOG_INFO_LIST + categoryName;
-		//redis已有当前页缓存
-		PageResult<BlogInfo> pageResultFromRedis = redisService.getBlogInfoPageResultByHash(redisHash, pageNum);
-		if (pageResultFromRedis != null) {
-			return pageResultFromRedis;
-		}
-		//redis没有缓存，从数据库查询，并添加缓存
 		PageHelper.startPage(pageNum, pageSize, orderBy);
 		List<BlogInfo> blogInfos = processBlogInfos(blogMapper.getBlogInfoListByCategoryNameAndIsPublished(categoryName));
 		PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogInfos);
 		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
-		//添加缓存
-		redisService.saveBlogInfoPageResultToHash(redisHash, pageNum, pageResult);
 		return pageResult;
 	}
 
 	@Override
 	public PageResult<BlogInfo> getBlogInfoListByTagNameAndIsPublished(String tagName, Integer pageNum) {
-		String redisHash = RedisKeyConfig.TAG_BLOG_INFO_LIST + tagName;
-		//redis已有当前页缓存
-		PageResult<BlogInfo> pageResultFromRedis = redisService.getBlogInfoPageResultByHash(redisHash, pageNum);
-		if (pageResultFromRedis != null) {
-			return pageResultFromRedis;
-		}
-		//redis没有缓存，从数据库查询，并添加缓存
 		PageHelper.startPage(pageNum, pageSize, orderBy);
 		List<BlogInfo> blogInfos = processBlogInfos(blogMapper.getBlogInfoListByTagNameAndIsPublished(tagName));
 		PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogInfos);
 		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
-		//添加缓存
-		redisService.saveBlogInfoPageResultToHash(redisHash, pageNum, pageResult);
 		return pageResult;
 	}
 
