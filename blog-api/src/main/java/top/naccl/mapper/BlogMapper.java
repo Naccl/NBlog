@@ -3,6 +3,7 @@ package top.naccl.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import top.naccl.entity.Blog;
+import top.naccl.model.dto.BlogView;
 import top.naccl.model.dto.BlogVisibility;
 import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.BlogDetail;
@@ -41,6 +42,8 @@ public interface BlogMapper {
 
 	List<RandomBlog> getRandomBlogListByLimitNumAndIsPublished(Integer limitNum);
 
+	List<BlogView> getBlogViewsList();
+
 	int deleteBlogById(Long id);
 
 	int deleteBlogTagByBlogId(Long blogId);
@@ -55,7 +58,7 @@ public interface BlogMapper {
 
 	int updateBlogTopById(Long blogId, Boolean top);
 
-	int updateViews(Long blogId);
+	int updateViews(Long blogId, Integer views);
 
 	Blog getBlogById(Long id);
 

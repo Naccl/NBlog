@@ -40,6 +40,21 @@ public class RedisServiceImpl implements RedisService {
 	}
 
 	@Override
+	public void saveMapToHash(String hash, Map map) {
+		jsonRedisTemplate.opsForHash().putAll(hash, map);
+	}
+
+	@Override
+	public Object getValueByHashKey(String hash, Object key) {
+		return jsonRedisTemplate.opsForHash().get(hash, key);
+	}
+
+	@Override
+	public void incrementByHashKey(String hash, Object key, int increment) {
+		jsonRedisTemplate.opsForHash().increment(hash, key, increment);
+	}
+
+	@Override
 	public <T> List<T> getListByValue(String key) {
 		List<T> redisResult = (List<T>) jsonRedisTemplate.opsForValue().get(key);
 		return redisResult;
@@ -76,5 +91,10 @@ public class RedisServiceImpl implements RedisService {
 	@Override
 	public void deleteCacheByKey(String key) {
 		jsonRedisTemplate.delete(key);
+	}
+
+	@Override
+	public boolean hasKey(String key) {
+		return jsonRedisTemplate.hasKey(key);
 	}
 }

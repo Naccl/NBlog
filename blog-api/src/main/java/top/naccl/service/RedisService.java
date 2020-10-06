@@ -11,6 +11,12 @@ public interface RedisService {
 
 	void saveBlogInfoPageResultToHash(String hash, Integer pageNum, Object object);
 
+	void saveMapToHash(String hash, Map map);
+
+	Object getValueByHashKey(String hash, Object key);
+
+	void incrementByHashKey(String hash, Object key, int increment);
+
 	<T> List<T> getListByValue(String key);
 
 	<T> void saveListToValue(String key, List<T> list);
@@ -24,4 +30,6 @@ public interface RedisService {
 	void saveObjectToValue(String key, Object object);
 
 	void deleteCacheByKey(String key);
+
+	boolean hasKey(String key);
 }

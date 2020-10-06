@@ -84,7 +84,7 @@ public class BlogController {
 			}
 			blog.setPassword("");
 		}
-		blogService.updateViews(id);
+		blogService.updateViewsToRedis(id);
 		return Result.ok("获取成功", blog);
 	}
 

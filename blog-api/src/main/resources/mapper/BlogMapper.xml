@@ -171,6 +171,11 @@
         limit #{limitNum}
     </select>
 
+    <!--查询所有文章的浏览量-->
+    <select id="getBlogViewsList" resultType="top.naccl.model.dto.BlogView">
+        select id, views from blog
+    </select>
+
     <!--按id删除博客-->
     <delete id="deleteBlogById">
         delete from blog where id=#{id}
@@ -213,7 +218,7 @@
 
     <!--更新博客阅读次数-->
     <update id="updateViews">
-        update blog set views=views+1 where id=#{blogId}
+        update blog set views=#{views} where id=#{blogId}
     </update>
 
     <!--按id查询博客-->
