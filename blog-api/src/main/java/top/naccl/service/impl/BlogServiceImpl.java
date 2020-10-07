@@ -165,6 +165,7 @@ public class BlogServiceImpl implements BlogService {
 		List<BlogInfo> blogInfos = processBlogInfos(blogMapper.getBlogInfoListByCategoryNameAndIsPublished(categoryName));
 		PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogInfos);
 		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
+		setBlogViewsFromRedisToPageResult(pageResult);
 		return pageResult;
 	}
 
@@ -174,6 +175,7 @@ public class BlogServiceImpl implements BlogService {
 		List<BlogInfo> blogInfos = processBlogInfos(blogMapper.getBlogInfoListByTagNameAndIsPublished(tagName));
 		PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogInfos);
 		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
+		setBlogViewsFromRedisToPageResult(pageResult);
 		return pageResult;
 	}
 
@@ -286,7 +288,7 @@ public class BlogServiceImpl implements BlogService {
 		if (blogMapper.updateBlogRecommendById(blogId, recommend) != 1) {
 			throw new PersistenceException("操作失败");
 		}
-		deleteBlogRedisCache();
+		redisService.deleteCacheByKey(RedisKeyConfig.NEW_BLOG_LIST);
 	}
 
 	@Transactional
@@ -295,7 +297,9 @@ public class BlogServiceImpl implements BlogService {
 		if (blogMapper.updateBlogVisibilityById(blogId, blogVisibility) != 1) {
 			throw new PersistenceException("操作失败");
 		}
-		deleteBlogRedisCache();
+		redisService.deleteCacheByKey(RedisKeyConfig.HOME_BLOG_INFO_LIST);
+		redisService.deleteCacheByKey(RedisKeyConfig.NEW_BLOG_LIST);
+		redisService.deleteCacheByKey(RedisKeyConfig.ARCHIVE_BLOG_MAP);
 	}
 
 	@Transactional
@@ -304,7 +308,7 @@ public class BlogServiceImpl implements BlogService {
 		if (blogMapper.updateBlogTopById(blogId, top) != 1) {
 			throw new PersistenceException("操作失败");
 		}
-		deleteBlogRedisCache();
+		redisService.deleteCacheByKey(RedisKeyConfig.HOME_BLOG_INFO_LIST);
 	}
 
 	@Override
