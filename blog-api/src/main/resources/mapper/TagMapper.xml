@@ -49,4 +49,14 @@
     <update id="updateTag">
         update tag set tag_name=#{name}, color=#{color} where id=#{id}
     </update>
+
+    <resultMap id="tagBlogCount" type="top.naccl.model.vo.TagBlogCount">
+        <id property="id" column="tag_id"/>
+        <result property="value" column="blog_count"/>
+    </resultMap>
+
+    <!--查询每个标签的博客数量-->
+    <select id="getTagBlogCount" resultMap="tagBlogCount">
+        select tag_id, count(tag_id) as blog_count from blog_tag group by tag_id
+    </select>
 </mapper>

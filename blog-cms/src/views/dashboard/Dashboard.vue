@@ -50,23 +50,27 @@
 			</el-col>
 		</el-row>
 
-		<el-row class="panel-group" :gutter="50">
+		<el-row class="panel-group" :gutter="20">
 			<el-col :span="8">
 				<el-card>
-					<div id="categoryEcharts" style="height:400px;"></div>
+					<div id="categoryEcharts" style="height:500px;"></div>
 				</el-card>
 			</el-col>
 			<el-col :span="8">
 				<el-card>
-					<div id="tagEcharts" style="height:400px;"></div>
+					<div id="tagEcharts" style="height:500px;"></div>
 				</el-card>
 			</el-col>
 			<el-col :span="8">
 				<el-card>
-					<div id="mapEcharts" style="height:400px;"></div>
+					<div id="mapEcharts" style="height:500px;"></div>
 				</el-card>
 			</el-col>
 		</el-row>
+
+		<el-card class="panel-group">
+			<div id="visitorEcharts" style="height:500px;"></div>
+		</el-card>
 	</div>
 </template>
 
@@ -92,7 +96,12 @@
 				categoryEcharts: null,
 				tagEcharts: null,
 				mapEcharts: null,
+				visitorEcharts: null,
 				categoryOption: {
+					title: {
+						text: '分类下文章数量',
+						x: 'center'
+					},
 					tooltip: {
 						trigger: 'item',
 						formatter: '{a} <br/>{b} : {c} ({d}%)'
@@ -113,6 +122,10 @@
 					]
 				},
 				tagOption: {
+					title: {
+						text: '标签下文章数量',
+						x: 'center'
+					},
 					tooltip: {
 						trigger: 'item',
 						formatter: '{a} <br/>{b} : {c} ({d}%)'
@@ -120,28 +133,24 @@
 					legend: {
 						left: 'center',
 						top: 'bottom',
-						data: ['rose1', 'rose2', 'rose3', 'rose4', 'rose5', 'rose6', 'rose7', 'rose8']
+						data: []
 					},
 					series: [
 						{
 							name: '文章数量',
+							top: '-10%',
 							type: 'pie',
 							radius: [30, 110],
 							roseType: 'area',
-							data: [
-								{value: 10, name: 'rose1'},
-								{value: 5, name: 'rose2'},
-								{value: 15, name: 'rose3'},
-								{value: 25, name: 'rose4'},
-								{value: 20, name: 'rose5'},
-								{value: 35, name: 'rose6'},
-								{value: 30, name: 'rose7'},
-								{value: 40, name: 'rose8'}
-							]
+							data: []
 						}
 					]
 				},
 				mapOption: {
+					title: {
+						text: '访客地图',
+						x: 'center'
+					},
 					tooltip: {
 						show: false
 					},
@@ -181,12 +190,20 @@
 						}
 					},
 				},
+				data:{
+					"code": "success",
+					"data": {
+						"date": ["10-02", "10-03", "10-04", "10-05", "10-06", "10-07", "10-08"],
+						"uv": [29.0, 39.0, 26.0, 44.0, 42.0, 37.0, 52.0],
+						"pv": [137.0, 190.0, 128.0, 512.0, 219.0, 205.0, 507.0]
+					}
+				}
 			}
 		},
 		mounted() {
 			this.getData()
-			this.initTagEcharts()
 			this.initMapEcharts()
+			this.initVisitorEcharts()
 		},
 		methods: {
 			getData() {
@@ -195,9 +212,14 @@
 					if (res.code === 200) {
 						this.blogCount = res.data.blogCount
 						this.commentCount = res.data.commentCount
+
 						this.categoryOption.legend.data = res.data.category.legend
 						this.categoryOption.series[0].data = res.data.category.series
 						this.initCategoryEcharts()
+
+						this.tagOption.legend.data = res.data.tag.legend
+						this.tagOption.series[0].data = res.data.tag.series
+						this.initTagEcharts()
 					} else {
 						this.msgError(res.msg)
 					}
@@ -218,7 +240,7 @@
 				this.mapEcharts.setOption(this.mapOption)
 				let dataValue = this.dealWithData()
 				let data1 = dataValue.splice(0, 6)
-				let option = {
+				let mapOption = {
 					series: [
 						{
 							type: "map",
@@ -226,8 +248,6 @@
 							roam: false,
 							zoom: 1.23,
 							center: [105, 36],
-							// geoIndex: 1,
-							// aspectScale: 0.75, //长宽比
 							showLegendSymbol: false, // 存在legend时显示
 							label: {
 								normal: {
@@ -258,15 +278,12 @@
 							type: "scatter",
 							coordinateSystem: "geo",
 							data: dataValue,
-							//   symbolSize: function(val) {
-							//     return val[2] / 10;
-							//   },
 							symbol: "circle",
 							symbolSize: 8,
 							hoverSymbolSize: 10,
 							tooltip: {
 								formatter(value) {
-									return value.data.name + "<br/>" + "设备数：" + "22";
+									return value.data.name + "<br/>" + "访客数：" + "22";
 								},
 								show: true
 							},
@@ -321,7 +338,7 @@
 						}
 					]
 				}
-				this.mapEcharts.setOption(option)
+				this.mapEcharts.setOption(mapOption)
 			},
 			dealWithData() {
 				let geoCoordMap = {
@@ -393,80 +410,6 @@
 					寿光: [118.73, 36.86],
 					盘锦: [122.070714, 41.119997],
 					长治: [113.08, 36.18],
-					深圳: [114.07, 22.62],
-					珠海: [113.52, 22.3],
-					宿迁: [118.3, 33.96],
-					咸阳: [108.72, 34.36],
-					铜川: [109.11, 35.09],
-					平度: [119.97, 36.77],
-					佛山: [113.11, 23.05],
-					海口: [110.35, 20.02],
-					江门: [113.06, 22.61],
-					章丘: [117.53, 36.72],
-					肇庆: [112.44, 23.05],
-					大连: [121.62, 38.92],
-					临汾: [111.5, 36.08],
-					吴江: [120.63, 31.16],
-					石嘴山: [106.39, 39.04],
-					沈阳: [123.38, 41.8],
-					苏州: [120.62, 31.32],
-					茂名: [110.88, 21.68],
-					嘉兴: [120.76, 30.77],
-					长春: [125.35, 43.88],
-					胶州: [120.03336, 36.264622],
-					银川: [106.27, 38.47],
-					张家港: [120.555821, 31.875428],
-					三门峡: [111.19, 34.76],
-					锦州: [121.15, 41.13],
-					南昌: [115.89, 28.68],
-					柳州: [109.4, 24.33],
-					三亚: [109.511909, 18.252847],
-					自贡: [104.778442, 29.33903],
-					吉林: [126.57, 43.87],
-					阳江: [111.95, 21.85],
-					泸州: [105.39, 28.91],
-					西宁: [101.74, 36.56],
-					宜宾: [104.56, 29.77],
-					呼和浩特: [111.65, 40.82],
-					成都: [104.06, 30.67],
-					大同: [113.3, 40.12],
-					镇江: [119.44, 32.2],
-					桂林: [110.28, 25.29],
-					张家界: [110.479191, 29.117096],
-					宜兴: [119.82, 31.36],
-					北海: [109.12, 21.49],
-					西安: [108.95, 34.27],
-					金坛: [119.56, 31.74],
-					东营: [118.49, 37.46],
-					牡丹江: [129.58, 44.6],
-					遵义: [106.9, 27.7],
-					绍兴: [120.58, 30.01],
-					扬州: [119.42, 32.39],
-					常州: [119.95, 31.79],
-					潍坊: [119.1, 36.62],
-					重庆: [106.54, 29.59],
-					台州: [121.420757, 28.656386],
-					南京: [118.78, 32.04],
-					滨州: [118.03, 37.36],
-					贵阳: [106.71, 26.57],
-					无锡: [120.29, 31.59],
-					本溪: [123.73, 41.3],
-					克拉玛依: [84.77, 45.59],
-					渭南: [109.5, 34.52],
-					马鞍山: [118.48, 31.56],
-					宝鸡: [107.15, 34.38],
-					焦作: [113.21, 35.24],
-					句容: [119.16, 31.95],
-					北京: [116.46, 39.92],
-					徐州: [117.2, 34.26],
-					衡水: [115.72, 37.72],
-					包头: [110, 40.58],
-					绵阳: [104.73, 31.48],
-					乌鲁木齐: [87.68, 43.77],
-					枣庄: [117.57, 34.86],
-					杭州: [120.19, 30.26],
-					淄博: [118.05, 36.78],
-					鞍山: [122.85, 41.12],
 					溧阳: [119.48, 31.43],
 					库尔勒: [86.06, 41.68],
 					安阳: [114.35, 36.1],
@@ -521,6 +464,79 @@
 					data.push({name: key, value: geoCoordMap[key]});
 				}
 				return data;
+			},
+			initVisitorEcharts() {
+				let visitorOption = {
+					xAxis: {
+						data: ["10-02", "10-03", "10-04", "10-05", "10-06", "10-07", "10-08"],
+						boundaryGap: false,
+						axisTick: {
+							show: false
+						}
+					},
+					grid: {
+						left: 10,
+						right: 10,
+						bottom: 20,
+						top: 30,
+						containLabel: true
+					},
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: {
+							type: 'cross'
+						},
+						padding: [5, 10]
+					},
+					yAxis: {
+						axisTick: {
+							show: false
+						}
+					},
+					legend: {
+						data: ['访问量(PV)', '独立用户(UV)']
+					},
+					series: [
+						{
+							name: '访问量(PV)', itemStyle: {
+								normal: {
+									color: '#FF005A',
+									lineStyle: {
+										color: '#FF005A',
+										width: 2
+									}
+								}
+							},
+							smooth: true,
+							type: 'line',
+							data: [137, 190, 128, 512, 219, 205, 110],
+							animationDuration: 2800,
+							animationEasing: 'cubicInOut'
+						},
+						{
+							name: '独立用户(UV)',
+							smooth: true,
+							type: 'line',
+							itemStyle: {
+								normal: {
+									color: '#3888fa',
+									lineStyle: {
+										color: '#3888fa',
+										width: 2
+									},
+									areaStyle: {
+										color: '#f3f8ff'
+									}
+								}
+							},
+							data: [29, 39, 26, 44, 42, 37, 13],
+							animationDuration: 2800,
+							animationEasing: 'quadraticOut'
+						}
+					]
+				}
+				this.visitorEcharts = echarts.init(document.getElementById('visitorEcharts'))
+				this.visitorEcharts.setOption(visitorOption)
 			},
 		}
 	}

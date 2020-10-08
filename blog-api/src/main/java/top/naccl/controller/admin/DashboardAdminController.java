@@ -27,11 +27,13 @@ public class DashboardAdminController {
 		int blogCount = dashboardService.getBlogCount();
 		int commentCount = dashboardService.getCommentCount();
 		Map<String, List> categoryBlogCountList = dashboardService.getCategoryBlogCountList();
+		Map<String, List> tagBlogCountList = dashboardService.getTagBlogCountList();
 
 		Map<String, Object> map = new HashMap<>();
 		map.put("blogCount", blogCount);
 		map.put("commentCount", commentCount);
 		map.put("category", categoryBlogCountList);
+		map.put("tag", tagBlogCountList);
 		return Result.ok("获取成功", map);
 	}
 }

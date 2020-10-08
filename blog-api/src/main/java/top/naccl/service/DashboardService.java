@@ -9,4 +9,6 @@ public interface DashboardService {
 	int getCommentCount();
 
 	Map<String, List> getCategoryBlogCountList();
+
+	Map<String, List> getTagBlogCountList();
 }
