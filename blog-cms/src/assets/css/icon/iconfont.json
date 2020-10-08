@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1123781",
+      "name": "新访客",
+      "font_class": "xinfangke",
+      "unicode": "e647",
+      "unicode_decimal": 58951
+    },
+    {
+      "icon_id": "12875242",
+      "name": "文章",
+      "font_class": "article",
+      "unicode": "e6ad",
+      "unicode_decimal": 59053
+    },
+    {
+      "icon_id": "14444479",
+      "name": "用户",
+      "font_class": "yonghu",
+      "unicode": "e6fe",
+      "unicode_decimal": 59134
+    },
+    {
       "icon_id": "309628",
       "name": "log-out",
       "font_class": "logout",
@@ -39,6 +60,13 @@
       "font_class": "biaoqian",
       "unicode": "e62b",
       "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "17548625",
+      "name": "评论",
+      "font_class": "pinglun-blue",
+      "unicode": "e7c1",
+      "unicode_decimal": 59329
     },
     {
       "icon_id": "594378",

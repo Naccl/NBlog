@@ -8,6 +8,7 @@ import top.naccl.model.dto.BlogVisibility;
 import top.naccl.model.vo.ArchiveBlog;
 import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.BlogInfo;
+import top.naccl.model.vo.CategoryBlogCount;
 import top.naccl.model.vo.NewBlog;
 import top.naccl.model.vo.RandomBlog;
 import top.naccl.model.vo.SearchBlog;
@@ -79,4 +80,6 @@ public interface BlogMapper {
 	Boolean getCommentEnabledByBlogId(Long blogId);
 
 	Boolean getPublishedByBlogId(Long blogId);
+
+	List<CategoryBlogCount> getCategoryBlogCountList();
 }

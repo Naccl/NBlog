@@ -306,4 +306,14 @@
     <select id="getPublishedByBlogId" resultType="java.lang.Boolean">
         select is_published from blog where id=#{blogId}
     </select>
+
+    <resultMap id="categoryBlogCount" type="top.naccl.model.vo.CategoryBlogCount">
+        <id property="id" column="category_id"/>
+        <result property="value" column="blog_count"/>
+    </resultMap>
+
+    <!--查询每个分类的博客数量-->
+    <select id="getCategoryBlogCountList" resultMap="categoryBlogCount">
+        select category_id, count(category_id) as blog_count from blog group by category_id
+    </select>
 </mapper>

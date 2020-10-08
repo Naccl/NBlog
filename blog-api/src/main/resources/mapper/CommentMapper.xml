@@ -108,6 +108,11 @@
         </if>
     </select>
 
+    <!--查询所有评论数量-->
+    <select id="countComment" resultType="java.lang.Integer">
+        select count(*) from comment
+    </select>
+
     <!--保存评论-->
     <insert id="saveComment" useGeneratedKeys="true" keyProperty="id">
         insert into comment (nickname, email, content, avatar, create_time, website, ip, is_published, is_admin_comment,

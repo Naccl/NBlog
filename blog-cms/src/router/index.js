@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from "@/views/Login";
 import Home from "@/views/Home";
-import Dashboard from "@/views/Dashboard";
+import Dashboard from "@/views/dashboard/Dashboard";
 import WriteBlog from "@/views/blog/WriteBlog";
 import BlogList from "@/views/blog/BlogList";
 import CategoryList from "@/views/category/CategoryList";

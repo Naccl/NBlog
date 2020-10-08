@@ -283,6 +283,7 @@
 		bottom: 0;
 		right: 0;
 		overflow-y: auto;
+		overflow-x: hidden;
 	}
 
 	.m-el-main-width-190 {

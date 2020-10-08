@@ -59,8 +59,6 @@ public interface BlogService {
 
 	void updateBlog(top.naccl.model.dto.Blog blog);
 
-	int countBlog();
-
 	int countBlogByIsPublished();
 
 	int countBlogByCategoryId(Long categoryId);

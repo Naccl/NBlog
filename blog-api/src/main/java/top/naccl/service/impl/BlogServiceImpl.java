@@ -376,11 +376,6 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public int countBlog() {
-		return blogMapper.countBlog();
-	}
-
-	@Override
 	public int countBlogByIsPublished() {
 		return blogMapper.countBlogByIsPublished();
 	}
