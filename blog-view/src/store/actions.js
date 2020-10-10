@@ -53,12 +53,12 @@ export default {
 	setCommentFormEmpty({commit}) {
 		commit(SET_COMMENT_FORM_EMPTY)
 	},
-	submitCommentForm({rootState, dispatch}, token = '') {
+	submitCommentForm({rootState, dispatch}, {token, path}) {
 		let form = {...rootState.commentForm}
 		form.page = rootState.commentQuery.page
 		form.blogId = rootState.commentQuery.blogId
 		form.parentCommentId = rootState.parentCommentId
-		submitComment(token, form).then(res => {
+		submitComment(token, form, path).then(res => {
 			console.log(res)
 			if (res.code === 200) {
 				Notification({

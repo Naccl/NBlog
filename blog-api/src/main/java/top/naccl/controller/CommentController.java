@@ -1,8 +1,10 @@
 package top.naccl.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +23,7 @@ import top.naccl.service.FriendService;
 import top.naccl.service.impl.UserServiceImpl;
 import top.naccl.util.IpAddressUtils;
 import top.naccl.util.JwtUtils;
+import top.naccl.util.MailUtils;
 import top.naccl.util.Md5Utils;
 import top.naccl.util.QQInfoUtils;
 import top.naccl.util.StringUtils;
@@ -47,6 +50,13 @@ public class CommentController {
 	UserServiceImpl userService;
 	@Autowired
 	FriendService friendService;
+	@Autowired
+	MailProperties mailProperties;
+	@Autowired
+	MailUtils mailUtils;
+	@Autowired
+	ObjectMapper objectMapper;
+	private static final String WEBSITE_URL = "https://naccl.top";
 
 	/**
 	 * 根据页面分页查询评论列表
@@ -144,12 +154,17 @@ public class CommentController {
 	/**
 	 * 提交评论 又长又臭 能用就不改了:)
 	 *
-	 * @param comment 评论DTO
 	 * @param request 用于获取ip和博主身份Token
 	 * @return
 	 */
 	@PostMapping("/comment")
-	public Result postComment(@RequestBody Comment comment, HttpServletRequest request) {
+	public Result postComment(@RequestBody Map<String, Object> map, HttpServletRequest request) {
+		//评论DTO
+		Comment comment = objectMapper.convertValue(map, Comment.class);
+		//评论所在的页面
+		String path = (String) map.get("path");
+		//访客的评论
+		boolean isVisitorComment = false;
 		//评论内容合法性校验
 		if (StringUtils.isEmpty(comment.getContent()) || comment.getContent().length() > 250) {
 			return Result.error("参数有误");
@@ -181,6 +196,7 @@ public class CommentController {
 						return Result.create(403, "博主身份Token已失效，请重新登录！");
 					}
 					setAdminComment(comment, request, admin);
+					isVisitorComment = false;
 				} else {//普通访客经文章密码验证后携带Token
 					//对访客的评论昵称、邮箱合法性校验
 					if (StringUtils.isEmpty(comment.getNickname(), comment.getEmail()) || comment.getNickname().length() > 15) {
@@ -193,6 +209,7 @@ public class CommentController {
 						return Result.create(403, "Token不匹配，请重新验证密码！");
 					}
 					setVisitorComment(comment, request);
+					isVisitorComment = true;
 				}
 			} else {//不存在Token则无评论权限
 				return Result.create(403, "此文章受密码保护，请验证密码！");
@@ -217,12 +234,14 @@ public class CommentController {
 						return Result.create(403, "博主身份Token已失效，请重新登录！");
 					}
 					setAdminComment(comment, request, admin);
+					isVisitorComment = false;
 				} else {//文章原先为密码保护，后取消保护，但客户端仍存在Token，则忽略Token
 					//对访客的评论昵称、邮箱合法性校验
 					if (StringUtils.isEmpty(comment.getNickname(), comment.getEmail()) || comment.getNickname().length() > 15) {
 						return Result.error("参数有误");
 					}
 					setVisitorComment(comment, request);
+					isVisitorComment = true;
 				}
 			} else {//访客评论
 				//对访客的评论昵称、邮箱合法性校验
@@ -230,9 +249,11 @@ public class CommentController {
 					return Result.error("参数有误");
 				}
 				setVisitorComment(comment, request);
+				isVisitorComment = true;
 			}
 		}
 		commentService.saveComment(comment);
+		judgeSendMail(comment, isVisitorComment, path);
 		return Result.ok("评论成功");
 	}
 
@@ -303,5 +324,63 @@ public class CommentController {
 		int num = m % 6 + 1;//计算对应的头像
 		String avatar = "/img/comment-avatar/" + num + ".jpg";
 		comment.setAvatar(avatar);
+	}
+
+	private void judgeSendMail(Comment comment, boolean isVisitorComment, String path) {
+		//访客的评论
+		if (isVisitorComment) {
+			//访客回复了一条评论
+			if (comment.getParentCommentId() != -1) {
+				top.naccl.entity.Comment parentComment = commentService.getCommentById(comment.getParentCommentId());
+				//访客回复我的评论，邮件提醒我自己
+				if (parentComment.getAdminComment()) {
+					sendMailToMe(parentComment.getEmail(), path);
+				} else if (parentComment.getNotice()) {
+					//访客回复了一个访客，且对方接收提醒，邮件提醒对方，并提醒我有新评论
+					sendMailToParentComment(parentComment.getEmail(), path);
+					sendMailToMe(mailProperties.getUsername(), path);
+				}
+			} else {//访客的直接评论，只邮件提醒我自己
+				sendMailToMe(mailProperties.getUsername(), path);
+			}
+		} else {
+			//我的评论
+			//我回复了一条评论
+			if (comment.getParentCommentId() != -1) {
+				top.naccl.entity.Comment parentComment = commentService.getCommentById(comment.getParentCommentId());
+				//我回复访客，且对方接收提醒，邮件提醒对方
+				if (!parentComment.getAdminComment() && parentComment.getNotice()) {
+					sendMailToParentComment(parentComment.getEmail(), path);
+				}
+			}
+		}
+	}
+
+	/**
+	 * 发送邮件提醒回复对象
+	 *
+	 * @param email 邮件接收方
+	 * @param path  评论所在的页面
+	 */
+	private void sendMailToParentComment(String email, String path) {
+		String url = WEBSITE_URL + path;
+		String toAccount = email;
+		String subject = "Naccl's Blog评论回复";
+		String content = "<body><h2>您的评论有新回复</h2><p><a href='" + url + "'>详情请看" + url + "</a></p><p>此邮件为自动发送，如不想再收到此类消息，请回复TD</p></body>";
+		mailUtils.sendHTMLMail(toAccount, subject, content);
+	}
+
+	/**
+	 * 发送邮件提醒我自己
+	 *
+	 * @param email 邮件接收方
+	 * @param path  评论所在的页面
+	 */
+	private void sendMailToMe(String email, String path) {
+		String url = WEBSITE_URL + path;
+		String toAccount = email;
+		String subject = "Naccl's Blog新评论";
+		String content = "<body><p><a href='" + url + "'>新评论" + url + "</a></p></body>";
+		mailUtils.sendHTMLMail(toAccount, subject, content);
 	}
 }

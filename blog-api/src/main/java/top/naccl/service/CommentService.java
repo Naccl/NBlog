@@ -10,6 +10,8 @@ public interface CommentService {
 
 	List<PageComment> getPageCommentList(Integer page, Long blogId, Long parentCommentId);
 
+	Comment getCommentById(Long id);
+
 	void updateCommentPublishedById(Long commentId, Boolean published);
 
 	void updateCommentNoticeById(Long commentId, Boolean notice);

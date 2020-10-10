@@ -21,6 +21,8 @@ public interface CommentMapper {
 
 	List<PageComment> getPageCommentListByPageAndParentCommentId(Integer page, Long blogId, Long parentCommentId);
 
+	Comment getCommentById(Long id);
+
 	int updateCommentPublishedById(Long commentId, Boolean published);
 
 	int updateCommentNoticeById(Long commentId, Boolean notice);

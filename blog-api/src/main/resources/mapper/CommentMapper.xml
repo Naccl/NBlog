@@ -73,6 +73,14 @@
         order by c1.create_time desc
     </select>
 
+    <!--按id查询评论-->
+    <select id="getCommentById" resultMap="comment">
+        select id, nickname, email, content, avatar, create_time, ip, is_published, is_admin_comment, page, is_notice,
+        parent_comment_id, website, qq
+        from comment
+        where id=#{id}
+    </select>
+
     <!--更新评论公开状态-->
     <update id="updateCommentPublishedById">
         update comment set is_published=#{published} where id=#{commentId}

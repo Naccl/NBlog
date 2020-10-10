@@ -44,6 +44,15 @@ public class CommentServiceImpl implements CommentService {
 		return comments;
 	}
 
+	@Override
+	public Comment getCommentById(Long id) {
+		Comment comment = commentMapper.getCommentById(id);
+		if (comment == null) {
+			throw new PersistenceException("评论不存在");
+		}
+		return comment;
+	}
+
 	/**
 	 * 将所有子评论递归取出到一个List中
 	 *

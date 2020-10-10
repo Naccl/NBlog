@@ -13,7 +13,7 @@ export function getCommentListByQuery(token, query) {
 	})
 }
 
-export function submitComment(token, form) {
+export function submitComment(token, form, path) {
 	return axios({
 		url: 'comment',
 		method: 'POST',
@@ -21,7 +21,8 @@ export function submitComment(token, form) {
 			Authorization: token,
 		},
 		data: {
-			...form
+			...form,
+			path
 		}
 	})
 }
