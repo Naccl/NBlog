@@ -32,6 +32,9 @@ public class LoginController {
 	@PostMapping("/login")
 	public Result login(@RequestBody LoginInfo loginInfo) {
 		User user = (User) userService.loadUserByUsername(loginInfo.getUsername());
+		if (!"ROLE_admin".equals(user.getRole())) {
+			return Result.create(403, "无权限");
+		}
 		user.setPassword(null);
 		String jwt = JwtUtils.generateToken("admin:" + user.getUsername());
 		Map<String, Object> map = new HashMap<>();
