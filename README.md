@@ -4,6 +4,12 @@
 
 计划编写详细博客教程（如果有人关注这个项目的话👀）
 
+预览地址：
+
+前台：[https://naccl.top](https://naccl.top)
+
+后台：[https://admin.naccl.top](https://admin.naccl.top) 账号Visitor 密码123456
+
 
 
 ## 后端
