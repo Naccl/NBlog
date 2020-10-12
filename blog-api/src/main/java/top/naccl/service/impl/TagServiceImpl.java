@@ -53,7 +53,7 @@ public class TagServiceImpl implements TagService {
 		if (tagMapper.saveTag(tag) != 1) {
 			throw new PersistenceException("标签添加失败");
 		}
-		deleteTagRedisCache();
+		redisService.deleteCacheByKey(RedisKeyConfig.TAG_CLOUD_LIST);
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class TagServiceImpl implements TagService {
 		if (tagMapper.deleteTagById(id) != 1) {
 			throw new PersistenceException("标签删除失败");
 		}
-		deleteTagRedisCache();
+		redisService.deleteCacheByKey(RedisKeyConfig.TAG_CLOUD_LIST);
 	}
 
 	@Transactional
@@ -85,13 +85,8 @@ public class TagServiceImpl implements TagService {
 		if (tagMapper.updateTag(tag) != 1) {
 			throw new PersistenceException("标签更新失败");
 		}
-		deleteTagRedisCache();
-	}
-
-	/**
-	 * 删除标签云缓存
-	 */
-	private void deleteTagRedisCache() {
 		redisService.deleteCacheByKey(RedisKeyConfig.TAG_CLOUD_LIST);
+		//修改了标签名或颜色，可能有首页文章关联了标签，也要更新首页缓存
+		redisService.deleteCacheByKey(RedisKeyConfig.HOME_BLOG_INFO_LIST);
 	}
 }
