@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.naccl.mapper.ScheduleJobMapper">
+
+    <resultMap id="job" type="top.naccl.entity.ScheduleJob">
+        <id property="jobId" column="job_id"/>
+        <result property="beanName" column="bean_name"/>
+        <result property="methodName" column="method_name"/>
+        <result property="params" column="params"/>
+        <result property="cron" column="cron"/>
+        <result property="status" column="status"/>
+        <result property="remark" column="remark"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <select id="getJobList" resultMap="job">
+        select job_id, bean_name, method_name, params, cron, status, remark, create_time from schedule_job
+    </select>
+
+    <select id="getJobById" resultMap="job">
+        select job_id, bean_name, method_name, params, cron, status, remark, create_time from schedule_job where job_id=#{jobId}
+    </select>
+
+    <insert id="saveJob" parameterType="top.naccl.entity.ScheduleJob" useGeneratedKeys="true" keyProperty="jobId">
+        insert into schedule_job (bean_name, method_name, params, cron, status, remark, create_time)
+        values (#{beanName}, #{methodName}, #{params}, #{cron}, #{status}, #{remark}, #{createTime})
+    </insert>
+
+    <update id="updateJob">
+        update schedule_job set bean_name=#{beanName}, method_name=#{methodName}, params=#{params}, cron=#{cron}, status=#{status},
+        remark=#{remark}, create_time=#{createTime} where job_id=#{jobId}
+    </update>
+
+    <delete id="deleteJobById">
+        delete from schedule_job where job_id=#{jobId}
+    </delete>
+
+    <update id="updateJobStatusById">
+        update schedule_job set status=#{status} where job_id=#{jobId}
+    </update>
+</mapper>
