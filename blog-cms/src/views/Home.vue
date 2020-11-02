@@ -67,43 +67,36 @@
 							{
 								id: 11,
 								title: '写文章',
-								children: [],
 								path: '/blogs/write'
 							},
 							{
 								id: 12,
 								title: '写动态',
-								children: [],
 								path: '/moments/write'
 							},
 							{
 								id: 13,
 								title: '文章管理',
-								children: [],
 								path: '/blogs'
 							},
 							{
 								id: 14,
 								title: '动态管理',
-								children: [],
 								path: '/moments'
 							},
 							{
 								id: 15,
 								title: '分类管理',
-								children: [],
 								path: '/categories'
 							},
 							{
 								id: 16,
 								title: '标签管理',
-								children: [],
 								path: '/tags'
 							},
 							{
 								id: 17,
 								title: '评论管理',
-								children: [],
 								path: '/comments'
 							}
 						]
@@ -115,43 +108,48 @@
 							{
 								id: 21,
 								title: '站点设置',
-								children: [],
 								path: '/siteSettings'
 							},
 							{
 								id: 22,
 								title: '友链管理',
-								children: [],
 								path: '/friends'
 							},
 							{
 								id: 23,
 								title: '关于我',
-								children: [],
 								path: '/about'
 							}
 						]
 					},
 					{
 						id: 3,
-						title: '数据统计',
+						title: '系统管理',
 						children: [
 							{
 								id: 31,
+								title: '定时任务',
+								path: '/scheduleJob'
+							}
+						]
+					},
+					{
+						id: 4,
+						title: '数据统计',
+						children: [
+							{
+								id: 41,
 								title: '访问量',
-								children: [],
 								path: '/pv'
 							},
 							{
-								id: 32,
+								id: 42,
 								title: '实时访客',
-								children: [],
 								path: '/latest'
 							},
 							{
-								id: 33,
+								id: 43,
 								title: '日志',
-								children: [],
 								path: '/log'
 							}
 						]
@@ -160,7 +158,8 @@
 				iconsObj: {
 					'1': 'el-icon-menu',
 					'2': 'el-icon-document-copy',
-					'3': 'el-icon-s-data',
+					'3': 'el-icon-s-tools',
+					'4': 'el-icon-s-data',
 					'11': 'el-icon-edit',
 					'12': 'el-icon-edit',
 					'13': 'el-icon-s-order',
@@ -171,9 +170,10 @@
 					'21': 'submenu ali-iconfont icon-bianjizhandian',
 					'22': 'submenu ali-iconfont icon-friend',
 					'23': 'el-icon-document',
-					'31': 'el-icon-s-marketing',
-					'32': 'el-icon-view',
-					'33': 'el-icon-document-checked',
+					'31': 'el-icon-alarm-clock',
+					'41': 'el-icon-s-marketing',
+					'42': 'el-icon-view',
+					'43': 'el-icon-document-checked',
 				},
 				//是否折叠
 				isCollapse: false,
@@ -277,7 +277,7 @@
 	}
 
 	.el-main {
-		background-color: #eaedf1;
+		background-color: #ffffff;
 		position: absolute;
 		top: 60px;
 		bottom: 0;

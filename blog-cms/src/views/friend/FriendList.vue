@@ -3,62 +3,60 @@
 		<!--面包屑导航-->
 		<Breadcrumb parentTitle="页面管理"/>
 
-		<el-card>
-			<!--添加-->
-			<el-row :gutter="10">
-				<el-col :span="2">
-					<el-button type="primary" size="mini" icon="el-icon-plus" @click="addDialogVisible=true">添加友链</el-button>
-				</el-col>
-				<el-col :span="4">
-					<el-switch v-model="infoForm.commentEnabled" active-text="页面评论" @change="commentEnabledChanged"></el-switch>
-				</el-col>
-			</el-row>
+		<!--添加-->
+		<el-row :gutter="10">
+			<el-col :span="2">
+				<el-button type="primary" size="mini" icon="el-icon-plus" @click="addDialogVisible=true">添加友链</el-button>
+			</el-col>
+			<el-col :span="4">
+				<el-switch v-model="infoForm.commentEnabled" active-text="页面评论" @change="commentEnabledChanged"></el-switch>
+			</el-col>
+		</el-row>
 
-			<el-table :data="friendList" border stripe>
-				<el-table-column label="序号" type="index" width="50"></el-table-column>
-				<el-table-column label="头像" width="80">
-					<template v-slot="scope">
-						<el-avatar shape="square" :size="60" fit="contain" :src="scope.row.avatar"></el-avatar>
-					</template>
-				</el-table-column>
-				<el-table-column label="昵称" prop="nickname"></el-table-column>
-				<el-table-column label="描述" prop="description"></el-table-column>
-				<el-table-column label="站点" prop="website"></el-table-column>
-				<el-table-column label="是否公开" width="100">
-					<template v-slot="scope">
-						<el-switch v-model="scope.row.published" @change="friendPublishedChanged(scope.row)"></el-switch>
-					</template>
-				</el-table-column>
-				<el-table-column label="浏览次数" prop="views" width="100"></el-table-column>
-				<el-table-column label="创建时间" width="170">
-					<template v-slot="scope">{{ scope.row.createTime | dateFormat}}</template>
-				</el-table-column>
-				<el-table-column label="操作" width="200">
-					<template v-slot="scope">
-						<el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row)">编辑</el-button>
-						<el-popconfirm title="确定删除吗？" icon="el-icon-delete" iconColor="red" @onConfirm="deleteFriendById(scope.row.id)">
-							<el-button size="mini" type="danger" icon="el-icon-delete" slot="reference">删除</el-button>
-						</el-popconfirm>
-					</template>
-				</el-table-column>
-			</el-table>
+		<el-table :data="friendList">
+			<el-table-column label="序号" type="index" width="50"></el-table-column>
+			<el-table-column label="头像" width="80">
+				<template v-slot="scope">
+					<el-avatar shape="square" :size="60" fit="contain" :src="scope.row.avatar"></el-avatar>
+				</template>
+			</el-table-column>
+			<el-table-column label="昵称" prop="nickname"></el-table-column>
+			<el-table-column label="描述" prop="description"></el-table-column>
+			<el-table-column label="站点" prop="website"></el-table-column>
+			<el-table-column label="是否公开" width="100">
+				<template v-slot="scope">
+					<el-switch v-model="scope.row.published" @change="friendPublishedChanged(scope.row)"></el-switch>
+				</template>
+			</el-table-column>
+			<el-table-column label="浏览次数" prop="views" width="100"></el-table-column>
+			<el-table-column label="创建时间" width="170">
+				<template v-slot="scope">{{ scope.row.createTime | dateFormat }}</template>
+			</el-table-column>
+			<el-table-column label="操作" width="200">
+				<template v-slot="scope">
+					<el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row)">编辑</el-button>
+					<el-popconfirm title="确定删除吗？" icon="el-icon-delete" iconColor="red" @onConfirm="deleteFriendById(scope.row.id)">
+						<el-button size="mini" type="danger" icon="el-icon-delete" slot="reference">删除</el-button>
+					</el-popconfirm>
+				</template>
+			</el-table-column>
+		</el-table>
 
-			<!--分页-->
-			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="queryInfo.pageNum"
-			               :page-sizes="[5, 10, 15, 20]" :page-size="queryInfo.pageSize" :total="total"
-			               layout="total, sizes, prev, pager, next, jumper" background>
-			</el-pagination>
+		<!--分页-->
+		<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="queryInfo.pageNum"
+		               :page-sizes="[5, 10, 15, 20]" :page-size="queryInfo.pageSize" :total="total"
+		               layout="total, sizes, prev, pager, next, jumper" background>
+		</el-pagination>
 
-			<!--友链页面信息-->
-			<el-form label-position="top">
-				<el-form-item label="友链页面信息">
-					<div id="vditor"></div>
-				</el-form-item>
-				<el-form-item style="text-align: right;">
-					<el-button type="primary" @click="updateContent">保存</el-button>
-				</el-form-item>
-			</el-form>
-		</el-card>
+		<!--友链页面信息-->
+		<el-form label-position="top">
+			<el-form-item label="友链页面信息">
+				<div id="vditor"></div>
+			</el-form-item>
+			<el-form-item style="text-align: right;">
+				<el-button type="primary" @click="updateContent">保存</el-button>
+			</el-form-item>
+		</el-form>
 
 		<!--添加友链对话框-->
 		<el-dialog title="添加友链" width="40%" :visible.sync="addDialogVisible" :close-on-click-modal="false" @close="addDialogClosed">

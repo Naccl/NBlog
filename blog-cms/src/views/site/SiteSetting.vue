@@ -3,7 +3,6 @@
 		<!--面包屑导航-->
 		<Breadcrumb parentTitle="系统管理"/>
 
-		<el-card>
 			<el-row :gutter="20">
 				<el-col :span="12">
 					<el-card>
@@ -74,7 +73,6 @@
 			<div style="text-align: right;margin-top: 30px">
 				<el-button type="primary" icon="el-icon-check" @click="submit">保存</el-button>
 			</div>
-		</el-card>
 	</div>
 </template>
 

@@ -3,61 +3,59 @@
 		<!--面包屑导航-->
 		<Breadcrumb parentTitle="博客管理"/>
 
-		<el-card>
-			<el-form :model="form" :rules="formRules" ref="formRef" label-position="top">
-				<el-form-item label="文章标题" prop="title">
-					<el-input v-model="form.title" placeholder="请输入标题"></el-input>
-				</el-form-item>
+		<el-form :model="form" :rules="formRules" ref="formRef" label-position="top">
+			<el-form-item label="文章标题" prop="title">
+				<el-input v-model="form.title" placeholder="请输入标题"></el-input>
+			</el-form-item>
 
-				<el-alert title="注意：如果从 Typora 中复制 Markdown，粘贴时要选择粘贴为纯文本，否则代码块可能无法被 prismjs 高亮" type="warning" center show-icon></el-alert>
+			<el-alert title="注意：如果从 Typora 中复制 Markdown，粘贴时要选择粘贴为纯文本，否则代码块可能无法被 prismjs 高亮" type="warning" center show-icon></el-alert>
 
-				<el-form-item label="文章描述" prop="description">
-					<div id="vditor-description"></div>
-				</el-form-item>
+			<el-form-item label="文章描述" prop="description">
+				<div id="vditor-description"></div>
+			</el-form-item>
 
-				<el-form-item label="文章正文" prop="content">
-					<div id="vditor-content"></div>
-				</el-form-item>
+			<el-form-item label="文章正文" prop="content">
+				<div id="vditor-content"></div>
+			</el-form-item>
 
-				<el-row :gutter="20">
-					<el-col :span="12">
-						<el-form-item label="分类" prop="cate">
-							<el-select v-model="form.cate" placeholder="请选择分类（输入可添加新分类）" :allow-create="true" :filterable="true" style="width: 100%;">
-								<el-option :label="item.name" :value="item.id" v-for="item in categoryList" :key="item.id"></el-option>
-							</el-select>
-						</el-form-item>
-					</el-col>
-					<el-col :span="12">
-						<el-form-item label="标签" prop="tagList">
-							<el-select v-model="form.tagList" placeholder="请选择标签（输入可添加新标签）" :allow-create="true" :filterable="true" :multiple="true" style="width: 100%;">
-								<el-option :label="item.name" :value="item.id" v-for="item in tagList" :key="item.id"></el-option>
-							</el-select>
-						</el-form-item>
-					</el-col>
-				</el-row>
+			<el-row :gutter="20">
+				<el-col :span="12">
+					<el-form-item label="分类" prop="cate">
+						<el-select v-model="form.cate" placeholder="请选择分类（输入可添加新分类）" :allow-create="true" :filterable="true" style="width: 100%;">
+							<el-option :label="item.name" :value="item.id" v-for="item in categoryList" :key="item.id"></el-option>
+						</el-select>
+					</el-form-item>
+				</el-col>
+				<el-col :span="12">
+					<el-form-item label="标签" prop="tagList">
+						<el-select v-model="form.tagList" placeholder="请选择标签（输入可添加新标签）" :allow-create="true" :filterable="true" :multiple="true" style="width: 100%;">
+							<el-option :label="item.name" :value="item.id" v-for="item in tagList" :key="item.id"></el-option>
+						</el-select>
+					</el-form-item>
+				</el-col>
+			</el-row>
 
-				<el-row :gutter="20">
-					<el-col :span="12">
-						<el-form-item label="字数" prop="words">
-							<el-input v-model="form.words" placeholder="请输入文章字数（自动计算阅读时长）" type="number"></el-input>
-						</el-form-item>
-					</el-col>
-					<el-col :span="12">
-						<el-form-item label="阅读时长(分钟)" prop="readTime">
-							<el-input v-model="form.readTime" placeholder="请输入阅读时长（可选）默认 Math.round(字数 / 200)" type="number"></el-input>
-						</el-form-item>
-					</el-col>
-				</el-row>
+			<el-row :gutter="20">
+				<el-col :span="12">
+					<el-form-item label="字数" prop="words">
+						<el-input v-model="form.words" placeholder="请输入文章字数（自动计算阅读时长）" type="number"></el-input>
+					</el-form-item>
+				</el-col>
+				<el-col :span="12">
+					<el-form-item label="阅读时长(分钟)" prop="readTime">
+						<el-input v-model="form.readTime" placeholder="请输入阅读时长（可选）默认 Math.round(字数 / 200)" type="number"></el-input>
+					</el-form-item>
+				</el-col>
+			</el-row>
 
-				<el-form-item label="浏览次数" prop="views">
-					<el-input v-model="form.views" placeholder="请输入文章字数（可选）默认为 0" type="number" style="width: 50%;"></el-input>
-				</el-form-item>
+			<el-form-item label="浏览次数" prop="views">
+				<el-input v-model="form.views" placeholder="请输入文章字数（可选）默认为 0" type="number" style="width: 50%;"></el-input>
+			</el-form-item>
 
-				<el-form-item style="text-align: right;">
-					<el-button type="primary" @click="dialogVisible=true">保存</el-button>
-				</el-form-item>
-			</el-form>
-		</el-card>
+			<el-form-item style="text-align: right;">
+				<el-button type="primary" @click="dialogVisible=true">保存</el-button>
+			</el-form-item>
+		</el-form>
 
 		<!--编辑可见性状态对话框-->
 		<el-dialog title="博客可见性" width="30%" :visible.sync="dialogVisible">

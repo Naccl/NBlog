@@ -3,39 +3,37 @@
 		<!--面包屑导航-->
 		<Breadcrumb parentTitle="博客管理"/>
 
-		<el-card>
-			<!--添加-->
-			<el-row :gutter="10">
-				<el-col :span="6">
-					<el-button type="primary" icon="el-icon-plus" @click="addDialogVisible=true">添加标签</el-button>
-				</el-col>
-			</el-row>
+		<!--添加-->
+		<el-row :gutter="10">
+			<el-col :span="6">
+				<el-button type="primary" icon="el-icon-plus" @click="addDialogVisible=true">添加标签</el-button>
+			</el-col>
+		</el-row>
 
-			<el-table :data="tagList" border stripe>
-				<el-table-column label="序号" type="index" width="50"></el-table-column>
-				<el-table-column label="名称" prop="name"></el-table-column>
-				<el-table-column label="颜色">
-					<template v-slot="scope">
-						<span style="float:left;width: 100px;">{{ scope.row.color }}</span>
-						<span style="float:left;width: 100px; height: 23px" :class="`me-${scope.row.color}`"></span>
-					</template>
-				</el-table-column>
-				<el-table-column label="操作">
-					<template v-slot="scope">
-						<el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row)">编辑</el-button>
-						<el-popconfirm title="确定删除吗？" icon="el-icon-delete" iconColor="red" @onConfirm="deleteTagById(scope.row.id)">
-							<el-button size="mini" type="danger" icon="el-icon-delete" slot="reference">删除</el-button>
-						</el-popconfirm>
-					</template>
-				</el-table-column>
-			</el-table>
+		<el-table :data="tagList">
+			<el-table-column label="序号" type="index" width="50"></el-table-column>
+			<el-table-column label="名称" prop="name"></el-table-column>
+			<el-table-column label="颜色">
+				<template v-slot="scope">
+					<span style="float:left;width: 100px;">{{ scope.row.color }}</span>
+					<span style="float:left;width: 100px; height: 23px" :class="`me-${scope.row.color}`"></span>
+				</template>
+			</el-table-column>
+			<el-table-column label="操作">
+				<template v-slot="scope">
+					<el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row)">编辑</el-button>
+					<el-popconfirm title="确定删除吗？" icon="el-icon-delete" iconColor="red" @onConfirm="deleteTagById(scope.row.id)">
+						<el-button size="mini" type="danger" icon="el-icon-delete" slot="reference">删除</el-button>
+					</el-popconfirm>
+				</template>
+			</el-table-column>
+		</el-table>
 
-			<!--分页-->
-			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="queryInfo.pageNum"
-			               :page-sizes="[5, 10, 15, 20]" :page-size="queryInfo.pageSize" :total="total"
-			               layout="total, sizes, prev, pager, next, jumper" background>
-			</el-pagination>
-		</el-card>
+		<!--分页-->
+		<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="queryInfo.pageNum"
+		               :page-sizes="[5, 10, 15, 20]" :page-size="queryInfo.pageSize" :total="total"
+		               layout="total, sizes, prev, pager, next, jumper" background>
+		</el-pagination>
 
 		<!--添加标签对话框-->
 		<el-dialog title="添加标签" width="50%" :visible.sync="addDialogVisible" :close-on-click-modal="false" @close="addDialogClosed">

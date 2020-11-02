@@ -28,6 +28,14 @@ input[type="number"] {
     margin-bottom: 15px;
 }
 
+.el-table th, .el-table td {
+    text-align: center !important;
+}
+
+.el-table th {
+    background-color: #f8f8f9 !important;
+}
+
 .me-red {
     background: #DD3C3C;
 }
