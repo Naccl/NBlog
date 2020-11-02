@@ -54,7 +54,7 @@
 				<div id="vditor"></div>
 			</el-form-item>
 			<el-form-item style="text-align: right;">
-				<el-button type="primary" @click="updateContent">保存</el-button>
+				<el-button type="primary" icon="el-icon-check" @click="updateContent">保存</el-button>
 			</el-form-item>
 		</el-form>
 

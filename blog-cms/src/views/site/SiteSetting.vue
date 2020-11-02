@@ -35,7 +35,7 @@
 									<el-input v-model="item.value"></el-input>
 								</div>
 							</el-form-item>
-							<el-button type="primary" icon="el-icon-plus" @click="addFavorite">添加自定义</el-button>
+							<el-button type="primary" size="mini" icon="el-icon-plus" @click="addFavorite">添加自定义</el-button>
 						</el-form>
 					</el-card>
 				</el-col>
@@ -66,7 +66,7 @@
 							<el-button type="danger" icon="el-icon-delete" @click="deleteBadge(badge)">删除</el-button>
 						</el-form-item>
 					</el-form>
-					<el-button type="primary" icon="el-icon-plus" @click="addBadge">添加 badge</el-button>
+					<el-button type="primary" size="mini" icon="el-icon-plus" @click="addBadge">添加 badge</el-button>
 				</el-card>
 			</el-row>
 
