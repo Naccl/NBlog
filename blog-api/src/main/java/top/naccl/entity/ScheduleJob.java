@@ -24,7 +24,7 @@ public class ScheduleJob {
 	private String methodName;//方法名
 	private String params;//参数
 	private String cron;//cron表达式
-	private Boolean status;//任务状态 1:启动 0:暂停
+	private Boolean status;//任务状态
 	private String remark;//备注
 	private Date createTime;//创建时间
 }

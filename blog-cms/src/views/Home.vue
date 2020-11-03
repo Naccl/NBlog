@@ -129,7 +129,7 @@
 							{
 								id: 31,
 								title: '定时任务',
-								path: '/scheduleJob'
+								path: '/jobs'
 							}
 						]
 					},

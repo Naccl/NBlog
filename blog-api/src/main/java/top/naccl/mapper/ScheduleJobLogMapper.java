@@ -16,7 +16,5 @@ import java.util.List;
 public interface ScheduleJobLogMapper {
 	List<ScheduleJobLog> getJobLogList();
 
-	ScheduleJobLog getJobLogById(Long jobLogId);
-
 	int saveJobLog(ScheduleJobLog jobLog);
 }

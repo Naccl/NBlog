@@ -13,6 +13,8 @@ import MomentList from "@/views/moment/MomentList";
 import WriteMoment from "@/views/moment/WriteMoment";
 import About from "@/views/about/About";
 import FriendList from "@/views/friend/FriendList";
+import JobList from "@/views/schedule/JobList";
+import JobLogList from "@/views/schedule/JobLogList";
 
 Vue.use(VueRouter)
 
@@ -122,6 +124,20 @@ const routes = [
 				component: FriendList,
 				meta: {
 					title: '友链管理'
+				}
+			},
+			{
+				path: '/jobs',
+				component: JobList,
+				meta: {
+					title: '定时任务'
+				}
+			},
+			{
+				path: '/jobs/logs',
+				component: JobLogList,
+				meta: {
+					title: '任务日志'
 				}
 			}
 		]

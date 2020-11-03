@@ -47,18 +47,6 @@ public class ScheduleJobController {
 	}
 
 	/**
-	 * 根据id查询定时任务信息
-	 *
-	 * @param jobId 任务id
-	 * @return
-	 */
-	@GetMapping("/job")
-	public Result job(@RequestParam Long jobId) {
-		ScheduleJob schedule = scheduleJobService.getJobById(jobId);
-		return Result.ok("请求成功", schedule);
-	}
-
-	/**
 	 * 新建定时任务
 	 *
 	 * @param scheduleJob
@@ -66,6 +54,8 @@ public class ScheduleJobController {
 	 */
 	@PostMapping("/job")
 	public Result saveJob(@RequestBody ScheduleJob scheduleJob) {
+		scheduleJob.setStatus(false);
+		scheduleJob.setCreateTime(new Date());
 		ValidatorUtils.validateEntity(scheduleJob);
 		scheduleJobService.saveJob(scheduleJob);
 		return Result.ok("添加成功");
@@ -79,6 +69,7 @@ public class ScheduleJobController {
 	 */
 	@PutMapping("/job")
 	public Result updateJob(@RequestBody ScheduleJob scheduleJob) {
+		scheduleJob.setStatus(false);
 		ValidatorUtils.validateEntity(scheduleJob);
 		scheduleJobService.updateJob(scheduleJob);
 		return Result.ok("修改成功");
@@ -135,28 +126,5 @@ public class ScheduleJobController {
 		PageHelper.startPage(pageNum, pageSize, orderBy);
 		PageInfo<ScheduleJobLog> pageInfo = new PageInfo<>(scheduleJobService.getJobLogList());
 		return Result.ok("请求成功", pageInfo);
-	}
-
-	/**
-	 * 根据id查询定时任务日志信息
-	 *
-	 * @param jobLogId 任务日志id
-	 * @return
-	 */
-	@GetMapping("/job/log")
-	public Result log(@RequestParam Long jobLogId) {
-		return Result.ok("请求成功", scheduleJobService.getJobLogById(jobLogId));
-	}
-
-	public static ScheduleJob createJob() {
-		ScheduleJob jobEntity = new ScheduleJob();
-		jobEntity.setBeanName("redisSyncScheduleTask");
-		jobEntity.setMethodName("syncBlogViewsToDatabase");
-		jobEntity.setParams(null);
-		jobEntity.setCron("0/10 * * * * ?");
-		jobEntity.setStatus(true);
-		jobEntity.setRemark("测试该定时任务的执行");
-		jobEntity.setCreateTime(new Date());
-		return jobEntity;
 	}
 }

@@ -18,10 +18,6 @@
         select log_id, job_id, bean_name, method_name, params, status, error, times, create_time from schedule_job_log
     </select>
 
-    <select id="getJobLogById" resultMap="log">
-        select log_id, job_id, bean_name, method_name, params, status, error, times, create_time from schedule_job_log where log_id=#{jobLogId}
-    </select>
-
     <insert id="saveJobLog" parameterType="top.naccl.entity.ScheduleJobLog" useGeneratedKeys="true" keyProperty="logId">
         insert into schedule_job_log (job_id, bean_name, method_name, params, status, error, times, create_time)
         values (#{jobId}, #{beanName}, #{methodName}, #{params}, #{status}, #{error}, #{times}, #{createTime})

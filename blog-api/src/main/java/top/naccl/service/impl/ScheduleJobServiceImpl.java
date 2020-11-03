@@ -53,11 +53,6 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
 	}
 
 	@Override
-	public ScheduleJob getJobById(Long jobId) {
-		return schedulerJobMapper.getJobById(jobId);
-	}
-
-	@Override
 	@Transactional
 	public void saveJob(ScheduleJob scheduleJob) {
 		if (schedulerJobMapper.saveJob(scheduleJob) != 1) {
@@ -69,10 +64,10 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
 	@Override
 	@Transactional
 	public void updateJob(ScheduleJob scheduleJob) {
-		ScheduleUtils.updateScheduleJob(scheduler, scheduleJob);
 		if (schedulerJobMapper.updateJob(scheduleJob) != 1) {
 			throw new PersistenceException("更新失败");
 		}
+		ScheduleUtils.updateScheduleJob(scheduler, scheduleJob);
 	}
 
 	@Override
@@ -86,7 +81,7 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
 
 	@Override
 	public void runJobById(Long jobId) {
-		ScheduleUtils.run(scheduler, getJobById(jobId));
+		ScheduleUtils.run(scheduler, schedulerJobMapper.getJobById(jobId));
 	}
 
 	@Override
@@ -105,11 +100,6 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
 	@Override
 	public List<ScheduleJobLog> getJobLogList() {
 		return scheduleJobLogMapper.getJobLogList();
-	}
-
-	@Override
-	public ScheduleJobLog getJobLogById(Long jobLogId) {
-		return scheduleJobLogMapper.getJobLogById(jobLogId);
 	}
 
 	@Override

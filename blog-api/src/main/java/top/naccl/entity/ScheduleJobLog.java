@@ -22,8 +22,8 @@ public class ScheduleJobLog {
 	private String beanName;//spring bean名称
 	private String methodName;//方法名
 	private String params;//参数
-	private Boolean status;//任务状态 1:成功 0:失败
-	private String error;//失败信息
+	private Boolean status;//任务执行结果
+	private String error;//异常信息
 	private Integer times;//耗时(单位：毫秒)
 	private Date createTime;//创建时间
 }

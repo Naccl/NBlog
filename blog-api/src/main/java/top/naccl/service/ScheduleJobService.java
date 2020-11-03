@@ -8,8 +8,6 @@ import java.util.List;
 public interface ScheduleJobService {
 	List<ScheduleJob> getJobList();
 
-	ScheduleJob getJobById(Long jobId);
-
 	void saveJob(ScheduleJob scheduleJob);
 
 	void updateJob(ScheduleJob scheduleJob);
@@ -20,9 +18,7 @@ public interface ScheduleJobService {
 
 	void updateJobStatusById(Long jobId, Boolean status);
 
-	ScheduleJobLog getJobLogById(Long jobLogId);
+	List<ScheduleJobLog> getJobLogList();
 
 	void saveLog(ScheduleJobLog log);
-
-	List<ScheduleJobLog> getJobLogList();
 }

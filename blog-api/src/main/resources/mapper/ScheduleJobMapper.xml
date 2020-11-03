@@ -28,7 +28,7 @@
 
     <update id="updateJob">
         update schedule_job set bean_name=#{beanName}, method_name=#{methodName}, params=#{params}, cron=#{cron}, status=#{status},
-        remark=#{remark}, create_time=#{createTime} where job_id=#{jobId}
+        remark=#{remark} where job_id=#{jobId}
     </update>
 
     <delete id="deleteJobById">
