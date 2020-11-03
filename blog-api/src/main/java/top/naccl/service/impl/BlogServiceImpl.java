@@ -25,6 +25,7 @@ import top.naccl.service.RedisService;
 import top.naccl.service.TagService;
 import top.naccl.util.markdown.MarkdownUtils;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -53,6 +54,20 @@ public class BlogServiceImpl implements BlogService {
 	private static final String orderBy = "is_top desc, create_time desc";
 	//私密博客提示
 	private static final String PRIVATE_BLOG_DESCRIPTION = "此文章受密码保护！";
+
+	/**
+	 * 项目启动时，保存所有博客的浏览量到Redis
+	 */
+	@PostConstruct
+	private void saveBlogViewsToRedis() {
+		String redisKey = RedisKeyConfig.BLOG_VIEWS_MAP;
+		//Redis中没有存储博客浏览量的Hash
+		if (!redisService.hasKey(redisKey)) {
+			//从数据库中读取并存入Redis
+			Map<Long, Integer> blogViewsMap = getBlogViewsMap();
+			redisService.saveMapToHash(redisKey, blogViewsMap);
+		}
+	}
 
 	@Override
 	public List<Blog> getListByTitleAndCategoryId(String title, Integer categoryId) {
@@ -116,22 +131,7 @@ public class BlogServiceImpl implements BlogService {
 		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
 		//添加首页缓存
 		redisService.saveBlogInfoPageResultToHash(redisKey, pageNum, pageResult);
-		//添加文章浏览量缓存
-		saveBlogViewsToRedis();
 		return pageResult;
-	}
-
-	/**
-	 * 保存所有博客的浏览量到Redis
-	 */
-	private void saveBlogViewsToRedis() {
-		String redisKey = RedisKeyConfig.BLOG_VIEWS_MAP;
-		//Redis中没有存储博客浏览量的Hash
-		if (!redisService.hasKey(redisKey)) {
-			//从数据库中读取并存入Redis
-			Map<Long, Integer> blogViewsMap = getBlogViewsMap();
-			redisService.saveMapToHash(redisKey, blogViewsMap);
-		}
 	}
 
 	/**
@@ -238,8 +238,7 @@ public class BlogServiceImpl implements BlogService {
 		return randomBlogs;
 	}
 
-	@Override
-	public Map<Long, Integer> getBlogViewsMap() {
+	private Map<Long, Integer> getBlogViewsMap() {
 		List<BlogView> blogViewList = blogMapper.getBlogViewsList();
 		Map<Long, Integer> blogViewsMap = new HashMap<>();
 		for (BlogView blogView : blogViewList) {
@@ -318,8 +317,10 @@ public class BlogServiceImpl implements BlogService {
 
 	@Transactional
 	@Override
-	public void updateViews(Long blogId) {
-
+	public void updateViews(Long blogId, Integer views) {
+		if (blogMapper.updateViews(blogId, views) != 1) {
+			throw new PersistenceException("更新失败");
+		}
 	}
 
 	@Override

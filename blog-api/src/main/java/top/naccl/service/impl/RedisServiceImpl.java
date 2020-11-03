@@ -45,6 +45,11 @@ public class RedisServiceImpl implements RedisService {
 	}
 
 	@Override
+	public Map getMapByHash(String hash) {
+		return jsonRedisTemplate.opsForHash().entries(hash);
+	}
+
+	@Override
 	public Object getValueByHashKey(String hash, Object key) {
 		return jsonRedisTemplate.opsForHash().get(hash, key);
 	}

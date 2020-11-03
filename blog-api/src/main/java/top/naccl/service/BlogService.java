@@ -31,8 +31,6 @@ public interface BlogService {
 
 	List<RandomBlog> getRandomBlogListByLimitNumAndIsPublished(Integer limitNum);
 
-	Map<Long, Integer> getBlogViewsMap();
-
 	void deleteBlogById(Long id);
 
 	void deleteBlogTagByBlogId(Long blogId);
@@ -49,7 +47,7 @@ public interface BlogService {
 
 	void updateViewsToRedis(Long blogId);
 
-	void updateViews(Long blogId);
+	void updateViews(Long blogId, Integer views);
 
 	Blog getBlogById(Long id);
 

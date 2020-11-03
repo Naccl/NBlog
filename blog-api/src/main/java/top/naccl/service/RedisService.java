@@ -13,6 +13,8 @@ public interface RedisService {
 
 	void saveMapToHash(String hash, Map map);
 
+	Map getMapByHash(String hash);
+
 	Object getValueByHashKey(String hash, Object key);
 
 	void incrementByHashKey(String hash, Object key, int increment);
