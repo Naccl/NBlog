@@ -112,10 +112,6 @@
 			showDetail(row) {
 				this.detail = {...row}
 				this.detailDialogVisible = true
-			},
-			detailDialogClosed() {
-				this.editForm = {}
-				this.$refs.editFormRef.resetFields()
 			}
 		}
 	}
