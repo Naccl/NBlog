@@ -1,6 +1,15 @@
 package top.naccl.util;
 
+import lombok.extern.slf4j.Slf4j;
+import org.lionsoul.ip2region.DataBlock;
+import org.lionsoul.ip2region.DbConfig;
+import org.lionsoul.ip2region.DbSearcher;
+import org.lionsoul.ip2region.Util;
+import org.springframework.util.StringUtils;
+
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -9,10 +18,11 @@ import java.net.UnknownHostException;
  * @Author: Naccl
  * @Date: 2020-08-18
  */
-
+@Slf4j
 public class IpAddressUtils {
 	/**
 	 * 在Nginx等代理之后获取用户真实IP地址
+	 *
 	 * @param request
 	 * @return
 	 */
@@ -38,13 +48,43 @@ public class IpAddressUtils {
 				try {
 					inet = InetAddress.getLocalHost();
 				} catch (UnknownHostException e) {
-					e.printStackTrace();
+					log.error("getIpAddress exception:", e);
 				}
 				ip = inet.getHostAddress();
 			}
 		}
 		return ip;
 	}
+
+	/**
+	 * 根据ip从 ip2region.db 中获取地理位置
+	 *
+	 * @param ip
+	 * @return
+	 */
+	public static String getCityInfo(String ip) {
+		String dbPath = IpAddressUtils.class.getResource("/ipdb/ip2region.db").getPath();
+		File file = new File(dbPath);
+		if (file.exists() == false) {
+			log.error("Error: Invalid ip2region.db file");
+		}
+		try {
+			DbConfig config = new DbConfig();
+			DbSearcher searcher = new DbSearcher(config, dbPath);
+			Method method = searcher.getClass().getMethod("btreeSearch", String.class);
+			if (Util.isIpAddress(ip) == false) {
+				log.error("Error: Invalid ip address");
+			}
+			DataBlock dataBlock = (DataBlock) method.invoke(searcher, ip);
+			String ipInfo = dataBlock.getRegion();
+			if (!StringUtils.isEmpty(ipInfo)) {
+				ipInfo = ipInfo.replace("|0", "");
+				ipInfo = ipInfo.replace("0|", "");
+			}
+			return ipInfo;
+		} catch (Exception e) {
+			log.error("getCityInfo exception:", e);
+		}
+		return null;
+	}
 }
-
-
