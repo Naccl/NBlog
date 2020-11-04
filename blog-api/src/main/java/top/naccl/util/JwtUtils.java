@@ -3,7 +3,9 @@ package top.naccl.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Date;
@@ -13,9 +15,20 @@ import java.util.Date;
  * @Author: Naccl
  * @Date: 2020-09-02
  */
+@Component
 public class JwtUtils {
-	private static long expireTime = 1000 * 3600 * 6L;
-	private static String secretKey = "abcdefghijklmnopqrstuvwxyz";
+	private static long expireTime;
+	private static String secretKey;
+
+	@Value("${token.secretKey}")
+	public void setSecretKey(String secretKey) {
+		this.secretKey = secretKey;
+	}
+
+	@Value("${token.expireTime}")
+	public void setExpireTime(long expireTime) {
+		this.expireTime = expireTime;
+	}
 
 	/**
 	 * 判断token是否存在
