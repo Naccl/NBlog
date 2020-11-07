@@ -1,7 +1,5 @@
 package top.naccl.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,6 +14,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import top.naccl.entity.User;
 import top.naccl.exception.BadRequestException;
 import top.naccl.model.vo.Result;
+import top.naccl.util.JacksonUtils;
 import top.naccl.util.JwtUtils;
 
 import javax.servlet.FilterChain;
@@ -45,13 +44,13 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
 			if (!"POST".equals(request.getMethod())) {
 				throw new BadRequestException("请求方法错误");
 			}
-			User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
+			User user = JacksonUtils.readValue(request.getInputStream(), User.class);
 			return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-		} catch (BadRequestException | MismatchedInputException exception) {
+		} catch (BadRequestException exception) {
 			response.setContentType("application/json;charset=utf-8");
 			Result result = Result.create(400, "非法请求");
 			PrintWriter out = response.getWriter();
-			out.write(new ObjectMapper().writeValueAsString(result));
+			out.write(JacksonUtils.writeValueAsString(result));
 			out.flush();
 			out.close();
 		}
@@ -70,7 +69,7 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
 		map.put("token", jwt);
 		Result result = Result.ok("登录成功", map);
 		PrintWriter out = response.getWriter();
-		out.write(new ObjectMapper().writeValueAsString(result));
+		out.write(JacksonUtils.writeValueAsString(result));
 		out.flush();
 		out.close();
 	}
@@ -93,7 +92,7 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
 			result.setMsg("用户名或密码错误！");
 		}
 		PrintWriter out = response.getWriter();
-		out.write(new ObjectMapper().writeValueAsString(result));
+		out.write(JacksonUtils.writeValueAsString(result));
 		out.flush();
 		out.close();
 	}

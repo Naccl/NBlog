@@ -1,6 +1,5 @@
 package top.naccl.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,7 @@ import top.naccl.service.CommentService;
 import top.naccl.service.FriendService;
 import top.naccl.service.impl.UserServiceImpl;
 import top.naccl.util.IpAddressUtils;
+import top.naccl.util.JacksonUtils;
 import top.naccl.util.JwtUtils;
 import top.naccl.util.MailUtils;
 import top.naccl.util.Md5Utils;
@@ -54,8 +54,6 @@ public class CommentController {
 	MailProperties mailProperties;
 	@Autowired
 	MailUtils mailUtils;
-	@Autowired
-	ObjectMapper objectMapper;
 	private static final String WEBSITE_URL = "https://naccl.top";
 
 	/**
@@ -160,7 +158,7 @@ public class CommentController {
 	@PostMapping("/comment")
 	public Result postComment(@RequestBody Map<String, Object> map, HttpServletRequest request) {
 		//评论DTO
-		Comment comment = objectMapper.convertValue(map, Comment.class);
+		Comment comment = JacksonUtils.convertValue(map, Comment.class);
 		//评论所在的页面
 		String path = (String) map.get("path");
 		//访客的评论

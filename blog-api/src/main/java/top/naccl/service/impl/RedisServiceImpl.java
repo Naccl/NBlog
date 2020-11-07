@@ -1,12 +1,12 @@
 package top.naccl.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import top.naccl.model.vo.BlogInfo;
 import top.naccl.model.vo.PageResult;
 import top.naccl.service.RedisService;
+import top.naccl.util.JacksonUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -20,14 +20,12 @@ import java.util.Map;
 public class RedisServiceImpl implements RedisService {
 	@Autowired
 	RedisTemplate jsonRedisTemplate;
-	@Autowired
-	ObjectMapper objectMapper;
 
 	@Override
 	public PageResult<BlogInfo> getBlogInfoPageResultByHash(String hash, Integer pageNum) {
 		if (jsonRedisTemplate.opsForHash().hasKey(hash, pageNum)) {
 			Object redisResult = jsonRedisTemplate.opsForHash().get(hash, pageNum);
-			PageResult<BlogInfo> pageResult = objectMapper.convertValue(redisResult, PageResult.class);
+			PageResult<BlogInfo> pageResult = JacksonUtils.convertValue(redisResult, PageResult.class);
 			return pageResult;
 		} else {
 			return null;
@@ -84,7 +82,7 @@ public class RedisServiceImpl implements RedisService {
 	@Override
 	public <T> T getObjectByValue(String key, Class t) {
 		Object redisResult = jsonRedisTemplate.opsForValue().get(key);
-		T object = (T) objectMapper.convertValue(redisResult, t);
+		T object = (T) JacksonUtils.convertValue(redisResult, t);
 		return object;
 	}
 

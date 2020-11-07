@@ -1,10 +1,10 @@
 package top.naccl.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 import top.naccl.model.vo.Result;
+import top.naccl.util.JacksonUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		Result result = Result.create(403, "请登录");
-		out.write(new ObjectMapper().writeValueAsString(result));
+		out.write(JacksonUtils.writeValueAsString(result));
 		out.flush();
 		out.close();
 	}

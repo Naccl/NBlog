@@ -1,7 +1,6 @@
 package top.naccl.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +14,7 @@ import top.naccl.model.bean.Favorite;
 import top.naccl.model.vo.Introduction;
 import top.naccl.service.RedisService;
 import top.naccl.service.SiteSettingService;
+import top.naccl.util.JacksonUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,8 +35,6 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 	SiteSettingMapper siteSettingMapper;
 	@Autowired
 	RedisService redisService;
-	@Autowired
-	ObjectMapper objectMapper;
 
 	private static final Pattern PATTERN = Pattern.compile("\"(.*?)\"");
 
@@ -126,7 +124,7 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 			deleteOneSiteSettingById(id);
 		}
 		for (LinkedHashMap s : siteSettings) {
-			SiteSetting siteSetting = objectMapper.convertValue(s, SiteSetting.class);
+			SiteSetting siteSetting = JacksonUtils.convertValue(s, SiteSetting.class);
 			if (siteSetting.getId() != null) {//修改
 				updateOneSiteSetting(siteSetting);
 			} else {//添加

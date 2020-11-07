@@ -1,6 +1,5 @@
 package top.naccl.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,6 +7,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 import top.naccl.model.vo.Result;
+import top.naccl.util.JacksonUtils;
 import top.naccl.util.JwtUtils;
 
 import javax.servlet.FilterChain;
@@ -48,7 +48,7 @@ public class JwtFilter extends GenericFilterBean {
 				response.setContentType("application/json;charset=utf-8");
 				Result result = Result.create(403, "凭证已失效，请重新登录！");
 				PrintWriter out = response.getWriter();
-				out.write(new ObjectMapper().writeValueAsString(result));
+				out.write(JacksonUtils.writeValueAsString(result));
 				out.flush();
 				out.close();
 				return;

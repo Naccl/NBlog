@@ -1,6 +1,5 @@
 package top.naccl.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,7 @@ import top.naccl.model.vo.SearchBlog;
 import top.naccl.service.BlogService;
 import top.naccl.service.RedisService;
 import top.naccl.service.TagService;
+import top.naccl.util.JacksonUtils;
 import top.naccl.util.markdown.MarkdownUtils;
 
 import javax.annotation.PostConstruct;
@@ -44,8 +44,6 @@ public class BlogServiceImpl implements BlogService {
 	TagService tagService;
 	@Autowired
 	RedisService redisService;
-	@Autowired
-	ObjectMapper objectMapper;
 	//最新推荐博客显示3条
 	private static final int newBlogPageSize = 3;
 	//每页显示5条博客简介
@@ -145,7 +143,7 @@ public class BlogServiceImpl implements BlogService {
 		if (redisService.hasKey(redisKey)) {
 			List<BlogInfo> blogInfos = pageResult.getList();
 			for (int i = 0; i < blogInfos.size(); i++) {
-				BlogInfo blogInfo = objectMapper.convertValue(blogInfos.get(i), BlogInfo.class);
+				BlogInfo blogInfo = JacksonUtils.convertValue(blogInfos.get(i), BlogInfo.class);
 				Long blogId = blogInfo.getId();
 				int view = (int) redisService.getValueByHashKey(redisKey, blogId);
 				blogInfo.setViews(view);
