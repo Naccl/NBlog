@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import top.naccl.mapper.UserMapper;
 import top.naccl.entity.User;
+import top.naccl.service.UserService;
 
 /**
  * @Description: 用户业务层接口实现类
@@ -14,7 +15,7 @@ import top.naccl.entity.User;
  * @Date: 2020-07-19
  */
 @Service
-public class UserServiceImpl implements UserDetailsService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 	@Autowired
 	private UserMapper userMapper;
 
@@ -23,6 +24,18 @@ public class UserServiceImpl implements UserDetailsService {
 		User user = userMapper.findByUsername(username);
 		if (user == null) {
 			throw new UsernameNotFoundException("用户不存在");
+		}
+		return user;
+	}
+
+	@Override
+	public User findUserByUsernameAndPassword(String username, String password) {
+		User user = userMapper.findByUsername(username);
+		if (user == null) {
+			throw new UsernameNotFoundException("用户不存在");
+		}
+		if (!user.getPassword().equals(password)) {
+			throw new UsernameNotFoundException("密码错误");
 		}
 		return user;
 	}

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import top.naccl.entity.User;
 import top.naccl.model.dto.LoginInfo;
 import top.naccl.model.vo.Result;
-import top.naccl.service.impl.UserServiceImpl;
+import top.naccl.service.UserService;
 import top.naccl.util.JwtUtils;
 
 import java.util.HashMap;
@@ -21,7 +21,7 @@ import java.util.Map;
 @RestController
 public class LoginController {
 	@Autowired
-	UserServiceImpl userService;
+	UserService userService;
 
 	/**
 	 * 登录成功后，签发博主身份Token
@@ -31,7 +31,7 @@ public class LoginController {
 	 */
 	@PostMapping("/login")
 	public Result login(@RequestBody LoginInfo loginInfo) {
-		User user = (User) userService.loadUserByUsername(loginInfo.getUsername());
+		User user = userService.findUserByUsernameAndPassword(loginInfo.getUsername(), loginInfo.getPassword());
 		if (!"ROLE_admin".equals(user.getRole())) {
 			return Result.create(403, "无权限");
 		}
