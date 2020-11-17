@@ -20,11 +20,11 @@ import top.naccl.service.BlogService;
 import top.naccl.service.CommentService;
 import top.naccl.service.FriendService;
 import top.naccl.service.impl.UserServiceImpl;
+import top.naccl.util.EncryptUtils;
 import top.naccl.util.IpAddressUtils;
 import top.naccl.util.JacksonUtils;
 import top.naccl.util.JwtUtils;
 import top.naccl.util.MailUtils;
-import top.naccl.util.Md5Utils;
 import top.naccl.util.QQInfoUtils;
 import top.naccl.util.StringUtils;
 
@@ -317,7 +317,7 @@ public class CommentController {
 	 */
 	private void setCommentRandomAvatar(Comment comment) {
 		//set 随机头像
-		String nicknameMd5 = Md5Utils.getMd5(comment.getNickname());//根据评论昵称取MD5，保证每一个昵称对应一个头像
+		String nicknameMd5 = EncryptUtils.getMd5(comment.getNickname());//根据评论昵称取MD5，保证每一个昵称对应一个头像
 		char m = nicknameMd5.charAt(nicknameMd5.length() - 1);//取MD5最后一位
 		int num = m % 6 + 1;//计算对应的头像
 		String avatar = "/img/comment-avatar/" + num + ".jpg";
