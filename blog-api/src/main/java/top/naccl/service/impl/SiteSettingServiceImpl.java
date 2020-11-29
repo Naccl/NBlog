@@ -1,6 +1,5 @@
 package top.naccl.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,12 +76,13 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 		for (SiteSetting s : siteSettings) {
 			if (s.getType() == 1) {
 				if ("copyright".equals(s.getNameEn())) {
-					siteInfo.put(s.getNameEn(), JSON.parseObject(s.getValue(), Copyright.class));
+					Copyright copyright = JacksonUtils.readValue(s.getValue(), Copyright.class);
+					siteInfo.put(s.getNameEn(), copyright);
 				} else {
 					siteInfo.put(s.getNameEn(), s.getValue());
 				}
 			} else if (s.getType() == 2) {
-				Badge badge = JSON.parseObject(s.getValue(), Badge.class);
+				Badge badge = JacksonUtils.readValue(s.getValue(), Badge.class);
 				badges.add(badge);
 			} else if (s.getType() == 3) {
 				if ("avatar".equals(s.getNameEn())) {
@@ -100,7 +100,8 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 				} else if ("email".equals(s.getNameEn())) {
 					introduction.setEmail(s.getValue());
 				} else if ("favorite".equals(s.getNameEn())) {
-					favorites.add(JSON.parseObject(s.getValue(), Favorite.class));
+					Favorite favorite = JacksonUtils.readValue(s.getValue(), Favorite.class);
+					favorites.add(favorite);
 				} else if ("rollText".equals(s.getNameEn())) {
 					Matcher m = PATTERN.matcher(s.getValue());
 					while (m.find()) {

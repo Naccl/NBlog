@@ -1,6 +1,5 @@
 package top.naccl.controller.admin;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import top.naccl.entity.Friend;
 import top.naccl.model.vo.Result;
 import top.naccl.service.FriendService;
+
+import java.util.Map;
 
 /**
  * @Description: 友链页面后台管理
@@ -117,12 +118,12 @@ public class FriendAdminController {
 	/**
 	 * 修改友链页面content
 	 *
-	 * @param jsonObject 包含content的JSON对象
+	 * @param map 包含content的JSON对象
 	 * @return
 	 */
 	@PutMapping("/friendInfo/content")
-	public Result updateFriendInfoContent(@RequestBody JSONObject jsonObject) {
-		friendService.updateFriendInfoContent((String) jsonObject.get("content"));
+	public Result updateFriendInfoContent(@RequestBody Map map) {
+		friendService.updateFriendInfoContent((String) map.get("content"));
 		return Result.ok("修改成功");
 	}
 }
