@@ -3,18 +3,18 @@ import VueRouter from 'vue-router'
 import Login from "@/views/Login";
 import Home from "@/views/Home";
 import Dashboard from "@/views/dashboard/Dashboard";
-import WriteBlog from "@/views/blog/WriteBlog";
-import BlogList from "@/views/blog/BlogList";
-import CategoryList from "@/views/category/CategoryList";
-import TagList from "@/views/tag/TagList";
-import CommentList from "@/views/comment/CommentList";
-import SiteSetting from "@/views/site/SiteSetting";
-import MomentList from "@/views/moment/MomentList";
-import WriteMoment from "@/views/moment/WriteMoment";
-import About from "@/views/about/About";
-import FriendList from "@/views/friend/FriendList";
-import JobList from "@/views/schedule/JobList";
-import JobLogList from "@/views/schedule/JobLogList";
+import WriteBlog from "@/views/blog/blog/WriteBlog";
+import BlogList from "@/views/blog/blog/BlogList";
+import CategoryList from "@/views/blog/category/CategoryList";
+import TagList from "@/views/blog/tag/TagList";
+import CommentList from "@/views/blog/comment/CommentList";
+import MomentList from "@/views/blog/moment/MomentList";
+import WriteMoment from "@/views/blog/moment/WriteMoment";
+import SiteSetting from "@/views/page/site/SiteSetting";
+import FriendList from "@/views/page/friend/FriendList";
+import About from "@/views/page/about/About";
+import JobList from "@/views/system/schedule/JobList";
+import JobLogList from "@/views/system/schedule/JobLogList";
 
 Vue.use(VueRouter)
 
