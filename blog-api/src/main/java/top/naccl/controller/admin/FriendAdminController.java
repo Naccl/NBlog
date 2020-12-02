@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.annotation.OperationLogger;
 import top.naccl.entity.Friend;
 import top.naccl.model.vo.Result;
 import top.naccl.service.FriendService;
@@ -51,6 +52,7 @@ public class FriendAdminController {
 	 * @param published 是否公开
 	 * @return
 	 */
+	@OperationLogger("更新友链公开状态")
 	@PutMapping("/friend/published")
 	public Result updatePublished(@RequestParam Long id, @RequestParam Boolean published) {
 		friendService.updateFriendPublishedById(id, published);
@@ -63,6 +65,7 @@ public class FriendAdminController {
 	 * @param friend 友链DTO
 	 * @return
 	 */
+	@OperationLogger("添加友链")
 	@PostMapping("/friend")
 	public Result saveFriend(@RequestBody Friend friend) {
 		friendService.saveFriend(friend);
@@ -75,6 +78,7 @@ public class FriendAdminController {
 	 * @param friend 友链DTO
 	 * @return
 	 */
+	@OperationLogger("更新友链")
 	@PutMapping("/friend")
 	public Result updateFriend(@RequestBody top.naccl.model.dto.Friend friend) {
 		friendService.updateFriend(friend);
@@ -87,6 +91,7 @@ public class FriendAdminController {
 	 * @param id
 	 * @return
 	 */
+	@OperationLogger("删除友链")
 	@DeleteMapping("/friend")
 	public Result deleteFriend(@RequestParam Long id) {
 		friendService.deleteFriend(id);
@@ -109,6 +114,7 @@ public class FriendAdminController {
 	 * @param commentEnabled 是否开放评论
 	 * @return
 	 */
+	@OperationLogger("修改友链页面评论开放状态")
 	@PutMapping("/friendInfo/commentEnabled")
 	public Result updateFriendInfoCommentEnabled(@RequestParam Boolean commentEnabled) {
 		friendService.updateFriendInfoCommentEnabled(commentEnabled);
@@ -121,6 +127,7 @@ public class FriendAdminController {
 	 * @param map 包含content的JSON对象
 	 * @return
 	 */
+	@OperationLogger("修改友链页面信息")
 	@PutMapping("/friendInfo/content")
 	public Result updateFriendInfoContent(@RequestBody Map map) {
 		friendService.updateFriendInfoContent((String) map.get("content"));

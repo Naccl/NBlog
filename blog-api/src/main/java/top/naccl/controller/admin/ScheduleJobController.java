@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.annotation.OperationLogger;
 import top.naccl.entity.ScheduleJob;
 import top.naccl.entity.ScheduleJobLog;
 import top.naccl.model.vo.Result;
@@ -52,6 +53,7 @@ public class ScheduleJobController {
 	 * @param scheduleJob
 	 * @return
 	 */
+	@OperationLogger("新建定时任务")
 	@PostMapping("/job")
 	public Result saveJob(@RequestBody ScheduleJob scheduleJob) {
 		scheduleJob.setStatus(false);
@@ -67,6 +69,7 @@ public class ScheduleJobController {
 	 * @param scheduleJob
 	 * @return
 	 */
+	@OperationLogger("修改定时任务")
 	@PutMapping("/job")
 	public Result updateJob(@RequestBody ScheduleJob scheduleJob) {
 		scheduleJob.setStatus(false);
@@ -81,6 +84,7 @@ public class ScheduleJobController {
 	 * @param jobId 任务id
 	 * @return
 	 */
+	@OperationLogger("删除定时任务")
 	@DeleteMapping("/job")
 	public Result deleteJob(@RequestParam Long jobId) {
 		scheduleJobService.deleteJobById(jobId);
@@ -93,6 +97,7 @@ public class ScheduleJobController {
 	 * @param jobId 任务id
 	 * @return
 	 */
+	@OperationLogger("立即执行定时任务")
 	@PostMapping("/job/run")
 	public Result runJob(@RequestParam Long jobId) {
 		scheduleJobService.runJobById(jobId);
@@ -106,6 +111,7 @@ public class ScheduleJobController {
 	 * @param status 状态
 	 * @return
 	 */
+	@OperationLogger("更新任务状态")
 	@PutMapping("/job/status")
 	public Result updateJobStatus(@RequestParam Long jobId, @RequestParam Boolean status) {
 		scheduleJobService.updateJobStatusById(jobId, status);

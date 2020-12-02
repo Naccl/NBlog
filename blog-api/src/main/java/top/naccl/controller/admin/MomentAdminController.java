@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.annotation.OperationLogger;
 import top.naccl.entity.Moment;
 import top.naccl.model.vo.Result;
 import top.naccl.service.MomentService;
@@ -45,12 +46,13 @@ public class MomentAdminController {
 	}
 
 	/**
-	 * 更新动态发布状态
+	 * 更新动态公开状态
 	 *
 	 * @param id        动态id
-	 * @param published 是否发布
+	 * @param published 是否公开
 	 * @return
 	 */
+	@OperationLogger("更新动态公开状态")
 	@PutMapping("/moment/published")
 	public Result updatePublished(@RequestParam Long id, @RequestParam Boolean published) {
 		momentService.updateMomentPublishedById(id, published);
@@ -74,6 +76,7 @@ public class MomentAdminController {
 	 * @param id 动态id
 	 * @return
 	 */
+	@OperationLogger("删除动态")
 	@DeleteMapping("/moment")
 	public Result deleteMoment(@RequestParam Long id) {
 		momentService.deleteMomentById(id);
@@ -81,11 +84,12 @@ public class MomentAdminController {
 	}
 
 	/**
-	 * 发表动态
+	 * 发布动态
 	 *
 	 * @param moment 动态实体
 	 * @return
 	 */
+	@OperationLogger("发布动态")
 	@PostMapping("/moment")
 	public Result saveMoment(@RequestBody Moment moment) {
 		if (moment.getCreateTime() == null) {
@@ -101,6 +105,7 @@ public class MomentAdminController {
 	 * @param moment 动态实体
 	 * @return
 	 */
+	@OperationLogger("更新动态")
 	@PutMapping("/moment")
 	public Result updateMoment(@RequestBody Moment moment) {
 		if (moment.getCreateTime() == null) {

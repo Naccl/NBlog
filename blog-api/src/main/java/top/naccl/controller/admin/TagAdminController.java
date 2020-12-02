@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.annotation.OperationLogger;
 import top.naccl.entity.Tag;
 import top.naccl.model.vo.Result;
 import top.naccl.service.BlogService;
@@ -51,6 +52,7 @@ public class TagAdminController {
 	 * @param tag 标签实体
 	 * @return
 	 */
+	@OperationLogger("添加标签")
 	@PostMapping("/tag")
 	public Result saveTag(@RequestBody Tag tag) {
 		return getResult(tag, "save");
@@ -62,6 +64,7 @@ public class TagAdminController {
 	 * @param tag 标签实体
 	 * @return
 	 */
+	@OperationLogger("修改标签")
 	@PutMapping("/tag")
 	public Result updateTag(@RequestBody Tag tag) {
 		return getResult(tag, "update");
@@ -99,6 +102,7 @@ public class TagAdminController {
 	 * @param id 标签id
 	 * @return
 	 */
+	@OperationLogger("删除标签")
 	@DeleteMapping("/tag")
 	public Result delete(@RequestParam Long id) {
 		//删除存在博客关联的标签后，该博客的查询会出异常

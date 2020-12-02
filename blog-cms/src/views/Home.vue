@@ -130,6 +130,16 @@
 								id: 31,
 								title: '定时任务',
 								path: '/jobs'
+							},
+							{
+								id: 32,
+								title: '任务日志',
+								path: '/jobs/logs'
+							},
+							{
+								id: 33,
+								title: '操作日志',
+								path: '/operationLog'
 							}
 						]
 					},
@@ -146,11 +156,6 @@
 								id: 42,
 								title: '实时访客',
 								path: '/latest'
-							},
-							{
-								id: 43,
-								title: '日志',
-								path: '/log'
 							}
 						]
 					},
@@ -171,9 +176,10 @@
 					'22': 'submenu ali-iconfont icon-friend',
 					'23': 'el-icon-document',
 					'31': 'el-icon-alarm-clock',
+					'32': 'el-icon-alarm-clock',
+					'33': 'el-icon-document-checked',
 					'41': 'el-icon-s-marketing',
 					'42': 'el-icon-view',
-					'43': 'el-icon-document-checked',
 				},
 				//是否折叠
 				isCollapse: false,

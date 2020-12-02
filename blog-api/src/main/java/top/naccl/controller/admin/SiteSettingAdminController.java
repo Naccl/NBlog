@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.annotation.OperationLogger;
 import top.naccl.entity.SiteSetting;
 import top.naccl.model.vo.Result;
 import top.naccl.service.SiteSettingService;
@@ -42,6 +43,7 @@ public class SiteSettingAdminController {
 	 * @param map 包含所有站点信息更新后的数据 map => {settings=[更新后的所有配置List], deleteIds=[要删除的配置id List]}
 	 * @return
 	 */
+	@OperationLogger("更新站点配置信息")
 	@PostMapping("/siteSettings")
 	public Result updateAll(@RequestBody Map<String, Object> map) {
 		List<LinkedHashMap> siteSettings = (List<LinkedHashMap>) map.get("settings");

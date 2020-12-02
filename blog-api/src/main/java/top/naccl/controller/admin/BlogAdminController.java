@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.annotation.OperationLogger;
 import top.naccl.entity.Blog;
 import top.naccl.entity.Category;
 import top.naccl.entity.Tag;
@@ -77,6 +78,7 @@ public class BlogAdminController {
 	 * @param id 文章id
 	 * @return
 	 */
+	@OperationLogger("删除博客")
 	@DeleteMapping("/blog")
 	public Result delete(@RequestParam Long id) {
 		blogService.deleteBlogTagByBlogId(id);
@@ -107,6 +109,7 @@ public class BlogAdminController {
 	 * @param top 是否置顶
 	 * @return
 	 */
+	@OperationLogger("更新博客置顶状态")
 	@PutMapping("/blog/top")
 	public Result updateTop(@RequestParam Long id, @RequestParam Boolean top) {
 		blogService.updateBlogTopById(id, top);
@@ -120,6 +123,7 @@ public class BlogAdminController {
 	 * @param recommend 是否推荐
 	 * @return
 	 */
+	@OperationLogger("更新博客推荐状态")
 	@PutMapping("/blog/recommend")
 	public Result updateRecommend(@RequestParam Long id, @RequestParam Boolean recommend) {
 		blogService.updateBlogRecommendById(id, recommend);
@@ -133,6 +137,7 @@ public class BlogAdminController {
 	 * @param blogVisibility 博客可见性DTO
 	 * @return
 	 */
+	@OperationLogger("更新博客可见性状态")
 	@PutMapping("blog/{id}/visibility")
 	public Result updateVisibility(@PathVariable Long id, @RequestBody BlogVisibility blogVisibility) {
 		blogService.updateBlogVisibilityById(id, blogVisibility);
@@ -157,6 +162,7 @@ public class BlogAdminController {
 	 * @param blog 博客文章DTO
 	 * @return
 	 */
+	@OperationLogger("发布博客")
 	@PostMapping("/blog")
 	public Result saveBlog(@RequestBody top.naccl.model.dto.Blog blog) {
 		return getResult(blog, "save");
@@ -168,6 +174,7 @@ public class BlogAdminController {
 	 * @param blog 博客文章DTO
 	 * @return
 	 */
+	@OperationLogger("更新博客")
 	@PutMapping("/blog")
 	public Result updateBlog(@RequestBody top.naccl.model.dto.Blog blog) {
 		return getResult(blog, "update");

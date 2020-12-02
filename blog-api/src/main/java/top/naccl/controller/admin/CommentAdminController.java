@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.annotation.OperationLogger;
 import top.naccl.entity.Blog;
 import top.naccl.entity.Comment;
 import top.naccl.model.vo.Result;
@@ -71,6 +72,7 @@ public class CommentAdminController {
 	 * @param published 是否公开
 	 * @return
 	 */
+	@OperationLogger("更新评论公开状态")
 	@PutMapping("/comment/published")
 	public Result updatePublished(@RequestParam Long id, @RequestParam Boolean published) {
 		commentService.updateCommentPublishedById(id, published);
@@ -84,6 +86,7 @@ public class CommentAdminController {
 	 * @param notice 是否接收提醒
 	 * @return
 	 */
+	@OperationLogger("更新评论邮件提醒状态")
 	@PutMapping("/comment/notice")
 	public Result updateNotice(@RequestParam Long id, @RequestParam Boolean notice) {
 		commentService.updateCommentNoticeById(id, notice);
@@ -96,6 +99,7 @@ public class CommentAdminController {
 	 * @param id 评论id
 	 * @return
 	 */
+	@OperationLogger("删除评论")
 	@DeleteMapping("/comment")
 	public Result delete(@RequestParam Long id) {
 		commentService.deleteCommentById(id);
@@ -108,6 +112,7 @@ public class CommentAdminController {
 	 * @param comment 评论实体
 	 * @return
 	 */
+	@OperationLogger("修改评论")
 	@PutMapping("/comment")
 	public Result updateComment(@RequestBody Comment comment) {
 		if (StringUtils.isEmpty(comment.getNickname(), comment.getAvatar(), comment.getEmail(), comment.getIp(), comment.getContent())) {

@@ -15,6 +15,7 @@ import FriendList from "@/views/page/friend/FriendList";
 import About from "@/views/page/about/About";
 import JobList from "@/views/system/schedule/JobList";
 import JobLogList from "@/views/system/schedule/JobLogList";
+import OperationLog from "@/views/system/operationLog/OperationLog";
 
 Vue.use(VueRouter)
 
@@ -138,6 +139,13 @@ const routes = [
 				component: JobLogList,
 				meta: {
 					title: '任务日志'
+				}
+			},
+			{
+				path: '/operationLog',
+				component: OperationLog,
+				meta: {
+					title: '操作日志'
 				}
 			}
 		]

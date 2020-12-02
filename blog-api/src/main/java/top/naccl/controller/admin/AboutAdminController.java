@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.annotation.OperationLogger;
 import top.naccl.model.vo.Result;
 import top.naccl.service.AboutService;
 
@@ -38,6 +39,7 @@ public class AboutAdminController {
 	 * @param map
 	 * @return
 	 */
+	@OperationLogger("修改关于我页面")
 	@PutMapping("/about")
 	public Result updateAbout(@RequestBody Map<String, String> map) {
 		aboutService.updateAbout(map);

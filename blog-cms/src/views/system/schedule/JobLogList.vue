@@ -12,11 +12,15 @@
 			<el-table-column label="参数" prop="params"></el-table-column>
 			<el-table-column label="结果" width="80">
 				<template v-slot="scope">
-					<el-tag v-if="scope.row.status" size="mini" effect="dark">成功</el-tag>
-					<el-tag v-else size="mini" effect="dark" type="danger">失败</el-tag>
+					<el-tag v-if="scope.row.status" size="small" effect="dark">成功</el-tag>
+					<el-tag v-else size="small" effect="dark" type="danger">失败</el-tag>
 				</template>
 			</el-table-column>
-			<el-table-column label="执行耗时(毫秒)" prop="times" width="120"></el-table-column>
+			<el-table-column label="执行耗时" prop="times" width="110">
+				<template v-slot="scope">
+					<el-tag size="small">{{ scope.row.times }}ms</el-tag>
+				</template>
+			</el-table-column>
 			<el-table-column label="执行时间" width="170">
 				<template v-slot="scope">{{ scope.row.createTime | dateFormat }}</template>
 			</el-table-column>

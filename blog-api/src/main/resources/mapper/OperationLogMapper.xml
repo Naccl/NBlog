@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.naccl.mapper.OperationLogMapper">
+
+    <resultMap id="log" type="top.naccl.entity.OperationLog">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="uri" column="uri"/>
+        <result property="method" column="method"/>
+        <result property="param" column="param"/>
+        <result property="description" column="description"/>
+        <result property="ip" column="ip"/>
+        <result property="ipSource" column="ip_source"/>
+        <result property="os" column="os"/>
+        <result property="browser" column="browser"/>
+        <result property="times" column="times"/>
+        <result property="createTime" column="create_time"/>
+        <result property="userAgent" column="user_agent"/>
+    </resultMap>
+
+    <!--查询日志-->
+    <select id="getOperationLogList" resultMap="log">
+        select id, username, uri, method, param, description, ip, ip_source, os, browser, times, create_time from operation_log
+    </select>
+
+    <!--添加日志-->
+    <insert id="saveOperationLog" parameterType="top.naccl.entity.OperationLog" useGeneratedKeys="true" keyProperty="id">
+        insert into operation_log (username, uri, method, param, description, ip, ip_source, os, browser, times, create_time, user_agent)
+        values (#{username}, #{uri}, #{method}, #{param}, #{description}, #{ip}, #{ipSource}, #{os}, #{browser}, #{times}, #{createTime}, #{userAgent})
+    </insert>
+
+    <!--删除日志-->
+    <delete id="deleteOperationLogById">
+        delete from operation_log where id=#{id}
+    </delete>
+</mapper>

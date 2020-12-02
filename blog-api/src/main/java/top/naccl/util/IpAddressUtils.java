@@ -8,7 +8,6 @@ import org.lionsoul.ip2region.Util;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -63,18 +62,15 @@ public class IpAddressUtils {
 	 * @return
 	 */
 	public static String getCityInfo(String ip) {
-		String dbPath = IpAddressUtils.class.getResource("/ipdb/ip2region.db").getPath();
-		File file = new File(dbPath);
-		if (file.exists() == false) {
-			log.error("Error: Invalid ip2region.db file");
+		if (ip == null || !Util.isIpAddress(ip)) {
+			log.error("Error: Invalid ip address");
+			return null;
 		}
 		try {
 			DbConfig config = new DbConfig();
+			String dbPath = IpAddressUtils.class.getResource("/ipdb/ip2region.db").getPath();
 			DbSearcher searcher = new DbSearcher(config, dbPath);
 			Method method = searcher.getClass().getMethod("btreeSearch", String.class);
-			if (Util.isIpAddress(ip) == false) {
-				log.error("Error: Invalid ip address");
-			}
 			DataBlock dataBlock = (DataBlock) method.invoke(searcher, ip);
 			String ipInfo = dataBlock.getRegion();
 			if (!StringUtils.isEmpty(ipInfo)) {
