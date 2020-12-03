@@ -10,19 +10,20 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import top.naccl.service.LoginLogService;
 import top.naccl.service.impl.UserServiceImpl;
-
 
 /**
  * @Description: Spring Security配置类
  * @Author: Naccl
  * @Date: 2020-07-19
  */
-
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	UserServiceImpl userService;
+	@Autowired
+	LoginLogService loginLogService;
 	@Autowired
 	MyAuthenticationEntryPoint myAuthenticationEntryPoint;
 
@@ -53,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest().permitAll()
 				.and()
 				//自定义JWT过滤器
-				.addFilterBefore(new JwtLoginFilter("/admin/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+				.addFilterBefore(new JwtLoginFilter("/admin/login", authenticationManager(), loginLogService), UsernamePasswordAuthenticationFilter.class)
 				.addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class)
 				//未登录时，返回json，在前端执行重定向
 				.exceptionHandling().authenticationEntryPoint(myAuthenticationEntryPoint);

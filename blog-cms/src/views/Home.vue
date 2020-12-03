@@ -138,6 +138,11 @@
 							},
 							{
 								id: 33,
+								title: '登录日志',
+								path: '/loginLog'
+							},
+							{
+								id: 34,
 								title: '操作日志',
 								path: '/operationLog'
 							}
@@ -177,7 +182,8 @@
 					'23': 'el-icon-document',
 					'31': 'el-icon-alarm-clock',
 					'32': 'el-icon-alarm-clock',
-					'33': 'el-icon-document-checked',
+					'33': 'el-icon-finished',
+					'34': 'el-icon-document-checked',
 					'41': 'el-icon-s-marketing',
 					'42': 'el-icon-view',
 				},

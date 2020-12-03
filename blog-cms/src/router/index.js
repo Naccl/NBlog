@@ -16,6 +16,7 @@ import About from "@/views/page/about/About";
 import JobList from "@/views/system/schedule/JobList";
 import JobLogList from "@/views/system/schedule/JobLogList";
 import OperationLog from "@/views/system/operationLog/OperationLog";
+import LoginLog from "@/views/system/loginLog/LoginLog";
 
 Vue.use(VueRouter)
 
@@ -146,6 +147,13 @@ const routes = [
 				component: OperationLog,
 				meta: {
 					title: '操作日志'
+				}
+			},
+			{
+				path: '/loginLog',
+				component: LoginLog,
+				meta: {
+					title: '登录日志'
 				}
 			}
 		]

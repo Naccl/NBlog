@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.naccl.mapper.LoginLogMapper">
+
+    <resultMap id="log" type="top.naccl.entity.LoginLog">
+        <id property="id" column="id"/>
+        <id property="username" column="username"/>
+        <result property="ip" column="ip"/>
+        <result property="ipSource" column="ip_source"/>
+        <result property="os" column="os"/>
+        <result property="browser" column="browser"/>
+        <result property="status" column="status"/>
+        <result property="description" column="description"/>
+        <result property="createTime" column="create_time"/>
+        <result property="userAgent" column="user_agent"/>
+    </resultMap>
+
+    <!--查询日志-->
+    <select id="getLoginLogList" resultMap="log">
+        select id, username, ip, ip_source, os, browser, status, description, create_time from login_log
+    </select>
+
+    <!--添加日志-->
+    <insert id="saveLoginLog" parameterType="top.naccl.entity.OperationLog" useGeneratedKeys="true" keyProperty="id">
+        insert into login_log (username, ip, ip_source, os, browser, status, description, create_time, user_agent)
+        values (#{username}, #{ip}, #{ipSource}, #{os}, #{browser}, #{status}, #{description}, #{createTime}, #{userAgent})
+    </insert>
+
+    <!--删除日志-->
+    <delete id="deleteLoginLogById">
+        delete from login_log where id=#{id}
+    </delete>
+</mapper>
