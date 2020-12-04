@@ -1,5 +1,8 @@
 package top.naccl.util;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 /**
  * @Description: 字符串校验
  * @Author: Naccl
@@ -58,5 +61,19 @@ public class StringUtils {
 			return "";
 		}
 		return str.substring(start, end);
+	}
+
+	/**
+	 * 获取堆栈信息
+	 *
+	 * @param throwable 异常
+	 * @return
+	 */
+	public static String getStackTrace(Throwable throwable) {
+		StringWriter sw = new StringWriter();
+		try (PrintWriter pw = new PrintWriter(sw)) {
+			throwable.printStackTrace(pw);
+			return sw.toString();
+		}
 	}
 }

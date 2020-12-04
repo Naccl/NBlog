@@ -122,7 +122,5 @@
 </script>
 
 <style scoped>
-	.el-button + span {
-		margin-left: 10px;
-	}
+
 </style>

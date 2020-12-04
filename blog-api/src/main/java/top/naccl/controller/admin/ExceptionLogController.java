@@ -8,34 +8,34 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import top.naccl.entity.LoginLog;
+import top.naccl.entity.ExceptionLog;
 import top.naccl.model.vo.Result;
-import top.naccl.service.LoginLogService;
+import top.naccl.service.ExceptionLogService;
 
 /**
- * @Description: 登录日志后台管理
+ * @Description: 异常日志后台管理
  * @Author: Naccl
- * @Date: 2020-12-03
+ * @Date: 2020-12-04
  */
 @RestController
 @RequestMapping("/admin")
-public class LoginLogController {
+public class ExceptionLogController {
 	@Autowired
-	LoginLogService loginLogService;
+	ExceptionLogService exceptionLogService;
 
 	/**
-	 * 分页查询登录日志列表
+	 * 分页查询异常日志列表
 	 *
 	 * @param pageNum  页码
 	 * @param pageSize 每页个数
 	 * @return
 	 */
-	@GetMapping("/loginLogs")
-	public Result loginLogs(@RequestParam(defaultValue = "1") Integer pageNum,
-	                        @RequestParam(defaultValue = "10") Integer pageSize) {
+	@GetMapping("/exceptionLogs")
+	public Result exceptionLogs(@RequestParam(defaultValue = "1") Integer pageNum,
+	                            @RequestParam(defaultValue = "10") Integer pageSize) {
 		String orderBy = "create_time desc";
 		PageHelper.startPage(pageNum, pageSize, orderBy);
-		PageInfo<LoginLog> pageInfo = new PageInfo<>(loginLogService.getLoginLogList());
+		PageInfo<ExceptionLog> pageInfo = new PageInfo<>(exceptionLogService.getExceptionLogList());
 		return Result.ok("请求成功", pageInfo);
 	}
 
@@ -45,9 +45,9 @@ public class LoginLogController {
 	 * @param id 日志id
 	 * @return
 	 */
-	@DeleteMapping("/loginLog")
+	@DeleteMapping("/exceptionLog")
 	public Result delete(@RequestParam Long id) {
-		loginLogService.deleteLoginLogById(id);
+		exceptionLogService.deleteExceptionLogById(id);
 		return Result.ok("删除成功");
 	}
 }

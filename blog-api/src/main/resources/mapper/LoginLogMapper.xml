@@ -21,7 +21,7 @@
     </select>
 
     <!--添加日志-->
-    <insert id="saveLoginLog" parameterType="top.naccl.entity.OperationLog" useGeneratedKeys="true" keyProperty="id">
+    <insert id="saveLoginLog" parameterType="top.naccl.entity.LoginLog" useGeneratedKeys="true" keyProperty="id">
         insert into login_log (username, ip, ip_source, os, browser, status, description, create_time, user_agent)
         values (#{username}, #{ip}, #{ipSource}, #{os}, #{browser}, #{status}, #{description}, #{createTime}, #{userAgent})
     </insert>

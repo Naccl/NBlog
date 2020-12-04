@@ -145,6 +145,11 @@
 								id: 34,
 								title: '操作日志',
 								path: '/operationLog'
+							},
+							{
+								id: 35,
+								title: '异常日志',
+								path: '/exceptionLog'
 							}
 						]
 					},
@@ -184,6 +189,7 @@
 					'32': 'el-icon-alarm-clock',
 					'33': 'el-icon-finished',
 					'34': 'el-icon-document-checked',
+					'35': 'el-icon-document-delete',
 					'41': 'el-icon-s-marketing',
 					'42': 'el-icon-view',
 				},

@@ -21,13 +21,13 @@ public class AopUtils {
 	 * @param joinPoint
 	 * @return
 	 */
-	public static Map<String, String> getRequestParams(JoinPoint joinPoint) {
-		Map<String, String> map = new LinkedHashMap<>();
+	public static Map<String, Object> getRequestParams(JoinPoint joinPoint) {
+		Map<String, Object> map = new LinkedHashMap<>();
 		String[] parameterNames = ((MethodSignature) joinPoint.getSignature()).getParameterNames();
 		Object[] args = joinPoint.getArgs();
 		for (int i = 0; i < args.length; i++) {
 			if (!isFilterObject(args[i])) {
-				map.put(parameterNames[i], JacksonUtils.writeValueAsString(args[i]));
+				map.put(parameterNames[i], args[i]);
 			}
 		}
 		return map;

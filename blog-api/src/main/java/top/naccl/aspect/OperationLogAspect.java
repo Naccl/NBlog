@@ -13,6 +13,7 @@ import top.naccl.entity.OperationLog;
 import top.naccl.service.OperationLogService;
 import top.naccl.util.AopUtils;
 import top.naccl.util.IpAddressUtils;
+import top.naccl.util.JacksonUtils;
 import top.naccl.util.JwtUtils;
 import top.naccl.util.StringUtils;
 
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
- * @Description: AOP记录日志
+ * @Description: AOP记录操作日志
  * @Author: Naccl
  * @Date: 2020-11-29
  */
@@ -74,8 +75,8 @@ public class OperationLogAspect {
 		String ip = IpAddressUtils.getIpAddress(request);
 		String userAgent = request.getHeader("User-Agent");
 		OperationLog log = new OperationLog(username, uri, method, description, ip, times, userAgent);
-		Map<String, String> requestParams = AopUtils.getRequestParams(joinPoint);
-		log.setParam(StringUtils.substring(requestParams.toString(), 0, 2000));
+		Map<String, Object> requestParams = AopUtils.getRequestParams(joinPoint);
+		log.setParam(StringUtils.substring(JacksonUtils.writeValueAsString(requestParams), 0, 2000));
 		return log;
 	}
 }
