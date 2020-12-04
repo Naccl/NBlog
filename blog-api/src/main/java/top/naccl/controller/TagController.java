@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.annotation.VisitLogger;
 import top.naccl.entity.Tag;
 import top.naccl.model.vo.BlogInfo;
 import top.naccl.model.vo.PageResult;
@@ -43,6 +44,7 @@ public class TagController {
 	 * @param pageNum 页码
 	 * @return
 	 */
+	@VisitLogger(behavior = "查看标签")
 	@GetMapping("/tag")
 	public Result tag(@RequestParam String tagName,
 	                  @RequestParam(defaultValue = "1") Integer pageNum) {

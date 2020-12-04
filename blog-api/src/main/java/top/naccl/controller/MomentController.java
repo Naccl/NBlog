@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.annotation.VisitLogger;
 import top.naccl.entity.Moment;
 import top.naccl.entity.User;
 import top.naccl.model.vo.PageResult;
@@ -34,6 +35,7 @@ public class MomentController {
 	 * @param pageNum 页码
 	 * @return
 	 */
+	@VisitLogger(behavior = "访问页面", content = "动态")
 	@GetMapping("/moments")
 	public Result moments(@RequestParam(defaultValue = "1") Integer pageNum, HttpServletRequest request) {
 		boolean adminIdentity = false;
@@ -63,6 +65,7 @@ public class MomentController {
 	 * @param id 动态id
 	 * @return
 	 */
+	@VisitLogger(behavior = "点赞动态")
 	@PostMapping("/moment/like")
 	public Result like(@RequestParam Long id) {
 		momentService.addLikeByMomentId(id);

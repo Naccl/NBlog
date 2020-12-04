@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.annotation.VisitLogger;
 import top.naccl.model.vo.BlogInfo;
 import top.naccl.model.vo.PageResult;
 import top.naccl.model.vo.Result;
@@ -39,6 +40,7 @@ public class CategoryController {
 	 * @param pageNum      页码
 	 * @return
 	 */
+	@VisitLogger(behavior = "查看分类")
 	@GetMapping("/category")
 	public Result category(@RequestParam String categoryName,
 	                       @RequestParam(defaultValue = "1") Integer pageNum) {

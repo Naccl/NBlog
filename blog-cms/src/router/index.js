@@ -18,6 +18,7 @@ import JobLogList from "@/views/system/schedule/JobLogList";
 import OperationLog from "@/views/system/operationLog/OperationLog";
 import LoginLog from "@/views/system/loginLog/LoginLog";
 import ExceptionLog from "@/views/system/ExceptionLog/ExceptionLog";
+import VisitLog from "@/views/system/visitLog/VisitLog";
 
 Vue.use(VueRouter)
 
@@ -162,6 +163,13 @@ const routes = [
 				component: ExceptionLog,
 				meta: {
 					title: '异常日志'
+				}
+			},
+			{
+				path: '/visitLog',
+				component: VisitLog,
+				meta: {
+					title: '访问日志'
 				}
 			}
 		]

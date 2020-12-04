@@ -150,6 +150,11 @@
 								id: 35,
 								title: '异常日志',
 								path: '/exceptionLog'
+							},
+							{
+								id: 36,
+								title: '访问日志',
+								path: '/visitLog'
 							}
 						]
 					},
@@ -190,6 +195,7 @@
 					'33': 'el-icon-finished',
 					'34': 'el-icon-document-checked',
 					'35': 'el-icon-document-delete',
+					'36': 'el-icon-data-line',
 					'41': 'el-icon-s-marketing',
 					'42': 'el-icon-view',
 				},

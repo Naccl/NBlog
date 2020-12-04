@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.annotation.VisitLogger;
 import top.naccl.model.vo.Friend;
 import top.naccl.model.vo.FriendInfo;
 import top.naccl.model.vo.Result;
@@ -29,6 +30,7 @@ public class FriendController {
 	 *
 	 * @return
 	 */
+	@VisitLogger(behavior = "访问页面", content = "友链")
 	@GetMapping("/friends")
 	public Result friends() {
 		List<Friend> friendList = friendService.getFriendVOList();
@@ -45,6 +47,7 @@ public class FriendController {
 	 * @param nickname 友链昵称
 	 * @return
 	 */
+	@VisitLogger(behavior = "点击友链")
 	@PostMapping("/friend")
 	public Result addViews(@RequestParam String nickname) {
 		friendService.updateViewsByNickname(nickname);

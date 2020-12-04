@@ -3,6 +3,7 @@ package top.naccl.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.annotation.VisitLogger;
 import top.naccl.model.vo.Result;
 import top.naccl.service.BlogService;
 
@@ -23,6 +24,7 @@ public class ArchiveController {
 	 *
 	 * @return
 	 */
+	@VisitLogger(behavior = "访问页面", content = "文章归档")
 	@GetMapping("/archives")
 	public Result archives() {
 		Map<String, Object> archiveBlogMap = blogService.getArchiveBlogAndCountByIsPublished();

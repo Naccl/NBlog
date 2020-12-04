@@ -40,7 +40,7 @@ public class LoginLogController {
 	}
 
 	/**
-	 * 按id删除操作日志
+	 * 按id删除登录日志
 	 *
 	 * @param id 日志id
 	 * @return
