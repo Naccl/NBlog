@@ -22,4 +22,8 @@
         insert into schedule_job_log (job_id, bean_name, method_name, params, status, error, times, create_time)
         values (#{jobId}, #{beanName}, #{methodName}, #{params}, #{status}, #{error}, #{times}, #{createTime})
     </insert>
+
+    <delete id="deleteJobLogByLogId">
+        delete from schedule_job_log where log_id=#{logId}
+    </delete>
 </mapper>

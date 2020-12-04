@@ -20,5 +20,7 @@ public interface ScheduleJobService {
 
 	List<ScheduleJobLog> getJobLogList();
 
-	void saveLog(ScheduleJobLog log);
+	void saveJobLog(ScheduleJobLog log);
+
+	void deleteJobLogByLogId(Long logId);
 }

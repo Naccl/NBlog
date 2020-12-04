@@ -70,3 +70,13 @@ export function getJobLogList(queryInfo) {
 		}
 	})
 }
+
+export function deleteJobLogByLogId(logId) {
+	return axios({
+		url: 'job/log',
+		method: 'DELETE',
+		params: {
+			logId
+		}
+	})
+}

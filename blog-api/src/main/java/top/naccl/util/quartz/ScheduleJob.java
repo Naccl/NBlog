@@ -56,7 +56,7 @@ public class ScheduleJob extends QuartzJobBean {
 			jobLog.setError(e.toString());
 			log.error("任务执行失败，任务ID：{}", scheduleJob.getJobId(), e);
 		} finally {
-			scheduleJobService.saveLog(jobLog);
+			scheduleJobService.saveJobLog(jobLog);
 		}
 	}
 }

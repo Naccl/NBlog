@@ -17,4 +17,6 @@ public interface ScheduleJobLogMapper {
 	List<ScheduleJobLog> getJobLogList();
 
 	int saveJobLog(ScheduleJobLog jobLog);
+
+	int deleteJobLogByLogId(Long logId);
 }

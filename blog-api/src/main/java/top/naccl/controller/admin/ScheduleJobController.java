@@ -133,4 +133,16 @@ public class ScheduleJobController {
 		PageInfo<ScheduleJobLog> pageInfo = new PageInfo<>(scheduleJobService.getJobLogList());
 		return Result.ok("请求成功", pageInfo);
 	}
+
+	/**
+	 * 按id删除任务日志
+	 *
+	 * @param logId 日志id
+	 * @return
+	 */
+	@DeleteMapping("/job/log")
+	public Result delete(@RequestParam Long logId) {
+		scheduleJobService.deleteJobLogByLogId(logId);
+		return Result.ok("删除成功");
+	}
 }

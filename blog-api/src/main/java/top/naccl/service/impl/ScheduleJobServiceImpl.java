@@ -104,9 +104,17 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
 
 	@Override
 	@Transactional
-	public void saveLog(ScheduleJobLog jobLog) {
+	public void saveJobLog(ScheduleJobLog jobLog) {
 		if (scheduleJobLogMapper.saveJobLog(jobLog) != 1) {
 			throw new PersistenceException("日志添加失败");
+		}
+	}
+
+	@Transactional
+	@Override
+	public void deleteJobLogByLogId(Long logId) {
+		if (scheduleJobLogMapper.deleteJobLogByLogId(logId) != 1) {
+			throw new PersistenceException("日志删除失败");
 		}
 	}
 }
