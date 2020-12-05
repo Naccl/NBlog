@@ -14,11 +14,11 @@ import SiteSetting from "@/views/page/site/SiteSetting";
 import FriendList from "@/views/page/friend/FriendList";
 import About from "@/views/page/about/About";
 import JobList from "@/views/system/schedule/JobList";
-import JobLogList from "@/views/system/schedule/JobLogList";
-import OperationLog from "@/views/system/operationLog/OperationLog";
-import LoginLog from "@/views/system/loginLog/LoginLog";
-import ExceptionLog from "@/views/system/ExceptionLog/ExceptionLog";
-import VisitLog from "@/views/system/visitLog/VisitLog";
+import JobLog from "@/views/log/scheduleJobLog/JobLog";
+import OperationLog from "@/views/log/operationLog/OperationLog";
+import LoginLog from "@/views/log/loginLog/LoginLog";
+import ExceptionLog from "@/views/log/ExceptionLog/ExceptionLog";
+import VisitLog from "@/views/log/visitLog/VisitLog";
 
 Vue.use(VueRouter)
 
@@ -139,7 +139,7 @@ const routes = [
 			},
 			{
 				path: '/jobs/logs',
-				component: JobLogList,
+				component: JobLog,
 				meta: {
 					title: '任务日志'
 				}

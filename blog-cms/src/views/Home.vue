@@ -131,44 +131,50 @@
 								title: '定时任务',
 								path: '/jobs'
 							},
+						]
+					},
+					{
+						id: 4,
+						title: '日志管理',
+						children: [
 							{
-								id: 32,
+								id: 41,
 								title: '任务日志',
 								path: '/jobs/logs'
 							},
 							{
-								id: 33,
+								id: 42,
 								title: '登录日志',
 								path: '/loginLog'
 							},
 							{
-								id: 34,
+								id: 43,
 								title: '操作日志',
 								path: '/operationLog'
 							},
 							{
-								id: 35,
+								id: 44,
 								title: '异常日志',
 								path: '/exceptionLog'
 							},
 							{
-								id: 36,
+								id: 45,
 								title: '访问日志',
 								path: '/visitLog'
 							}
 						]
 					},
 					{
-						id: 4,
+						id: 5,
 						title: '数据统计',
 						children: [
 							{
-								id: 41,
+								id: 51,
 								title: '访问量',
 								path: '/pv'
 							},
 							{
-								id: 42,
+								id: 52,
 								title: '实时访客',
 								path: '/latest'
 							}
@@ -179,7 +185,8 @@
 					'1': 'el-icon-menu',
 					'2': 'el-icon-document-copy',
 					'3': 'el-icon-s-tools',
-					'4': 'el-icon-s-data',
+					'4': 'el-icon-document',
+					'5': 'el-icon-s-data',
 					'11': 'el-icon-edit',
 					'12': 'el-icon-edit',
 					'13': 'el-icon-s-order',
@@ -189,20 +196,20 @@
 					'17': 'el-icon-s-comment',
 					'21': 'submenu ali-iconfont icon-bianjizhandian',
 					'22': 'submenu ali-iconfont icon-friend',
-					'23': 'el-icon-document',
+					'23': 'el-icon-tickets',
 					'31': 'el-icon-alarm-clock',
-					'32': 'el-icon-alarm-clock',
-					'33': 'el-icon-finished',
-					'34': 'el-icon-document-checked',
-					'35': 'el-icon-document-delete',
-					'36': 'el-icon-data-line',
-					'41': 'el-icon-s-marketing',
-					'42': 'el-icon-view',
+					'41': 'el-icon-alarm-clock',
+					'42': 'el-icon-finished',
+					'43': 'el-icon-document-checked',
+					'44': 'el-icon-document-delete',
+					'45': 'el-icon-data-line',
+					'51': 'el-icon-s-marketing',
+					'52': 'el-icon-view',
 				},
 				//是否折叠
 				isCollapse: false,
 				//默认打开的菜单
-				defaultOpeneds: ['1', '2', '3', '4'],
+				defaultOpeneds: ['1', '2', '3', '4', '5'],
 				user: null,
 			}
 		},

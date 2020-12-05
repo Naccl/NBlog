@@ -76,7 +76,7 @@
 	import {getJobLogList, deleteJobLogByLogId} from "@/api/schedule";
 
 	export default {
-		name: "JobLogList",
+		name: "JobLog",
 		components: {Breadcrumb},
 		data() {
 			return {
