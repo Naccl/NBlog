@@ -30,9 +30,10 @@ public class ExceptionLog {
 	private Date createTime;//操作时间
 	private String userAgent;
 
-	public ExceptionLog(String uri, String method, String error, String ip, String userAgent) {
+	public ExceptionLog(String uri, String method, String description, String error, String ip, String userAgent) {
 		this.uri = uri;
 		this.method = method;
+		this.description = description;
 		this.error = error;
 		this.ip = ip;
 		this.createTime = new Date();

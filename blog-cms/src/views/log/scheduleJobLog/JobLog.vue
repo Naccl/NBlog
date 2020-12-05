@@ -41,7 +41,7 @@
 		</el-pagination>
 
 		<!-- 任务日志详情 -->
-		<el-dialog title="日志详情" width="50%" :visible.sync="detailDialogVisible">
+		<el-dialog title="日志详情" append-to-body top="20px" width="80%" :visible.sync="detailDialogVisible" destroy-on-close>
 			<el-form :model="detail" ref="detailFormRef" label-width="120px" size="mini">
 				<el-row>
 					<el-col :span="12">
@@ -59,8 +59,12 @@
 							<el-tag v-else size="mini" effect="dark" type="danger">失败</el-tag>
 						</el-form-item>
 					</el-col>
-					<el-form-item label="异常信息：" prop="content">
-						<el-input v-model="detail.error" type="textarea" :rows="3"></el-input>
+					<el-form-item label="异常信息：">
+						<div class="match-braces rainbow-braces">
+							<pre>
+								<code class="language-java">{{ detail.error }}</code>
+							</pre>
+						</div>
 					</el-form-item>
 				</el-row>
 			</el-form>
@@ -118,6 +122,12 @@
 			},
 			showDetail(row) {
 				this.detail = {...row}
+				if (this.detail.error) {
+					this.detail.error = '\n' + this.detail.error
+					this.$nextTick(() => {
+						Prism.highlightAll()
+					})
+				}
 				this.detailDialogVisible = true
 			},
 			deleteJobLogByLogId(logId) {
