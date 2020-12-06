@@ -25,7 +25,7 @@ Vue.use(VueRouter)
 const routes = [
 	{
 		path: '/',
-		redirect: '/login',
+		redirect: '/home',
 	},
 	{
 		path: '/login',
@@ -186,7 +186,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
 	if (to.path !== '/login') {
 		//获取token
-		const tokenStr = window.sessionStorage.getItem('token')
+		const tokenStr = window.localStorage.getItem('token')
 		if (!tokenStr) return next("/login")
 	}
 	if (to.meta.title) {

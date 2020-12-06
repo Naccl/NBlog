@@ -218,13 +218,13 @@
 		},
 		methods: {
 			getUserInfo() {
-				this.user = JSON.parse(window.sessionStorage.getItem('user') || null)
+				this.user = JSON.parse(window.localStorage.getItem('user') || null)
 				if (!this.user) {
 					this.$router.push('/login')
 				}
 			},
 			logout() {
-				window.sessionStorage.clear()
+				window.localStorage.clear()
 				this.$router.push('/login')
 				this.msgSuccess('退出成功')
 			}
