@@ -3,6 +3,7 @@ package top.naccl.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,6 @@ import top.naccl.service.FriendService;
 import top.naccl.service.impl.UserServiceImpl;
 import top.naccl.util.EncryptUtils;
 import top.naccl.util.IpAddressUtils;
-import top.naccl.util.JacksonUtils;
 import top.naccl.util.JwtUtils;
 import top.naccl.util.MailUtils;
 import top.naccl.util.QQInfoUtils;
@@ -54,7 +54,12 @@ public class CommentController {
 	MailProperties mailProperties;
 	@Autowired
 	MailUtils mailUtils;
-	private static final String WEBSITE_URL = "https://naccl.top";
+	private static String websiteUrl;
+
+	@Value("${server.website.url}")
+	public void setWebsiteUrl(String websiteUrl) {
+		this.websiteUrl = websiteUrl;
+	}
 
 	/**
 	 * 根据页面分页查询评论列表
@@ -152,15 +157,12 @@ public class CommentController {
 	/**
 	 * 提交评论 又长又臭 能用就不改了:)
 	 *
+	 * @param comment 评论DTO
 	 * @param request 用于获取ip和博主身份Token
 	 * @return
 	 */
 	@PostMapping("/comment")
-	public Result postComment(@RequestBody Map<String, Object> map, HttpServletRequest request) {
-		//评论DTO
-		Comment comment = JacksonUtils.convertValue(map, Comment.class);
-		//评论所在的页面
-		String path = (String) map.get("path");
+	public Result postComment(@RequestBody Comment comment, HttpServletRequest request) {
 		//访客的评论
 		boolean isVisitorComment = false;
 		//评论内容合法性校验
@@ -251,6 +253,17 @@ public class CommentController {
 			}
 		}
 		commentService.saveComment(comment);
+		String path = "";
+		if (comment.getPage() == 0) {
+			//普通博客
+			path = "/blog/" + comment.getBlogId();
+		} else if (comment.getPage() == 1) {
+			//关于我页面
+			path = "/about";
+		} else if (comment.getPage() == 2) {
+			//友链页面
+			path = "/friends";
+		}
 		judgeSendMail(comment, isVisitorComment, path);
 		return Result.ok("评论成功");
 	}
@@ -361,7 +374,7 @@ public class CommentController {
 	 * @param path  评论所在的页面
 	 */
 	private void sendMailToParentComment(String email, String path) {
-		String url = WEBSITE_URL + path;
+		String url = websiteUrl + path;
 		String toAccount = email;
 		String subject = "Naccl's Blog评论回复";
 		String content = "<body><h2>您的评论有新回复</h2><p><a href='" + url + "'>详情请看" + url + "</a></p><p>此邮件为自动发送，如不想再收到此类消息，请回复TD</p></body>";
@@ -375,7 +388,7 @@ public class CommentController {
 	 * @param path  评论所在的页面
 	 */
 	private void sendMailToMe(String email, String path) {
-		String url = WEBSITE_URL + path;
+		String url = websiteUrl + path;
 		String toAccount = email;
 		String subject = "Naccl's Blog新评论";
 		String content = "<body><p><a href='" + url + "'>新评论" + url + "</a></p></body>";

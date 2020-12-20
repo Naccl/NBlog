@@ -77,7 +77,7 @@
 							type: 'warning'
 						})
 					} else {
-						return this.$store.dispatch('submitCommentForm', {token: adminToken, path: this.$route.path})
+						return this.$store.dispatch('submitCommentForm', adminToken)
 					}
 				}
 				const blogToken = window.localStorage.getItem(`blog${this.commentQuery.blogId}`)
@@ -89,7 +89,7 @@
 							type: 'warning'
 						})
 					} else {
-						this.$store.dispatch('submitCommentForm', {token: blogToken ? blogToken : '', path: this.$route.path})
+						this.$store.dispatch('submitCommentForm', blogToken ? blogToken : '')
 					}
 				})
 			}
