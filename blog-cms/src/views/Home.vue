@@ -233,24 +233,33 @@
 </script>
 
 <style scoped>
-	.el-aside::-webkit-scrollbar, .el-main::-webkit-scrollbar {
+	.el-aside {
+		-ms-overflow-style: none; /* IE10 */
+		scrollbar-width: none; /* Firefox */
+	}
+
+	.el-aside::-webkit-scrollbar {
+		display: none;
+	}
+
+	.el-main::-webkit-scrollbar {
 		width: 8px;
 		height: 5px;
 	}
 
-	.el-aside::-webkit-scrollbar-thumb, .el-main::-webkit-scrollbar-thumb {
+	.el-main::-webkit-scrollbar-thumb {
 		-webkit-box-shadow: inset 0 0 6px #48dbfb;
 		box-shadow: inset 0 0 6px #48dbfb;
 		background-color: #48dbfb;
 	}
 
-	.el-aside::-webkit-scrollbar-track, .el-main::-webkit-scrollbar-track {
+	.el-main::-webkit-scrollbar-track {
 		-webkit-box-shadow: inset 0 0 6px transparent;
 		box-shadow: inset 0 0 6px transparent;
 		background-color: transparent;
 	}
 
-	.el-aside::-webkit-scrollbar-track-piece, .el-main::-webkit-scrollbar-track-piece {
+	.el-main::-webkit-scrollbar-track-piece {
 		background-color: transparent;
 	}
 
