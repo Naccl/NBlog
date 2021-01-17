@@ -7,7 +7,9 @@
 			<div class="ui link three doubling cards">
 				<a :href="item.website" target="_blank" rel="external nofollow noopener" class="card" :style="randomRGB()"
 				   v-for="(item,index) in friendList" :key="index" @click="addViews(item.nickname)">
-					<div class="image"><img :src="item.avatar"></div>
+					<div class="image">
+						<img :src="item.avatar" onerror="this.src = '/img/error.png'">
+					</div>
 					<div class="content">
 						<div class="header">{{ item.nickname }}</div>
 						<div class="description">{{ item.description }}</div>
