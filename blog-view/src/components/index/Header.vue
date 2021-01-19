@@ -1,11 +1,18 @@
 <template>
 	<header ref="header">
+		<div class="view">
+			<div class="bg1" style="background-image: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg1.jpg');"></div>
+			<div class="bg2" style="background-image: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg2.jpg');"></div>
+			<div class="bg3" style="background-image: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg3.jpg');"></div>
+		</div>
 		<div class="text-malfunction" data-word="Naccl's Blog">
 			<div class="line"></div>
 		</div>
 		<div class="wrapper">
 			<i class="ali-iconfont icon-down" @click="scrollToMain"></i>
 		</div>
+		<div class="wave1"></div>
+		<div class="wave2"></div>
 	</header>
 </template>
 
@@ -24,6 +31,20 @@
 		},
 		mounted() {
 			this.setHeaderHeight()
+			let startingPoint
+			const header = this.$refs.header
+			header.addEventListener('mouseenter', (e) => {
+				startingPoint = e.clientX
+			})
+			header.addEventListener('mouseout', (e) => {
+				header.classList.remove('moving')
+				header.style.setProperty('--percentage', 0.5)
+			})
+			header.addEventListener('mousemove', (e) => {
+				let percentage = (e.clientX - startingPoint) / window.outerWidth + 0.5
+				header.style.setProperty('--percentage', percentage)
+				header.classList.add('moving')
+			})
 		},
 		methods: {
 			//根据可视窗口高度，动态改变首图大小
@@ -40,11 +61,53 @@
 
 <style scoped>
 	header {
-		background-image: url('/img/bg1.jpg');
+		--percentage: 0.5;
+		user-select: none;
+	}
+
+	.view {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		display: flex;
+		justify-content: center;
+		transform: translatex(calc(var(--percentage) * 100px));
+	}
+
+	.view div {
 		background-position: center center;
 		background-size: cover;
-		background-attachment: fixed;
-		user-select: none;
+		position: absolute;
+		width: 110%;
+		height: 100%;
+	}
+
+	.view .bg1 {
+		z-index: 10;
+		opacity: calc(1 - (var(--percentage) - 0.5) / 0.5);
+	}
+
+	.view .bg2 {
+		z-index: 20;
+		opacity: calc(1 - (var(--percentage) - 0.25) / 0.25);
+	}
+
+	.view .bg3 {
+		left: -10%;
+	}
+
+	header .view,
+	header .bg1,
+	header .bg2 {
+		transition: .2s all ease-in;
+	}
+
+	header.moving .view,
+	header.moving .bg1,
+	header.moving .bg2 {
+		transition: none;
 	}
 
 	.text-malfunction {
@@ -64,7 +127,7 @@
 		left: -1px;
 		height: 1px;
 		background: black;
-		z-index: 10;
+		z-index: 50;
 		animation: lineMove 5s ease-out infinite;
 	}
 
@@ -81,7 +144,7 @@
 		left: 0;
 		color: red;
 		text-shadow: 1px 0 0 red;
-		z-index: 3;
+		z-index: 30;
 		animation: malfunctionAni 0.95s infinite;
 	}
 
@@ -89,7 +152,7 @@
 		left: -1px;
 		color: cyan;
 		text-shadow: -1px 0 0 cyan;
-		z-index: 4;
+		z-index: 40;
 		mix-blend-mode: lighten;
 		animation: malfunctionAni 1.1s infinite 0.2s;
 	}
@@ -171,6 +234,7 @@
 		right: 0;
 		margin: auto;
 		font-size: 26px;
+		z-index: 100;
 	}
 
 	.wrapper i {
@@ -192,5 +256,24 @@
 		100% {
 			top: 65px
 		}
+	}
+
+	.wave1, .wave2 {
+		position: absolute;
+		bottom: 0;
+		width: 400%;
+		transition-duration: .4s, .4s;
+		z-index: 80;
+	}
+
+	.wave1 {
+		background: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/wave1.png') repeat-x;
+		height: 75px;
+	}
+
+	.wave2 {
+		background: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/wave2.png') repeat-x;
+		height: 90px;
+		left: -100px;
 	}
 </style>

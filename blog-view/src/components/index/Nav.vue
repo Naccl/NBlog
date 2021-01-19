@@ -168,11 +168,12 @@
 	}
 
 	.ui.inverted.pointing.menu.transparent .active.item:after {
-		background: rgba(255, 255, 255, 0) !important;
+		background: transparent !important;
+		transition: .3s ease-out;
 	}
 
 	.ui.inverted.pointing.menu.transparent .active.item:hover:after {
-		background: rgba(255, 255, 255, 0) !important;
+		background: transparent !important;
 	}
 
 	.el-dropdown-link {
