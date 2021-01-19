@@ -78,6 +78,10 @@
 						this.$refs.nav.classList.remove('transparent')
 					}
 				}
+			},
+			//路由改变时，收起导航栏
+			'$route.path'() {
+				this.mobileHide = true
 			}
 		},
 		created() {
@@ -93,6 +97,17 @@
 					} else {
 						this.$refs.nav.classList.add('transparent')
 					}
+				}
+			})
+			//监听点击事件，收起导航菜单
+			document.addEventListener('click', (e) => {
+				//遍历冒泡
+				let flag = e.path.some(item => {
+					if (item === this.$refs.nav) return true
+				})
+				//如果导航栏是打开状态，且点击的元素不是Nav的子元素，则收起菜单
+				if (!this.mobileHide && !flag) {
+					this.mobileHide = true
 				}
 			})
 		},
