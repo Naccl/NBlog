@@ -1,0 +1,23 @@
+{
+  "id": "1993827",
+  "name": "blog-view",
+  "font_family": "ali-iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1139074",
+      "name": "箭头下",
+      "font_class": "down",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "3176645",
+      "name": "GitHub",
+      "font_class": "github",
+      "unicode": "ea0a",
+      "unicode_decimal": 59914
+    }
+  ]
+}

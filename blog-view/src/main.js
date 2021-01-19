@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 //自定义css
 import './assets/css/base.css'
+//阿里icon
+import './assets/css/icon/iconfont.css'
 //typo.css
 import "./assets/css/typo.css";
 //semantic-ui-vue

@@ -1,5 +1,5 @@
 <template>
-	<div class="ui fixed inverted stackable pointing menu">
+	<div ref="nav" class="ui fixed inverted stackable pointing menu" :class="{'transparent':$route.name==='home' && clientSize.clientWidth+8>768}">
 		<div class="ui container">
 			<router-link to="/">
 				<h3 class="ui header item m-blue">{{ blogName }}</h3>
@@ -46,6 +46,7 @@
 <script>
 	import {getCategoryList} from "@/api/category";
 	import {getSearchBlogList} from "@/api/blog";
+	import {mapState} from 'vuex'
 
 	export default {
 		name: "Nav",
@@ -64,8 +65,36 @@
 				timer: null
 			}
 		},
+		computed: {
+			...mapState(['clientSize'])
+		},
+		watch: {
+			'clientSize.clientWidth'() {
+				if (this.$route.name === 'home') {
+					//8是垂直滚动条宽度
+					if (this.clientSize.clientWidth + 8 > 768) {
+						this.$refs.nav.classList.add('transparent')
+					} else {
+						this.$refs.nav.classList.remove('transparent')
+					}
+				}
+			}
+		},
 		created() {
 			this.getCategoryList()
+		},
+		mounted() {
+			//监听页面滚动位置，改变导航栏的显示
+			window.addEventListener('scroll', () => {
+				//首页且不是移动端
+				if (this.$route.name === 'home' && this.clientSize.clientWidth + 8 > 768) {
+					if (window.scrollY > this.clientSize.clientHeight / 2) {
+						this.$refs.nav.classList.remove('transparent')
+					} else {
+						this.$refs.nav.classList.add('transparent')
+					}
+				}
+			})
 		},
 		methods: {
 			toggle() {
@@ -128,6 +157,22 @@
 		width: 1400px !important;
 		margin-left: auto !important;
 		margin-right: auto !important;
+	}
+
+	.ui.fixed.menu {
+		transition: .3s ease-out;
+	}
+
+	.ui.inverted.pointing.menu.transparent {
+		background: transparent !important;
+	}
+
+	.ui.inverted.pointing.menu.transparent .active.item:after {
+		background: rgba(255, 255, 255, 0) !important;
+	}
+
+	.ui.inverted.pointing.menu.transparent .active.item:hover:after {
+		background: rgba(255, 255, 255, 0) !important;
 	}
 
 	.el-dropdown-link {

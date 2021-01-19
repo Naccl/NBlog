@@ -2,6 +2,10 @@
 	<div class="site">
 		<!--顶部导航-->
 		<Nav :blogName="siteInfo.blogName"/>
+		<!--首页大图 只在首页且pc端时显示-->
+		<div class="m-mobile-hide">
+			<Header v-if="$route.name==='home'"/>
+		</div>
 
 		<div class="main">
 			<div class="m-padded-tb-big">
@@ -48,6 +52,7 @@
 <script>
 	import {getHitokoto, getSite} from '@/api/index'
 	import Nav from "@/components/index/Nav";
+	import Header from "@/components/index/Header";
 	import Footer from "@/components/index/Footer";
 	import Introduction from "@/components/sidebar/Introduction";
 	import Tags from "@/components/sidebar/Tags";
@@ -56,10 +61,11 @@
 	import Tocbot from "@/components/sidebar/Tocbot";
 	import BlogPasswordDialog from "@/components/index/BlogPasswordDialog";
 	import {mapState} from 'vuex'
+	import {SAVE_CLIENT_SIZE} from "../store/mutations-types";
 
 	export default {
 		name: "Index",
-		components: {BlogPasswordDialog, Tocbot, MyAPlayer, RandomBlog, Tags, Nav, Footer, Introduction},
+		components: {Header, BlogPasswordDialog, Tocbot, MyAPlayer, RandomBlog, Tags, Nav, Footer, Introduction},
 		data() {
 			return {
 				siteInfo: {
@@ -82,6 +88,13 @@
 		created() {
 			this.getSite()
 			this.getHitokoto()
+		},
+		mounted() {
+			//保存可视窗口大小
+			this.$store.commit(SAVE_CLIENT_SIZE, {clientHeight: document.body.clientHeight, clientWidth: document.body.clientWidth})
+			window.onresize = () => {
+				this.$store.commit(SAVE_CLIENT_SIZE, {clientHeight: document.body.clientHeight, clientWidth: document.body.clientWidth})
+			}
 		},
 		methods: {
 			getSite() {

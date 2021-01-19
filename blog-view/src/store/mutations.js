@@ -11,7 +11,8 @@ import {
 	SET_BLOG_PASSWORD_DIALOG_VISIBLE,
 	SET_BLOG_PASSWORD_FORM,
 	SET_FOCUS_MODE,
-	SET_IS_BLOG_TO_HOME
+	SET_IS_BLOG_TO_HOME,
+	SAVE_CLIENT_SIZE,
 } from "./mutations-types";
 
 export default {
@@ -61,5 +62,8 @@ export default {
 	},
 	[SET_IS_BLOG_TO_HOME](state, isBlogToHome) {
 		state.isBlogToHome = isBlogToHome
-	}
+	},
+	[SAVE_CLIENT_SIZE](state, clientSize) {
+		state.clientSize = clientSize
+	},
 }

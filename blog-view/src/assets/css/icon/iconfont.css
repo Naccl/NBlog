@@ -1,0 +1,25 @@
+@font-face {font-family: "ali-iconfont";
+  src: url('iconfont.eot?t=1610990526796'); /* IE9 */
+  src: url('iconfont.eot?t=1610990526796#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAQIAAsAAAAACHQAAAO6AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDBgqELINsATYCJAMMCwgABCAFhR0HNxtjBxHVmz/JfiRkJy2XqdP8ZAk/EmeCB77OfH/+n9kJVlAhZ1MBk0IpwRNOEE89bhMAW5uiuoyKMEzJefBd/kd+Q7gQOv445vPWOuDdWwNAVGt0Cg+kQCLKf5//8zr/QP4X2V2BWORlCMBOAnmIRk1adcJEYc4SgBg+ZFAfzIwG1UAQmHKjYqMyxQp0TG2Rdh9YHvy8+EmJMEFDl5gL2w1s3J96X9J+2KXls7p7OuaMZwL4bSCBPECB6Flp6YyMPHlI7KpENYcbKATaWHafj4CjyYyV/uNpIAxMiRNjslQaJ8V1GBDww87GUs5/GxhACHAU+IsxYcmSwJCo4Ea6sIimMISu6vPExHue4r2P8dajBZ26rlu8xgp3rfVGutd7ElNYJ+m51qD184BEixtFFhZ5wR8z7dGnTo+fu/YeFhWPnkQeuxZ2aH/42avc9GZuPh755EnF9qe5656Ueh677nmbP33KyUdhBx/HD37K2qN0sg5mPn3pfvJl/Jp169fas73giPw1Ees8kaE4LC0M9x+rvmbf+r2Ur1ns8YZXXbtn3f5wX4abDfXGjau34YTNxMy49YS0wM2Dqa6gy8Guly8bhzR2D3YFXw5yXbxYaR4OOWxWrvzcrsaiwYMX1dhhM31m3LpDem+SHlpv9MxM/Y124o5tW5UUHPQZGtS0aUReO748rzdgiezcdUn1kINd1fIhcrU9trG3i1/zDNnYbFH4buE7lxkqZUZO2cVb+rntctXyId30l20zWO4gZVuVOzbthHqTmZn2M/RutbPm5QaHJ12xVvVrGmIG9d3W8Gqj/xvnu6qMTi/PKzNXGWEBYcZEoyS/JILeAPiey/0yE3wzVIy0fvff8Ki8/YJegbX+mQ4FwKvcT9cCHswG5suwCvi5BSoafD4VI8ghUqWIaeQYfslYAl8dC7MEKb80ESCEN/1l4eBYEDgJT0DDj2SQOMlCKEwZ6DioBwZOWoKdXNzbHYQyG4lQNiCHtQgEUVwHjQCegiSKzwiFqQSdCBEOBlEiF+xUiIYHOsgQG+0NWUYlaEH/IRpanR0nN1VirXS7oz+K4nwJ/cobeY+0Qt90Zf4ZV+Qxl+wfP4g4cEwLTA3XYSkEG1NCI00Q2ca2dVVP1BhaqhsNGZWgBf2HaGh13nfLjT4l1trvu6M/imJAVZT6jbyz+cFB33RAxCxZwWXXOmz/+EGEiIDkMi0w9QvFUghLtupxCY00oYdrG1urnYNKmvlly3PvAOyYJ0qhCSkUqj9915OPEg5dVQAA') format('woff2'),
+  url('iconfont.woff?t=1610990526796') format('woff'),
+  url('iconfont.ttf?t=1610990526796') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1610990526796#ali-iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.ali-iconfont {
+  font-family: "ali-iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-down:before {
+  content: "\e624";
+}
+
+.icon-github:before {
+  content: "\ea0a";
+}
+
