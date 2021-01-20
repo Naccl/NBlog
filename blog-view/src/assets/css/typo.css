@@ -3,6 +3,7 @@
 .typo {
     width: 100%;
     text-align: justify;
+    word-wrap: break-word;
 }
 
 .typo img {
