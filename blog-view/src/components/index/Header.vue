@@ -1,9 +1,10 @@
 <template>
 	<header ref="header">
 		<div class="view">
+			<img ref="imgbg1" src="https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg1.jpg" style="display: none;">
 			<div class="bg1" style="background-image: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg1.jpg');"></div>
 			<div class="bg2" style="background-image: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg2.jpg');"></div>
-			<div class="bg3" style="background-image: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg3.jpg');"></div>
+			<div class="bg3" style="background-image: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg3.jpg');" v-show="loaded"></div>
 		</div>
 		<div class="text-malfunction" data-word="Naccl's Blog">
 			<div class="line"></div>
@@ -21,6 +22,11 @@
 
 	export default {
 		name: "Header",
+		data() {
+			return {
+				loaded: false
+			}
+		},
 		computed: {
 			...mapState(['clientSize'])
 		},
@@ -30,6 +36,14 @@
 			}
 		},
 		mounted() {
+			/**
+			 * 因为bg3.jpg比较小，通常会比bg1.jpg先加载，显示出来会有一瞬间bg1显示一半，bg3显示一半，为了解决这个问题，增加这个判断，让bg1加载完毕后再显示bg3
+			 * HTML中使用img标签的原因：我个人想用div作为图片的载体，而只有img标签有图片加载完毕的onload回调，所以用一个display: none的img人柱力来加载图片
+			 * 当img中的src加载完毕后，会把图片缓存到浏览器，后续在div中用background url的形式将直接从浏览器中取出图片，不会下载两次图片
+			 */
+			this.$refs.imgbg1.onload = () => {
+				this.loaded = true
+			}
 			this.setHeaderHeight()
 			let startingPoint
 			const header = this.$refs.header
