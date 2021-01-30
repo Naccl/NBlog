@@ -44,7 +44,6 @@
 </template>
 
 <script>
-	import {getCategoryList} from "@/api/category";
 	import {getSearchBlogList} from "@/api/blog";
 	import {mapState} from 'vuex'
 
@@ -54,12 +53,15 @@
 			blogName: {
 				type: String,
 				required: true
-			}
+			},
+			categoryList: {
+				type: Array,
+				required: true
+			},
 		},
 		data() {
 			return {
 				mobileHide: true,
-				categoryList: [],
 				queryString: '',
 				queryResult: [],
 				timer: null
@@ -82,9 +84,6 @@
 			'$route.path'() {
 				this.mobileHide = true
 			}
-		},
-		created() {
-			this.getCategoryList()
 		},
 		mounted() {
 			//监听页面滚动位置，改变导航栏的显示
@@ -113,18 +112,6 @@
 		methods: {
 			toggle() {
 				this.mobileHide = !this.mobileHide
-			},
-			getCategoryList() {
-				getCategoryList().then(res => {
-					console.log(res)
-					if (res.code === 200) {
-						this.categoryList = res.data
-					} else {
-						this.msgError(res.msg)
-					}
-				}).catch(() => {
-					this.msgError("请求失败")
-				})
 			},
 			categoryRoute(name) {
 				this.$router.push(`/category/${name}`)

@@ -9,7 +9,6 @@ import top.naccl.model.vo.BlogInfo;
 import top.naccl.model.vo.PageResult;
 import top.naccl.model.vo.Result;
 import top.naccl.service.BlogService;
-import top.naccl.service.CategoryService;
 
 /**
  * @Description: 分类
@@ -19,19 +18,7 @@ import top.naccl.service.CategoryService;
 @RestController
 public class CategoryController {
 	@Autowired
-	CategoryService categoryService;
-	@Autowired
 	BlogService blogService;
-
-	/**
-	 * 获取全部分类List
-	 *
-	 * @return
-	 */
-	@GetMapping("/categories")
-	public Result categories() {
-		return Result.ok("请求成功", categoryService.getCategoryNameList());
-	}
 
 	/**
 	 * 根据分类name分页查询公开博客列表

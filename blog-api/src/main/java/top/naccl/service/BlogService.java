@@ -29,7 +29,7 @@ public interface BlogService {
 
 	Map<String, Object> getArchiveBlogAndCountByIsPublished();
 
-	List<RandomBlog> getRandomBlogListByLimitNumAndIsPublished(Integer limitNum);
+	List<RandomBlog> getRandomBlogListByLimitNumAndIsPublished();
 
 	void deleteBlogById(Long id);
 

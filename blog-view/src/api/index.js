@@ -13,10 +13,3 @@ export function getSite() {
 		method: 'GET'
 	})
 }
-
-export function getRandomBlogs() {
-	return axios({
-		url: 'randomBlogs',
-		method: 'GET'
-	})
-}

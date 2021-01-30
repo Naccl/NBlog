@@ -5,14 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.naccl.annotation.VisitLogger;
-import top.naccl.entity.Tag;
 import top.naccl.model.vo.BlogInfo;
 import top.naccl.model.vo.PageResult;
 import top.naccl.model.vo.Result;
 import top.naccl.service.BlogService;
-import top.naccl.service.TagService;
-
-import java.util.List;
 
 /**
  * @Description: 标签
@@ -22,20 +18,7 @@ import java.util.List;
 @RestController
 public class TagController {
 	@Autowired
-	TagService tagService;
-	@Autowired
 	BlogService blogService;
-
-	/**
-	 * 标签云
-	 *
-	 * @return
-	 */
-	@GetMapping("/tags")
-	public Result tags() {
-		List<Tag> tags = tagService.getTagListNotId();
-		return Result.ok("获取成功", tags);
-	}
 
 	/**
 	 * 根据标签name分页查询公开博客列表

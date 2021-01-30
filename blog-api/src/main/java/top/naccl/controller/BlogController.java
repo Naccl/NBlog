@@ -12,7 +12,6 @@ import top.naccl.model.dto.BlogPassword;
 import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.BlogInfo;
 import top.naccl.model.vo.PageResult;
-import top.naccl.model.vo.RandomBlog;
 import top.naccl.model.vo.Result;
 import top.naccl.model.vo.SearchBlog;
 import top.naccl.service.BlogService;
@@ -108,18 +107,6 @@ public class BlogController {
 		} else {
 			return Result.create(403, "密码错误");
 		}
-	}
-
-	/**
-	 * 获取随机公开文章
-	 *
-	 * @return
-	 */
-	@GetMapping("/randomBlogs")
-	public Result randomBlogs() {
-		int limitNum = 5;
-		List<RandomBlog> randomBlogs = blogService.getRandomBlogListByLimitNumAndIsPublished(limitNum);
-		return Result.ok("获取成功", randomBlogs);
 	}
 
 	/**

@@ -44,6 +44,8 @@ public class BlogServiceImpl implements BlogService {
 	TagService tagService;
 	@Autowired
 	RedisService redisService;
+	//随机博客显示5条
+	private static final int randomBlogLimitNum = 5;
 	//最新推荐博客显示3条
 	private static final int newBlogPageSize = 3;
 	//每页显示5条博客简介
@@ -222,8 +224,8 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public List<RandomBlog> getRandomBlogListByLimitNumAndIsPublished(Integer limitNum) {
-		List<RandomBlog> randomBlogs = blogMapper.getRandomBlogListByLimitNumAndIsPublished(limitNum);
+	public List<RandomBlog> getRandomBlogListByLimitNumAndIsPublished() {
+		List<RandomBlog> randomBlogs = blogMapper.getRandomBlogListByLimitNumAndIsPublished(randomBlogLimitNum);
 		for (RandomBlog randomBlog : randomBlogs) {
 			if (!"".equals(randomBlog.getPassword())) {
 				randomBlog.setPrivacy(true);

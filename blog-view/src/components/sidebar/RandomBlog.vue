@@ -4,7 +4,7 @@
 		<div class="ui secondary segment"><i class="bookmark icon"></i>随机文章</div>
 		<div class="ui yellow segment">
 			<div class="ui divided items">
-				<div class="item" v-for="blog in blogList" :key="blog.id">
+				<div class="item" v-for="blog in randomBlogList" :key="blog.id">
 					<div class="content">
 						<a href="" @click.prevent="toBlog(blog)" class="header m-text-500">{{ blog.title }}</a>
 						<div class="meta">
@@ -26,31 +26,15 @@
 </template>
 
 <script>
-	import {getRandomBlogs} from "@/api/index";
-
 	export default {
 		name: "RandomBlog",
-		data() {
-			return {
-				blogList: []
-			}
-		},
-		created() {
-			this.getRandomBlogList()
+		props: {
+			randomBlogList: {
+				type: Array,
+				required: true
+			},
 		},
 		methods: {
-			getRandomBlogList() {
-				getRandomBlogs().then(res => {
-					console.log(res)
-					if (res.code === 200) {
-						this.blogList = res.data
-					} else {
-						this.msgError(res.msg)
-					}
-				}).catch(() => {
-					this.msgError("请求失败")
-				})
-			},
 			toBlog(blog) {
 				this.$store.dispatch('goBlogPage', blog)
 			}

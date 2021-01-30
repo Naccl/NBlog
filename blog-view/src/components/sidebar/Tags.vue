@@ -11,32 +11,14 @@
 </template>
 
 <script>
-	import {getTagList} from "@/api/tag";
-
 	export default {
 		name: "Tags",
-		data() {
-			return {
-				tagList: []
-			}
+		props: {
+			tagList: {
+				type: Array,
+				required: true
+			},
 		},
-		created() {
-			this.getTagList()
-		},
-		methods: {
-			getTagList() {
-				getTagList().then(res => {
-					console.log(res)
-					if (res.code === 200) {
-						this.tagList = res.data
-					} else {
-						this.msgError(res.msg)
-					}
-				}).catch(() => {
-					this.msgError("请求失败")
-				})
-			}
-		}
 	}
 </script>
 

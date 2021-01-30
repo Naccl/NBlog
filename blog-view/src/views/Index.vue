@@ -1,7 +1,7 @@
 <template>
 	<div class="site">
 		<!--顶部导航-->
-		<Nav :blogName="siteInfo.blogName"/>
+		<Nav :blogName="siteInfo.blogName" :categoryList="categoryList"/>
 		<!--首页大图 只在首页且pc端时显示-->
 		<div class="m-mobile-hide">
 			<Header v-if="$route.name==='home'"/>
@@ -23,8 +23,8 @@
 						</div>
 						<!--右侧-->
 						<div class="three wide column m-mobile-hide">
-							<RandomBlog :class="{'m-display-none':focusMode}"/>
-							<Tags :class="{'m-display-none':focusMode}"/>
+							<RandomBlog :randomBlogList="randomBlogList" :class="{'m-display-none':focusMode}"/>
+							<Tags :tagList="tagList" :class="{'m-display-none':focusMode}"/>
 							<!--只在文章页面显示目录-->
 							<Tocbot v-if="$route.name==='blog'"/>
 						</div>
@@ -71,6 +71,9 @@
 				siteInfo: {
 					blogName: ''
 				},
+				categoryList: [],
+				tagList: [],
+				randomBlogList: [],
 				badges: [],
 				newBlogList: [],
 				hitokoto: {},
@@ -104,6 +107,9 @@
 						this.siteInfo = res.data.siteInfo
 						this.badges = res.data.badges
 						this.newBlogList = res.data.newBlogList
+						this.categoryList = res.data.categoryList
+						this.tagList = res.data.tagList
+						this.randomBlogList = res.data.randomBlogList
 						this.$store.dispatch('saveSiteInfo', this.siteInfo)
 						this.$store.dispatch('saveIntroduction', res.data.introduction)
 						document.title = this.$route.meta.title + this.siteInfo.webTitleSuffix
