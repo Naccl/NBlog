@@ -9,7 +9,7 @@ import java.util.Map;
 public interface RedisService {
 	PageResult<BlogInfo> getBlogInfoPageResultByHash(String hash, Integer pageNum);
 
-	void saveBlogInfoPageResultToHash(String hash, Integer pageNum, Object object);
+	void saveKVToHash(String hash, Object key, Object value);
 
 	void saveMapToHash(String hash, Map map);
 
@@ -30,6 +30,10 @@ public interface RedisService {
 	<T> T getObjectByValue(String key, Class t);
 
 	void saveObjectToValue(String key, Object object);
+
+	void saveValueToSet(String key, Object value);
+
+	boolean hasValueInSet(String key, Object value);
 
 	void deleteCacheByKey(String key);
 

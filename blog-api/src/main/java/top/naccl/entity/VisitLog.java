@@ -18,6 +18,7 @@ import java.util.Date;
 @ToString
 public class VisitLog {
 	private Long id;
+	private String uuid;//访客标识码
 	private String uri;//请求接口
 	private String method;//请求方式
 	private String param;//请求参数
@@ -32,7 +33,8 @@ public class VisitLog {
 	private Date createTime;//访问时间
 	private String userAgent;
 
-	public VisitLog(String uri, String method, String behavior, String content, String remark, String ip, Integer times, String userAgent) {
+	public VisitLog(String uuid, String uri, String method, String behavior, String content, String remark, String ip, Integer times, String userAgent) {
+		this.uuid = uuid;
 		this.uri = uri;
 		this.method = method;
 		this.behavior = behavior;

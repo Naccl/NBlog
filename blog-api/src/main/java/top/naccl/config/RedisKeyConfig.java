@@ -32,4 +32,7 @@ public class RedisKeyConfig {
 
 	//博客访问量key
 	public static final String BLOG_VIEWS_MAP = "blogViewsMap";
+
+	//访客标识码key
+	public static final String IDENTIFICATION_SET = "identificationSet";
 }

@@ -11,6 +11,11 @@ const request = axios.create({
 request.interceptors.request.use(
 	config => {
 		NProgress.start()
+		const identification = window.localStorage.getItem('identification')
+		//identification存在，且是基于baseURL的请求
+		if (identification && !(config.url.startsWith('http://') || config.url.startsWith('https://'))) {
+			config.headers.identification = identification
+		}
 		return config
 	}
 )
@@ -19,6 +24,11 @@ request.interceptors.request.use(
 request.interceptors.response.use(
 	config => {
 		NProgress.done()
+		const identification = config.headers.identification
+		if (identification) {
+			//保存身份标识到localStorage
+			window.localStorage.setItem('identification', identification)
+		}
 		return config.data
 	}
 )

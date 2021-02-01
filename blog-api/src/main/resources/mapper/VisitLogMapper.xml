@@ -4,6 +4,7 @@
 
     <resultMap id="log" type="top.naccl.entity.VisitLog">
         <id property="id" column="id"/>
+        <result property="uuid" column="uuid"/>
         <result property="uri" column="uri"/>
         <result property="method" column="method"/>
         <result property="param" column="param"/>
@@ -21,13 +22,13 @@
 
     <!--查询日志-->
     <select id="getVisitLogList" resultMap="log">
-        select id, uri, method, param, behavior, content, remark, ip, ip_source, os, browser, times, create_time from visit_log
+        select id, uuid, uri, method, param, behavior, content, remark, ip, ip_source, os, browser, times, create_time from visit_log
     </select>
 
     <!--添加日志-->
     <insert id="saveVisitLog" parameterType="top.naccl.entity.VisitLog" useGeneratedKeys="true" keyProperty="id">
-        insert into visit_log (uri, method, param, behavior, content, remark, ip, ip_source, os, browser, times, create_time, user_agent)
-        values (#{uri}, #{method}, #{param}, #{behavior}, #{content}, #{remark}, #{ip}, #{ipSource}, #{os}, #{browser}, #{times}, #{createTime}, #{userAgent})
+        insert into visit_log (uuid, uri, method, param, behavior, content, remark, ip, ip_source, os, browser, times, create_time, user_agent)
+        values (#{uuid}, #{uri}, #{method}, #{param}, #{behavior}, #{content}, #{remark}, #{ip}, #{ipSource}, #{os}, #{browser}, #{times}, #{createTime}, #{userAgent})
     </insert>
 
     <!--删除日志-->

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.naccl.mapper.VisitorMapper">
+
+    <resultMap id="visitor" type="top.naccl.entity.Visitor">
+        <id property="id" column="id"/>
+        <result property="uuid" column="uuid"/>
+        <result property="ip" column="ip"/>
+        <result property="ipSource" column="ip_source"/>
+        <result property="os" column="os"/>
+        <result property="browser" column="browser"/>
+        <result property="createTime" column="create_time"/>
+        <result property="lastTime" column="last_time"/>
+        <result property="pv" column="pv"/>
+        <result property="userAgent" column="user_agent"/>
+    </resultMap>
+
+    <!--查询访客-->
+    <select id="getVisitorList" resultMap="visitor">
+        select id, uuid, ip, ip_source, os, browser, create_time, last_time, pv from visitor
+    </select>
+
+    <!--查询是否存在某个uuid-->
+    <select id="hasUUID" resultType="java.lang.Integer">
+        select ifnull((select 1 from visitor where uuid=#{uuid} limit 1), 0)
+    </select>
+
+    <!--添加访客-->
+    <insert id="saveVisitor" parameterType="top.naccl.entity.Visitor" useGeneratedKeys="true" keyProperty="id">
+        insert into visitor (uuid, ip, ip_source, os, browser, create_time, last_time, pv, user_agent)
+        values (#{uuid}, #{ip}, #{ipSource}, #{os}, #{browser}, #{createTime}, #{lastTime}, #{pv}, #{userAgent})
+    </insert>
+
+    <!--删除访客-->
+    <delete id="deleteVisitorById">
+        delete from visitor where id=#{id}
+    </delete>
+</mapper>

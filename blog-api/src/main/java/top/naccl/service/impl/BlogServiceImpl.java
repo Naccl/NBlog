@@ -130,7 +130,7 @@ public class BlogServiceImpl implements BlogService {
 		PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogInfos);
 		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
 		//添加首页缓存
-		redisService.saveBlogInfoPageResultToHash(redisKey, pageNum, pageResult);
+		redisService.saveKVToHash(redisKey, pageNum, pageResult);
 		return pageResult;
 	}
 

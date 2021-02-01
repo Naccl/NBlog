@@ -33,8 +33,8 @@ public class RedisServiceImpl implements RedisService {
 	}
 
 	@Override
-	public void saveBlogInfoPageResultToHash(String hash, Integer pageNum, Object object) {
-		jsonRedisTemplate.opsForHash().put(hash, pageNum, object);
+	public void saveKVToHash(String hash, Object key, Object value) {
+		jsonRedisTemplate.opsForHash().put(hash, key, value);
 	}
 
 	@Override
@@ -89,6 +89,16 @@ public class RedisServiceImpl implements RedisService {
 	@Override
 	public void saveObjectToValue(String key, Object object) {
 		jsonRedisTemplate.opsForValue().set(key, object);
+	}
+
+	@Override
+	public void saveValueToSet(String key, Object value) {
+		jsonRedisTemplate.opsForSet().add(key, value);
+	}
+
+	@Override
+	public boolean hasValueInSet(String key, Object value) {
+		return jsonRedisTemplate.opsForSet().isMember(key, value);
 	}
 
 	@Override

@@ -9,18 +9,24 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import top.naccl.annotation.VisitLogger;
+import top.naccl.config.RedisKeyConfig;
 import top.naccl.entity.VisitLog;
+import top.naccl.entity.Visitor;
 import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.Result;
+import top.naccl.service.RedisService;
 import top.naccl.service.VisitLogService;
+import top.naccl.service.VisitorService;
 import top.naccl.util.AopUtils;
 import top.naccl.util.IpAddressUtils;
 import top.naccl.util.JacksonUtils;
 import top.naccl.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @Description: AOP记录访问日志
@@ -32,6 +38,10 @@ import java.util.Map;
 public class VisitLogAspect {
 	@Autowired
 	VisitLogService visitLogService;
+	@Autowired
+	VisitorService visitorService;
+	@Autowired
+	RedisService redisService;
 
 	ThreadLocal<Long> currentTime = new ThreadLocal<>();
 
@@ -55,9 +65,70 @@ public class VisitLogAspect {
 		Object result = joinPoint.proceed();
 		int times = (int) (System.currentTimeMillis() - currentTime.get());
 		currentTime.remove();
-		VisitLog visitLog = handleLog(joinPoint, visitLogger, result, times);
+		//获取请求对象
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		//校验访客标识码
+		String identification = checkIdentification(request);
+		//记录访问日志
+		VisitLog visitLog = handleLog(joinPoint, visitLogger, request, result, times, identification);
 		visitLogService.saveVisitLog(visitLog);
 		return result;
+	}
+
+	/**
+	 * 校验访客标识码
+	 *
+	 * @param request
+	 * @return
+	 */
+	private String checkIdentification(HttpServletRequest request) {
+		String identification = request.getHeader("identification");
+		if (identification == null) {
+			//第一次访问，签发uuid并保存到数据库和Redis
+			identification = saveUUID(request);
+		} else {
+			//校验Redis中是否存在uuid
+			boolean redisHas = redisService.hasValueInSet(RedisKeyConfig.IDENTIFICATION_SET, identification);
+			//Redis中不存在uuid
+			if (!redisHas) {
+				//校验数据库中是否存在uuid
+				boolean mysqlHas = visitorService.hasUUID(identification);
+				if (mysqlHas) {
+					//数据库存在，保存至Redis
+					redisService.saveValueToSet(RedisKeyConfig.IDENTIFICATION_SET, identification);
+				} else {
+					//数据库不存在，签发新的uuid
+					identification = saveUUID(request);
+				}
+			}
+		}
+		return identification;
+	}
+
+	/**
+	 * 签发UUID，并保存至数据库和Redis
+	 *
+	 * @param request
+	 * @return
+	 */
+	private String saveUUID(HttpServletRequest request) {
+		//获取响应对象
+		HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+		//生成UUID
+		String uuid = UUID.randomUUID().toString();
+		//添加访客标识码UUID至响应头
+		response.addHeader("identification", uuid);
+		//暴露自定义header供页面资源使用
+		response.addHeader("Access-Control-Expose-Headers", "identification");
+		//保存至Redis
+		redisService.saveValueToSet(RedisKeyConfig.IDENTIFICATION_SET, uuid);
+		//获取访问者基本信息
+		String ip = IpAddressUtils.getIpAddress(request);
+		String userAgent = request.getHeader("User-Agent");
+		Visitor visitor = new Visitor(uuid, ip, userAgent);
+		//保存至数据库
+		visitorService.saveVisitor(visitor);
+		return uuid;
 	}
 
 	/**
@@ -69,9 +140,8 @@ public class VisitLogAspect {
 	 * @param times
 	 * @return
 	 */
-	private VisitLog handleLog(ProceedingJoinPoint joinPoint, VisitLogger visitLogger, Object result, int times) {
-		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-		HttpServletRequest request = attributes.getRequest();
+	private VisitLog handleLog(ProceedingJoinPoint joinPoint, VisitLogger visitLogger, HttpServletRequest request, Object result,
+	                           int times, String identification) {
 		String uri = request.getRequestURI();
 		String method = request.getMethod();
 		String behavior = visitLogger.behavior();
@@ -80,7 +150,7 @@ public class VisitLogAspect {
 		String userAgent = request.getHeader("User-Agent");
 		Map<String, Object> requestParams = AopUtils.getRequestParams(joinPoint);
 		Map<String, String> map = judgeBehavior(behavior, content, requestParams, result);
-		VisitLog log = new VisitLog(uri, method, behavior, map.get("content"), map.get("remark"), ip, times, userAgent);
+		VisitLog log = new VisitLog(identification, uri, method, behavior, map.get("content"), map.get("remark"), ip, times, userAgent);
 		log.setParam(StringUtils.substring(JacksonUtils.writeValueAsString(requestParams), 0, 2000));
 		return log;
 	}
