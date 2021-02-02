@@ -127,9 +127,9 @@
 	.text-malfunction {
 		position: absolute;
 		top: 40%;
-		left: 50%;
+		left: 51.5%;
 		transform: translate(-50%, -50%) scale(2.5);
-		width: 200px;
+		width: 220px;
 		font-size: 34px;
 		font-family: sans-serif;
 		color: transparent;
@@ -137,7 +137,7 @@
 
 	.line {
 		position: absolute;
-		width: 100%;
+		width: 200px;
 		left: -1px;
 		height: 1px;
 		background: black;
