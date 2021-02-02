@@ -36,6 +36,18 @@ input[type="number"] {
     background-color: #f8f8f9 !important;
 }
 
+.el-table .table-expand label {
+    font-weight: 700;
+}
+
+.el-table .table-expand .el-form-item {
+    margin-bottom: 0;
+}
+
+.el-table .table-expand .el-form-item__content {
+    text-align: left;
+}
+
 .me-red {
     background: #DD3C3C;
 }

@@ -5,7 +5,7 @@
 
 		<el-table :data="momentList">
 			<el-table-column label="序号" type="index" width="50"></el-table-column>
-			<el-table-column label="内容" prop="content"></el-table-column>
+			<el-table-column label="内容" prop="content" show-overflow-tooltip></el-table-column>
 			<el-table-column label="发布状态" width="80">
 				<template v-slot="scope">
 					<el-switch v-model="scope.row.published" @change="momentPublishedChanged(scope.row)"></el-switch>
@@ -27,7 +27,7 @@
 
 		<!--分页-->
 		<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="queryInfo.pageNum"
-		               :page-sizes="[5, 10, 15, 20]" :page-size="queryInfo.pageSize" :total="total"
+		               :page-sizes="[10, 20, 30, 50]" :page-size="queryInfo.pageSize" :total="total"
 		               layout="total, sizes, prev, pager, next, jumper" background>
 		</el-pagination>
 	</div>

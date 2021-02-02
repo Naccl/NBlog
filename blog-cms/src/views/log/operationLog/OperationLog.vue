@@ -23,7 +23,7 @@
 			<el-table-column label="ip" prop="ip"></el-table-column>
 			<el-table-column label="ip来源" prop="ipSource"></el-table-column>
 			<el-table-column label="操作系统" prop="os"></el-table-column>
-			<el-table-column label="浏览器" prop="browser"></el-table-column>
+			<el-table-column label="浏览器" prop="browser" show-overflow-tooltip></el-table-column>
 			<el-table-column label="操作耗时" width="110">
 				<template v-slot="scope">
 					<el-tag size="small">{{ scope.row.times }}ms</el-tag>
@@ -43,7 +43,7 @@
 
 		<!--分页-->
 		<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="queryInfo.pageNum"
-		               :page-sizes="[5, 10, 15, 20]" :page-size="queryInfo.pageSize" :total="total"
+		               :page-sizes="[10, 20, 30, 50]" :page-size="queryInfo.pageSize" :total="total"
 		               layout="total, sizes, prev, pager, next, jumper" background>
 		</el-pagination>
 	</div>
@@ -109,14 +109,6 @@
 	}
 </script>
 
-<style>
-	.table-expand label {
-		font-weight: 700;
-	}
-	.table-expand .el-form-item {
-		margin-bottom: 0;
-	}
-	.table-expand .el-form-item__content {
-		text-align: left;
-	}
+<style scoped>
+
 </style>

@@ -9,7 +9,7 @@
 			<el-table-column label="ip" prop="ip"></el-table-column>
 			<el-table-column label="ip来源" prop="ipSource"></el-table-column>
 			<el-table-column label="操作系统" prop="os"></el-table-column>
-			<el-table-column label="浏览器" prop="browser"></el-table-column>
+			<el-table-column label="浏览器" prop="browser" show-overflow-tooltip></el-table-column>
 			<el-table-column label="登录状态">
 				<template v-slot="scope">
 					<el-tag v-if="scope.row.status" size="small" effect="dark">成功</el-tag>
@@ -31,7 +31,7 @@
 
 		<!--分页-->
 		<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="queryInfo.pageNum"
-		               :page-sizes="[5, 10, 15, 20]" :page-size="queryInfo.pageSize" :total="total"
+		               :page-sizes="[10, 20, 30, 50]" :page-size="queryInfo.pageSize" :total="total"
 		               layout="total, sizes, prev, pager, next, jumper" background>
 		</el-pagination>
 	</div>

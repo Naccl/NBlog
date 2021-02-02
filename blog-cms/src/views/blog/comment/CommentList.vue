@@ -25,16 +25,16 @@
 					<el-avatar shape="square" :size="60" fit="contain" :src="scope.row.avatar"></el-avatar>
 				</template>
 			</el-table-column>
-			<el-table-column label="邮箱" prop="email"></el-table-column>
-			<el-table-column label="网站" prop="website"></el-table-column>
+			<el-table-column label="邮箱" prop="email" show-overflow-tooltip></el-table-column>
+			<el-table-column label="网站" prop="website" show-overflow-tooltip></el-table-column>
 			<el-table-column label="ip" prop="ip" width="130"></el-table-column>
-			<el-table-column label="评论内容" prop="content"></el-table-column>
-			<el-table-column label="QQ" prop="qq" width="100"></el-table-column>
-			<el-table-column label="所在页面">
+			<el-table-column label="评论内容" prop="content" show-overflow-tooltip></el-table-column>
+			<el-table-column label="QQ" prop="qq" width="115"></el-table-column>
+			<el-table-column label="所在页面" show-overflow-tooltip>
 				<template v-slot="scope">
-					<el-link type="success" :href="`/blog/${scope.row.blog.id}`" target="_blank" v-if="scope.row.page==0">{{ scope.row.blog.title }}</el-link>
-					<el-link type="success" :href="'/about'" target="_blank" v-else-if="scope.row.page==1">关于我</el-link>
-					<el-link type="success" :href="'/friends'" target="_blank" v-else-if="scope.row.page==2">友人帐</el-link>
+					<el-link type="success" :href="`/blog/${scope.row.blog.id}`" target="_blank" v-if="scope.row.page===0">{{ scope.row.blog.title }}</el-link>
+					<el-link type="success" :href="'/about'" target="_blank" v-else-if="scope.row.page===1">关于我</el-link>
+					<el-link type="success" :href="'/friends'" target="_blank" v-else-if="scope.row.page===2">友人帐</el-link>
 				</template>
 			</el-table-column>
 			<el-table-column label="发表时间" width="170">
@@ -60,7 +60,7 @@
 
 		<!--分页-->
 		<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="queryInfo.pageNum"
-		               :page-sizes="[5, 10, 15, 20]" :page-size="queryInfo.pageSize" :total="total"
+		               :page-sizes="[10, 20, 30, 50]" :page-size="queryInfo.pageSize" :total="total"
 		               layout="total, sizes, prev, pager, next, jumper" background>
 		</el-pagination>
 
@@ -99,7 +99,7 @@
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
 	import {getCommentListByQuery, getBlogList, updatePublished, updateNotice, deleteCommentById, editComment} from '@/api/comment'
-	import {checkEmail, checkIpv4} from "@/common/reg";
+	import {checkEmail} from "@/common/reg";
 
 	export default {
 		name: "CommentList",
