@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<!--面包屑导航-->
-		<Breadcrumb parentTitle="系统管理"/>
+		<Breadcrumb parentTitle="日志管理"/>
 
 		<el-table :data="logList">
 			<el-table-column type="expand">

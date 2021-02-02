@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<!--面包屑导航-->
-		<Breadcrumb parentTitle="系统管理"/>
+		<Breadcrumb parentTitle="页面管理"/>
 
 			<el-row :gutter="20">
 				<el-col :span="12">

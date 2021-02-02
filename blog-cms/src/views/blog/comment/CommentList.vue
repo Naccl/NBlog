@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<!--面包屑导航-->
-		<Breadcrumb parentTitle="评论管理"/>
+		<Breadcrumb parentTitle="博客管理"/>
 
 		<!--搜索-->
 		<el-row>
