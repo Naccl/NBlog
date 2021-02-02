@@ -13,7 +13,7 @@
 					<div class="tl-item" v-for="blog in value" :key="blog.id">
 						<div class="tl-wrap">
 							<span class="tl-date">{{ blog.day }}</span>
-							<a href="" @click.prevent="toBlog(blog)">
+							<a href="javascript:;" @click.prevent="toBlog(blog)">
 								<div class="ui left pointing label tl-title">{{ blog.title }}</div>
 							</a>
 						</div>
