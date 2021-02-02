@@ -1,6 +1,7 @@
 package top.naccl.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
@@ -8,7 +9,6 @@ import org.lionsoul.ip2region.Util;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -58,7 +58,7 @@ public class IpAddressUtils {
 				ip = inet.getHostAddress();
 			}
 		}
-		return ip;
+		return StringUtils.substringBefore(ip, ",");
 	}
 
 	private static DbSearcher searcher;
