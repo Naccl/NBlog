@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface VisitLogMapper {
-	List<VisitLog> getVisitLogList();
+	List<VisitLog> getVisitLogListByUUIDAndDate(String uuid, String startDate, String endDate);
 
 	int saveVisitLog(VisitLog log);
 

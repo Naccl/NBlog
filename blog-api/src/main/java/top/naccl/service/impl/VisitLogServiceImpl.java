@@ -26,8 +26,8 @@ public class VisitLogServiceImpl implements VisitLogService {
 	UserAgentUtils userAgentUtils;
 
 	@Override
-	public List<VisitLog> getVisitLogList() {
-		return visitLogMapper.getVisitLogList();
+	public List<VisitLog> getVisitLogListByUUIDAndDate(String uuid, String startDate, String endDate) {
+		return visitLogMapper.getVisitLogListByUUIDAndDate(uuid, startDate, endDate);
 	}
 
 	@Transactional

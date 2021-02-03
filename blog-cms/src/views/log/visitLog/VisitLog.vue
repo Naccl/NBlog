@@ -3,10 +3,28 @@
 		<!--面包屑导航-->
 		<Breadcrumb parentTitle="日志管理"/>
 
+		<!--搜索-->
+		<el-form inline>
+			<el-form-item label="访客标识">
+				<el-input v-model="queryInfo.uuid" :clearable="true" size="small" @keyup.native.enter="search"
+				          placeholder="请输入访客标识码" style="min-width: 300px">
+				</el-input>
+			</el-form-item>
+			<el-form-item label="操作时间">
+				<DateTimeRangePicker :date="queryInfo.date" :setDate="setDate"/>
+			</el-form-item>
+			<el-form-item>
+				<el-button type="primary" size="small" icon="el-icon-search" @click="search">搜索</el-button>
+			</el-form-item>
+		</el-form>
+
 		<el-table :data="logList">
 			<el-table-column type="expand">
 				<template v-slot="props">
 					<el-form label-position="left" class="table-expand">
+						<el-form-item label="访客标识">
+							<span>{{ props.row.uuid }}</span>
+						</el-form-item>
 						<el-form-item label="请求接口">
 							<span>{{ props.row.uri }}</span>
 						</el-form-item>
@@ -20,6 +38,11 @@
 				</template>
 			</el-table-column>
 			<el-table-column label="序号" type="index" width="50"></el-table-column>
+			<el-table-column label="访客标识" width="100" show-overflow-tooltip>
+				<template v-slot="scope">
+					<el-link type="primary" href="" :underline="false" @click.prevent="showThis(scope.row.uuid)">{{ scope.row.uuid }}</el-link>
+				</template>
+			</el-table-column>
 			<el-table-column label="请求方式" prop="method" width="80"></el-table-column>
 			<el-table-column label="访问行为" prop="behavior"></el-table-column>
 			<el-table-column label="访问内容" prop="content" show-overflow-tooltip></el-table-column>
@@ -50,13 +73,16 @@
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
 	import {getVisitLogList, deleteVisitLogById} from "@/api/visitLog";
+	import DateTimeRangePicker from "@/components/DateTimeRangePicker";
 
 	export default {
 		name: "VisitLog",
-		components: {Breadcrumb},
+		components: {DateTimeRangePicker, Breadcrumb},
 		data() {
 			return {
 				queryInfo: {
+					uuid: '',
+					date: [],
 					pageNum: 1,
 					pageSize: 10
 				},
@@ -65,11 +91,18 @@
 			}
 		},
 		created() {
+			if (this.$route.query.uuid) {
+				this.queryInfo.uuid = this.$route.query.uuid
+			}
 			this.getData()
 		},
 		methods: {
 			getData() {
-				getVisitLogList(this.queryInfo).then(res => {
+				let query = {...this.queryInfo}
+				if (query.date && query.date.length === 2) {
+					query.date = query.date[0] + ',' + query.date[1]
+				}
+				getVisitLogList(query).then(res => {
 					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
@@ -103,10 +136,24 @@
 					this.msgError("请求失败")
 				})
 			},
+			search() {
+				this.queryInfo.pageNum = 1
+				this.queryInfo.pageSize = 10
+				this.getData()
+			},
+			showThis(uuid) {
+				this.queryInfo.uuid = uuid
+				this.search()
+			},
+			setDate(value){
+				this.queryInfo.date = value
+			},
 		}
 	}
 </script>
 
 <style scoped>
-
+	.el-form-item {
+		margin-bottom: 0;
+	}
 </style>

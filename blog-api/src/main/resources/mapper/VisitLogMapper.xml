@@ -21,8 +21,18 @@
     </resultMap>
 
     <!--查询日志-->
-    <select id="getVisitLogList" resultMap="log">
-        select id, uuid, uri, method, param, behavior, content, remark, ip, ip_source, os, browser, times, create_time from visit_log
+    <select id="getVisitLogListByUUIDAndDate" resultMap="log">
+        <bind name="uuidPattern" value="'%' + uuid + '%'"/>
+        select id, uuid, uri, method, param, behavior, content, remark, ip, ip_source, os, browser, times, create_time
+        from visit_log
+        <where>
+            <if test="uuid!=null and uuid!=''">
+                uuid like #{uuidPattern}
+            </if>
+            <if test="startDate!=null and startDate!='' and endDate!=null and endDate!=''">
+                and create_time between #{startDate} and #{endDate}
+            </if>
+        </where>
     </select>
 
     <!--添加日志-->

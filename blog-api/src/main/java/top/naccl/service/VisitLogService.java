@@ -6,7 +6,7 @@ import top.naccl.entity.VisitLog;
 import java.util.List;
 
 public interface VisitLogService {
-	List<VisitLog> getVisitLogList();
+	List<VisitLog> getVisitLogListByUUIDAndDate(String uuid, String startDate, String endDate);
 
 	@Async
 	void saveVisitLog(VisitLog log);
