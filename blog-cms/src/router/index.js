@@ -19,6 +19,7 @@ import OperationLog from "@/views/log/operationLog/OperationLog";
 import LoginLog from "@/views/log/loginLog/LoginLog";
 import ExceptionLog from "@/views/log/ExceptionLog/ExceptionLog";
 import VisitLog from "@/views/log/visitLog/VisitLog";
+import Visitor from "@/views/statistics/Visitor";
 
 Vue.use(VueRouter)
 
@@ -171,7 +172,14 @@ const routes = [
 				meta: {
 					title: '访问日志'
 				}
-			}
+			},
+			{
+				path: '/visitor',
+				component: Visitor,
+				meta: {
+					title: '访客统计'
+				}
+			},
 		]
 	}
 ]

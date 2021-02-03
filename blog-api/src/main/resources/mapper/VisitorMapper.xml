@@ -16,8 +16,14 @@
     </resultMap>
 
     <!--查询访客-->
-    <select id="getVisitorList" resultMap="visitor">
-        select id, uuid, ip, ip_source, os, browser, create_time, last_time, pv from visitor
+    <select id="getVisitorListByDate" resultMap="visitor">
+        select id, uuid, ip, ip_source, os, browser, create_time, last_time, pv
+        from visitor
+        <where>
+            <if test="startDate!=null and startDate!='' and endDate!=null and endDate!=''">
+                last_time between #{startDate} and #{endDate}
+            </if>
+        </where>
     </select>
 
     <!--查询是否存在某个uuid-->

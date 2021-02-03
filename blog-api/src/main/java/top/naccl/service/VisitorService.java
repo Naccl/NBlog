@@ -6,12 +6,12 @@ import top.naccl.entity.Visitor;
 import java.util.List;
 
 public interface VisitorService {
-	List<Visitor> getVisitorList();
+	List<Visitor> getVisitorListByDate(String startDate, String endDate);
 
 	boolean hasUUID(String uuid);
 
 	@Async
 	void saveVisitor(Visitor visitor);
 
-	void deleteVisitorById(Long id);
+	void deleteVisitor(Long id, String uuid);
 }

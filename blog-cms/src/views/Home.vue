@@ -170,13 +170,13 @@
 						children: [
 							{
 								id: 51,
-								title: '访问量',
-								path: '/pv'
+								title: '访客统计',
+								path: '/visitor'
 							},
 							{
 								id: 52,
-								title: '实时访客',
-								path: '/latest'
+								title: '受访页面',
+								path: '/visitPage'
 							}
 						]
 					},

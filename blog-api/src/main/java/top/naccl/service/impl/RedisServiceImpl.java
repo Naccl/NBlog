@@ -97,6 +97,11 @@ public class RedisServiceImpl implements RedisService {
 	}
 
 	@Override
+	public void deleteValueBySet(String key, Object value) {
+		jsonRedisTemplate.opsForSet().remove(key, value);
+	}
+
+	@Override
 	public boolean hasValueInSet(String key, Object value) {
 		return jsonRedisTemplate.opsForSet().isMember(key, value);
 	}

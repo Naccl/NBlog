@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface VisitorMapper {
-	List<Visitor> getVisitorList();
+	List<Visitor> getVisitorListByDate(String startDate, String endDate);
 
 	int hasUUID(String uuid);
 
