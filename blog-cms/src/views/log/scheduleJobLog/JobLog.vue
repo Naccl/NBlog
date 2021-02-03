@@ -3,6 +3,16 @@
 		<!--面包屑导航-->
 		<Breadcrumb parentTitle="日志管理"/>
 
+		<!--搜索-->
+		<el-form inline>
+			<el-form-item label="执行时间">
+				<DateTimeRangePicker :date="queryInfo.date" :setDate="setDate"/>
+			</el-form-item>
+			<el-form-item>
+				<el-button type="primary" size="small" icon="el-icon-search" @click="search">搜索</el-button>
+			</el-form-item>
+		</el-form>
+
 		<el-table :data="logList">
 			<el-table-column label="序号" type="index" width="50"></el-table-column>
 			<el-table-column label="日志id" prop="logId" width="80"></el-table-column>
@@ -26,7 +36,7 @@
 			</el-table-column>
 			<el-table-column label="操作" width="200">
 				<template v-slot="scope">
-					<el-button type="warning" icon="el-icon-edit" size="mini" @click="showDetail(scope.row)">查看详情</el-button>
+					<el-button type="warning" icon="el-icon-view" size="mini" @click="showDetail(scope.row)">查看详情</el-button>
 					<el-popconfirm title="确定删除吗？" icon="el-icon-delete" iconColor="red" @onConfirm="deleteJobLogByLogId(scope.row.logId)">
 						<el-button size="mini" type="danger" icon="el-icon-delete" slot="reference">删除</el-button>
 					</el-popconfirm>
@@ -78,13 +88,15 @@
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
 	import {getJobLogList, deleteJobLogByLogId} from "@/api/schedule";
+	import DateTimeRangePicker from "@/components/DateTimeRangePicker";
 
 	export default {
 		name: "JobLog",
-		components: {Breadcrumb},
+		components: {DateTimeRangePicker, Breadcrumb},
 		data() {
 			return {
 				queryInfo: {
+					date: [],
 					pageNum: 1,
 					pageSize: 10
 				},
@@ -99,7 +111,11 @@
 		},
 		methods: {
 			getData() {
-				getJobLogList(this.queryInfo).then(res => {
+				let query = {...this.queryInfo}
+				if (query.date && query.date.length === 2) {
+					query.date = query.date[0] + ',' + query.date[1]
+				}
+				getJobLogList(query).then(res => {
 					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
@@ -143,6 +159,14 @@
 					this.msgError("请求失败")
 				})
 			},
+			search() {
+				this.queryInfo.pageNum = 1
+				this.queryInfo.pageSize = 10
+				this.getData()
+			},
+			setDate(value) {
+				this.queryInfo.date = value
+			},
 		}
 	}
 </script>
@@ -150,5 +174,9 @@
 <style scoped>
 	.el-button + span {
 		margin-left: 10px;
+	}
+
+	.el-form--inline .el-form-item {
+		margin-bottom: 0;
 	}
 </style>

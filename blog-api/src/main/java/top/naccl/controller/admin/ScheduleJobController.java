@@ -121,16 +121,24 @@ public class ScheduleJobController {
 	/**
 	 * 分页查询定时任务日志列表
 	 *
+	 * @param date     按执行时间查询
 	 * @param pageNum  页码
 	 * @param pageSize 每页条数
 	 * @return
 	 */
 	@GetMapping("/job/logs")
-	public Result logs(@RequestParam(defaultValue = "1") Integer pageNum,
+	public Result logs(@RequestParam(defaultValue = "") String[] date,
+	                   @RequestParam(defaultValue = "1") Integer pageNum,
 	                   @RequestParam(defaultValue = "10") Integer pageSize) {
+		String startDate = null;
+		String endDate = null;
+		if (date.length == 2) {
+			startDate = date[0];
+			endDate = date[1];
+		}
 		String orderBy = "create_time desc";
 		PageHelper.startPage(pageNum, pageSize, orderBy);
-		PageInfo<ScheduleJobLog> pageInfo = new PageInfo<>(scheduleJobService.getJobLogList());
+		PageInfo<ScheduleJobLog> pageInfo = new PageInfo<>(scheduleJobService.getJobLogListByDate(startDate, endDate));
 		return Result.ok("请求成功", pageInfo);
 	}
 

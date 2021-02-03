@@ -26,8 +26,8 @@ public class OperationLogServiceImpl implements OperationLogService {
 	UserAgentUtils userAgentUtils;
 
 	@Override
-	public List<OperationLog> getOperationLogList() {
-		return operationLogMapper.getOperationLogList();
+	public List<OperationLog> getOperationLogListByDate(String startDate, String endDate) {
+		return operationLogMapper.getOperationLogListByDate(startDate, endDate);
 	}
 
 	@Transactional

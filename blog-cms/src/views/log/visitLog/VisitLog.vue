@@ -10,7 +10,7 @@
 				          placeholder="请输入访客标识码" style="min-width: 300px">
 				</el-input>
 			</el-form-item>
-			<el-form-item label="操作时间">
+			<el-form-item label="访问时间">
 				<DateTimeRangePicker :date="queryInfo.date" :setDate="setDate"/>
 			</el-form-item>
 			<el-form-item>
@@ -50,7 +50,7 @@
 			<el-table-column label="ip来源" prop="ipSource"></el-table-column>
 			<el-table-column label="操作系统" prop="os"></el-table-column>
 			<el-table-column label="浏览器" prop="browser" show-overflow-tooltip></el-table-column>
-			<el-table-column label="操作时间" width="170">
+			<el-table-column label="访问时间" width="170">
 				<template v-slot="scope">{{ scope.row.createTime | dateFormat }}</template>
 			</el-table-column>
 			<el-table-column label="操作" width="120">
@@ -145,7 +145,7 @@
 				this.queryInfo.uuid = uuid
 				this.search()
 			},
-			setDate(value){
+			setDate(value) {
 				this.queryInfo.date = value
 			},
 		}
@@ -153,7 +153,7 @@
 </script>
 
 <style scoped>
-	.el-form-item {
+	.el-form--inline .el-form-item {
 		margin-bottom: 0;
 	}
 </style>

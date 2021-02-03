@@ -26,8 +26,8 @@ public class ExceptionLogServiceImpl implements ExceptionLogService {
 	UserAgentUtils userAgentUtils;
 
 	@Override
-	public List<ExceptionLog> getExceptionLogList() {
-		return exceptionLogMapper.getExceptionLogList();
+	public List<ExceptionLog> getExceptionLogListByDate(String startDate, String endDate) {
+		return exceptionLogMapper.getExceptionLogListByDate(startDate, endDate);
 	}
 
 	@Transactional

@@ -26,8 +26,8 @@ public class LoginLogServiceImpl implements LoginLogService {
 	UserAgentUtils userAgentUtils;
 
 	@Override
-	public List<LoginLog> getLoginLogList() {
-		return loginLogMapper.getLoginLogList();
+	public List<LoginLog> getLoginLogListByDate(String startDate, String endDate) {
+		return loginLogMapper.getLoginLogListByDate(startDate, endDate);
 	}
 
 	@Transactional

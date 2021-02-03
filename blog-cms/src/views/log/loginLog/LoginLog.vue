@@ -3,6 +3,16 @@
 		<!--面包屑导航-->
 		<Breadcrumb parentTitle="日志管理"/>
 
+		<!--搜索-->
+		<el-form inline>
+			<el-form-item label="操作时间">
+				<DateTimeRangePicker :date="queryInfo.date" :setDate="setDate"/>
+			</el-form-item>
+			<el-form-item>
+				<el-button type="primary" size="small" icon="el-icon-search" @click="search">搜索</el-button>
+			</el-form-item>
+		</el-form>
+
 		<el-table :data="logList">
 			<el-table-column label="序号" type="index" width="50"></el-table-column>
 			<el-table-column label="用户名称" prop="username"></el-table-column>
@@ -40,13 +50,15 @@
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
 	import {getLoginLogList, deleteLoginLogById} from "@/api/loginLog";
+	import DateTimeRangePicker from "@/components/DateTimeRangePicker";
 
 	export default {
 		name: "LoginLog",
-		components: {Breadcrumb},
+		components: {DateTimeRangePicker, Breadcrumb},
 		data() {
 			return {
 				queryInfo: {
+					date: [],
 					pageNum: 1,
 					pageSize: 10
 				},
@@ -59,7 +71,11 @@
 		},
 		methods: {
 			getData() {
-				getLoginLogList(this.queryInfo).then(res => {
+				let query = {...this.queryInfo}
+				if (query.date && query.date.length === 2) {
+					query.date = query.date[0] + ',' + query.date[1]
+				}
+				getLoginLogList(query).then(res => {
 					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
@@ -93,10 +109,20 @@
 					this.msgError("请求失败")
 				})
 			},
+			search() {
+				this.queryInfo.pageNum = 1
+				this.queryInfo.pageSize = 10
+				this.getData()
+			},
+			setDate(value) {
+				this.queryInfo.date = value
+			},
 		}
 	}
 </script>
 
 <style scoped>
-
+	.el-form--inline .el-form-item {
+		margin-bottom: 0;
+	}
 </style>

@@ -26,16 +26,24 @@ public class OperationLogController {
 	/**
 	 * 分页查询操作日志列表
 	 *
+	 * @param date     按操作时间查询
 	 * @param pageNum  页码
 	 * @param pageSize 每页个数
 	 * @return
 	 */
 	@GetMapping("/operationLogs")
-	public Result operationLogs(@RequestParam(defaultValue = "1") Integer pageNum,
+	public Result operationLogs(@RequestParam(defaultValue = "") String[] date,
+	                            @RequestParam(defaultValue = "1") Integer pageNum,
 	                            @RequestParam(defaultValue = "10") Integer pageSize) {
+		String startDate = null;
+		String endDate = null;
+		if (date.length == 2) {
+			startDate = date[0];
+			endDate = date[1];
+		}
 		String orderBy = "create_time desc";
 		PageHelper.startPage(pageNum, pageSize, orderBy);
-		PageInfo<OperationLog> pageInfo = new PageInfo<>(operationLogService.getOperationLogList());
+		PageInfo<OperationLog> pageInfo = new PageInfo<>(operationLogService.getOperationLogListByDate(startDate, endDate));
 		return Result.ok("请求成功", pageInfo);
 	}
 

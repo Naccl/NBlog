@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface ExceptionLogMapper {
-	List<ExceptionLog> getExceptionLogList();
+	List<ExceptionLog> getExceptionLogListByDate(String startDate, String endDate);
 
 	int saveExceptionLog(ExceptionLog log);
 

@@ -132,7 +132,7 @@
 		margin-left: 10px;
 	}
 
-	.el-form-item {
+	.el-form--inline .el-form-item {
 		margin-bottom: 0;
 	}
 </style>

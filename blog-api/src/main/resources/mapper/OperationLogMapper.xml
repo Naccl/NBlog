@@ -19,8 +19,14 @@
     </resultMap>
 
     <!--查询日志-->
-    <select id="getOperationLogList" resultMap="log">
-        select id, username, uri, method, param, description, ip, ip_source, os, browser, times, create_time from operation_log
+    <select id="getOperationLogListByDate" resultMap="log">
+        select id, username, uri, method, param, description, ip, ip_source, os, browser, times, create_time
+        from operation_log
+        <where>
+            <if test="startDate!=null and startDate!='' and endDate!=null and endDate!=''">
+                create_time between #{startDate} and #{endDate}
+            </if>
+        </where>
     </select>
 
     <!--添加日志-->

@@ -26,16 +26,24 @@ public class LoginLogController {
 	/**
 	 * 分页查询登录日志列表
 	 *
+	 * @param date     按操作时间查询
 	 * @param pageNum  页码
 	 * @param pageSize 每页个数
 	 * @return
 	 */
 	@GetMapping("/loginLogs")
-	public Result loginLogs(@RequestParam(defaultValue = "1") Integer pageNum,
+	public Result loginLogs(@RequestParam(defaultValue = "") String[] date,
+	                        @RequestParam(defaultValue = "1") Integer pageNum,
 	                        @RequestParam(defaultValue = "10") Integer pageSize) {
+		String startDate = null;
+		String endDate = null;
+		if (date.length == 2) {
+			startDate = date[0];
+			endDate = date[1];
+		}
 		String orderBy = "create_time desc";
 		PageHelper.startPage(pageNum, pageSize, orderBy);
-		PageInfo<LoginLog> pageInfo = new PageInfo<>(loginLogService.getLoginLogList());
+		PageInfo<LoginLog> pageInfo = new PageInfo<>(loginLogService.getLoginLogListByDate(startDate, endDate));
 		return Result.ok("请求成功", pageInfo);
 	}
 

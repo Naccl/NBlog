@@ -26,16 +26,24 @@ public class ExceptionLogController {
 	/**
 	 * 分页查询异常日志列表
 	 *
+	 * @param date     按操作时间查询
 	 * @param pageNum  页码
 	 * @param pageSize 每页个数
 	 * @return
 	 */
 	@GetMapping("/exceptionLogs")
-	public Result exceptionLogs(@RequestParam(defaultValue = "1") Integer pageNum,
+	public Result exceptionLogs(@RequestParam(defaultValue = "") String[] date,
+	                            @RequestParam(defaultValue = "1") Integer pageNum,
 	                            @RequestParam(defaultValue = "10") Integer pageSize) {
+		String startDate = null;
+		String endDate = null;
+		if (date.length == 2) {
+			startDate = date[0];
+			endDate = date[1];
+		}
 		String orderBy = "create_time desc";
 		PageHelper.startPage(pageNum, pageSize, orderBy);
-		PageInfo<ExceptionLog> pageInfo = new PageInfo<>(exceptionLogService.getExceptionLogList());
+		PageInfo<ExceptionLog> pageInfo = new PageInfo<>(exceptionLogService.getExceptionLogListByDate(startDate, endDate));
 		return Result.ok("请求成功", pageInfo);
 	}
 

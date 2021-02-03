@@ -18,8 +18,14 @@
     </resultMap>
 
     <!--查询日志-->
-    <select id="getExceptionLogList" resultMap="log">
-        select id, uri, method, param, description, error, ip, ip_source, os, browser, create_time from exception_log
+    <select id="getExceptionLogListByDate" resultMap="log">
+        select id, uri, method, param, description, error, ip, ip_source, os, browser, create_time
+        from exception_log
+        <where>
+            <if test="startDate!=null and startDate!='' and endDate!=null and endDate!=''">
+                create_time between #{startDate} and #{endDate}
+            </if>
+        </where>
     </select>
 
     <!--添加日志-->

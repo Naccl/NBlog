@@ -14,8 +14,14 @@
         <result property="createTime" column="create_time"/>
     </resultMap>
 
-    <select id="getJobLogList" resultMap="log">
-        select log_id, job_id, bean_name, method_name, params, status, error, times, create_time from schedule_job_log
+    <select id="getJobLogListByDate" resultMap="log">
+        select log_id, job_id, bean_name, method_name, params, status, error, times, create_time
+        from schedule_job_log
+        <where>
+            <if test="startDate!=null and startDate!='' and endDate!=null and endDate!=''">
+                create_time between #{startDate} and #{endDate}
+            </if>
+        </where>
     </select>
 
     <insert id="saveJobLog" parameterType="top.naccl.entity.ScheduleJobLog" useGeneratedKeys="true" keyProperty="logId">

@@ -16,8 +16,14 @@
     </resultMap>
 
     <!--查询日志-->
-    <select id="getLoginLogList" resultMap="log">
-        select id, username, ip, ip_source, os, browser, status, description, create_time from login_log
+    <select id="getLoginLogListByDate" resultMap="log">
+        select id, username, ip, ip_source, os, browser, status, description, create_time
+        from login_log
+        <where>
+            <if test="startDate!=null and startDate!='' and endDate!=null and endDate!=''">
+                create_time between #{startDate} and #{endDate}
+            </if>
+        </where>
     </select>
 
     <!--添加日志-->

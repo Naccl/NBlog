@@ -98,8 +98,8 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
 	}
 
 	@Override
-	public List<ScheduleJobLog> getJobLogList() {
-		return scheduleJobLogMapper.getJobLogList();
+	public List<ScheduleJobLog> getJobLogListByDate(String startDate, String endDate) {
+		return scheduleJobLogMapper.getJobLogListByDate(startDate, endDate);
 	}
 
 	@Override

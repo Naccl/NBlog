@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface ScheduleJobLogMapper {
-	List<ScheduleJobLog> getJobLogList();
+	List<ScheduleJobLog> getJobLogListByDate(String startDate, String endDate);
 
 	int saveJobLog(ScheduleJobLog jobLog);
 

@@ -6,7 +6,7 @@ import top.naccl.entity.OperationLog;
 import java.util.List;
 
 public interface OperationLogService {
-	List<OperationLog> getOperationLogList();
+	List<OperationLog> getOperationLogListByDate(String startDate, String endDate);
 
 	@Async
 	void saveOperationLog(OperationLog log);

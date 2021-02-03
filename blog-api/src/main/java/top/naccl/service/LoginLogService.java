@@ -6,7 +6,7 @@ import top.naccl.entity.LoginLog;
 import java.util.List;
 
 public interface LoginLogService {
-	List<LoginLog> getLoginLogList();
+	List<LoginLog> getLoginLogListByDate(String startDate, String endDate);
 
 	@Async
 	void saveLoginLog(LoginLog log);

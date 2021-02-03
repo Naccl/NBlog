@@ -6,7 +6,7 @@ import top.naccl.entity.ExceptionLog;
 import java.util.List;
 
 public interface ExceptionLogService {
-	List<ExceptionLog> getExceptionLogList();
+	List<ExceptionLog> getExceptionLogListByDate(String startDate, String endDate);
 
 	@Async
 	void saveExceptionLog(ExceptionLog log);

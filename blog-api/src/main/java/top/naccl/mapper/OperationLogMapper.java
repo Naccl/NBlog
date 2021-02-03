@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface OperationLogMapper {
-	List<OperationLog> getOperationLogList();
+	List<OperationLog> getOperationLogListByDate(String startDate, String endDate);
 
 	int saveOperationLog(OperationLog log);
 
