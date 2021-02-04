@@ -3,14 +3,14 @@
 		<!--面包屑导航-->
 		<Breadcrumb parentTitle="系统管理"/>
 
-		<el-row :gutter="10">
-			<el-col :span="1.5">
+		<el-form inline>
+			<el-form-item>
 				<el-button type="primary" size="mini" icon="el-icon-plus" @click="addDialogVisible=true">添加</el-button>
-			</el-col>
-			<el-col :span="1.5">
+			</el-form-item>
+			<el-form-item>
 				<el-button type="warning" size="mini" icon="el-icon-document-checked" @click="goLogPage">日志</el-button>
-			</el-col>
-		</el-row>
+			</el-form-item>
+		</el-form>
 
 		<el-table :data="jobList">
 			<el-table-column label="序号" type="index" width="50"></el-table-column>
@@ -274,5 +274,9 @@
 <style scoped>
 	.el-button + span {
 		margin-left: 10px;
+	}
+
+	.el-form--inline .el-form-item {
+		margin-bottom: 0;
 	}
 </style>

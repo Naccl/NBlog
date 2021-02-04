@@ -6,7 +6,7 @@
 		<!--添加-->
 		<el-row :gutter="10">
 			<el-col :span="6">
-				<el-button type="primary" size="mini" icon="el-icon-plus" @click="addDialogVisible=true">添加标签</el-button>
+				<el-button type="primary" size="small" icon="el-icon-plus" @click="addDialogVisible=true">添加标签</el-button>
 			</el-col>
 		</el-row>
 

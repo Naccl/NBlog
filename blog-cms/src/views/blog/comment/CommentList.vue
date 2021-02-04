@@ -6,7 +6,7 @@
 		<!--搜索-->
 		<el-row>
 			<el-col :span="6">
-				<el-select v-model="pageId" placeholder="请选择页面" :filterable="true" :clearable="true" @change="search">
+				<el-select v-model="pageId" placeholder="请选择页面" :filterable="true" :clearable="true" @change="search" size="small" style="min-width: 400px">
 					<el-option :label="item.title" :value="item.id" v-for="item in blogList" :key="item.id"></el-option>
 				</el-select>
 			</el-col>
