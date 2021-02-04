@@ -71,15 +71,6 @@
 			...mapState(['clientSize'])
 		},
 		watch: {
-			'clientSize.clientWidth'() {
-				if (this.$route.name === 'home') {
-					if (this.clientSize.clientWidth > 768) {
-						this.$refs.nav.classList.add('transparent')
-					} else {
-						this.$refs.nav.classList.remove('transparent')
-					}
-				}
-			},
 			//路由改变时，收起导航栏
 			'$route.path'() {
 				this.mobileHide = true
@@ -236,7 +227,7 @@
 	.m-search-item li .title {
 		text-overflow: ellipsis;
 		overflow: hidden;
-		color: rgba(0, 0, 0, .87);
+		color: rgba(0, 0, 0, 0.87);
 	}
 
 	.m-search-item li .content {
