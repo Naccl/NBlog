@@ -7,6 +7,7 @@ import top.naccl.config.RedisKeyConfig;
 import top.naccl.entity.Visitor;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.VisitorMapper;
+import top.naccl.model.dto.VisitLogUuidTime;
 import top.naccl.service.RedisService;
 import top.naccl.service.VisitorService;
 import top.naccl.util.IpAddressUtils;
@@ -52,6 +53,11 @@ public class VisitorServiceImpl implements VisitorService {
 		if (visitorMapper.saveVisitor(visitor) != 1) {
 			throw new PersistenceException("访客添加失败");
 		}
+	}
+
+	@Override
+	public void updatePVAndLastTimeByUUID(VisitLogUuidTime dto) {
+		visitorMapper.updatePVAndLastTimeByUUID(dto);
 	}
 
 	@Transactional

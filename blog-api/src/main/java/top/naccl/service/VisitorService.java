@@ -2,6 +2,7 @@ package top.naccl.service;
 
 import org.springframework.scheduling.annotation.Async;
 import top.naccl.entity.Visitor;
+import top.naccl.model.dto.VisitLogUuidTime;
 
 import java.util.List;
 
@@ -12,6 +13,8 @@ public interface VisitorService {
 
 	@Async
 	void saveVisitor(Visitor visitor);
+
+	void updatePVAndLastTimeByUUID(VisitLogUuidTime dto);
 
 	void deleteVisitor(Long id, String uuid);
 }

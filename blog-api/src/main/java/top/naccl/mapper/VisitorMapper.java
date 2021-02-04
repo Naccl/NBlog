@@ -3,6 +3,7 @@ package top.naccl.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import top.naccl.entity.Visitor;
+import top.naccl.model.dto.VisitLogUuidTime;
 
 import java.util.List;
 
@@ -19,6 +20,8 @@ public interface VisitorMapper {
 	int hasUUID(String uuid);
 
 	int saveVisitor(Visitor visitor);
+
+	int updatePVAndLastTimeByUUID(VisitLogUuidTime dto);
 
 	int deleteVisitorById(Long id);
 }

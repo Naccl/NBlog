@@ -5,6 +5,7 @@
 </template>
 
 <script>
+	//参考阿里iconfont, assets/css/icon/demo_index.html Symbol
 	export default {
 		name: 'SvgIcon',
 		props: {

@@ -35,6 +35,16 @@
         </where>
     </select>
 
+    <resultMap id="logDTO" type="top.naccl.model.dto.VisitLogUuidTime">
+        <result property="uuid" column="uuid"/>
+        <result property="time" column="create_time"/>
+    </resultMap>
+
+    <!--查询昨天的所有访问日志-->
+    <select id="getUUIDAndCreateTimeByYesterday" resultMap="logDTO">
+        select uuid, create_time from visit_log where date(create_time)=date_sub(curdate(), interval 1 day) order by create_time desc
+    </select>
+
     <!--添加日志-->
     <insert id="saveVisitLog" parameterType="top.naccl.entity.VisitLog" useGeneratedKeys="true" keyProperty="id">
         insert into visit_log (uuid, uri, method, param, behavior, content, remark, ip, ip_source, os, browser, times, create_time, user_agent)
@@ -45,4 +55,9 @@
     <delete id="deleteVisitLogById">
         delete from visit_log where id=#{id}
     </delete>
+
+    <!--查询今日访问量-->
+    <select id="countVisitLogByToday" resultType="java.lang.Integer">
+        select count(*) from visit_log where date(create_time)=curdate()
+    </select>
 </mapper>

@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "169640",
+      "name": "访问量",
+      "font_class": "pv",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "3346279",
+      "name": "浏览量",
+      "font_class": "click",
+      "unicode": "e6b2",
+      "unicode_decimal": 59058
+    },
+    {
       "icon_id": "1123781",
       "name": "新访客",
       "font_class": "xinfangke",

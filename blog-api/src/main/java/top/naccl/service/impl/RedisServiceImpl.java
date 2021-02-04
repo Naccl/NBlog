@@ -97,6 +97,11 @@ public class RedisServiceImpl implements RedisService {
 	}
 
 	@Override
+	public int countBySet(String key) {
+		return jsonRedisTemplate.opsForSet().size(key).intValue();
+	}
+
+	@Override
 	public void deleteValueBySet(String key, Object value) {
 		jsonRedisTemplate.opsForSet().remove(key, value);
 	}

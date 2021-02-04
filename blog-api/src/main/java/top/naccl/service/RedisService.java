@@ -33,6 +33,8 @@ public interface RedisService {
 
 	void saveValueToSet(String key, Object value);
 
+	int countBySet(String key);
+
 	void deleteValueBySet(String key, Object value);
 
 	boolean hasValueInSet(String key, Object value);

@@ -22,14 +22,14 @@ public class RedisSyncScheduleTask {
 	BlogService blogService;
 
 	/**
-	 * 从Redis同步博客浏览量到数据库
+	 * 从Redis同步博客文章浏览量到数据库
 	 */
 	public void syncBlogViewsToDatabase() {
 		String redisKey = RedisKeyConfig.BLOG_VIEWS_MAP;
-		Map map = redisService.getMapByHash(redisKey);
-		Set<Integer> keys = map.keySet();
+		Map blogViewsMap = redisService.getMapByHash(redisKey);
+		Set<Integer> keys = blogViewsMap.keySet();
 		for (Integer key : keys) {
-			Integer views = (Integer) map.get(key);
+			Integer views = (Integer) blogViewsMap.get(key);
 			blogService.updateViews(key.longValue(), views);
 		}
 	}

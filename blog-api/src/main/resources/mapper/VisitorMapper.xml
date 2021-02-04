@@ -37,6 +37,11 @@
         values (#{uuid}, #{ip}, #{ipSource}, #{os}, #{browser}, #{createTime}, #{lastTime}, #{pv}, #{userAgent})
     </insert>
 
+    <!--更新访客pv和最后访问时间-->
+    <update id="updatePVAndLastTimeByUUID">
+        update visitor set pv=pv+#{pv}, last_time=#{time} where uuid=#{uuid}
+    </update>
+
     <!--删除访客-->
     <delete id="deleteVisitorById">
         delete from visitor where id=#{id}

@@ -4,11 +4,11 @@
 			<el-col :span="6">
 				<el-card class="card-panel" :body-style="cardBodyStyle">
 					<div class="card-panel-icon-wrapper">
-						<SvgIcon icon-class="#icon-yonghu" class-name="card-panel-icon"/>
+						<SvgIcon icon-class="#icon-pv" class-name="card-panel-icon"/>
 					</div>
 					<div class="card-panel-description">
-						<div class="card-panel-text">今日访客数</div>
-						<span class="card-panel-num">{{ visitorCount }}</span>
+						<div class="card-panel-text">今日PV</div>
+						<span class="card-panel-num">{{ pv }}</span>
 					</div>
 				</el-card>
 			</el-col>
@@ -16,11 +16,11 @@
 			<el-col :span="6">
 				<el-card class="card-panel" :body-style="cardBodyStyle">
 					<div class="card-panel-icon-wrapper">
-						<SvgIcon icon-class="#icon-xinfangke" class-name="card-panel-icon"/>
+						<SvgIcon icon-class="#icon-yonghu" class-name="card-panel-icon"/>
 					</div>
 					<div class="card-panel-description">
-						<div class="card-panel-text">新增访客</div>
-						<span class="card-panel-num">{{ visitorAddCount }}</span>
+						<div class="card-panel-text">今日UV</div>
+						<span class="card-panel-num">{{ uv }}</span>
 					</div>
 				</el-card>
 			</el-col>
@@ -89,8 +89,8 @@
 				cardBodyStyle: {
 					padding: 0
 				},
-				visitorCount: 57,
-				visitorAddCount: 13,
+				pv: 0,
+				uv: 0,
 				blogCount: 0,
 				commentCount: 0,
 				categoryEcharts: null,
@@ -191,11 +191,11 @@
 					},
 				},
 				data: {
-					"code": "success",
-					"data": {
-						"date": ["10-02", "10-03", "10-04", "10-05", "10-06", "10-07", "10-08"],
-						"uv": [29.0, 39.0, 26.0, 44.0, 42.0, 37.0, 52.0],
-						"pv": [137.0, 190.0, 128.0, 512.0, 219.0, 205.0, 507.0]
+					code: "success",
+					data: {
+						date: ["10-02", "10-03", "10-04", "10-05", "10-06", "10-07", "10-08"],
+						uv: [29.0, 39.0, 26.0, 44.0, 42.0, 37.0, 52.0],
+						pv: [137.0, 190.0, 128.0, 512.0, 219.0, 205.0, 507.0]
 					}
 				}
 			}
@@ -210,6 +210,8 @@
 				getDashboard().then(res => {
 					console.log(res)
 					if (res.code === 200) {
+						this.pv = res.data.pv
+						this.uv = res.data.uv
 						this.blogCount = res.data.blogCount
 						this.commentCount = res.data.commentCount
 
@@ -494,7 +496,7 @@
 						}
 					},
 					legend: {
-						data: ['访问量(PV)', '独立用户(UV)']
+						data: ['访问量(PV)', '独立访客(UV)']
 					},
 					series: [
 						{
@@ -514,7 +516,7 @@
 							animationEasing: 'cubicInOut'
 						},
 						{
-							name: '独立用户(UV)',
+							name: '独立访客(UV)',
 							smooth: true,
 							type: 'line',
 							itemStyle: {

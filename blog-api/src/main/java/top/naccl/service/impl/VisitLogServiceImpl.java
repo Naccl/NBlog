@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import top.naccl.entity.VisitLog;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.VisitLogMapper;
+import top.naccl.model.dto.VisitLogUuidTime;
 import top.naccl.service.VisitLogService;
 import top.naccl.util.IpAddressUtils;
 import top.naccl.util.UserAgentUtils;
@@ -30,6 +31,11 @@ public class VisitLogServiceImpl implements VisitLogService {
 		return visitLogMapper.getVisitLogListByUUIDAndDate(uuid, startDate, endDate);
 	}
 
+	@Override
+	public List<VisitLogUuidTime> getUUIDAndCreateTimeByYesterday() {
+		return visitLogMapper.getUUIDAndCreateTimeByYesterday();
+	}
+
 	@Transactional
 	@Override
 	public void saveVisitLog(VisitLog log) {
@@ -51,5 +57,10 @@ public class VisitLogServiceImpl implements VisitLogService {
 		if (visitLogMapper.deleteVisitLogById(id) != 1) {
 			throw new PersistenceException("删除日志失败");
 		}
+	}
+
+	@Override
+	public int countVisitLogByToday() {
+		return visitLogMapper.countVisitLogByToday();
 	}
 }
