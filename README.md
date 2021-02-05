@@ -63,7 +63,7 @@ MarkDown 排版：基于 [typo.css](https://github.com/sofish/typo.css) 修改
 
 ## 快速开始
 
-1. 创建 MySQL 数据库`vue_blog`，并执行`/blog-api/vue_blog.sql`初始化表数据
+1. 创建 MySQL 数据库`nblog`，并执行`/blog-api/nblog.sql`初始化表数据
 2. 修改配置信息`blog-api/src/main/resources/application-dev.properties`
 3. 安装 Redis 并启动
 4. 启动后端服务
