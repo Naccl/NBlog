@@ -34,7 +34,7 @@ public class Visitor {
 		Date date = new Date();
 		this.createTime = date;
 		this.lastTime = date;
-		this.pv = 1;
+		this.pv = 0;
 		this.userAgent = userAgent;
 	}
 }
