@@ -47,7 +47,7 @@
 			<el-table-column label="访问行为" prop="behavior"></el-table-column>
 			<el-table-column label="访问内容" prop="content" show-overflow-tooltip></el-table-column>
 			<el-table-column label="ip" prop="ip"></el-table-column>
-			<el-table-column label="ip来源" prop="ipSource"></el-table-column>
+			<el-table-column label="ip来源" prop="ipSource" show-overflow-tooltip></el-table-column>
 			<el-table-column label="操作系统" prop="os"></el-table-column>
 			<el-table-column label="浏览器" prop="browser" show-overflow-tooltip></el-table-column>
 			<el-table-column label="访问时间" width="170">
