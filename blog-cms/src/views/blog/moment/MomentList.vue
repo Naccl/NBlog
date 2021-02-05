@@ -58,7 +58,6 @@
 		methods: {
 			getMomentList() {
 				getMomentListByQuery(this.queryInfo).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.momentList = res.data.list
 						this.total = res.data.total

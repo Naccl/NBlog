@@ -51,7 +51,6 @@
 				this.$refs.loginFormRef.validate(valid => {
 					if (valid) {
 						login(this.loginForm).then(res => {
-							console.log(res)
 							if (res.code === 200) {
 								this.msgSuccess(res.msg)
 								window.sessionStorage.setItem('adminToken', res.data.token)

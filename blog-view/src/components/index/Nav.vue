@@ -123,7 +123,6 @@
 					return
 				}
 				getSearchBlogList(queryString).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.queryResult = res.data
 						if (this.queryResult.length === 0) {

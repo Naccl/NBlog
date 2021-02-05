@@ -153,7 +153,6 @@
 		methods: {
 			getCommentList() {
 				getCommentListByQuery(this.queryInfo).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
 						this.commentList = res.data.list
@@ -167,7 +166,6 @@
 			},
 			getBlogList() {
 				getBlogList().then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.blogList = res.data
 						this.blogList.unshift({id: -2, title: '友人帐'})
@@ -239,7 +237,6 @@
 					dangerouslyUseHTMLString: true
 				}).then(() => {
 					deleteCommentById(id).then(res => {
-						console.log(res)
 						if (res.code === 200) {
 							this.msgSuccess(res.msg)
 							this.getCommentList()

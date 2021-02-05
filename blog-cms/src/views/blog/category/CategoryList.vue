@@ -94,9 +94,7 @@
 		},
 		methods: {
 			getData() {
-				getData(this.queryInfo)
-				.then(res => {
-					console.log(res)
+				getData(this.queryInfo).then(res => {
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
 						this.categoryList = res.data.list
@@ -129,7 +127,6 @@
 				this.$refs.addFormRef.validate(valid => {
 					if (valid) {
 						addCategory(this.addForm).then(res => {
-							console.log(res)
 							if (res.code === 200) {
 								this.msgSuccess(res.msg)
 								this.addDialogVisible = false
@@ -147,7 +144,6 @@
 				this.$refs.editFormRef.validate(valid => {
 					if (valid) {
 						editCategory(this.editForm).then(res => {
-							console.log(res)
 							if (res.code === 200) {
 								this.msgSuccess(res.msg)
 								this.editDialogVisible = false
@@ -169,7 +165,6 @@
 			},
 			deleteCategoryById(id) {
 				deleteCategoryById(id).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.getData()

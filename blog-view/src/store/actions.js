@@ -30,7 +30,6 @@ export default {
 		const adminToken = window.sessionStorage.getItem('adminToken')
 		const token = adminToken ? adminToken : (blogToken ? blogToken : '')
 		getCommentListByQuery(token, rootState.commentQuery).then(res => {
-			console.log(res)
 			if (res.code === 200) {
 				commit(SAVE_COMMENT_RESULT, res.data)
 			}
@@ -59,7 +58,6 @@ export default {
 		form.blogId = rootState.commentQuery.blogId
 		form.parentCommentId = rootState.parentCommentId
 		submitComment(token, form).then(res => {
-			console.log(res)
 			if (res.code === 200) {
 				Notification({
 					title: res.msg,

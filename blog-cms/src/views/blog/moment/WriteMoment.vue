@@ -68,7 +68,6 @@
 			},
 			getMoment(id) {
 				getMomentById(id).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.form = res.data
 						this.vditor.setValue(this.form.content)
@@ -82,10 +81,8 @@
 			submit(published) {
 				this.form.content = this.vditor.getValue()
 				this.form.published = published
-				console.log(this.form)
 				if (this.$route.params.id) {
 					updateMoment(this.form).then(res => {
-						console.log(res)
 						if (res.code === 200) {
 							this.msgSuccess(res.msg)
 							this.$router.push('/moments')
@@ -97,7 +94,6 @@
 					})
 				} else {
 					saveMoment(this.form).then(res => {
-						console.log(res)
 						if (res.code === 200) {
 							this.msgSuccess(res.msg)
 							this.$router.push('/moments')

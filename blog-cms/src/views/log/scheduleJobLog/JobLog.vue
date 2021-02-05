@@ -116,7 +116,6 @@
 					query.date = query.date[0] + ',' + query.date[1]
 				}
 				getJobLogList(query).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.logList = res.data.list
@@ -148,7 +147,6 @@
 			},
 			deleteJobLogByLogId(logId) {
 				deleteJobLogByLogId(logId).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.getData()

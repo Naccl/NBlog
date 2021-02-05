@@ -102,7 +102,6 @@
 		methods: {
 			getSite() {
 				getSite().then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.siteInfo = res.data.siteInfo
 						this.badges = res.data.badges

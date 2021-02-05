@@ -135,7 +135,6 @@
 		methods: {
 			getData() {
 				getDataByQuery(this.queryInfo).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
 						this.blogList = res.data.blogs.list
@@ -156,7 +155,6 @@
 			//切换博客置顶状态
 			blogTopChanged(row) {
 				updateTop(row.id, row.top).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
 					} else {
@@ -169,7 +167,6 @@
 			//切换博客推荐状态
 			blogRecommendChanged(row) {
 				updateRecommend(row.id, row.recommend).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
 					} else {
@@ -243,7 +240,6 @@
 					dangerouslyUseHTMLString: true
 				}).then(() => {
 					deleteBlogById(id).then(res => {
-						console.log(res)
 						if (res.code === 200) {
 							this.msgSuccess(res.msg)
 							this.getData()

@@ -189,7 +189,6 @@
 			},
 			getInfo() {
 				getFriendInfo().then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.infoForm = res.data
@@ -203,7 +202,6 @@
 			},
 			updateContent() {
 				updateContent(this.vditor.getValue()).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.getInfo()
@@ -216,7 +214,6 @@
 			},
 			commentEnabledChanged() {
 				updateCommentEnabled(this.infoForm.commentEnabled).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 					} else {
@@ -228,7 +225,6 @@
 			},
 			getFriendList() {
 				getFriendsByQuery(this.queryInfo).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.friendList = res.data.list
 						this.total = res.data.total
@@ -250,7 +246,6 @@
 			},
 			friendPublishedChanged(row) {
 				updatePublished(row.id, row.published).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 					} else {
@@ -262,7 +257,6 @@
 			},
 			deleteFriendById(id) {
 				deleteFriendById(id).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.getFriendList()
 						this.msgSuccess(res.msg)
@@ -288,7 +282,6 @@
 				this.$refs.addFormRef.validate(valid => {
 					if (valid) {
 						saveFriend(this.addForm).then(res => {
-							console.log(res)
 							if (res.code === 200) {
 								this.getFriendList()
 								this.msgSuccess(res.msg)
@@ -306,7 +299,6 @@
 				this.$refs.editFormRef.validate(valid => {
 					if (valid) {
 						updateFriend(this.editForm).then(res => {
-							console.log(res)
 							if (res.code === 200) {
 								this.getFriendList()
 								this.msgSuccess(res.msg)

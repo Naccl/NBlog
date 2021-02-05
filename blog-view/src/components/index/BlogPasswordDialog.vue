@@ -42,7 +42,6 @@
 				this.$refs.formRef.validate(valid => {
 					if (valid) {
 						checkBlogPassword(this.blogPasswordForm).then(res => {
-							console.log(res)
 							if (res.code === 200) {
 								this.msgSuccess(res.msg)
 								window.localStorage.setItem(`blog${this.blogPasswordForm.blogId}`, res.data)

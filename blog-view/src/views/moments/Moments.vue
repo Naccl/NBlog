@@ -67,7 +67,6 @@
 				const adminToken = window.sessionStorage.getItem('adminToken')
 				const token = adminToken ? adminToken : ''
 				getMomentListByPageNum(token, this.pageNum).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.momentList = res.data.list
 						this.totalPage = res.data.totalPage

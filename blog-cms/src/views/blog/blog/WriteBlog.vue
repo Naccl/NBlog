@@ -196,7 +196,6 @@
 			},
 			getBlog(id) {
 				getBlogById(id).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.computeCategoryAndTag(res.data)
 						this.msgSuccess(res.msg);
@@ -220,7 +219,6 @@
 			},
 			getData() {
 				getCategoryAndTag().then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
 						this.categoryList = res.data.categories
@@ -252,12 +250,10 @@
 						if (this.radio !== 3) {
 							this.form.password = ''
 						}
-						console.log(this.form)
 						if (this.$route.params.id) {
 							this.form.category = null
 							this.form.tags = null
 							updateBlog(this.form).then(res => {
-								console.log(res)
 								if (res.code === 200) {
 									this.msgSuccess(res.msg)
 									this.$router.push('/blogs')
@@ -269,7 +265,6 @@
 							})
 						} else {
 							saveBlog(this.form).then(res => {
-								console.log(res)
 								if (res.code === 200) {
 									this.msgSuccess(res.msg)
 									this.$router.push('/blogs')

@@ -208,7 +208,6 @@
 		methods: {
 			getData() {
 				getDashboard().then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.pv = res.data.pv
 						this.uv = res.data.uv

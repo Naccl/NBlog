@@ -88,7 +88,6 @@
 					query.date = query.date[0] + ',' + query.date[1]
 				}
 				getOperationLogList(query).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.logList = res.data.list
@@ -110,7 +109,6 @@
 			},
 			deleteLogById(id) {
 				deleteOperationLogById(id).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.getData()

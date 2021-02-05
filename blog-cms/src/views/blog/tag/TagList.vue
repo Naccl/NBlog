@@ -134,9 +134,7 @@
 		},
 		methods: {
 			getData() {
-				getData(this.queryInfo)
-				.then(res => {
-					console.log(res)
+				getData(this.queryInfo).then(res => {
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
 						this.tagList = res.data.list
@@ -170,7 +168,6 @@
 				this.$refs.addFormRef.validate(valid => {
 					if (valid) {
 						addTag(this.addForm).then(res => {
-							console.log(res)
 							if (res.code === 200) {
 								this.msgSuccess(res.msg)
 								this.addDialogVisible = false
@@ -188,7 +185,6 @@
 				this.$refs.editFormRef.validate(valid => {
 					if (valid) {
 						editTag(this.editForm).then(res => {
-							console.log(res)
 							if (res.code === 200) {
 								this.msgSuccess(res.msg)
 								this.editDialogVisible = false
@@ -208,7 +204,6 @@
 			},
 			deleteTagById(id) {
 				deleteTagById(id).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.getData()

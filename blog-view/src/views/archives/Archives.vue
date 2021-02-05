@@ -52,7 +52,6 @@
 		methods: {
 			getArchives() {
 				getArchives().then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.blogMap = res.data.blogMap
 						this.count = res.data.count

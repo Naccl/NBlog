@@ -78,7 +78,6 @@
 			},
 			getData() {
 				getAbout().then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.form.title = res.data.title
 						this.form.musicId = res.data.musicId

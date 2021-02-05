@@ -96,7 +96,6 @@
 		methods: {
 			getData() {
 				getSiteSettingData().then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.typeMap = res.data
 						res.data.type2.forEach(item => {
@@ -144,7 +143,6 @@
 							return
 						}
 					})
-					console.log(this.deleteIds)
 				} else {
 					arr.forEach((item, index) => {
 						if (item.key === favorite.key) {
@@ -164,7 +162,6 @@
 							return
 						}
 					})
-					console.log(this.deleteIds)
 				} else {
 					arr.forEach((item, index) => {
 						if (item.key === badge.key) {
@@ -183,9 +180,7 @@
 				updateArr.push(...result.type1)
 				updateArr.push(...result.type2)
 				updateArr.push(...result.type3)
-				console.log(updateArr)
 				update(updateArr, this.deleteIds).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.deleteIds = []
 						this.getData()

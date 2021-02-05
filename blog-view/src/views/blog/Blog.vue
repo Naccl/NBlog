@@ -147,7 +147,6 @@
 				const adminToken = window.sessionStorage.getItem('adminToken')
 				const token = adminToken ? adminToken : (blogToken ? blogToken : '')
 				getBlogById(token, id).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.blog = res.data
 						document.title = this.blog.title + this.siteInfo.webTitleSuffix

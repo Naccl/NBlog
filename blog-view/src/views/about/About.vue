@@ -36,7 +36,6 @@
 		methods: {
 			getData() {
 				getAbout().then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.about = res.data
 					} else {

@@ -39,7 +39,6 @@
 		methods: {
 			getBlogList(pageNum) {
 				getBlogList(pageNum).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.blogList = res.data.list
 						this.totalPage = res.data.totalPage

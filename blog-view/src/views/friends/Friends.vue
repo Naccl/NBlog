@@ -56,7 +56,6 @@
 		methods: {
 			getData() {
 				getData().then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.friendList = res.data.friendList
 						this.info = res.data.friendInfo
@@ -68,10 +67,7 @@
 				})
 			},
 			addViews(nickname) {
-				addViewsByNickname(nickname).then(res => {
-					console.log(res)
-				}).catch(() => {
-				})
+				addViewsByNickname(nickname)
 			},
 			randomRGB() {
 				const index = Math.floor((Math.random() * this.bgColor.length))

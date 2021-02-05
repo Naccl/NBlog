@@ -139,7 +139,6 @@
 		methods: {
 			getData() {
 				getJobList(this.queryInfo).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.jobList = res.data.list
@@ -168,7 +167,6 @@
 					dangerouslyUseHTMLString: true
 				}).then(() => {
 					updateJobStatus(row.jobId, row.status).then(res => {
-						console.log(res)
 						if (res.code === 200) {
 							this.msgSuccess(res.msg)
 						} else {
@@ -188,7 +186,6 @@
 					type: 'warning'
 				}).then(() => {
 					runJobOnce(jobId).then(res => {
-						console.log(res)
 						if (res.code === 200) {
 							this.msgSuccess(res.msg)
 						} else {
@@ -206,7 +203,6 @@
 			},
 			deleteJobById(jobId) {
 				deleteJobById(jobId).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.getData()
@@ -232,7 +228,6 @@
 				this.$refs.addFormRef.validate(valid => {
 					if (valid) {
 						addJob(this.addForm).then(res => {
-							console.log(res)
 							if (res.code === 200) {
 								this.msgSuccess(res.msg)
 								this.addDialogVisible = false
@@ -250,7 +245,6 @@
 				this.$refs.editFormRef.validate(valid => {
 					if (valid) {
 						editJob(this.editForm).then(res => {
-							console.log(res)
 							if (res.code === 200) {
 								this.msgSuccess(res.msg)
 								this.editDialogVisible = false

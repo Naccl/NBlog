@@ -83,7 +83,6 @@
 					query.date = query.date[0] + ',' + query.date[1]
 				}
 				getVisitorList(query).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.visitorList = res.data.list
@@ -105,7 +104,6 @@
 			},
 			deleteVisitorById(visitor) {
 				deleteVisitor(visitor.id, visitor.uuid).then(res => {
-					console.log(res)
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.getData()
