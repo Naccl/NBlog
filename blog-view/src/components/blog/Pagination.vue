@@ -31,7 +31,7 @@
 			})
 		},
 		computed: {
-			...mapState(['isBlogToHome'])
+			...mapState(['isBlogToHome', 'clientSize'])
 		},
 		data() {
 			return {
@@ -41,7 +41,13 @@
 		methods: {
 			//监听页码改变的事件
 			handleCurrentChange(newPage) {
-				this.scrollToTop()
+				//如果是首页，则滚动至Header下方
+				if (this.$route.name === 'home') {
+					window.scrollTo({top: this.clientSize.clientHeight, behavior: 'smooth'})
+				} else {
+					//其它页面（分类和标签页）滚动至顶部
+					this.scrollToTop()
+				}
 				this.pageNum = newPage
 				this.getBlogList(newPage)
 			},
