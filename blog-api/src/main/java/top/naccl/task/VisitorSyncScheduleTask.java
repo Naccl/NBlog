@@ -82,9 +82,9 @@ public class VisitorSyncScheduleTask {
 		Map<String, Integer> cityVisitorMap = new HashMap<>();
 		ipSource.forEach(i -> {
 			if (i.startsWith("中国")) {
-				String[] split = i.split("|");
+				String[] split = i.split("\\|");
 				if (split.length == 4) {
-					String city = split[3];
+					String city = split[2];
 					cityVisitorMap.merge(city, 1, Integer::sum);
 				}
 			}
