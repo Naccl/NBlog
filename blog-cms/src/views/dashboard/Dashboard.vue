@@ -81,7 +81,7 @@
 	import 'echarts/map/js/china'
 	import {getDashboard} from "@/api/dashboard";
 	//城市经纬度数据来自 https://github.com/Naccl/region2coord
-	import geoCoordMap from '@/common/city2coordinates.json'
+	import geoCoordMap from '@/common/city2coord.json'
 
 	export default {
 		name: "Dashboard",
