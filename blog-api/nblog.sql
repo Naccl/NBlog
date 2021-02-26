@@ -68,6 +68,16 @@ CREATE TABLE `category`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for city_visitor
+-- ----------------------------
+DROP TABLE IF EXISTS `city_visitor`;
+CREATE TABLE `city_visitor`  (
+  `city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '城市名称',
+  `uv` int(0) NOT NULL COMMENT '独立访客数量',
+  PRIMARY KEY (`city`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for comment
 -- ----------------------------
 DROP TABLE IF EXISTS `comment`;
@@ -313,6 +323,18 @@ CREATE TABLE `visit_log`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for visit_record
+-- ----------------------------
+DROP TABLE IF EXISTS `visit_record`;
+CREATE TABLE `visit_record`  (
+  `id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `pv` int(0) NOT NULL COMMENT '访问量',
+  `uv` int(0) NOT NULL COMMENT '独立用户',
+  `date` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '日期\"02-23\"',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for visitor
 -- ----------------------------
 DROP TABLE IF EXISTS `visitor`;
@@ -329,4 +351,5 @@ CREATE TABLE `visitor`  (
   `user_agent` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'user-agent用户代理',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
 SET FOREIGN_KEY_CHECKS = 1;

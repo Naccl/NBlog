@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Description: 访客记录业务层实现
+ * @Description: 访客统计业务层实现
  * @Author: Naccl
  * @Date: 2021-01-31
  */
@@ -33,6 +33,11 @@ public class VisitorServiceImpl implements VisitorService {
 	@Override
 	public List<Visitor> getVisitorListByDate(String startDate, String endDate) {
 		return visitorMapper.getVisitorListByDate(startDate, endDate);
+	}
+
+	@Override
+	public List<String> getNewVisitorIpSourceByYesterday() {
+		return visitorMapper.getNewVisitorIpSourceByYesterday();
 	}
 
 	@Override

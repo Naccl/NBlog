@@ -3,11 +3,16 @@ package top.naccl.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.naccl.entity.Category;
+import top.naccl.entity.CityVisitor;
 import top.naccl.entity.Tag;
+import top.naccl.entity.VisitRecord;
 import top.naccl.mapper.BlogMapper;
 import top.naccl.mapper.CategoryMapper;
+import top.naccl.mapper.CityVisitorMapper;
 import top.naccl.mapper.CommentMapper;
 import top.naccl.mapper.TagMapper;
+import top.naccl.mapper.VisitLogMapper;
+import top.naccl.mapper.VisitRecordMapper;
 import top.naccl.model.vo.CategoryBlogCount;
 import top.naccl.model.vo.TagBlogCount;
 import top.naccl.service.DashboardService;
@@ -32,6 +37,19 @@ public class DashboardServiceImpl implements DashboardService {
 	CategoryMapper categoryMapper;
 	@Autowired
 	TagMapper tagMapper;
+	@Autowired
+	VisitLogMapper visitLogMapper;
+	@Autowired
+	VisitRecordMapper visitRecordMapper;
+	@Autowired
+	CityVisitorMapper cityVisitorMapper;
+	//查询最近7天的记录
+	private static final int visitRecordLimitNum = 7;
+
+	@Override
+	public int countVisitLogByToday() {
+		return visitLogMapper.countVisitLogByToday();
+	}
 
 	@Override
 	public int getBlogCount() {
@@ -44,7 +62,7 @@ public class DashboardServiceImpl implements DashboardService {
 	}
 
 	@Override
-	public Map<String, List> getCategoryBlogCountList() {
+	public Map<String, List> getCategoryBlogCountMap() {
 		//查询分类id对应的博客数量
 		List<CategoryBlogCount> categoryBlogCountList = blogMapper.getCategoryBlogCountList();
 		//查询所有分类的id和名称
@@ -89,7 +107,7 @@ public class DashboardServiceImpl implements DashboardService {
 	}
 
 	@Override
-	public Map<String, List> getTagBlogCountList() {
+	public Map<String, List> getTagBlogCountMap() {
 		//查询标签id对应的博客数量
 		List<TagBlogCount> tagBlogCountList = tagMapper.getTagBlogCount();
 		//查询所有标签的id和名称
@@ -110,7 +128,7 @@ public class DashboardServiceImpl implements DashboardService {
 				t.setName(m.get(t.getId()));
 				series.add(t);
 			}
-		}else {
+		} else {
 			Map<Long, Integer> m = new HashMap<>();
 			for (TagBlogCount t : tagBlogCountList) {
 				m.put(t.getId(), t.getValue());
@@ -131,5 +149,29 @@ public class DashboardServiceImpl implements DashboardService {
 		map.put("legend", legend);
 		map.put("series", series);
 		return map;
+	}
+
+	@Override
+	public Map<String, List> getVisitRecordMap() {
+		List<VisitRecord> visitRecordList = visitRecordMapper.getVisitRecordListByLimit(visitRecordLimitNum);
+		List<String> date = new ArrayList<>(visitRecordList.size());
+		List<Integer> pv = new ArrayList<>(visitRecordList.size());
+		List<Integer> uv = new ArrayList<>(visitRecordList.size());
+		for (int i = visitRecordList.size() - 1; i >= 0; i--) {
+			VisitRecord visitRecord = visitRecordList.get(i);
+			date.add(visitRecord.getDate());
+			pv.add(visitRecord.getPv());
+			uv.add(visitRecord.getUv());
+		}
+		Map<String, List> map = new HashMap<>();
+		map.put("date", date);
+		map.put("pv", pv);
+		map.put("uv", uv);
+		return map;
+	}
+
+	@Override
+	public List<CityVisitor> getCityVisitorList() {
+		return cityVisitorMapper.getCityVisitorList();
 	}
 }

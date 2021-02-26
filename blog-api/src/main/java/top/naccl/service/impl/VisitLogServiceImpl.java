@@ -58,9 +58,4 @@ public class VisitLogServiceImpl implements VisitLogService {
 			throw new PersistenceException("删除日志失败");
 		}
 	}
-
-	@Override
-	public int countVisitLogByToday() {
-		return visitLogMapper.countVisitLogByToday();
-	}
 }

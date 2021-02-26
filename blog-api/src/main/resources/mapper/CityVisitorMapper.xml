@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.naccl.mapper.CityVisitorMapper">
+
+    <resultMap id="cityVisitor" type="top.naccl.entity.CityVisitor">
+        <result property="city" column="city"/>
+        <result property="uv" column="uv"/>
+    </resultMap>
+
+    <!--查询城市访客数-->
+    <select id="getCityVisitorList" resultMap="cityVisitor">
+        select city, uv from city_visitor order by uv desc
+    </select>
+
+    <!--添加访问记录-->
+    <insert id="saveCityVisitor" parameterType="top.naccl.entity.CityVisitor">
+        insert into city_visitor (city, uv) values (#{city}, #{uv})
+        on duplicate key update
+        uv=uv+#{uv}
+    </insert>
+</mapper>

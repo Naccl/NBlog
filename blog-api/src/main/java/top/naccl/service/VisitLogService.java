@@ -15,6 +15,4 @@ public interface VisitLogService {
 	void saveVisitLog(VisitLog log);
 
 	void deleteVisitLogById(Long id);
-
-	int countVisitLogByToday();
 }

@@ -26,6 +26,11 @@
         </where>
     </select>
 
+    <!--查询昨天的所有新增访客的ip来源-->
+    <select id="getNewVisitorIpSourceByYesterday" resultType="java.lang.String">
+        select ip_source from visitor where date(create_time)=date_sub(curdate(), interval 1 day)
+    </select>
+
     <!--查询是否存在某个uuid-->
     <select id="hasUUID" resultType="java.lang.Integer">
         select ifnull((select 1 from visitor where uuid=#{uuid} limit 1), 0)

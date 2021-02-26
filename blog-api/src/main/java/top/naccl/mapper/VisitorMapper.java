@@ -17,6 +17,8 @@ import java.util.List;
 public interface VisitorMapper {
 	List<Visitor> getVisitorListByDate(String startDate, String endDate);
 
+	List<String> getNewVisitorIpSourceByYesterday();
+
 	int hasUUID(String uuid);
 
 	int saveVisitor(Visitor visitor);
