@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.naccl.annotation.VisitLogger;
@@ -14,8 +15,6 @@ import top.naccl.model.vo.Result;
 import top.naccl.service.MomentService;
 import top.naccl.service.impl.UserServiceImpl;
 import top.naccl.util.JwtUtils;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Description: 动态
@@ -33,13 +32,14 @@ public class MomentController {
 	 * 分页查询动态List
 	 *
 	 * @param pageNum 页码
+	 * @param jwt     博主访问Token
 	 * @return
 	 */
 	@VisitLogger(behavior = "访问页面", content = "动态")
 	@GetMapping("/moments")
-	public Result moments(@RequestParam(defaultValue = "1") Integer pageNum, HttpServletRequest request) {
+	public Result moments(@RequestParam(defaultValue = "1") Integer pageNum,
+	                      @RequestHeader(value = "Authorization", defaultValue = "") String jwt) {
 		boolean adminIdentity = false;
-		String jwt = request.getHeader("Authorization");
 		if (JwtUtils.judgeTokenIsExist(jwt)) {
 			try {
 				String subject = JwtUtils.getTokenBody(jwt).getSubject();

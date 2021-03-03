@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.naccl.annotation.VisitLogger;
@@ -19,7 +20,6 @@ import top.naccl.service.impl.UserServiceImpl;
 import top.naccl.util.JwtUtils;
 import top.naccl.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -50,17 +50,17 @@ public class BlogController {
 	/**
 	 * 按id获取公开博客详情
 	 *
-	 * @param id      博客id
-	 * @param request 用于获取密码保护文章的访问Token
+	 * @param id  博客id
+	 * @param jwt 密码保护文章的访问Token
 	 * @return
 	 */
 	@VisitLogger(behavior = "查看博客")
 	@GetMapping("/blog")
-	public Result getBlog(@RequestParam Long id, HttpServletRequest request) {
+	public Result getBlog(@RequestParam Long id,
+	                      @RequestHeader(value = "Authorization", defaultValue = "") String jwt) {
 		BlogDetail blog = blogService.getBlogByIdAndIsPublished(id);
 		//对密码保护的文章校验Token
 		if (!"".equals(blog.getPassword())) {
-			String jwt = request.getHeader("Authorization");
 			if (JwtUtils.judgeTokenIsExist(jwt)) {
 				try {
 					String subject = JwtUtils.getTokenBody(jwt).getSubject();

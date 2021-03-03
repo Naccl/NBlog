@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.naccl.entity.User;
@@ -68,7 +69,7 @@ public class CommentController {
 	 * @param blogId   如果page==0，需要博客id参数
 	 * @param pageNum  页码
 	 * @param pageSize 每页个数
-	 * @param request  若文章受密码保护，需要获取访问Token
+	 * @param jwt      若文章受密码保护，需要获取访问Token
 	 * @return
 	 */
 	@GetMapping("/comments")
@@ -76,14 +77,13 @@ public class CommentController {
 	                       @RequestParam(defaultValue = "") Long blogId,
 	                       @RequestParam(defaultValue = "1") Integer pageNum,
 	                       @RequestParam(defaultValue = "10") Integer pageSize,
-	                       HttpServletRequest request) {
+	                       @RequestHeader(value = "Authorization", defaultValue = "") String jwt) {
 		int judgeResult = judgeCommentEnabled(page, blogId);
 		if (judgeResult == 2) {
 			return Result.create(404, "该博客不存在");
 		} else if (judgeResult == 1) {
 			return Result.create(403, "评论已关闭");
 		} else if (judgeResult == 3) {//文章受密码保护，需要验证Token
-			String jwt = request.getHeader("Authorization");
 			if (JwtUtils.judgeTokenIsExist(jwt)) {
 				try {
 					String subject = JwtUtils.getTokenBody(jwt).getSubject();
@@ -158,11 +158,14 @@ public class CommentController {
 	 * 提交评论 又长又臭 能用就不改了:)
 	 *
 	 * @param comment 评论DTO
-	 * @param request 用于获取ip和博主身份Token
+	 * @param request 获取ip
+	 * @param jwt     博主身份Token
 	 * @return
 	 */
 	@PostMapping("/comment")
-	public Result postComment(@RequestBody Comment comment, HttpServletRequest request) {
+	public Result postComment(@RequestBody Comment comment,
+	                          HttpServletRequest request,
+	                          @RequestHeader(value = "Authorization", defaultValue = "") String jwt) {
 		//访客的评论
 		boolean isVisitorComment = false;
 		//评论内容合法性校验
@@ -177,7 +180,6 @@ public class CommentController {
 		} else if (judgeResult == 1) {
 			return Result.create(403, "评论已关闭");
 		} else if (judgeResult == 3) {//文章受密码保护
-			String jwt = request.getHeader("Authorization");
 			//验证Token合法性
 			if (JwtUtils.judgeTokenIsExist(jwt)) {
 				String subject;
@@ -215,7 +217,6 @@ public class CommentController {
 				return Result.create(403, "此文章受密码保护，请验证密码！");
 			}
 		} else if (judgeResult == 0) {//普通文章
-			String jwt = request.getHeader("Authorization");
 			//有Token则为博主评论，或文章原先为密码保护，后取消保护，但客户端仍存在Token
 			if (JwtUtils.judgeTokenIsExist(jwt)) {
 				String subject;
@@ -272,7 +273,7 @@ public class CommentController {
 	 * 设置博主评论属性
 	 *
 	 * @param comment 评论DTO
-	 * @param request 用于获取ip和博主身份Token
+	 * @param request 获取ip
 	 * @param admin   博主信息
 	 */
 	private void setAdminComment(Comment comment, HttpServletRequest request, User admin) {
