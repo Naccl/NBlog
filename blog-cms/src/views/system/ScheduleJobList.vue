@@ -106,7 +106,7 @@
 	import {getJobList, updateJobStatus, runJobOnce, deleteJobById, addJob, editJob} from "@/api/schedule";
 
 	export default {
-		name: "JobList",
+		name: "ScheduleJobList",
 		components: {Breadcrumb},
 		data() {
 			return {

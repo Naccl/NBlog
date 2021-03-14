@@ -10,15 +10,15 @@ import TagList from "@/views/blog/tag/TagList";
 import CommentList from "@/views/blog/comment/CommentList";
 import MomentList from "@/views/blog/moment/MomentList";
 import WriteMoment from "@/views/blog/moment/WriteMoment";
-import SiteSetting from "@/views/page/site/SiteSetting";
-import FriendList from "@/views/page/friend/FriendList";
-import About from "@/views/page/about/About";
-import JobList from "@/views/system/schedule/JobList";
-import JobLog from "@/views/log/scheduleJobLog/JobLog";
-import OperationLog from "@/views/log/operationLog/OperationLog";
-import LoginLog from "@/views/log/loginLog/LoginLog";
-import ExceptionLog from "@/views/log/ExceptionLog/ExceptionLog";
-import VisitLog from "@/views/log/visitLog/VisitLog";
+import SiteSetting from "@/views/page/SiteSetting";
+import FriendList from "@/views/page/FriendList";
+import About from "@/views/page/About";
+import JobList from "@/views/system/ScheduleJobList";
+import JobLog from "@/views/log/ScheduleJobLog";
+import OperationLog from "@/views/log/OperationLog";
+import LoginLog from "@/views/log/LoginLog";
+import ExceptionLog from "@/views/log/ExceptionLog";
+import VisitLog from "@/views/log/VisitLog";
 import Visitor from "@/views/statistics/Visitor";
 
 Vue.use(VueRouter)

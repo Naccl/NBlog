@@ -91,7 +91,7 @@
 	import DateTimeRangePicker from "@/components/DateTimeRangePicker";
 
 	export default {
-		name: "JobLog",
+		name: "ScheduleJobLog",
 		components: {DateTimeRangePicker, Breadcrumb},
 		data() {
 			return {
