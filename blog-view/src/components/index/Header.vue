@@ -275,7 +275,6 @@
 	.wave1, .wave2 {
 		position: absolute;
 		bottom: 0;
-		width: 400%;
 		transition-duration: .4s, .4s;
 		z-index: 80;
 	}
@@ -283,11 +282,13 @@
 	.wave1 {
 		background: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/wave1.png') repeat-x;
 		height: 75px;
+		width: 100%;
 	}
 
 	.wave2 {
 		background: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/wave2.png') repeat-x;
 		height: 90px;
+		width: calc(100% + 100px);
 		left: -100px;
 	}
 </style>
