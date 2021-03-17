@@ -43,6 +43,8 @@
 
 Vue 项目基于 @vue/cli4.x 构建
 
+JS 依赖及参考的 css：[axios](https://github.com/axios/axios)、[moment](https://github.com/moment/moment)、[nprogress](https://github.com/rstacruz/nprogress)、[v-viewer](https://github.com/fengyuanchen/viewerjs)、[prismjs](https://github.com/PrismJS/prism)、[APlayer](https://github.com/DIYgod/APlayer)、[MetingJS](https://github.com/metowolf/MetingJS)、[lodash](https://github.com/lodash/lodash)、[vditor](https://github.com/Vanessa219/vditor)、[echarts](https://github.com/apache/echarts)、[tocbot](https://github.com/tscanlin/tocbot)、[iCSS](https://github.com/chokcoco/iCSS)
+
 
 
 ### 后台 UI
@@ -72,6 +74,28 @@ MarkDown 排版：基于 [typo.css](https://github.com/sofish/typo.css) 修改
 
 
 
+## 注意事项
+
+最近逐渐有些小伙伴关注此项目，表示不知如何部署，或部署过程中有一些问题不知如何解决，在这里把过程中可能遇到的一些问题描述一下：
+
+- 本人使用的 MySQL 版本为 8.x，5.x 版本未经测试，但确保数据库字符集为`utf8mb4`的情况下通常没有问题（”站点设置“及”文章详情“等许多表字段需要`utf8mb4`格式字符集来支持emoji表情，否则在导入 sql 文件时，即使成功导入，也会有部分字段内容不完整，导致前端页面渲染数据时报错）
+- 确保 Maven 能够成功导入现版本依赖（已知 [yauaa](https://github.com/nielsbasjes/yauaa) 依赖在用更高版本替换后，以现在的写法运行会报错）
+- 数据库中默认用户名密码为`Admin`，`123456`
+- 注意修改`application-dev.properties`的配置信息
+  - Redis 若没有密码，留空即可
+  - 注意修改`token.secretKey`，否则无法保证 token 安全性
+  - `spring.mail.host`及`spring.mail.port`的默认配置为阿里云邮箱，其它邮箱服务商参考关键字`spring mail 服务器`（邮箱配置用于接收评论提醒）
+
+
+
+## 隐藏功能
+
+- 在前台访问`/login`路径登录后，可以以博主身份（带有博主标识）回复评论，且不需要填写昵称和邮箱即可提交
+- 在 Markdown 中加入`<meting-js server="netease" type="song" id="歌曲id" theme="#25CCF7"></meting-js>` （注意以正文形式添加，而不是代码片段）可以在文章中添加 [APlayer](https://github.com/DIYgod/APlayer) 音乐播放器，`netease`为网易云音乐，其它配置及具体用法参考 [MetingJS](https://github.com/metowolf/MetingJS)
+- 大部分个性化配置可以在后台“站点设置”中修改，小部分由于考虑到首屏加载速度（如首页大图）需要修改前端源码，通过 IDE 全局查找应该可以很快定位
+
+
+
 ## And...
 
 由于一些技术是现学现用的，难免有些考虑不周，望大佬们能够指出错误
@@ -82,6 +106,6 @@ MarkDown 排版：基于 [typo.css](https://github.com/sofish/typo.css) 修改
 
 ## 致谢
 
-感谢 [JetBrains](https://www.jetbrains.com/) 提供的非商业开源软件License
+感谢 [JetBrains](https://www.jetbrains.com/) 提供的非商业开源软件 License
 
 此项目本是学习过程中的产物，参考了许多优秀的教程和项目，由于比较零散，难以统计，如大佬能看到此，请及时与我联系，以便表示感谢
