@@ -3,7 +3,7 @@
 	<div class="form">
 		<h3>
 			发表评论
-			<el-button class="m-small" size="mini" type="primary" @click="$store.dispatch('setParentCommentId', -1)" v-show="parentCommentId!==-1">取消回复</el-button>
+			<el-button class="m-small" size="mini" type="primary" @click="$store.commit(SET_PARENT_COMMENT_ID, -1)" v-show="parentCommentId!==-1">取消回复</el-button>
 		</h3>
 		<el-form :inline="true" :model="commentForm" :rules="formRules" ref="formRef" size="small">
 			<el-input :class="'textarea'" type="textarea" :rows="5" v-model="commentForm.content" placeholder="评论千万条，友善第一条"
@@ -18,7 +18,7 @@
 			</el-form-item>
 			<el-form-item prop="email">
 				<el-popover ref="emailPopover" placement="bottom" trigger="focus"
-				            content="邮箱将保密，用于接收回复邮件，可随时退订">
+				            content="用于接收回复邮件">
 				</el-popover>
 				<el-input v-model="commentForm.email" placeholder="邮箱（必填）" :validate-event="false" v-popover:emailPopover>
 					<i slot="prefix" class="el-input__icon el-icon-message"></i>
@@ -28,7 +28,7 @@
 				<el-popover ref="websitePopover" placement="bottom" trigger="focus"
 				            content="可以让我参观一下吗😊">
 				</el-popover>
-				<el-input v-model="commentForm.website" placeholder="网站或博客（可选）" v-popover:websitePopover>
+				<el-input v-model="commentForm.website" placeholder="https://（可选）" v-popover:websitePopover>
 					<i slot="prefix" class="el-input__icon el-icon-map-location"></i>
 				</el-input>
 			</el-form-item>
@@ -45,6 +45,7 @@
 <script>
 	import {mapState} from 'vuex'
 	import {checkEmail} from "@/common/reg";
+	import {SET_PARENT_COMMENT_ID} from "@/store/mutations-types";
 
 	export default {
 		name: "CommentForm",
@@ -53,6 +54,7 @@
 		},
 		data() {
 			return {
+				SET_PARENT_COMMENT_ID,
 				formRules: {
 					nickname: [
 						{required: true, message: '请输入评论昵称'},

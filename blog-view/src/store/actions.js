@@ -1,13 +1,7 @@
 import {
-	SAVE_SITE_INFO,
-	SAVE_INTRODUCTION,
 	SAVE_COMMENT_RESULT,
-	SET_COMMENT_QUERY_PAGE_NUM,
 	SET_PARENT_COMMENT_ID,
-	SET_COMMENT_FORM_EMPTY,
-	SET_COMMENT_QUERY_PAGE,
-	SET_COMMENT_QUERY_BLOG_ID,
-	SET_IS_BLOG_RENDER_COMPLETE,
+	RESET_COMMENT_FORM,
 	SET_BLOG_PASSWORD_DIALOG_VISIBLE,
 	SET_BLOG_PASSWORD_FORM
 } from "./mutations-types";
@@ -17,12 +11,6 @@ import {Message, Notification} from "element-ui";
 import router from "../router";
 
 export default {
-	saveSiteInfo({commit}, siteInfo) {
-		commit(SAVE_SITE_INFO, {siteInfo})
-	},
-	saveIntroduction({commit}, introduction) {
-		commit(SAVE_INTRODUCTION, {introduction})
-	},
 	getCommentList({commit, rootState}) {
 		//密码保护的文章，需要发送密码验证通过后保存在localStorage的Token
 		const blogToken = window.localStorage.getItem(`blog${rootState.commentQuery.blogId}`)
@@ -37,22 +25,7 @@ export default {
 			Message.error("请求失败")
 		})
 	},
-	setCommentQueryPage({commit}, page) {
-		commit(SET_COMMENT_QUERY_PAGE, {page})
-	},
-	setCommentQueryBlogId({commit}, blogId) {
-		commit(SET_COMMENT_QUERY_BLOG_ID, {blogId})
-	},
-	setCommentQueryPageNum({commit}, pageNum) {
-		commit(SET_COMMENT_QUERY_PAGE_NUM, {pageNum})
-	},
-	setParentCommentId({commit}, parentCommentId) {
-		commit(SET_PARENT_COMMENT_ID, {parentCommentId})
-	},
-	setCommentFormEmpty({commit}) {
-		commit(SET_COMMENT_FORM_EMPTY)
-	},
-	submitCommentForm({rootState, dispatch}, token) {
+	submitCommentForm({rootState, dispatch, commit}, token) {
 		let form = {...rootState.commentForm}
 		form.page = rootState.commentQuery.page
 		form.blogId = rootState.commentQuery.blogId
@@ -63,8 +36,8 @@ export default {
 					title: res.msg,
 					type: 'success'
 				})
-				dispatch('setParentCommentId', -1)
-				dispatch('setCommentFormEmpty')
+				commit(SET_PARENT_COMMENT_ID, -1)
+				commit(RESET_COMMENT_FORM)
 				dispatch('getCommentList')
 			} else {
 				Notification({
@@ -80,9 +53,6 @@ export default {
 				type: 'error'
 			})
 		})
-	},
-	setIsBlogRenderComplete({commit}, ok) {
-		commit(SET_IS_BLOG_RENDER_COMPLETE, {ok})
 	},
 	goBlogPage({commit}, blog) {
 		if (blog.privacy) {

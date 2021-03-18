@@ -6,6 +6,7 @@ export default {
 		rollText: [],
 	},
 	commentQuery: {
+		//用于后端判断该评论所在页面类型(文章、友链、关于我)
 		page: 0,
 		blogId: null,
 		pageNum: 1,

@@ -7,6 +7,7 @@
 
 <script>
 	import {mapState} from 'vuex'
+	import {SET_COMMENT_QUERY_PAGE_NUM, SET_PARENT_COMMENT_ID} from "@/store/mutations-types";
 
 	export default {
 		name: "Pagination",
@@ -16,8 +17,8 @@
 		methods: {
 			//监听页码改变的事件
 			handleCurrentChange(newPage) {
-				this.$store.dispatch('setCommentQueryPageNum', newPage)
-				this.$store.dispatch('setParentCommentId', -1)
+				this.$store.commit(SET_COMMENT_QUERY_PAGE_NUM, newPage)
+				this.$store.commit(SET_PARENT_COMMENT_ID, -1)
 				this.$store.dispatch('getCommentList')
 			},
 		}

@@ -61,7 +61,7 @@
 	import Tocbot from "@/components/sidebar/Tocbot";
 	import BlogPasswordDialog from "@/components/index/BlogPasswordDialog";
 	import {mapState} from 'vuex'
-	import {SAVE_CLIENT_SIZE} from "../store/mutations-types";
+	import {SAVE_CLIENT_SIZE, SAVE_INTRODUCTION, SAVE_SITE_INFO, RESTORE_COMMENT_FORM} from "@/store/mutations-types";
 
 	export default {
 		name: "Index",
@@ -91,6 +91,8 @@
 		created() {
 			this.getSite()
 			this.getHitokoto()
+			//从localStorage恢复之前的评论信息
+			this.$store.commit(RESTORE_COMMENT_FORM)
 		},
 		mounted() {
 			//保存可视窗口大小
@@ -109,8 +111,8 @@
 						this.categoryList = res.data.categoryList
 						this.tagList = res.data.tagList
 						this.randomBlogList = res.data.randomBlogList
-						this.$store.dispatch('saveSiteInfo', this.siteInfo)
-						this.$store.dispatch('saveIntroduction', res.data.introduction)
+						this.$store.commit(SAVE_SITE_INFO, this.siteInfo)
+						this.$store.commit(SAVE_INTRODUCTION, res.data.introduction)
 						document.title = this.$route.meta.title + this.siteInfo.webTitleSuffix
 					}
 				})

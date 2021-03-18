@@ -13,7 +13,7 @@
 				<a class="nickname" :href="comment.website!=''&&comment.website!=null?comment.website:null" target="_blank" rel="external nofollow noopener">{{ comment.nickname }}</a>
 				<div class="ui black left pointing label" v-if="comment.adminComment">{{ $store.state.siteInfo.commentAdminFlag }}</div>
 				<div class="metadata">
-					<strong class="date">{{ comment.createTime | dateFormat('YYYY-MM-DD HH:mm')}}</strong>
+					<strong class="date">{{ comment.createTime | dateFormat('YYYY-MM-DD HH:mm') }}</strong>
 				</div>
 				<el-button size="mini" type="primary" @click="setReply(comment.id)">回复</el-button>
 				<div class="text">{{ comment.content }}</div>
@@ -28,7 +28,7 @@
 						<a class="nickname" :href="reply.website!=''&&reply.website!=null?reply.website:null" target="_blank" rel="external nofollow noopener">{{ reply.nickname }}</a>
 						<div class="ui black left pointing label" v-if="reply.adminComment">{{ $store.state.siteInfo.commentAdminFlag }}</div>
 						<div class="metadata">
-							<strong class="date">{{ reply.createTime | dateFormat('YYYY-MM-DD HH:mm')}}</strong>
+							<strong class="date">{{ reply.createTime | dateFormat('YYYY-MM-DD HH:mm') }}</strong>
 						</div>
 						<div class="text"><a :href="`#comment-${reply.parentCommentId}`">@{{ reply.parentCommentNickname }}</a>{{ reply.content }}</div>
 						<div class="actions">
@@ -46,6 +46,7 @@
 <script>
 	import {mapState} from 'vuex'
 	import CommentForm from "./CommentForm";
+	import {SET_PARENT_COMMENT_ID} from "@/store/mutations-types";
 
 	export default {
 		name: "Comment",
@@ -55,7 +56,7 @@
 		},
 		methods: {
 			setReply(id) {
-				this.$store.dispatch('setParentCommentId', id)
+				this.$store.commit(SET_PARENT_COMMENT_ID, id)
 			}
 		}
 	}

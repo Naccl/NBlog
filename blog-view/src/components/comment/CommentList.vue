@@ -8,6 +8,7 @@
 <script>
 	import Comment from "./Comment";
 	import Pagination from "./Pagination";
+	import {SET_COMMENT_QUERY_PAGE, SET_COMMENT_QUERY_BLOG_ID, SET_COMMENT_QUERY_PAGE_NUM} from "@/store/mutations-types";
 
 	export default {
 		name: "CommentList",
@@ -33,9 +34,9 @@
 		},
 		methods: {
 			init() {
-				this.$store.dispatch('setCommentQueryPage', this.page)
-				this.$store.dispatch('setCommentQueryBlogId', this.blogId)
-				this.$store.dispatch('setCommentQueryPageNum', 1)
+				this.$store.commit(SET_COMMENT_QUERY_PAGE, this.page)
+				this.$store.commit(SET_COMMENT_QUERY_BLOG_ID, this.blogId)
+				this.$store.commit(SET_COMMENT_QUERY_PAGE_NUM, 1)
 				this.$store.dispatch('getCommentList')
 			}
 		}
