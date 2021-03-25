@@ -43,8 +43,8 @@ public class DashboardServiceImpl implements DashboardService {
 	VisitRecordMapper visitRecordMapper;
 	@Autowired
 	CityVisitorMapper cityVisitorMapper;
-	//查询最近7天的记录
-	private static final int visitRecordLimitNum = 7;
+	//查询最近30天的记录
+	private static final int visitRecordLimitNum = 30;
 
 	@Override
 	public int countVisitLogByToday() {
