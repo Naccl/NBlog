@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import top.naccl.mapper.UserMapper;
 import top.naccl.entity.User;
 import top.naccl.service.UserService;
-import top.naccl.util.EncryptUtils;
+import top.naccl.util.HashUtils;
 
 /**
  * @Description: 用户业务层接口实现类
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException("用户不存在");
 		}
-		if (!EncryptUtils.matchBC(password, user.getPassword())) {
+		if (!HashUtils.matchBC(password, user.getPassword())) {
 			throw new UsernameNotFoundException("密码错误");
 		}
 		return user;
