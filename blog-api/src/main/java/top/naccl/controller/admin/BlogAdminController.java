@@ -189,7 +189,7 @@ public class BlogAdminController {
 	 */
 	private Result getResult(top.naccl.model.dto.Blog blog, String type) {
 		//验证普通字段
-		if (StringUtils.isEmpty(blog.getTitle(), blog.getContent(), blog.getDescription())
+		if (StringUtils.isEmpty(blog.getTitle(), blog.getFirstPicture(), blog.getContent(), blog.getDescription())
 				|| blog.getWords() == null || blog.getWords() < 0) {
 			return Result.error("参数有误");
 		}

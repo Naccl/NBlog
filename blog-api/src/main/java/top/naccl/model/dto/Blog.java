@@ -24,6 +24,7 @@ import java.util.List;
 public class Blog {
 	private Long id;
 	private String title;//文章标题
+	private String firstPicture;//文章首图，用于随机文章展示
 	private String content;//文章正文
 	private String description;//描述
 	private Boolean published;//公开或私密

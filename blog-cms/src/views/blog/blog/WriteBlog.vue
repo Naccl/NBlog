@@ -4,9 +4,18 @@
 		<Breadcrumb parentTitle="博客管理"/>
 
 		<el-form :model="form" :rules="formRules" ref="formRef" label-position="top">
-			<el-form-item label="文章标题" prop="title">
-				<el-input v-model="form.title" placeholder="请输入标题"></el-input>
-			</el-form-item>
+			<el-row :gutter="20">
+				<el-col :span="12">
+					<el-form-item label="文章标题" prop="title">
+						<el-input v-model="form.title" placeholder="请输入标题"></el-input>
+					</el-form-item>
+				</el-col>
+				<el-col :span="12">
+					<el-form-item label="文章首图" prop="firstPicture">
+						<el-input v-model="form.firstPicture" placeholder="文章首图，用于随机文章展示"></el-input>
+					</el-form-item>
+				</el-col>
+			</el-row>
 
 			<el-alert title="注意：如果从 Typora 中复制 Markdown，粘贴时要选择粘贴为纯文本，否则代码块可能无法被 prismjs 高亮" type="warning" center show-icon></el-alert>
 
@@ -116,6 +125,7 @@
 				radio: 1,
 				form: {
 					title: '',
+					firstPicture: '',
 					description: '',
 					content: '',
 					cate: null,
@@ -132,6 +142,7 @@
 				},
 				formRules: {
 					title: [{required: true, message: '请输入标题', trigger: 'change'}],
+					firstPicture: [{required: true, message: '请输入首图链接', trigger: 'change'}],
 					cate: [{required: true, message: '请选择分类', trigger: 'change'}],
 					tagList: [{required: true, message: '请选择标签', trigger: 'change'}],
 					words: [{required: true, message: '请输入文章字数', trigger: 'change'}],

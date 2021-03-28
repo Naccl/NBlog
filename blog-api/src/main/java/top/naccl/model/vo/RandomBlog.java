@@ -4,11 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import top.naccl.entity.Category;
-import top.naccl.entity.Tag;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 /**
  * @Description: 随机博客
@@ -22,9 +19,8 @@ import java.util.List;
 public class RandomBlog {
 	private Long id;
 	private String title;//文章标题
+	private String firstPicture;//文章首图，用于随机文章展示
+	private Date createTime;//创建时间
 	private String password;//文章密码
 	private Boolean privacy;//是否私密文章
-
-	private Category category;//文章分类
-	private List<Tag> tags = new ArrayList<>();//文章标签
 }

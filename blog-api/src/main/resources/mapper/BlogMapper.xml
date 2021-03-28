@@ -5,6 +5,7 @@
     <resultMap id="blog" type="top.naccl.entity.Blog">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
+        <result property="firstPicture" column="first_picture"/>
         <result property="content" column="content"/>
         <result property="description" column="description"/>
         <result property="published" column="is_published"/>
@@ -42,7 +43,7 @@
     <!--按标题和分类查询博客List-->
     <select id="getListByTitleAndCategoryId" resultMap="blog">
         <bind name="titlePattern" value="'%' + title + '%'"/>
-        select b.id, b.title, b.create_time, b.update_time, b.is_published, b.is_recommend, b.is_appreciation,
+        select b.id, b.title, b.first_picture, b.create_time, b.update_time, b.is_published, b.is_recommend, b.is_appreciation,
         b.is_comment_enabled, b.is_top, b.password,
         c.id as category_id, c.category_name
         from blog as b left join category as c on b.category_id=c.id
@@ -157,18 +158,14 @@
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="password" column="password"/>
-        <association property="category" javaType="top.naccl.entity.Category">
-            <result property="name" column="category_name"/>
-        </association>
+        <result property="createTime" column="create_time"/>
+        <result property="firstPicture" column="first_picture"/>
     </resultMap>
 
     <!--查询随机的公开文章-->
     <select id="getRandomBlogListByLimitNumAndIsPublished" resultMap="randomBlog">
-        select b.id, b.title, b.password, c.category_name
-        from blog as b left join category as c on b.category_id=c.id
-        where b.is_published=true
-        order by rand()
-        limit #{limitNum}
+        select id, title, password, create_time, first_picture
+        from blog where is_published=true order by rand() limit #{limitNum}
     </select>
 
     <!--查询所有文章的浏览量-->
@@ -193,7 +190,7 @@
 
     <!--添加博客-->
     <insert id="saveBlog" parameterType="top.naccl.model.dto.Blog" useGeneratedKeys="true" keyProperty="id">
-        insert into blog (title, content, description, is_published, is_recommend, is_appreciation, is_comment_enabled,
+        insert into blog (title, first_picture, content, description, is_published, is_recommend, is_appreciation, is_comment_enabled,
         is_top, create_time, update_time, views, words, read_time, category_id, user_id, password)
         values (#{title}, #{content}, #{description}, #{published}, #{recommend}, #{appreciation}, #{commentEnabled},
         #{top}, #{createTime}, #{updateTime}, #{views}, #{words}, #{readTime}, #{category.id}, #{user.id}, #{password})
@@ -223,7 +220,7 @@
 
     <!--按id查询博客-->
     <select id="getBlogById" resultMap="blog">
-        select b.id, b.title, b.content, b.description, b.is_recommend, b.is_published, b.is_appreciation,
+        select b.id, b.title, b.first_picture, b.content, b.description, b.is_recommend, b.is_published, b.is_appreciation,
         b.is_comment_enabled, b.is_top, b.create_time, b.update_time, b.views, b.words, b.read_time, b.password,
         c.id as category_id, c.category_name,
         bt.tag_id as tag_id, t.tag_name as tag_name, t.color
@@ -270,8 +267,8 @@
 
     <!--更新博客-->
     <update id="updateBlog">
-        update blog set title=#{title}, content=#{content}, description=#{description}, is_recommend=#{recommend},
-        is_published=#{published}, is_appreciation=#{appreciation}, is_comment_enabled=#{commentEnabled},
+        update blog set title=#{title}, first_picture=#{firstPicture}, content=#{content}, description=#{description},
+        is_recommend=#{recommend}, is_published=#{published}, is_appreciation=#{appreciation}, is_comment_enabled=#{commentEnabled},
         is_top=#{top}, create_time=#{createTime}, update_time=#{updateTime}, views=#{views},
         words=#{words}, read_time=#{readTime}, category_id=#{category.id}, password=#{password}
         where id=#{id}
