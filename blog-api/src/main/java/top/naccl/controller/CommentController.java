@@ -338,28 +338,37 @@ public class CommentController {
 	}
 
 	private void judgeSendMail(Comment comment, boolean isVisitorComment, String path) {
-		//访客的评论
+		//6种情况：
+		//我以父评论提交：不用邮件提醒
+		//我回复我自己：不用邮件提醒
+		//我回复访客的评论：只提醒该访客
+		//访客以父评论提交：只提醒我自己
+		//访客回复我的评论：只提醒我自己
+		//访客回复访客的评论(即使是他自己先前的评论)：提醒我自己和他回复的评论
 		if (isVisitorComment) {
-			//访客回复了一条评论
+			//访客的评论
 			if (comment.getParentCommentId() != -1) {
 				top.naccl.entity.Comment parentComment = commentService.getCommentById(comment.getParentCommentId());
 				//访客回复我的评论，邮件提醒我自己
 				if (parentComment.getAdminComment()) {
 					sendMailToMe(parentComment.getEmail(), path);
-				} else if (parentComment.getNotice()) {
-					//访客回复了一个访客，且对方接收提醒，邮件提醒对方，并提醒我有新评论
-					sendMailToParentComment(parentComment.getEmail(), path);
+				} else {
+					if (parentComment.getNotice()) {
+						//访客回复访客的评论(即使是他自己先前的评论)，且对方接收提醒，邮件提醒对方
+						sendMailToParentComment(parentComment.getEmail(), path);
+					}
+					//不管对方是否接收提醒，都要提醒我有新评论
 					sendMailToMe(mailProperties.getUsername(), path);
 				}
-			} else {//访客的直接评论，只邮件提醒我自己
+			} else {
+				//访客以父评论提交，只邮件提醒我自己
 				sendMailToMe(mailProperties.getUsername(), path);
 			}
 		} else {
 			//我的评论
-			//我回复了一条评论
 			if (comment.getParentCommentId() != -1) {
 				top.naccl.entity.Comment parentComment = commentService.getCommentById(comment.getParentCommentId());
-				//我回复访客，且对方接收提醒，邮件提醒对方
+				//我回复访客的评论，且对方接收提醒，邮件提醒对方
 				if (!parentComment.getAdminComment() && parentComment.getNotice()) {
 					sendMailToParentComment(parentComment.getEmail(), path);
 				}
