@@ -12,6 +12,7 @@
     "element-ui": "^2.13.2",
     "moment": "^2.27.0",
     "nprogress": "^0.2.0",
+    "sanitize-html": "^2.3.3",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-vue": "^0.11.0",
     "v-viewer": "^1.5.1",

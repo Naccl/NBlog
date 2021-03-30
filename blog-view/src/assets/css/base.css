@@ -315,3 +315,8 @@ footer {
         background-position: -400% 0;
     }
 }
+
+.ui.comments .comment .text img {
+    width: 25px;
+    vertical-align: bottom;
+}

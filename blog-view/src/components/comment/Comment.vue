@@ -16,7 +16,7 @@
 					<strong class="date">{{ comment.createTime | dateFormat('YYYY-MM-DD HH:mm') }}</strong>
 				</div>
 				<el-button size="mini" type="primary" @click="setReply(comment.id)">回复</el-button>
-				<div class="text">{{ comment.content }}</div>
+				<div class="text" v-html="comment.content"></div>
 			</div>
 			<div class="comments" v-if="comment.replyComments.length>0">
 				<div class="comment" v-for="reply in comment.replyComments" :key="reply.id">
@@ -30,7 +30,7 @@
 						<div class="metadata">
 							<strong class="date">{{ reply.createTime | dateFormat('YYYY-MM-DD HH:mm') }}</strong>
 						</div>
-						<div class="text"><a :href="`#comment-${reply.parentCommentId}`">@{{ reply.parentCommentNickname }}</a>{{ reply.content }}</div>
+						<div class="text"><a :href="`#comment-${reply.parentCommentId}`">@{{ reply.parentCommentNickname }}</a><div v-html="reply.content"></div></div>
 						<div class="actions">
 							<el-button size="mini" type="primary" @click="setReply(reply.id)">回复</el-button>
 						</div>
@@ -101,6 +101,10 @@
 		margin-right: 8px;
 		font-weight: bolder;
 		color: rgba(0, 0, 0, .87);
+	}
+
+	.ui.comments .comment .text div {
+		display: inline;
 	}
 
 	.label {
