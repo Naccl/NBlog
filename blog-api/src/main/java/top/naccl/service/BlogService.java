@@ -19,7 +19,7 @@ public interface BlogService {
 
 	List<Blog> getIdAndTitleList();
 
-	List<NewBlog> getNewBlogListByIsPublishedAndIsRecommend();
+	List<NewBlog> getNewBlogListByIsPublished();
 
 	PageResult<BlogInfo> getBlogInfoListByIsPublished(Integer pageNum);
 
@@ -29,7 +29,7 @@ public interface BlogService {
 
 	Map<String, Object> getArchiveBlogAndCountByIsPublished();
 
-	List<RandomBlog> getRandomBlogListByLimitNumAndIsPublished();
+	List<RandomBlog> getRandomBlogListByLimitNumAndIsPublishedAndIsRecommend();
 
 	void deleteBlogById(Long id);
 

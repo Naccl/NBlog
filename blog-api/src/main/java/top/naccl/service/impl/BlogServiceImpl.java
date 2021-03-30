@@ -95,14 +95,14 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public List<NewBlog> getNewBlogListByIsPublishedAndIsRecommend() {
+	public List<NewBlog> getNewBlogListByIsPublished() {
 		String redisKey = RedisKeyConfig.NEW_BLOG_LIST;
 		List<NewBlog> newBlogListFromRedis = redisService.getListByValue(redisKey);
 		if (newBlogListFromRedis != null) {
 			return newBlogListFromRedis;
 		}
 		PageHelper.startPage(1, newBlogPageSize);
-		List<NewBlog> newBlogList = blogMapper.getNewBlogListByIsPublishedAndIsRecommend();
+		List<NewBlog> newBlogList = blogMapper.getNewBlogListByIsPublished();
 		for (NewBlog newBlog : newBlogList) {
 			if (!"".equals(newBlog.getPassword())) {
 				newBlog.setPrivacy(true);
@@ -224,8 +224,8 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public List<RandomBlog> getRandomBlogListByLimitNumAndIsPublished() {
-		List<RandomBlog> randomBlogs = blogMapper.getRandomBlogListByLimitNumAndIsPublished(randomBlogLimitNum);
+	public List<RandomBlog> getRandomBlogListByLimitNumAndIsPublishedAndIsRecommend() {
+		List<RandomBlog> randomBlogs = blogMapper.getRandomBlogListByLimitNumAndIsPublishedAndIsRecommend(randomBlogLimitNum);
 		for (RandomBlog randomBlog : randomBlogs) {
 			if (!"".equals(randomBlog.getPassword())) {
 				randomBlog.setPrivacy(true);

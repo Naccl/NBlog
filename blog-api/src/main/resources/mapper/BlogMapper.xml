@@ -88,9 +88,10 @@
     </resultMap>
 
     <!--查询公开且推荐-->
-    <select id="getNewBlogListByIsPublishedAndIsRecommend" resultMap="newBlog">
-        select id, title, password from blog
-        where is_published=true and is_recommend=true
+    <select id="getNewBlogListByIsPublished" resultMap="newBlog">
+        select id, title, password
+        from blog
+        where is_published=true
         order by create_time desc
     </select>
 
@@ -163,9 +164,11 @@
     </resultMap>
 
     <!--查询随机的公开文章-->
-    <select id="getRandomBlogListByLimitNumAndIsPublished" resultMap="randomBlog">
+    <select id="getRandomBlogListByLimitNumAndIsPublishedAndIsRecommend" resultMap="randomBlog">
         select id, title, password, create_time, first_picture
-        from blog where is_published=true order by rand() limit #{limitNum}
+        from blog
+        where is_published=true and is_recommend=true
+        order by rand() limit #{limitNum}
     </select>
 
     <!--查询所有文章的浏览量-->
