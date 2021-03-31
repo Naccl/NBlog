@@ -12,7 +12,7 @@ import java.io.UnsupportedEncodingException;
 public class QQInfoUtils {
 	private static RestTemplate restTemplate = new RestTemplate();
 	private static final String QQ_NICKNAME_URL = "https://r.qzone.qq.com/fcg-bin/cgi_get_portrait.fcg?uins={1}";
-	private static final String QQ_AVATAR_URL = "http://q.qlogo.cn/g?b=qq&nk=%s&s=100";
+	private static final String QQ_AVATAR_URL = "https://q.qlogo.cn/g?b=qq&nk=%s&s=100";
 
 	public static String getQQNickname(String qq) throws UnsupportedEncodingException {
 		String res = restTemplate.getForObject(QQ_NICKNAME_URL, String.class, qq);
