@@ -87,7 +87,7 @@
         <result property="password" column="password"/>
     </resultMap>
 
-    <!--查询公开且推荐-->
+    <!--查询最新公开博客-->
     <select id="getNewBlogListByIsPublished" resultMap="newBlog">
         select id, title, password
         from blog
@@ -163,7 +163,7 @@
         <result property="firstPicture" column="first_picture"/>
     </resultMap>
 
-    <!--查询随机的公开文章-->
+    <!--查询随机的公开且推荐文章-->
     <select id="getRandomBlogListByLimitNumAndIsPublishedAndIsRecommend" resultMap="randomBlog">
         select id, title, password, create_time, first_picture
         from blog

@@ -19,6 +19,8 @@ public interface RedisService {
 
 	void incrementByHashKey(String hash, Object key, int increment);
 
+	void deleteByHashKey(String hash, Object key);
+
 	<T> List<T> getListByValue(String key);
 
 	<T> void saveListToValue(String key, List<T> list);

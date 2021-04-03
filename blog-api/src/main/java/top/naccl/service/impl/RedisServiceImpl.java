@@ -58,6 +58,11 @@ public class RedisServiceImpl implements RedisService {
 	}
 
 	@Override
+	public void deleteByHashKey(String hash, Object key) {
+		jsonRedisTemplate.opsForHash().delete(hash, key);
+	}
+
+	@Override
 	public <T> List<T> getListByValue(String key) {
 		List<T> redisResult = (List<T>) jsonRedisTemplate.opsForValue().get(key);
 		return redisResult;
