@@ -13,7 +13,6 @@
 		</el-form>
 
 		<el-table :data="jobList">
-			<el-table-column label="序号" type="index" width="50"></el-table-column>
 			<el-table-column label="任务id" prop="jobId" width="80"></el-table-column>
 			<el-table-column label="bean" prop="beanName"></el-table-column>
 			<el-table-column label="方法名" prop="methodName"></el-table-column>

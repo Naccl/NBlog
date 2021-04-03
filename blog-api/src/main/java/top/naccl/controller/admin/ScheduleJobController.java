@@ -41,8 +41,7 @@ public class ScheduleJobController {
 	@GetMapping("/jobs")
 	public Result jobs(@RequestParam(defaultValue = "1") Integer pageNum,
 	                   @RequestParam(defaultValue = "10") Integer pageSize) {
-		String orderBy = "create_time desc";
-		PageHelper.startPage(pageNum, pageSize, orderBy);
+		PageHelper.startPage(pageNum, pageSize);
 		PageInfo<ScheduleJob> pageInfo = new PageInfo<>(scheduleJobService.getJobList());
 		return Result.ok("请求成功", pageInfo);
 	}
