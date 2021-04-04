@@ -31,6 +31,8 @@ public interface RedisService {
 
 	<T> T getObjectByValue(String key, Class t);
 
+	void incrementByKey(String key, int increment);
+
 	void saveObjectToValue(String key, Object object);
 
 	void saveValueToSet(String key, Object value);
@@ -44,4 +46,6 @@ public interface RedisService {
 	void deleteCacheByKey(String key);
 
 	boolean hasKey(String key);
+
+	void expire(String key, long time);
 }

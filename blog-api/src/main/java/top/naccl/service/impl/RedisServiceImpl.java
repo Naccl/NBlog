@@ -10,6 +10,7 @@ import top.naccl.util.JacksonUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Description: 读写Redis相关操作
@@ -54,6 +55,9 @@ public class RedisServiceImpl implements RedisService {
 
 	@Override
 	public void incrementByHashKey(String hash, Object key, int increment) {
+		if (increment < 0) {
+			throw new RuntimeException("递增因子必须大于0");
+		}
 		jsonRedisTemplate.opsForHash().increment(hash, key, increment);
 	}
 
@@ -92,6 +96,14 @@ public class RedisServiceImpl implements RedisService {
 	}
 
 	@Override
+	public void incrementByKey(String key, int increment) {
+		if (increment < 0) {
+			throw new RuntimeException("递增因子必须大于0");
+		}
+		jsonRedisTemplate.opsForValue().increment(key, increment);
+	}
+
+	@Override
 	public void saveObjectToValue(String key, Object object) {
 		jsonRedisTemplate.opsForValue().set(key, object);
 	}
@@ -124,5 +136,10 @@ public class RedisServiceImpl implements RedisService {
 	@Override
 	public boolean hasKey(String key) {
 		return jsonRedisTemplate.hasKey(key);
+	}
+
+	@Override
+	public void expire(String key, long time) {
+		jsonRedisTemplate.expire(key, time, TimeUnit.SECONDS);
 	}
 }

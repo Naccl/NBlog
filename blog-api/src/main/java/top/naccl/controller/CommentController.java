@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.annotation.AccessLimit;
 import top.naccl.entity.User;
 import top.naccl.model.dto.Comment;
 import top.naccl.model.vo.FriendInfo;
@@ -156,12 +157,14 @@ public class CommentController {
 
 	/**
 	 * 提交评论 又长又臭 能用就不改了:)
+	 * 单个ip，30秒内允许提交1次评论
 	 *
 	 * @param comment 评论DTO
 	 * @param request 获取ip
 	 * @param jwt     博主身份Token
 	 * @return
 	 */
+	@AccessLimit(seconds = 30, maxCount = 1, msg = "30秒内只能提交一次评论")
 	@PostMapping("/comment")
 	public Result postComment(@RequestBody Comment comment,
 	                          HttpServletRequest request,
