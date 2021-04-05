@@ -51,7 +51,7 @@
 		<!--友链页面信息-->
 		<el-form label-position="top">
 			<el-form-item label="友链页面信息">
-				<div id="vditor"></div>
+				<mavon-editor v-model="infoForm.content"/>
 			</el-form-item>
 			<el-form-item style="text-align: right;">
 				<el-button type="primary" icon="el-icon-check" @click="updateContent">保存</el-button>
@@ -120,14 +120,12 @@
 		getFriendsByQuery, updatePublished, saveFriend, updateFriend,
 		deleteFriendById, getFriendInfo, updateContent, updateCommentEnabled
 	} from "@/api/friend";
-	import Vditor from "vditor";
 
 	export default {
 		name: "FriendList",
 		components: {Breadcrumb},
 		data() {
 			return {
-				vditor: null,
 				infoForm: {
 					content: '',
 					commentEnabled: true,
@@ -164,35 +162,14 @@
 		},
 		created() {
 			this.getFriendList()
-		},
-		mounted() {
-			this.initVditor()
+			this.getInfo()
 		},
 		methods: {
-			//初始化md编辑器
-			initVditor() {
-				const options = {
-					height: 320,
-					mode: 'sv',//分屏渲染
-					outline: false,//大纲
-					cache: {//不缓存到localStorage
-						enable: false,
-					},
-					resize: {//可调整高度
-						enable: true
-					},
-					after: () => {
-						this.getInfo()
-					}
-				}
-				this.vditor = new Vditor('vditor', options)
-			},
 			getInfo() {
 				getFriendInfo().then(res => {
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.infoForm = res.data
-						this.vditor.setValue(this.infoForm.content)
 					} else {
 						this.msgError(res.msg)
 					}
@@ -201,7 +178,7 @@
 				})
 			},
 			updateContent() {
-				updateContent(this.vditor.getValue()).then(res => {
+				updateContent(this.infoForm.content).then(res => {
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.getInfo()

@@ -11,20 +11,18 @@
 					</el-form-item>
 				</el-col>
 				<el-col :span="12">
-					<el-form-item label="文章首图" prop="firstPicture">
+					<el-form-item label="文章首图URL" prop="firstPicture">
 						<el-input v-model="form.firstPicture" placeholder="文章首图，用于随机文章展示"></el-input>
 					</el-form-item>
 				</el-col>
 			</el-row>
 
-			<el-alert title="注意：如果从 Typora 中复制 Markdown，粘贴时要选择粘贴为纯文本，否则代码块可能无法被 prismjs 高亮" type="warning" center show-icon></el-alert>
-
 			<el-form-item label="文章描述" prop="description">
-				<div id="vditor-description"></div>
+				<mavon-editor v-model="form.description"/>
 			</el-form-item>
 
 			<el-form-item label="文章正文" prop="content">
-				<div id="vditor-content"></div>
+				<mavon-editor v-model="form.content"/>
 			</el-form-item>
 
 			<el-row :gutter="20">
@@ -45,21 +43,22 @@
 			</el-row>
 
 			<el-row :gutter="20">
-				<el-col :span="12">
+				<el-col :span="8">
 					<el-form-item label="字数" prop="words">
 						<el-input v-model="form.words" placeholder="请输入文章字数（自动计算阅读时长）" type="number"></el-input>
 					</el-form-item>
 				</el-col>
-				<el-col :span="12">
+				<el-col :span="8">
 					<el-form-item label="阅读时长(分钟)" prop="readTime">
 						<el-input v-model="form.readTime" placeholder="请输入阅读时长（可选）默认 Math.round(字数 / 200)" type="number"></el-input>
 					</el-form-item>
 				</el-col>
+				<el-col :span="8">
+					<el-form-item label="浏览次数" prop="views">
+						<el-input v-model="form.views" placeholder="请输入文章字数（可选）默认为 0" type="number"></el-input>
+					</el-form-item>
+				</el-col>
 			</el-row>
-
-			<el-form-item label="浏览次数" prop="views">
-				<el-input v-model="form.views" placeholder="请输入文章字数（可选）默认为 0" type="number" style="width: 50%;"></el-input>
-			</el-form-item>
 
 			<el-form-item style="text-align: right;">
 				<el-button type="primary" @click="dialogVisible=true">保存</el-button>
@@ -109,16 +108,12 @@
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
 	import {getCategoryAndTag, saveBlog, getBlogById, updateBlog} from '@/api/blog'
-	import Vditor from 'vditor'
 
 	export default {
 		name: "WriteBlog",
 		components: {Breadcrumb},
 		data() {
 			return {
-				ready: false,
-				descriptionVditor: null,
-				contentVditor: null,
 				categoryList: [],
 				tagList: [],
 				dialogVisible: false,
@@ -156,64 +151,31 @@
 		},
 		created() {
 			this.getData()
-		},
-		mounted() {
-			this.initDescriptionVditor()
-			this.initContentVditor()
+			if (this.$route.params.id) {
+				this.getBlog(this.$route.params.id)
+			}
 		},
 		methods: {
-			//初始化md编辑器
-			initDescriptionVditor() {
-				const options = {
-					height: 320,
-					mode: 'sv',//分屏渲染
-					outline: true,//大纲
-					cache: {//不缓存到localStorage
-						enable: false,
-					},
-					resize: {//可调整高度
-						enable: true
-					},
-					after: () => {
-						if (!this.ready) {
-							this.ready = true //两个编辑器都加载完成后执行，避免重复请求
-						} else if (this.$route.params.id) {
-							this.getBlog(this.$route.params.id)
-						}
+			getData() {
+				getCategoryAndTag().then(res => {
+					if (res.code === 200) {
+						this.msgSuccess(res.msg);
+						this.categoryList = res.data.categories
+						this.tagList = res.data.tags
+					} else {
+						this.msgError(res.msg)
 					}
-				}
-				this.descriptionVditor = new Vditor('vditor-description', options)
-			},
-			initContentVditor() {
-				const options = {
-					height: 640,
-					mode: 'sv',//分屏渲染
-					outline: true,//大纲
-					cache: {//不缓存到localStorage
-						enable: false,
-					},
-					resize: {//可调整高度
-						enable: true
-					},
-					after: () => {
-						if (!this.ready) {
-							this.ready = true
-						} else if (this.$route.params.id) {
-							this.getBlog(this.$route.params.id)
-						}
-					}
-				}
-				this.contentVditor = new Vditor('vditor-content', options)
+				}).catch(() => {
+					this.msgError('请求失败')
+				})
 			},
 			getBlog(id) {
 				getBlogById(id).then(res => {
 					if (res.code === 200) {
 						this.computeCategoryAndTag(res.data)
-						this.msgSuccess(res.msg);
 						this.form = res.data
-						this.descriptionVditor.setValue(this.form.description)
-						this.contentVditor.setValue(this.form.content)
 						this.radio = this.form.published ? (this.form.password !== '' ? 3 : 1) : 2
+						this.msgSuccess(res.msg)
 					} else {
 						this.msgError(res.msg)
 					}
@@ -228,27 +190,12 @@
 					blog.tagList.push(item.id)
 				})
 			},
-			getData() {
-				getCategoryAndTag().then(res => {
-					if (res.code === 200) {
-						this.msgSuccess(res.msg);
-						this.categoryList = res.data.categories
-						this.tagList = res.data.tags
-					} else {
-						this.msgError(res.msg)
-					}
-				}).catch(() => {
-					this.msgError('请求失败')
-				})
-			},
 			submit() {
 				if (this.radio === 3 && (this.form.password === '' || this.form.password === null)) {
 					return this.msgError("密码保护模式必须填写密码！")
 				}
 				this.$refs.formRef.validate(valid => {
 					if (valid) {
-						this.form.description = this.descriptionVditor.getValue()
-						this.form.content = this.contentVditor.getValue()
 						if (this.radio === 2) {
 							this.form.appreciation = false
 							this.form.recommend = false
@@ -297,5 +244,5 @@
 </script>
 
 <style scoped>
-	@import "~vditor/dist/index.css";
+
 </style>

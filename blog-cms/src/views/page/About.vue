@@ -22,7 +22,7 @@
 			</el-row>
 
 			<el-form-item label="正文" prop="content">
-				<div id="vditor"></div>
+				<mavon-editor v-model="form.content"/>
 			</el-form-item>
 
 			<el-form-item style="text-align: right;">
@@ -35,14 +35,12 @@
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
 	import {getAbout, updateAbout} from "@/api/about";
-	import Vditor from "vditor";
 
 	export default {
 		name: "About",
 		components: {Breadcrumb},
 		data() {
 			return {
-				vditor: null,
 				form: {
 					title: '',
 					musicId: null,
@@ -54,28 +52,10 @@
 				}
 			}
 		},
-		mounted() {
-			this.initVditor()
+		created() {
+			this.getData()
 		},
 		methods: {
-			//初始化md编辑器
-			initVditor() {
-				const options = {
-					height: 640,
-					mode: 'sv',//分屏渲染
-					outline: true,//大纲
-					cache: {//不缓存到localStorage
-						enable: false,
-					},
-					resize: {//可调整高度
-						enable: true
-					},
-					after: () => {
-						this.getData()
-					}
-				}
-				this.vditor = new Vditor('vditor', options)
-			},
 			getData() {
 				getAbout().then(res => {
 					if (res.code === 200) {
@@ -83,7 +63,6 @@
 						this.form.musicId = res.data.musicId
 						this.form.content = res.data.content
 						this.form.commentEnabled = res.data.commentEnabled === 'true' ? true : false
-						this.vditor.setValue(this.form.content)
 						this.msgSuccess(res.msg)
 					} else {
 						this.msgError(res.msg)
@@ -100,13 +79,7 @@
 						if (!reg.test(this.form.musicId)) {
 							return this.msgError("歌曲ID有误")
 						}
-						const form = {
-							title: this.form.title,
-							musicId: this.form.musicId,
-							content: this.vditor.getValue(),
-							commentEnabled: this.form.commentEnabled
-						}
-						updateAbout(form).then(res => {
+						updateAbout(this.form).then(res => {
 							if (res.code === 200) {
 								this.msgSuccess(res.msg)
 							} else {

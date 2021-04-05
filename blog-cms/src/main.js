@@ -10,7 +10,10 @@ import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 //moment
 import './util/dateTimeFormatUtils.js'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
+Vue.use(mavonEditor)
 Vue.use(Element)
 
 

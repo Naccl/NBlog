@@ -5,7 +5,7 @@
 
 		<el-form :model="form" label-position="top">
 			<el-form-item label="动态内容" prop="content">
-				<div id="vditor"></div>
+				<mavon-editor v-model="form.content"/>
 			</el-form-item>
 
 			<el-form-item label="点赞数" prop="likes" style="width: 50%">
@@ -27,14 +27,12 @@
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
 	import {getMomentById, saveMoment, updateMoment} from "@/api/moment";
-	import Vditor from 'vditor'
 
 	export default {
 		name: "WriteMoment",
 		components: {Breadcrumb},
 		data() {
 			return {
-				vditor: null,
 				form: {
 					content: '',
 					createTime: null,
@@ -43,34 +41,16 @@
 				},
 			}
 		},
-		mounted() {
-			this.initVditor()
+		created() {
+			if (this.$route.params.id) {
+				this.getMoment(this.$route.params.id)
+			}
 		},
 		methods: {
-			initVditor() {
-				const options = {
-					height: 320,
-					mode: 'sv',//分屏渲染
-					outline: false,//大纲
-					cache: {//不缓存到localStorage
-						enable: false,
-					},
-					resize: {//可调整高度
-						enable: true
-					},
-					after: () => {
-						if (this.$route.params.id) {
-							this.getMoment(this.$route.params.id)
-						}
-					}
-				}
-				this.vditor = new Vditor('vditor', options)
-			},
 			getMoment(id) {
 				getMomentById(id).then(res => {
 					if (res.code === 200) {
 						this.form = res.data
-						this.vditor.setValue(this.form.content)
 					} else {
 						this.msgError(res.msg)
 					}
@@ -79,7 +59,6 @@
 				})
 			},
 			submit(published) {
-				this.form.content = this.vditor.getValue()
 				this.form.published = published
 				if (this.$route.params.id) {
 					updateMoment(this.form).then(res => {
