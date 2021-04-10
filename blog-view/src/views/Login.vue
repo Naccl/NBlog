@@ -53,7 +53,7 @@
 						login(this.loginForm).then(res => {
 							if (res.code === 200) {
 								this.msgSuccess(res.msg)
-								window.sessionStorage.setItem('adminToken', res.data.token)
+								window.localStorage.setItem('adminToken', res.data.token)
 								this.$router.push('/home')
 							} else {
 								this.msgError(res.msg)
