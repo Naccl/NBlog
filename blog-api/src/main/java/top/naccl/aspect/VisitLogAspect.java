@@ -24,6 +24,7 @@ import top.naccl.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -84,7 +85,7 @@ public class VisitLogAspect {
 	private String checkIdentification(HttpServletRequest request) {
 		String identification = request.getHeader("identification");
 		if (identification == null) {
-			//第一次访问，签发uuid并保存到数据库和Redis
+			//请求头没有uuid，签发uuid并保存到数据库和Redis
 			identification = saveUUID(request);
 		} else {
 			//校验Redis中是否存在uuid
@@ -114,20 +115,30 @@ public class VisitLogAspect {
 	private String saveUUID(HttpServletRequest request) {
 		//获取响应对象
 		HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
-		//生成UUID
-		String uuid = UUID.randomUUID().toString();
+		//获取当前时间戳，精确到小时，防刷访客数据
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		String timestamp = Long.toString(calendar.getTimeInMillis() / 1000);
+		//获取访问者基本信息
+		String ip = IpAddressUtils.getIpAddress(request);
+		String userAgent = request.getHeader("User-Agent");
+		//根据时间戳、ip、userAgent生成UUID
+		String nameUUID = timestamp + ip + userAgent;
+		String uuid = UUID.nameUUIDFromBytes(nameUUID.getBytes()).toString();
 		//添加访客标识码UUID至响应头
 		response.addHeader("identification", uuid);
 		//暴露自定义header供页面资源使用
 		response.addHeader("Access-Control-Expose-Headers", "identification");
-		//保存至Redis
-		redisService.saveValueToSet(RedisKeyConfig.IDENTIFICATION_SET, uuid);
-		//获取访问者基本信息
-		String ip = IpAddressUtils.getIpAddress(request);
-		String userAgent = request.getHeader("User-Agent");
-		Visitor visitor = new Visitor(uuid, ip, userAgent);
-		//保存至数据库
-		visitorService.saveVisitor(visitor);
+		//校验Redis中是否存在uuid
+		boolean redisHas = redisService.hasValueInSet(RedisKeyConfig.IDENTIFICATION_SET, uuid);
+		if (!redisHas) {
+			//保存至Redis
+			redisService.saveValueToSet(RedisKeyConfig.IDENTIFICATION_SET, uuid);
+			//保存至数据库
+			Visitor visitor = new Visitor(uuid, ip, userAgent);
+			visitorService.saveVisitor(visitor);
+		}
 		return uuid;
 	}
 
