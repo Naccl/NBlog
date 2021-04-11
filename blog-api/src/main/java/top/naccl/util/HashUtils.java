@@ -29,4 +29,8 @@ public class HashUtils {
 	public static boolean matchBC(CharSequence rawPassword, String encodedPassword) {
 		return bCryptPasswordEncoder.matches(rawPassword, encodedPassword);
 	}
+
+	public static void main(String[] args) {
+		System.out.println(getBC("123456"));
+	}
 }

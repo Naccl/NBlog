@@ -75,7 +75,7 @@ JS 依赖及参考的 css：[axios](https://github.com/axios/axios)、[moment](h
 
 [Element UI](https://github.com/ElemeFE/element)：部分使用，一些小组件，弥补了 Semantic UI 的不足，便于快速实现效果
 
-MarkDown 排版：基于 [typo.css](https://github.com/sofish/typo.css) 修改
+文章排版：基于 [typo.css](https://github.com/sofish/typo.css) 修改
 
 
 
@@ -96,7 +96,7 @@ MarkDown 排版：基于 [typo.css](https://github.com/sofish/typo.css) 修改
 
 - 本人使用的 MySQL 版本为 8.x，5.x 版本未经测试，但确保数据库字符集为`utf8mb4`的情况下通常没有问题（”站点设置“及”文章详情“等许多表字段需要`utf8mb4`格式字符集来支持emoji表情，否则在导入 sql 文件时，即使成功导入，也会有部分字段内容不完整，导致前端页面渲染数据时报错）
 - 确保 Maven 能够成功导入现版本依赖（已知 [yauaa](https://github.com/nielsbasjes/yauaa) 依赖在用更高版本替换后，以现在的写法运行会报错）
-- 数据库中默认用户名密码为`Admin`，`123456`
+- 数据库中默认用户名密码为`Admin`，`123456`，因为是个人博客，没打算做修改密码的页面，可在`top.naccl.util.HashUtils`下的`main`方法手动生成密码存入数据库
 - 注意修改`application-dev.properties`的配置信息
   - Redis 若没有密码，留空即可
   - 注意修改`token.secretKey`，否则无法保证 token 安全性
