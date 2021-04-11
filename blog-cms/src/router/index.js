@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store'
 import Login from "@/views/Login";
 import Home from "@/views/Home";
 import Dashboard from "@/views/dashboard/Dashboard";
@@ -20,6 +21,7 @@ import LoginLog from "@/views/log/LoginLog";
 import ExceptionLog from "@/views/log/ExceptionLog";
 import VisitLog from "@/views/log/VisitLog";
 import Visitor from "@/views/statistics/Visitor";
+import {SAVE_NAV_STATE} from "@/store/mutations-types";
 
 Vue.use(VueRouter)
 
@@ -198,9 +200,13 @@ router.beforeEach((to, from, next) => {
 		if (!tokenStr) return next("/login")
 	}
 	if (to.meta.title) {
-		document.title = to.meta.title + ' - Naccl\'s Blog'
+		if (store.state.webTitleSuffix) {
+			document.title = to.meta.title + store.state.webTitleSuffix
+		} else {
+			document.title = to.meta.title
+		}
 	}
-	router.app.$options.store.dispatch('saveNavState', to.path)
+	router.app.$options.store.commit(SAVE_NAV_STATE, to.path)
 	next()
 })
 

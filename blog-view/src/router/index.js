@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from '../store'
+import store from '@/store'
 import Index from "@/views/Index";
 import Home from "@/views/home/Home";
 import Archives from "@/views/archives/Archives";

@@ -17,3 +17,10 @@ export function update(settings, deleteIds) {
 		}
 	})
 }
+
+export function getWebTitleSuffix() {
+	return axios({
+		url: 'webTitleSuffix',
+		method: 'GET'
+	})
+}

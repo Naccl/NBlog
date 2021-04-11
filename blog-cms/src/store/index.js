@@ -1,22 +1,22 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {SAVE_NAV_STATE} from './mutations-types'
+import {SAVE_NAV_STATE, SAVE_WEB_TITLE_SUFFIX} from './mutations-types'
 
 Vue.use(Vuex)
 
 const state = {
-	activePath: ''
+	activePath: '',
+	webTitleSuffix: ''
 }
 
-const actions = {
-	saveNavState({commit}, activePath) {
-		commit(SAVE_NAV_STATE, {activePath})
-	}
-}
+const actions = {}
 
 const mutations = {
-	[SAVE_NAV_STATE](state, {activePath}) {
+	[SAVE_NAV_STATE](state, activePath) {
 		state.activePath = activePath
+	},
+	[SAVE_WEB_TITLE_SUFFIX](state, webTitleSuffix) {
+		state.webTitleSuffix = webTitleSuffix
 	}
 }
 

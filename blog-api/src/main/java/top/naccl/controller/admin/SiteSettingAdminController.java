@@ -51,4 +51,14 @@ public class SiteSettingAdminController {
 		siteSettingService.updateSiteSetting(siteSettings, deleteIds);
 		return Result.ok("更新成功");
 	}
+
+	/**
+	 * 查询网页标题后缀
+	 *
+	 * @return
+	 */
+	@GetMapping("/webTitleSuffix")
+	public Result getWebTitleSuffix() {
+		return Result.ok("请求成功", siteSettingService.getWebTitleSuffix());
+	}
 }

@@ -18,6 +18,8 @@ public interface SiteSettingMapper {
 
 	List<SiteSetting> getFriendInfo();
 
+	String getWebTitleSuffix();
+
 	int updateSiteSetting(SiteSetting siteSetting);
 
 	int deleteSiteSettingById(Integer id);

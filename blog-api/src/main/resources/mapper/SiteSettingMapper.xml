@@ -12,6 +12,11 @@
         select * from site_setting where type=4
     </select>
 
+    <!--查询网页标题后缀-->
+    <select id="getWebTitleSuffix" resultType="java.lang.String">
+        select value from site_setting where name_en='webTitleSuffix'
+    </select>
+
     <!--更新-->
     <update id="updateSiteSetting">
         update site_setting set value=#{value} where id=#{id}

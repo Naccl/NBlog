@@ -120,6 +120,11 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 	}
 
 	@Override
+	public String getWebTitleSuffix() {
+		return siteSettingMapper.getWebTitleSuffix();
+	}
+
+	@Override
 	public void updateSiteSetting(List<LinkedHashMap> siteSettings, List<Integer> deleteIds) {
 		for (Integer id : deleteIds) {//删除
 			deleteOneSiteSettingById(id);
