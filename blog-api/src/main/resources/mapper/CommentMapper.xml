@@ -42,7 +42,7 @@
     <!--按父评论id查询评论List-->
     <select id="getListByParentCommentId" resultMap="comment">
         select c.id, c.nickname, c.email, c.content, c.avatar, c.create_time, c.ip, c.is_published, c.is_admin_comment, c.page,
-        c.is_notice, c.parent_comment_id, c.website, c.blog_id, c.qq, b.title
+               c.is_notice, c.parent_comment_id, c.website, c.qq, c.blog_id, b.title
         from comment as c left join blog as b on c.blog_id=b.id
         where c.parent_comment_id=#{parentCommentId}
     </select>
@@ -75,10 +75,10 @@
 
     <!--按id查询评论-->
     <select id="getCommentById" resultMap="comment">
-        select id, nickname, email, content, avatar, create_time, ip, is_published, is_admin_comment, page, is_notice,
-        parent_comment_id, website, qq
-        from comment
-        where id=#{id}
+        select c.id, c.nickname, c.email, c.content, c.avatar, c.create_time, c.ip, c.is_published, c.is_admin_comment, c.page,
+               c.is_notice, c.parent_comment_id, c.website, c.qq, c.blog_id, b.title
+        from comment as c left join blog as b on c.blog_id=b.id
+        where c.id=#{id}
     </select>
 
     <!--更新评论公开状态-->

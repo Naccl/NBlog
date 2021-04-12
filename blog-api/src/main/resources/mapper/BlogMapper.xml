@@ -231,6 +231,11 @@
         where b.id=#{id}
     </select>
 
+    <!--按id查询博客标题-->
+    <select id="getTitleByBlogId" resultType="java.lang.String">
+        select title from blog where id=#{id}
+    </select>
+
     <resultMap id="blogDetail" type="top.naccl.model.vo.BlogDetail">
         <id property="id" column="id"/>
         <result property="title" column="title"/>

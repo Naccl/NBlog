@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+	<div style="width: 550px;height: auto;border-radius: 5px;margin: 0 auto;border: 1px solid #ffb0b0;box-shadow: 0px 0px 20px #888888;position: relative;padding-bottom: 5px">
+		<div style="background-image: url(https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/mail.jpg);width: 550px;height: 300px;background-size: cover;background-repeat: no-repeat;border-radius: 5px 5px 0px 0px"></div>
+		<div style="width: 200px;height: 40px;background-color: rgb(255, 114, 114);margin-top: -20px;margin-left: 20px;box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);color: rgb(255, 255, 255);text-align: center;line-height: 40px" th:text="|Dear: ${parentNickname}|"></div>
+		<div style="background-color: white;line-height: 180%;padding: 0 15px 12px;width: 520px;margin: 30px auto;color: #555555;font-family: 'Century Gothic', 'Trebuchet MS', 'Hiragino Sans GB', 微软雅黑, 'Microsoft Yahei', Tahoma, Helvetica, Arial, 'SimSun', sans-serif;font-size: 12px;margin-bottom: 0px">
+			<h2 style="border-bottom: 1px solid #ddd;font-size: 14px;font-weight: normal;padding: 13px 0 10px 8px">
+				您在<a style="text-decoration: none;color: #12addb" th:href="@{${url}}" target="_blank" th:text="|《${title}》|"></a>的评论有了新的回复~
+			</h2>
+			<div style="padding: 0 12px 0 12px;margin-top: 18px">
+				<p>时间：<span style="border-bottom: 1px dashed #ccc" th:text="${#dates.format(time,'yyyy-MM-dd HH:mm')}"></span></p>
+				<p>您的评论：</p>
+				<p style="background-color: #f5f5f5;border: 0px solid #ddd;padding: 10px 15px;margin: 18px 0" th:text="${parentContent}"></p>
+				<p><strong th:text="${nickname}"></strong>&nbsp;给您的回复：</p>
+				<p style="background-color: #f5f5f5;border: 0px solid #ddd;padding: 10px 15px;margin: 18px 0" th:text="${content}"></p>
+			</div>
+		</div>
+		<div style="color: #8c8c8c;font-family: 'Century Gothic', 'Trebuchet MS', 'Hiragino Sans GB', 微软雅黑, 'Microsoft Yahei', Tahoma, Helvetica, Arial, 'SimSun', sans-serif;font-size: 10px;width: 100%;text-align: center;word-wrap: break-word;margin-top: -30px">
+			<p style="padding: 20px">萤火虫消失之后，那光的轨迹仍久久地印在我的脑际。那微弱浅淡的光点，仿佛迷失方向的魂灵，在漆黑厚重的夜幕中彷徨。——《挪威的森林》村上春树</p>
+		</div>
+		<a style="text-decoration: none;color: #fff;width: 40%;text-align: center;background-color: #ff7272;height: 40px;line-height: 35px;box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);margin: -10px auto;display: block" th:href="@{${url}}" target="_blank">查看回复的完整內容</a>
+		<div style="color: #8c8c8c;font-family: 'Century Gothic', 'Trebuchet MS', 'Hiragino Sans GB', 微软雅黑, 'Microsoft Yahei', Tahoma, Helvetica, Arial, 'SimSun', sans-serif;font-size: 10px;width: 100%;text-align: center;margin-top: 30px">
+			<p>本邮件为系统自动发送，回复TD退订~</p>
+		</div>
+	</div>
+</body>
+</html>

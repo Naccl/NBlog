@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+	<div style="width: 550px;height: auto;border-radius: 5px;margin: 0 auto;border: 1px solid #ffb0b0;box-shadow: 0px 0px 20px #888888;position: relative;">
+		<div style="background-image: url(https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/mail.jpg);width: 550px;height: 250px;background-size: cover;background-repeat: no-repeat;border-radius: 5px 5px 0px 0px"></div>
+		<div style="background-color: white;line-height: 180%;padding: 0 15px 12px;width: 520px;color: #555555;font-family: 'Century Gothic', 'Trebuchet MS', 'Hiragino Sans GB', 微软雅黑, 'Microsoft Yahei', Tahoma, Helvetica, Arial, 'SimSun', sans-serif;font-size: 12px;margin: 10px auto 0px">
+			<h2 style="border-bottom: 1px solid #DDD;font-size: 14px;font-weight: normal;padding: 13px 0 10px 8px">
+				您的文章<a style="text-decoration: none;color: #12ADDB" th:href="@{${url}}" target="_blank" th:text="|《${title}》|"></a>有了新的评论~</h2>
+			<div style="padding: 0 12px 0 12px;margin-top: 18px">
+				<p>时间：<span style="border-bottom: 1px dashed #ccc" th:text="${#dates.format(time,'yyyy-MM-dd HH:mm')}"></span></p>
+				<p><strong th:text="${nickname}"></strong>&nbsp;给您的评论：</p>
+				<p style="background-color: #f5f5f5;border: 0px solid #DDD;padding: 10px 15px;margin: 18px 0" th:text="${content}"></p>
+				<p>其他信息：</p>
+				<p style="background-color: #f5f5f5;border: 0px solid #DDD;padding: 10px 15px;margin: 18px 0"><span th:text="|IP：${ip}|"></span><br/><span th:text="|邮箱：${email}|"></span><br/><span th:text="|状态：${status}|"></span> [<a th:href="@{${manageUrl}}" target="_blank">管理评论</a>]</p>
+			</div>
+		</div>
+		<a style="text-decoration: none;color: rgb(255, 255, 255);width: 40%;text-align: center;background-color: rgb(255, 114, 114);height: 40px;line-height: 40px;box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);display: block;margin: 0 auto 28px auto" th:href="@{${url}}" target="_blank">查看回复的完整內容</a>
+	</div>
+</body>
+</html>

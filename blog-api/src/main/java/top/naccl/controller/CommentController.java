@@ -56,9 +56,21 @@ public class CommentController {
 	MailProperties mailProperties;
 	@Autowired
 	MailUtils mailUtils;
+	private static String blogName;
+	private static String cmsUrl;
 	private static String websiteUrl;
 
-	@Value("${server.website.url}")
+	@Value("${custom.mail.blog.name}")
+	public void setBlogName(String blogName) {
+		this.blogName = blogName;
+	}
+
+	@Value("${custom.mail.url.cms}")
+	public void setCmsUrl(String cmsUrl) {
+		this.cmsUrl = cmsUrl;
+	}
+
+	@Value("${custom.mail.url.website}")
 	public void setWebsiteUrl(String websiteUrl) {
 		this.websiteUrl = websiteUrl;
 	}
@@ -156,7 +168,7 @@ public class CommentController {
 	}
 
 	/**
-	 * 提交评论 又长又臭 能用就不改了:)
+	 * 提交评论 又长又臭 能用就不改了:) https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/1stLaw4Coding.jpg
 	 * 单个ip，30秒内允许提交1次评论
 	 *
 	 * @param comment 评论DTO
@@ -257,18 +269,7 @@ public class CommentController {
 			}
 		}
 		commentService.saveComment(comment);
-		String path = "";
-		if (comment.getPage() == 0) {
-			//普通博客
-			path = "/blog/" + comment.getBlogId();
-		} else if (comment.getPage() == 1) {
-			//关于我页面
-			path = "/about";
-		} else if (comment.getPage() == 2) {
-			//友链页面
-			path = "/friends";
-		}
-		judgeSendMail(comment, isVisitorComment, path);
+		judgeSendMail(comment, isVisitorComment);
 		return Result.ok("评论成功");
 	}
 
@@ -340,32 +341,34 @@ public class CommentController {
 		comment.setAvatar(avatar);
 	}
 
-	private void judgeSendMail(Comment comment, boolean isVisitorComment, String path) {
-		//6种情况：
-		//我以父评论提交：不用邮件提醒
-		//我回复我自己：不用邮件提醒
-		//我回复访客的评论：只提醒该访客
-		//访客以父评论提交：只提醒我自己
-		//访客回复我的评论：只提醒我自己
-		//访客回复访客的评论(即使是他自己先前的评论)：提醒我自己和他回复的评论
+	private void judgeSendMail(Comment comment, boolean isVisitorComment) {
+		/*
+		6种情况：
+		我以父评论提交：不用邮件提醒
+		我回复我自己：不用邮件提醒
+		我回复访客的评论：只提醒该访客
+		访客以父评论提交：只提醒我自己
+		访客回复我的评论：只提醒我自己
+		访客回复访客的评论(即使是他自己先前的评论)：提醒我自己和他回复的评论
+		 */
 		if (isVisitorComment) {
 			//访客的评论
 			if (comment.getParentCommentId() != -1) {
 				top.naccl.entity.Comment parentComment = commentService.getCommentById(comment.getParentCommentId());
 				//访客回复我的评论，邮件提醒我自己
 				if (parentComment.getAdminComment()) {
-					sendMailToMe(parentComment.getEmail(), path);
+					sendMailToMe(comment);
 				} else {
 					if (parentComment.getNotice()) {
 						//访客回复访客的评论(即使是他自己先前的评论)，且对方接收提醒，邮件提醒对方
-						sendMailToParentComment(parentComment.getEmail(), path);
+						sendMailToParentComment(parentComment, comment);
 					}
 					//不管对方是否接收提醒，都要提醒我有新评论
-					sendMailToMe(mailProperties.getUsername(), path);
+					sendMailToMe(comment);
 				}
 			} else {
 				//访客以父评论提交，只邮件提醒我自己
-				sendMailToMe(mailProperties.getUsername(), path);
+				sendMailToMe(comment);
 			}
 		} else {
 			//我的评论
@@ -373,7 +376,7 @@ public class CommentController {
 				top.naccl.entity.Comment parentComment = commentService.getCommentById(comment.getParentCommentId());
 				//我回复访客的评论，且对方接收提醒，邮件提醒对方
 				if (!parentComment.getAdminComment() && parentComment.getNotice()) {
-					sendMailToParentComment(parentComment.getEmail(), path);
+					sendMailToParentComment(parentComment, comment);
 				}
 			}
 		}
@@ -382,28 +385,71 @@ public class CommentController {
 	/**
 	 * 发送邮件提醒回复对象
 	 *
-	 * @param email 邮件接收方
-	 * @param path  评论所在的页面
+	 * @param parentComment 父评论
+	 * @param comment       当前评论
 	 */
-	private void sendMailToParentComment(String email, String path) {
-		String url = websiteUrl + path;
-		String toAccount = email;
-		String subject = "Naccl's Blog评论回复";
-		String content = "<body><h2>您的评论有新回复</h2><p><a href='" + url + "'>详情请看" + url + "</a></p><p>此邮件为自动发送，如不想再收到此类消息，请回复TD</p></body>";
-		mailUtils.sendHTMLMail(toAccount, subject, content);
+	private void sendMailToParentComment(top.naccl.entity.Comment parentComment, Comment comment) {
+		String path = "";
+		String title = "";
+		if (comment.getPage() == 0) {
+			//普通博客
+			title = parentComment.getBlog().getTitle();
+			path = "/blog/" + comment.getBlogId();
+		} else if (comment.getPage() == 1) {
+			//关于我页面
+			title = "关于我";
+			path = "/about";
+		} else if (comment.getPage() == 2) {
+			//友链页面
+			title = "友人帐";
+			path = "/friends";
+		}
+		Map<String, Object> map = new HashMap<>();
+		map.put("parentNickname", parentComment.getNickname());
+		map.put("nickname", comment.getNickname());
+		map.put("title", title);
+		map.put("time", comment.getCreateTime());
+		map.put("parentContent", parentComment.getContent());
+		map.put("content", comment.getContent());
+		map.put("url", websiteUrl + path);
+		String toAccount = parentComment.getEmail();
+		String subject = "您在 " + blogName + " 的评论有了新回复";
+		mailUtils.sendHtmlTemplateMail(map, toAccount, subject, "guest.html");
 	}
 
 	/**
 	 * 发送邮件提醒我自己
 	 *
-	 * @param email 邮件接收方
-	 * @param path  评论所在的页面
+	 * @param comment 当前评论
 	 */
-	private void sendMailToMe(String email, String path) {
-		String url = websiteUrl + path;
-		String toAccount = email;
-		String subject = "Naccl's Blog新评论";
-		String content = "<body><p><a href='" + url + "'>新评论" + url + "</a></p></body>";
-		mailUtils.sendHTMLMail(toAccount, subject, content);
+	private void sendMailToMe(Comment comment) {
+		String path = "";
+		String title = "";
+		if (comment.getPage() == 0) {
+			//普通博客
+			title = blogService.getTitleByBlogId(comment.getBlogId());
+			path = "/blog/" + comment.getBlogId();
+		} else if (comment.getPage() == 1) {
+			//关于我页面
+			title = "关于我";
+			path = "/about";
+		} else if (comment.getPage() == 2) {
+			//友链页面
+			title = "友人帐";
+			path = "/friends";
+		}
+		Map<String, Object> map = new HashMap<>();
+		map.put("title", title);
+		map.put("time", comment.getCreateTime());
+		map.put("nickname", comment.getNickname());
+		map.put("content", comment.getContent());
+		map.put("ip", comment.getIp());
+		map.put("email", comment.getEmail());
+		map.put("status", comment.getPublished() ? "公开" : "待审核");
+		map.put("url", websiteUrl + path);
+		map.put("manageUrl", cmsUrl + "/comments");
+		String toAccount = mailProperties.getUsername();
+		String subject = blogName + " 收到新评论";
+		mailUtils.sendHtmlTemplateMail(map, toAccount, subject, "owner.html");
 	}
 }

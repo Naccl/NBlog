@@ -63,6 +63,8 @@ public interface BlogMapper {
 
 	Blog getBlogById(Long id);
 
+	String getTitleByBlogId(Long id);
+
 	BlogDetail getBlogByIdAndIsPublished(Long id);
 
 	String getBlogPassword(Long blogId);
