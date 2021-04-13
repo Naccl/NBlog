@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.annotation.AccessLimit;
 import top.naccl.annotation.VisitLogger;
 import top.naccl.entity.Moment;
 import top.naccl.entity.User;
@@ -61,10 +62,12 @@ public class MomentController {
 
 	/**
 	 * 给动态点赞
+	 * 简单限制一下点赞
 	 *
 	 * @param id 动态id
 	 * @return
 	 */
+	@AccessLimit(seconds = 86400, maxCount = 1, msg = "不可以重复点赞哦")
 	@VisitLogger(behavior = "点赞动态")
 	@PostMapping("/moment/like")
 	public Result like(@RequestParam Long id) {
