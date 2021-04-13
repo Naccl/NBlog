@@ -95,7 +95,7 @@ CREATE TABLE `comment`  (
   `page` int(0) NOT NULL COMMENT '0普通文章，1关于我页面，2友链页面',
   `is_notice` bit(1) NOT NULL COMMENT '接收邮件提醒',
   `blog_id` bigint(0) NULL DEFAULT NULL COMMENT '所属的文章',
-  `parent_comment_id` bigint(0) NULL DEFAULT NULL COMMENT '父评论id，-1为根评论',
+  `parent_comment_id` bigint(0) NOT NULL COMMENT '父评论id，-1为根评论',
   `website` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '个人网站',
   `qq` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '如果评论昵称为QQ号，则将昵称和头像置为QQ昵称和QQ头像，并将此字段置为QQ号备份',
   PRIMARY KEY (`id`) USING BTREE

@@ -84,7 +84,7 @@
 					<el-input v-model="editForm.ip"></el-input>
 				</el-form-item>
 				<el-form-item label="评论内容" prop="content">
-					<el-input v-model="editForm.content" type="textarea" maxlength="255" :rows="5" show-word-limit></el-input>
+					<el-input v-model="editForm.content" type="textarea" maxlength="250" :rows="5" show-word-limit></el-input>
 				</el-form-item>
 			</el-form>
 			<!--底部-->

@@ -56,9 +56,9 @@ public class CommentController {
 	MailProperties mailProperties;
 	@Autowired
 	MailUtils mailUtils;
-	private static String blogName;
-	private static String cmsUrl;
-	private static String websiteUrl;
+	private String blogName;
+	private String cmsUrl;
+	private String websiteUrl;
 
 	@Value("${custom.mail.blog.name}")
 	public void setBlogName(String blogName) {
@@ -134,7 +134,7 @@ public class CommentController {
 	/**
 	 * 查询对应页面评论是否开启
 	 *
-	 * @param page   页面分类（0普通文章，1关于我...）
+	 * @param page   页面分类（0普通文章，1关于我，2友链）
 	 * @param blogId 如果page==0，需要博客id参数，校验文章是否公开状态
 	 * @return 0:公开可查询状态 1:评论关闭 2:该博客不存在 3:文章受密码保护
 	 */
@@ -181,13 +181,29 @@ public class CommentController {
 	public Result postComment(@RequestBody Comment comment,
 	                          HttpServletRequest request,
 	                          @RequestHeader(value = "Authorization", defaultValue = "") String jwt) {
-		//访客的评论
-		boolean isVisitorComment = false;
 		//评论内容合法性校验
-		if (StringUtils.isEmpty(comment.getContent()) || comment.getContent().length() > 250) {
+		if (StringUtils.isEmpty(comment.getNickname(), comment.getEmail(), comment.getContent()) ||
+				comment.getContent().length() > 250 || comment.getPage() == null || comment.getParentCommentId() == null) {
 			return Result.error("参数有误");
 		}
-
+		//是否访客的评论
+		boolean isVisitorComment = false;
+		//父评论
+		top.naccl.entity.Comment parentComment = null;
+		//对于有指定父评论的评论，应该以父评论为准，只判断页面可能会被绕过“评论开启状态检测”
+		if (comment.getParentCommentId() != -1) {
+			//当前评论为子评论
+			parentComment = commentService.getCommentById(comment.getParentCommentId());
+			Integer page = parentComment.getPage();
+			Long blogId = page == 0 ? parentComment.getBlog().getId() : null;
+			comment.setPage(page);
+			comment.setBlogId(blogId);
+		} else {
+			//当前评论为顶级评论
+			if (comment.getPage() != 0) {
+				comment.setBlogId(null);
+			}
+		}
 		//判断是否可评论
 		int judgeResult = judgeCommentEnabled(comment.getPage(), comment.getBlogId());
 		if (judgeResult == 2) {
@@ -269,7 +285,7 @@ public class CommentController {
 			}
 		}
 		commentService.saveComment(comment);
-		judgeSendMail(comment, isVisitorComment);
+		judgeSendMail(comment, isVisitorComment, parentComment);
 		return Result.ok("评论成功");
 	}
 
@@ -329,7 +345,7 @@ public class CommentController {
 	}
 
 	/**
-	 * 对于昵称不是QQ号的评论，根据昵称MD5设置头像
+	 * 对于昵称不是QQ号的评论，根据昵称Hash设置头像
 	 *
 	 * @param comment 评论DTO
 	 */
@@ -341,44 +357,31 @@ public class CommentController {
 		comment.setAvatar(avatar);
 	}
 
-	private void judgeSendMail(Comment comment, boolean isVisitorComment) {
-		/*
-		6种情况：
-		我以父评论提交：不用邮件提醒
-		我回复我自己：不用邮件提醒
-		我回复访客的评论：只提醒该访客
-		访客以父评论提交：只提醒我自己
-		访客回复我的评论：只提醒我自己
-		访客回复访客的评论(即使是他自己先前的评论)：提醒我自己和他回复的评论
-		 */
+	/**
+	 * 判断是否发送邮件
+	 * 6种情况：
+	 * 1.我以父评论提交：不用邮件提醒
+	 * 2.我回复我自己：不用邮件提醒
+	 * 3.我回复访客的评论：只提醒该访客
+	 * 4.访客以父评论提交：只提醒我自己
+	 * 5.访客回复我的评论：只提醒我自己
+	 * 6.访客回复访客的评论(即使是他自己先前的评论)：提醒我自己和他回复的评论
+	 *
+	 * @param comment          当前评论
+	 * @param isVisitorComment 是否访客评论
+	 * @param parentComment    父评论
+	 */
+	private void judgeSendMail(Comment comment, boolean isVisitorComment, top.naccl.entity.Comment parentComment) {
+		if (parentComment != null && !parentComment.getAdminComment() && parentComment.getNotice()) {
+			//我回复访客的评论，且对方接收提醒，邮件提醒对方(3)
+			//访客回复访客的评论(即使是他自己先前的评论)，且对方接收提醒，邮件提醒对方(6)
+			sendMailToParentComment(parentComment, comment);
+		}
 		if (isVisitorComment) {
-			//访客的评论
-			if (comment.getParentCommentId() != -1) {
-				top.naccl.entity.Comment parentComment = commentService.getCommentById(comment.getParentCommentId());
-				//访客回复我的评论，邮件提醒我自己
-				if (parentComment.getAdminComment()) {
-					sendMailToMe(comment);
-				} else {
-					if (parentComment.getNotice()) {
-						//访客回复访客的评论(即使是他自己先前的评论)，且对方接收提醒，邮件提醒对方
-						sendMailToParentComment(parentComment, comment);
-					}
-					//不管对方是否接收提醒，都要提醒我有新评论
-					sendMailToMe(comment);
-				}
-			} else {
-				//访客以父评论提交，只邮件提醒我自己
-				sendMailToMe(comment);
-			}
-		} else {
-			//我的评论
-			if (comment.getParentCommentId() != -1) {
-				top.naccl.entity.Comment parentComment = commentService.getCommentById(comment.getParentCommentId());
-				//我回复访客的评论，且对方接收提醒，邮件提醒对方
-				if (!parentComment.getAdminComment() && parentComment.getNotice()) {
-					sendMailToParentComment(parentComment, comment);
-				}
-			}
+			//访客以父评论提交，只邮件提醒我自己(4)
+			//访客回复我的评论，邮件提醒我自己(5)
+			//访客回复访客的评论，不管对方是否接收提醒，都要提醒我有新评论(6)
+			sendMailToMe(comment);
 		}
 	}
 
