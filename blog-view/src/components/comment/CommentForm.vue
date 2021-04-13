@@ -170,6 +170,11 @@
 </script>
 
 <style>
+	.form {
+		background: #fff;
+		position: relative;
+	}
+
 	.form h3 {
 		margin: 5px;
 		font-weight: 500 !important;

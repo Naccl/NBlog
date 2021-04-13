@@ -30,7 +30,10 @@
 						<div class="metadata">
 							<strong class="date">{{ reply.createTime | dateFormat('YYYY-MM-DD HH:mm') }}</strong>
 						</div>
-						<div class="text"><a :href="`#comment-${reply.parentCommentId}`">@{{ reply.parentCommentNickname }}</a><div v-html="reply.content"></div></div>
+						<div class="text">
+							<a :href="`#comment-${reply.parentCommentId}`">@{{ reply.parentCommentNickname }}</a>
+							<div v-html="reply.content"></div>
+						</div>
 						<div class="actions">
 							<el-button size="mini" type="primary" @click="setReply(reply.id)">回复</el-button>
 						</div>
@@ -38,6 +41,7 @@
 					<CommentForm v-if="parentCommentId===reply.id"/>
 				</div>
 			</div>
+			<div class="border"></div>
 			<CommentForm v-if="parentCommentId===comment.id"/>
 		</div>
 	</div>
@@ -63,6 +67,21 @@
 </script>
 
 <style scoped>
+	.comments + .border {
+		position: absolute;
+		left: 34px;
+		top: 47px;
+		bottom: 0;
+		border-style: solid;
+		border-width: 0 0 0 1px;
+		border-color: #e0e0e0;
+	}
+
+	.ui.threaded.comments .comment .comments {
+		box-shadow: none;
+		margin-top: -2em;
+	}
+
 	.comment {
 		padding-right: 2em !important;
 		padding-left: 1em !important;
@@ -78,11 +97,14 @@
 		padding: 4px 5px;
 	}
 
-	.anchor {
-		display: block;
-		height: 55px;
-		margin-top: -55px;
-		visibility: hidden;
+	.comment > .anchor {
+		position: absolute;
+		left: 0;
+		top: -48px;
+	}
+
+	.comment .comments .comment > .anchor {
+		top: -55px;
 	}
 
 	.ui.comments .comment .avatar {
