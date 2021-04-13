@@ -182,8 +182,8 @@ public class CommentController {
 	                          HttpServletRequest request,
 	                          @RequestHeader(value = "Authorization", defaultValue = "") String jwt) {
 		//评论内容合法性校验
-		if (StringUtils.isEmpty(comment.getNickname(), comment.getEmail(), comment.getContent()) ||
-				comment.getContent().length() > 250 || comment.getPage() == null || comment.getParentCommentId() == null) {
+		if (StringUtils.isEmpty(comment.getContent()) || comment.getContent().length() > 250 ||
+				comment.getPage() == null || comment.getParentCommentId() == null) {
 			return Result.error("参数有误");
 		}
 		//是否访客的评论
