@@ -41,6 +41,8 @@
 
 
 
+邮件模板参考自[Typecho-CommentToMail-Template](https://github.com/MisakaTAT/Typecho-CommentToMail-Template)
+
 基于 JDK8 开发，8以上要添加依赖：
 
 ```xml
