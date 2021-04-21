@@ -64,7 +64,7 @@
 		methods: {
 			getMomentList() {
 				//如果有则发送博主身份Token
-				const adminToken = window.sessionStorage.getItem('adminToken')
+				const adminToken = window.localStorage.getItem('adminToken')
 				const token = adminToken ? adminToken : ''
 				getMomentListByPageNum(token, this.pageNum).then(res => {
 					if (res.code === 200) {

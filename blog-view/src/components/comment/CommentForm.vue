@@ -141,7 +141,7 @@
 			postForm() {
 				const adminToken = window.localStorage.getItem('adminToken')
 				if (adminToken) {
-					//博主登录后，sessionStorage中会存储token，在后端设置属性，可以不校验昵称、邮箱
+					//博主登录后，localStorage中会存储token，在后端设置属性，可以不校验昵称、邮箱
 					if (this.commentForm.content === '' || this.commentForm.content.length > 250) {
 						return this.$notify({
 							title: '评论失败',
