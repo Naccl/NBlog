@@ -86,6 +86,8 @@
 
 	.card .image img {
 		border-radius: 100% !important;
+		width: 70px !important;
+		height: 70px !important;
 	}
 
 	.card .content {

@@ -1,7 +1,6 @@
 package top.naccl.interceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -24,8 +23,6 @@ import java.io.PrintWriter;
 public class AccessLimitInterceptor extends HandlerInterceptorAdapter {
 	@Autowired
 	RedisService redisService;
-	@Autowired
-	RedisTemplate jsonRedisTemplate;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
