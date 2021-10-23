@@ -286,7 +286,7 @@
 
 .typo li ul, .typo li ol {
     margin-bottom: 0.8em;
-    margin-left: 2em;
+    /*margin-left: 2em;*/
 }
 
 .typo li ul {
