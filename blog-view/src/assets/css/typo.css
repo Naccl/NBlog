@@ -161,9 +161,9 @@
 }
 
 /* 代码片断 */
-.typo p code, .typo ul code {
-    margin-left: 5px;
-    margin-right: 5px;
+.typo p code, .typo ul code, .typo ol code {
+    margin-left: 3px;
+    margin-right: 3px;
     border: 1px solid #ddd;
     color: #e4305e;
     background: #fdf2f5;
