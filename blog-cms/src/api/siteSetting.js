@@ -1,4 +1,4 @@
-import axios from '@/plugins/axios'
+import axios from '@/util/request'
 
 export function getSiteSettingData() {
 	return axios({

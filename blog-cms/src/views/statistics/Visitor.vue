@@ -1,8 +1,5 @@
 <template>
 	<div>
-		<!--面包屑导航-->
-		<Breadcrumb parentTitle="数据统计"/>
-
 		<!--搜索-->
 		<el-form inline>
 			<el-form-item label="最后访问时间">
@@ -84,14 +81,9 @@
 				}
 				getVisitorList(query).then(res => {
 					if (res.code === 200) {
-						this.msgSuccess(res.msg)
 						this.visitorList = res.data.list
 						this.total = res.data.total
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			handleSizeChange(newSize) {
@@ -107,16 +99,12 @@
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.getData()
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			showLog(uuid) {
 				this.$router.push({
-					path: '/visitLog',
+					path: '/log/visit',
 					query: {
 						uuid
 					}

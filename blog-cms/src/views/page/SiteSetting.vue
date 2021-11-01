@@ -1,78 +1,75 @@
 <template>
 	<div>
-		<!--面包屑导航-->
-		<Breadcrumb parentTitle="页面管理"/>
-
-			<el-row :gutter="20">
-				<el-col :span="12">
-					<el-card>
-						<div slot="header">
-							<span>基础设置</span>
-						</div>
-						<el-form label-position="right" label-width="100px">
-							<el-form-item :label="item.nameZh" v-for="item in typeMap.type1" :key="item.id">
-								<el-input v-model="item.value"></el-input>
-							</el-form-item>
-						</el-form>
-					</el-card>
-				</el-col>
-				<el-col :span="12">
-					<el-card>
-						<div slot="header">
-							<span>资料卡</span>
-						</div>
-						<el-form label-position="right" label-width="100px">
-							<el-form-item :label="item.nameZh" v-for="item in typeMap.type3" :key="item.id">
-								<div v-if="item.nameEn=='favorite'">
-									<el-col :span="20">
-										<el-input v-model="item.value"></el-input>
-									</el-col>
-									<el-col :span="4">
-										<el-button type="danger" icon="el-icon-delete" @click="deleteFavorite(item)">删除</el-button>
-									</el-col>
-								</div>
-								<div v-else>
-									<el-input v-model="item.value"></el-input>
-								</div>
-							</el-form-item>
-							<el-button type="primary" size="mini" icon="el-icon-plus" @click="addFavorite">添加自定义</el-button>
-						</el-form>
-					</el-card>
-				</el-col>
-			</el-row>
-
-			<el-row style="margin-top: 20px">
+		<el-row :gutter="20">
+			<el-col :span="12">
 				<el-card>
 					<div slot="header">
-						<span>页脚徽标</span>
+						<span>基础设置</span>
 					</div>
-					<el-form :inline="true" v-for="badge in typeMap.type2" :key="badge.id">
-						<el-form-item label="title">
-							<el-input v-model="badge.value.title"></el-input>
-						</el-form-item>
-						<el-form-item label="url">
-							<el-input v-model="badge.value.url"></el-input>
-						</el-form-item>
-						<el-form-item label="subject">
-							<el-input v-model="badge.value.subject"></el-input>
-						</el-form-item>
-						<el-form-item label="value">
-							<el-input v-model="badge.value.value"></el-input>
-						</el-form-item>
-						<el-form-item label="color">
-							<el-input v-model="badge.value.color"></el-input>
-						</el-form-item>
-						<el-form-item>
-							<el-button type="danger" icon="el-icon-delete" @click="deleteBadge(badge)">删除</el-button>
+					<el-form label-position="right" label-width="100px">
+						<el-form-item :label="item.nameZh" v-for="item in typeMap.type1" :key="item.id">
+							<el-input v-model="item.value"></el-input>
 						</el-form-item>
 					</el-form>
-					<el-button type="primary" size="mini" icon="el-icon-plus" @click="addBadge">添加 badge</el-button>
 				</el-card>
-			</el-row>
+			</el-col>
+			<el-col :span="12">
+				<el-card>
+					<div slot="header">
+						<span>资料卡</span>
+					</div>
+					<el-form label-position="right" label-width="100px">
+						<el-form-item :label="item.nameZh" v-for="item in typeMap.type3" :key="item.id">
+							<div v-if="item.nameEn=='favorite'">
+								<el-col :span="20">
+									<el-input v-model="item.value"></el-input>
+								</el-col>
+								<el-col :span="4">
+									<el-button type="danger" icon="el-icon-delete" @click="deleteFavorite(item)">删除</el-button>
+								</el-col>
+							</div>
+							<div v-else>
+								<el-input v-model="item.value"></el-input>
+							</div>
+						</el-form-item>
+						<el-button type="primary" size="mini" icon="el-icon-plus" @click="addFavorite">添加自定义</el-button>
+					</el-form>
+				</el-card>
+			</el-col>
+		</el-row>
 
-			<div style="text-align: right;margin-top: 30px">
-				<el-button type="primary" icon="el-icon-check" @click="submit">保存</el-button>
-			</div>
+		<el-row style="margin-top: 20px">
+			<el-card>
+				<div slot="header">
+					<span>页脚徽标</span>
+				</div>
+				<el-form :inline="true" v-for="badge in typeMap.type2" :key="badge.id">
+					<el-form-item label="title">
+						<el-input v-model="badge.value.title"></el-input>
+					</el-form-item>
+					<el-form-item label="url">
+						<el-input v-model="badge.value.url"></el-input>
+					</el-form-item>
+					<el-form-item label="subject">
+						<el-input v-model="badge.value.subject"></el-input>
+					</el-form-item>
+					<el-form-item label="value">
+						<el-input v-model="badge.value.value"></el-input>
+					</el-form-item>
+					<el-form-item label="color">
+						<el-input v-model="badge.value.color"></el-input>
+					</el-form-item>
+					<el-form-item>
+						<el-button type="danger" icon="el-icon-delete" @click="deleteBadge(badge)">删除</el-button>
+					</el-form-item>
+				</el-form>
+				<el-button type="primary" size="mini" icon="el-icon-plus" @click="addBadge">添加 badge</el-button>
+			</el-card>
+		</el-row>
+
+		<div style="text-align: right;margin-top: 30px">
+			<el-button type="primary" icon="el-icon-check" @click="submit">保存</el-button>
+		</div>
 	</div>
 </template>
 
@@ -101,12 +98,7 @@
 						res.data.type2.forEach(item => {
 							item.value = JSON.parse(item.value)
 						})
-						this.msgSuccess(res.msg)
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			addFavorite() {
@@ -185,11 +177,7 @@
 						this.deleteIds = []
 						this.getData()
 						this.msgSuccess(res.msg)
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			}
 		}

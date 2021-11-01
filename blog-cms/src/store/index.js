@@ -1,28 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {SAVE_NAV_STATE, SAVE_WEB_TITLE_SUFFIX} from './mutations-types'
+import getters from './getters'
+import app from './modules/app'
+import settings from './modules/settings'
 
 Vue.use(Vuex)
 
-const state = {
-	activePath: '',
-	webTitleSuffix: ''
-}
-
-const actions = {}
-
-const mutations = {
-	[SAVE_NAV_STATE](state, activePath) {
-		state.activePath = activePath
-	},
-	[SAVE_WEB_TITLE_SUFFIX](state, webTitleSuffix) {
-		state.webTitleSuffix = webTitleSuffix
-	}
-}
-
 export default new Vuex.Store({
-	state,
-	actions,
-	mutations,
-	modules: {}
+	modules: {
+		app,
+		settings,
+	},
+	getters
 })

@@ -1,8 +1,5 @@
 <template>
 	<div>
-		<!--面包屑导航-->
-		<Breadcrumb parentTitle="日志管理"/>
-
 		<!--搜索-->
 		<el-form inline>
 			<el-form-item label="操作时间">
@@ -89,14 +86,9 @@
 				}
 				getOperationLogList(query).then(res => {
 					if (res.code === 200) {
-						this.msgSuccess(res.msg)
 						this.logList = res.data.list
 						this.total = res.data.total
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			handleSizeChange(newSize) {
@@ -112,11 +104,7 @@
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.getData()
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			search() {

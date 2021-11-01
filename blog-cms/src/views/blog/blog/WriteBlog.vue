@@ -1,8 +1,5 @@
 <template>
 	<div>
-		<!--面包屑导航-->
-		<Breadcrumb parentTitle="博客管理"/>
-
 		<el-form :model="form" :rules="formRules" ref="formRef" label-position="top">
 			<el-row :gutter="20">
 				<el-col :span="12">
@@ -159,14 +156,9 @@
 			getData() {
 				getCategoryAndTag().then(res => {
 					if (res.code === 200) {
-						this.msgSuccess(res.msg);
 						this.categoryList = res.data.categories
 						this.tagList = res.data.tags
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError('请求失败')
 				})
 			},
 			getBlog(id) {
@@ -175,12 +167,7 @@
 						this.computeCategoryAndTag(res.data)
 						this.form = res.data
 						this.radio = this.form.published ? (this.form.password !== '' ? 3 : 1) : 2
-						this.msgSuccess(res.msg)
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError('请求失败')
 				})
 			},
 			computeCategoryAndTag(blog) {
@@ -214,23 +201,15 @@
 							updateBlog(this.form).then(res => {
 								if (res.code === 200) {
 									this.msgSuccess(res.msg)
-									this.$router.push('/blogs')
-								} else {
-									this.msgError(res.msg)
+									this.$router.push('/blog/list')
 								}
-							}).catch(() => {
-								this.msgError('请求失败')
 							})
 						} else {
 							saveBlog(this.form).then(res => {
 								if (res.code === 200) {
 									this.msgSuccess(res.msg)
-									this.$router.push('/blogs')
-								} else {
-									this.msgError(res.msg)
+									this.$router.push('/blog/list')
 								}
-							}).catch(() => {
-								this.msgError('请求失败')
 							})
 						}
 					} else {

@@ -1,8 +1,5 @@
 <template>
 	<div>
-		<!--面包屑导航-->
-		<Breadcrumb parentTitle="系统管理"/>
-
 		<el-form inline>
 			<el-form-item>
 				<el-button type="primary" size="mini" icon="el-icon-plus" @click="addDialogVisible=true">添加</el-button>
@@ -139,14 +136,9 @@
 			getData() {
 				getJobList(this.queryInfo).then(res => {
 					if (res.code === 200) {
-						this.msgSuccess(res.msg)
 						this.jobList = res.data.list
 						this.total = res.data.total
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			handleSizeChange(newSize) {
@@ -168,11 +160,7 @@
 					updateJobStatus(row.jobId, row.status).then(res => {
 						if (res.code === 200) {
 							this.msgSuccess(res.msg)
-						} else {
-							this.msgError(res.msg)
 						}
-					}).catch(() => {
-						this.msgError("请求失败")
 					})
 				}).catch(() => {
 					row.status = !row.status
@@ -187,11 +175,7 @@
 					runJobOnce(jobId).then(res => {
 						if (res.code === 200) {
 							this.msgSuccess(res.msg)
-						} else {
-							this.msgError(res.msg)
 						}
-					}).catch(() => {
-						this.msgError("请求失败")
 					})
 				}).catch(() => {
 					this.$message({
@@ -205,11 +189,7 @@
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.getData()
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			showEditDialog(row) {
@@ -231,11 +211,7 @@
 								this.msgSuccess(res.msg)
 								this.addDialogVisible = false
 								this.getData()
-							} else {
-								this.msgError(res.msg)
 							}
-						}).catch(() => {
-							this.msgError("请求失败")
 						})
 					}
 				})
@@ -248,17 +224,13 @@
 								this.msgSuccess(res.msg)
 								this.editDialogVisible = false
 								this.getData()
-							} else {
-								this.msgError(res.msg)
 							}
-						}).catch(() => {
-							this.msgError("请求失败")
 						})
 					}
 				})
 			},
 			goLogPage() {
-				this.$router.push('/jobs/logs')
+				this.$router.push('/log/job')
 			}
 		}
 	}

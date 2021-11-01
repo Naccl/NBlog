@@ -1,8 +1,5 @@
 <template>
 	<div>
-		<!--面包屑导航-->
-		<Breadcrumb parentTitle="博客管理"/>
-
 		<!--添加-->
 		<el-row :gutter="10">
 			<el-col :span="6">
@@ -136,14 +133,9 @@
 			getData() {
 				getData(this.queryInfo).then(res => {
 					if (res.code === 200) {
-						this.msgSuccess(res.msg);
 						this.tagList = res.data.list
 						this.total = res.data.total
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			//监听 pageSize 改变事件
@@ -172,11 +164,7 @@
 								this.msgSuccess(res.msg)
 								this.addDialogVisible = false
 								this.getData()
-							} else {
-								this.msgError(res.msg)
 							}
-						}).catch(() => {
-							this.msgError("请求失败")
 						})
 					}
 				})
@@ -189,11 +177,7 @@
 								this.msgSuccess(res.msg)
 								this.editDialogVisible = false
 								this.getData()
-							} else {
-								this.msgError(res.msg)
 							}
-						}).catch(() => {
-							this.msgError("请求失败")
 						})
 					}
 				})
@@ -207,11 +191,7 @@
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.getData()
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			}
 		}

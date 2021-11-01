@@ -1,8 +1,5 @@
 <template>
 	<div>
-		<!--面包屑导航-->
-		<Breadcrumb parentTitle="博客管理"/>
-
 		<el-table :data="momentList">
 			<el-table-column label="序号" type="index" width="50"></el-table-column>
 			<el-table-column label="内容" prop="content" show-overflow-tooltip></el-table-column>
@@ -61,12 +58,7 @@
 					if (res.code === 200) {
 						this.momentList = res.data.list
 						this.total = res.data.total
-						this.msgSuccess(res.msg)
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError('请求失败')
 				})
 			},
 			//监听 pageSize 改变事件
@@ -83,26 +75,18 @@
 				updatePublished(row.id, row.published).then(res => {
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			goEditMomentPage(id) {
-				this.$router.push(`/moments/edit/${id}`)
+				this.$router.push(`/blog/moment/edit/${id}`)
 			},
 			deleteMomentById(id) {
 				deleteMomentById(id).then(res => {
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.getMomentList()
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			}
 		}

@@ -1,8 +1,5 @@
 <template>
 	<div>
-		<!--面包屑导航-->
-		<Breadcrumb parentTitle="博客管理"/>
-
 		<!--搜索-->
 		<el-row>
 			<el-col :span="8">
@@ -136,15 +133,10 @@
 			getData() {
 				getDataByQuery(this.queryInfo).then(res => {
 					if (res.code === 200) {
-						this.msgSuccess(res.msg);
 						this.blogList = res.data.blogs.list
 						this.categoryList = res.data.categories
 						this.total = res.data.blogs.total
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			search() {
@@ -157,11 +149,7 @@
 				updateTop(row.id, row.top).then(res => {
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			//切换博客推荐状态
@@ -169,11 +157,7 @@
 				updateRecommend(row.id, row.recommend).then(res => {
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			//编辑博客可见性
@@ -212,11 +196,7 @@
 						this.msgSuccess(res.msg)
 						this.getData()
 						this.dialogVisible = false
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			//监听 pageSize 改变事件
@@ -230,7 +210,7 @@
 				this.getData()
 			},
 			goBlogEditPage(id) {
-				this.$router.push(`/blogs/edit/${id}`)
+				this.$router.push(`/blog/edit/${id}`)
 			},
 			deleteBlogById(id) {
 				this.$confirm('此操作将永久删除该博客<strong style="color: red">及其所有评论</strong>，是否删除?<br>建议将博客置为<strong style="color: red">私密</strong>状态！', '提示', {
@@ -243,11 +223,7 @@
 						if (res.code === 200) {
 							this.msgSuccess(res.msg)
 							this.getData()
-						} else {
-							this.msgError(res.msg)
 						}
-					}).catch(() => {
-						this.msgError("操作失败")
 					})
 				}).catch(() => {
 					this.$message({

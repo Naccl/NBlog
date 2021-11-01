@@ -1,8 +1,5 @@
 <template>
 	<div>
-		<!--面包屑导航-->
-		<Breadcrumb parentTitle="博客管理"/>
-
 		<el-form :model="form" label-position="top">
 			<el-form-item label="动态内容" prop="content">
 				<mavon-editor v-model="form.content"/>
@@ -17,7 +14,7 @@
 			</el-form-item>
 
 			<el-form-item style="text-align: right;">
-				<el-button type="info" @click="submit(false)">保存草稿</el-button>
+				<el-button type="info" @click="submit(false)">仅自己可见</el-button>
 				<el-button type="primary" @click="submit(true)">发布动态</el-button>
 			</el-form-item>
 		</el-form>
@@ -51,11 +48,7 @@
 				getMomentById(id).then(res => {
 					if (res.code === 200) {
 						this.form = res.data
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			submit(published) {
@@ -64,23 +57,15 @@
 					updateMoment(this.form).then(res => {
 						if (res.code === 200) {
 							this.msgSuccess(res.msg)
-							this.$router.push('/moments')
-						} else {
-							this.msgError(res.msg)
+							this.$router.push('/blog/moment/list')
 						}
-					}).catch(() => {
-						this.msgError('请求失败')
 					})
 				} else {
 					saveMoment(this.form).then(res => {
 						if (res.code === 200) {
 							this.msgSuccess(res.msg)
-							this.$router.push('/moments')
-						} else {
-							this.msgError(res.msg)
+							this.$router.push('/blog/moment/list')
 						}
-					}).catch(() => {
-						this.msgError('请求失败')
 					})
 				}
 			}

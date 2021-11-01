@@ -1,8 +1,5 @@
 <template>
 	<div>
-		<!--面包屑导航-->
-		<Breadcrumb parentTitle="博客管理"/>
-
 		<!--搜索-->
 		<el-row>
 			<el-col :span="6">
@@ -99,7 +96,7 @@
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
 	import {getCommentListByQuery, getBlogList, updatePublished, updateNotice, deleteCommentById, editComment} from '@/api/comment'
-	import {checkEmail} from "@/common/reg";
+	import {checkEmail} from "@/util/reg";
 
 	export default {
 		name: "CommentList",
@@ -154,14 +151,9 @@
 			getCommentList() {
 				getCommentListByQuery(this.queryInfo).then(res => {
 					if (res.code === 200) {
-						this.msgSuccess(res.msg);
 						this.commentList = res.data.list
 						this.total = res.data.total
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			getBlogList() {
@@ -170,11 +162,7 @@
 						this.blogList = res.data
 						this.blogList.unshift({id: -2, title: '友人帐'})
 						this.blogList.unshift({id: -1, title: '关于我'})
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			search() {
@@ -210,11 +198,7 @@
 				updatePublished(row.id, row.published).then(res => {
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			//切换评论邮件提醒状态
@@ -222,11 +206,7 @@
 				updateNotice(row.id, row.notice).then(res => {
 					if (res.code === 200) {
 						this.msgSuccess(res.msg);
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			deleteCommentById(id) {
@@ -240,11 +220,7 @@
 						if (res.code === 200) {
 							this.msgSuccess(res.msg)
 							this.getCommentList()
-						} else {
-							this.msgError(res.msg)
 						}
-					}).catch(() => {
-						this.msgError("请求失败")
 					})
 				}).catch(() => {
 					this.$message({
@@ -278,11 +254,7 @@
 								this.msgSuccess(res.msg)
 								this.editDialogVisible = false
 								this.getCommentList()
-							} else {
-								this.msgError(res.msg)
 							}
-						}).catch(() => {
-							this.msgError("请求失败")
 						})
 					}
 				})

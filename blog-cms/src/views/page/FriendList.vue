@@ -1,8 +1,5 @@
 <template>
 	<div>
-		<!--面包屑导航-->
-		<Breadcrumb parentTitle="页面管理"/>
-
 		<!--添加-->
 		<el-form inline>
 			<el-form-item>
@@ -168,13 +165,8 @@
 			getInfo() {
 				getFriendInfo().then(res => {
 					if (res.code === 200) {
-						this.msgSuccess(res.msg)
 						this.infoForm = res.data
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			updateContent() {
@@ -182,22 +174,14 @@
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
 						this.getInfo()
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			commentEnabledChanged() {
 				updateCommentEnabled(this.infoForm.commentEnabled).then(res => {
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			getFriendList() {
@@ -205,12 +189,7 @@
 					if (res.code === 200) {
 						this.friendList = res.data.list
 						this.total = res.data.total
-						this.msgSuccess(res.msg)
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			handleSizeChange(newSize) {
@@ -225,11 +204,7 @@
 				updatePublished(row.id, row.published).then(res => {
 					if (res.code === 200) {
 						this.msgSuccess(res.msg)
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			deleteFriendById(id) {
@@ -237,11 +212,7 @@
 					if (res.code === 200) {
 						this.getFriendList()
 						this.msgSuccess(res.msg)
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			showEditDialog(row) {
@@ -263,11 +234,7 @@
 								this.getFriendList()
 								this.msgSuccess(res.msg)
 								this.addDialogVisible = false
-							} else {
-								this.msgError(res.msg)
 							}
-						}).catch(() => {
-							this.msgError("请求失败")
 						})
 					}
 				})
@@ -280,11 +247,7 @@
 								this.getFriendList()
 								this.msgSuccess(res.msg)
 								this.editDialogVisible = false
-							} else {
-								this.msgError(res.msg)
 							}
-						}).catch(() => {
-							this.msgError("请求失败")
 						})
 					}
 				})

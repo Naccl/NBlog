@@ -1,8 +1,5 @@
 <template>
 	<div>
-		<!--面包屑导航-->
-		<Breadcrumb parentTitle="页面管理"/>
-
 		<el-form :model="form" :rules="formRules" ref="formRef" label-position="top">
 			<el-form-item label="标题" prop="title" style="width: 50%">
 				<el-input v-model="form.title" placeholder="请输入标题"></el-input>
@@ -63,12 +60,7 @@
 						this.form.musicId = res.data.musicId
 						this.form.content = res.data.content
 						this.form.commentEnabled = res.data.commentEnabled === 'true' ? true : false
-						this.msgSuccess(res.msg)
-					} else {
-						this.msgError(res.msg)
 					}
-				}).catch(() => {
-					this.msgError("请求失败")
 				})
 			},
 			submit() {
@@ -82,11 +74,7 @@
 						updateAbout(this.form).then(res => {
 							if (res.code === 200) {
 								this.msgSuccess(res.msg)
-							} else {
-								this.msgError(res.msg)
 							}
-						}).catch(() => {
-							this.msgError("请求失败")
 						})
 					} else {
 						return this.msgError('请填写必要的表单')
