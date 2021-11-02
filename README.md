@@ -67,7 +67,7 @@ JS 依赖及参考的 css：[axios](https://github.com/axios/axios)、[moment](h
 
 ### 后台 UI
 
-后台 CMS 部分基于 [vue-admin-template](https://github.com/PanJiaChen/vue-admin-template) 二次修改后的 [my-vue-admin-template](https://github.com/Naccl/my-vue-admin-template) 模板进行开发（于2021年11月1日重构过一次，[重构前最后一次 commit](https://github.com/Naccl/NBlog/commit/55b5b662ea781aff8fda03f11c9e3933c3b8f793)）
+后台 CMS 部分基于 [vue-admin-template](https://github.com/PanJiaChen/vue-admin-template) 二次修改后的 [my-vue-admin-template](https://github.com/Naccl/my-vue-admin-template) 模板进行开发（于2021年11月1日重构过一次，[重构 commit](https://github.com/Naccl/NBlog/commit/b33641fe34b2bed34e8237bacf67146cd64be4cf)）
 
 UI 框架为 [Element UI](https://github.com/ElemeFE/element)
 
