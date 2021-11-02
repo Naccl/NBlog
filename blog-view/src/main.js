@@ -8,8 +8,7 @@ import './assets/css/base.css'
 import './assets/css/icon/iconfont.css'
 //typo.css
 import "./assets/css/typo.css";
-//semantic-ui-vue
-import SuiVue from 'semantic-ui-vue'
+//semantic-ui
 import 'semantic-ui-css/semantic.min.css'
 //element-ui
 import Element from 'element-ui'
@@ -29,7 +28,6 @@ console.log(
 	'background:transparent'
 )
 
-Vue.use(SuiVue)
 Vue.use(Element)
 Vue.use(Viewer)
 
