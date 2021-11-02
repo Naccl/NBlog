@@ -15,10 +15,7 @@ export function getMomentListByPageNum(token, pageNum) {
 
 export function likeMoment(id) {
 	return axios({
-		url: 'moment/like',
+		url: `moment/like/${id}`,
 		method: 'POST',
-		params: {
-			id
-		}
 	})
 }
