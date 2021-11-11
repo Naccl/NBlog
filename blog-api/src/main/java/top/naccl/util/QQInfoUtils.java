@@ -2,6 +2,7 @@ package top.naccl.util;
 
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -24,8 +25,10 @@ public class QQInfoUtils {
 		return nickname;
 	}
 
-	public static String getQQAvatarURL(String qq) {
-		return String.format(QQ_AVATAR_URL, qq);
+	public static String getQQAvatarURL(String qq) throws IOException {
+		String url = String.format(QQ_AVATAR_URL, qq);
+		ImageUtils.ImageResource image = ImageUtils.getImageByRequest(url);
+		return ImageUtils.saveImage(image);
 	}
 
 	public static boolean isQQNumber(String nickname) {

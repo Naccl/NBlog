@@ -60,17 +60,17 @@ public class CommentController {
 	private String cmsUrl;
 	private String websiteUrl;
 
-	@Value("${custom.mail.blog.name}")
+	@Value("${custom.blog.name}")
 	public void setBlogName(String blogName) {
 		this.blogName = blogName;
 	}
 
-	@Value("${custom.mail.url.cms}")
+	@Value("${custom.url.cms}")
 	public void setCmsUrl(String cmsUrl) {
 		this.cmsUrl = cmsUrl;
 	}
 
-	@Value("${custom.mail.url.website}")
+	@Value("${custom.url.website}")
 	public void setWebsiteUrl(String websiteUrl) {
 		this.websiteUrl = websiteUrl;
 	}
