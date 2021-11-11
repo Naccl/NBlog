@@ -111,6 +111,9 @@
     <select id="countByPageAndIsPublished" resultType="java.lang.Integer">
         select count(*) from comment
         where page=#{page}
+        <if test="isPublished!=null">
+            and is_published=#{isPublished}
+        </if>
         <if test="page==0 and blogId!=0">
             and blog_id=#{blogId}
         </if>

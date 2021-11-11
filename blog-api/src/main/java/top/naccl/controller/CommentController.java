@@ -121,12 +121,16 @@ public class CommentController {
 				return Result.create(403, "此文章受密码保护，请验证密码！");
 			}
 		}
-		Integer count = commentService.countByPageAndIsPublished(page, blogId);
+		//查询该页面所有评论的数量
+		Integer allComment = commentService.countByPageAndIsPublished(page, blogId, null);
+		//查询该页面公开评论的数量
+		Integer openComment = commentService.countByPageAndIsPublished(page, blogId, true);
 		PageHelper.startPage(pageNum, pageSize);
 		PageInfo<PageComment> pageInfo = new PageInfo<>(commentService.getPageCommentList(page, blogId, (long) -1));
 		PageResult<PageComment> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
 		Map<String, Object> map = new HashMap<>();
-		map.put("count", count);
+		map.put("allComment", allComment);
+		map.put("closeComment", allComment - openComment);
 		map.put("comments", pageResult);
 		return Result.ok("获取成功", map);
 	}

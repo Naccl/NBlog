@@ -12,7 +12,8 @@ export default {
 		pageNum: 1,
 		pageSize: 5
 	},
-	commentCount: 0,
+	allComment: 0,
+	closeComment: 0,
 	commentTotalPage: 0,
 	comments: [],
 	parentCommentId: -1,

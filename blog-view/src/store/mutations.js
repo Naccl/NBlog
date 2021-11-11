@@ -24,7 +24,8 @@ export default {
 		state.introduction = introduction
 	},
 	[SAVE_COMMENT_RESULT](state, data) {
-		state.commentCount = data.count
+		state.allComment = data.allComment
+		state.closeComment = data.closeComment
 		state.commentTotalPage = data.comments.totalPage
 		state.comments = data.comments.list
 	},
