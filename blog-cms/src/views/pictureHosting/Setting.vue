@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<el-alert title="图床配置及用法请查看：https://github.com/Naccl/PictureHosting" type="warning" show-icon v-if="hintShow"></el-alert>
 		<el-row>
 			<el-col :span="8">
 				<el-input placeholder="请输入token进行初始化" v-model="token" :clearable="true" @keyup.native.enter="searchUser" style="min-width: 500px">
@@ -36,12 +37,20 @@
 				userInfo: {
 					login: '未配置'
 				},
+				hintShow: false
 			}
 		},
 		created() {
 			this.token = localStorage.getItem("githubToken")
 			const userInfo = localStorage.getItem('githubUserInfo')
 			this.userInfo = userInfo ? JSON.parse(userInfo) : {login: '未配置'}
+
+			const userJson = window.localStorage.getItem('user') || '{}'
+			const user = JSON.parse(userJson)
+			if (userJson !== '{}' && user.role !== 'ROLE_admin') {
+				//对于访客模式，增加个提示
+				this.hintShow = true
+			}
 		},
 		methods: {
 			// 获取用户信息
@@ -66,7 +75,7 @@
 </script>
 
 <style>
-	.el-row + .el-row {
+	.el-alert + .el-row, .el-row + .el-row {
 		margin-top: 20px;
 	}
 
