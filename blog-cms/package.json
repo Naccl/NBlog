@@ -13,7 +13,7 @@
     "core-js": "3.6.5",
     "echarts": "4.9.0",
     "element-ui": "2.13.2",
-    "lodash": "4.17.19",
+    "lodash": "4.17.21",
     "mavon-editor": "2.9.1",
     "moment": "2.27.0",
     "normalize.css": "7.0.0",
