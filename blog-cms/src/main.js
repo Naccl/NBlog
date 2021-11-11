@@ -18,10 +18,15 @@ import './util/dateTimeFormatUtils.js'
 //mavonEditor
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+//v-viewer
+import 'viewerjs/dist/viewer.css'
+import Viewer from 'v-viewer'
+// directive
+import './util/directive'
 
 Vue.use(mavonEditor)
 Vue.use(Element)
-
+Vue.use(Viewer)
 
 Vue.prototype.msgSuccess = function (msg) {
 	this.$message.success(msg)
