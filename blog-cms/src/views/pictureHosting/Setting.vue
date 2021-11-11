@@ -19,7 +19,7 @@
 
 		<el-row>
 			<el-col :span="8">
-				<el-button type="primary" size="medium" icon="el-icon-check" @click="saveUser(true)">保存配置</el-button>
+				<el-button type="primary" size="medium" icon="el-icon-check" :disabled="isSave" @click="saveUser(true)">保存配置</el-button>
 				<el-button type="info" size="medium" icon="el-icon-close" @click="saveUser(false)">清除配置</el-button>
 			</el-col>
 		</el-row>
@@ -37,13 +37,19 @@
 				userInfo: {
 					login: '未配置'
 				},
+				isSave: true,
 				hintShow: false
 			}
 		},
 		created() {
 			this.token = localStorage.getItem("githubToken")
 			const userInfo = localStorage.getItem('githubUserInfo')
-			this.userInfo = userInfo ? JSON.parse(userInfo) : {login: '未配置'}
+			if (this.token && userInfo) {
+				this.userInfo = JSON.parse(userInfo)
+				this.isSave = false
+			} else {
+				this.userInfo = {login: '未配置'}
+			}
 
 			const userJson = window.localStorage.getItem('user') || '{}'
 			const user = JSON.parse(userJson)
@@ -57,6 +63,7 @@
 			searchUser() {
 				getUserInfo(this.token).then(res => {
 					this.userInfo = res
+					this.isSave = false
 				})
 			},
 			saveUser(save) {
