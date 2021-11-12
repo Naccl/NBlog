@@ -324,7 +324,7 @@ public class CommentController {
 			if (QQInfoUtils.isQQNumber(commentNickname)) {
 				comment.setQq(commentNickname);
 				comment.setNickname(QQInfoUtils.getQQNickname(commentNickname));
-				comment.setAvatar(QQInfoUtils.getQQAvatarURL(commentNickname));
+				comment.setAvatar(QQInfoUtils.getQQAvatarURLByGithubUpload(commentNickname));
 			} else {
 				comment.setNickname(comment.getNickname().trim());
 				setCommentRandomAvatar(comment);
