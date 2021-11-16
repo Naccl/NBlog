@@ -1,6 +1,9 @@
 @charset "utf-8";
 
 .typo {
+    color: #24292F;
+    font-size: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
     width: 100%;
     text-align: justify;
     word-wrap: break-word;
@@ -189,7 +192,6 @@
 
 .typo strong, .typo b {
     font-weight: bold;
-    color: #000;
 }
 
 /* 可拖动文件添加拖动手势 */
@@ -225,6 +227,10 @@
     font-family: Palatino, Optima, Georgia, serif;
 }
 
+.typo pre {
+    font-size: 14px;
+}
+
 /* 保证块/段落之间的空白隔行 */
 .typo p, .typo pre, .typo ul, .typo ol, .typo dl, .typo form, .typo hr, .typo table, blockquote {
     margin-bottom: 1.2em
@@ -232,28 +238,30 @@
 
 /* 标题应该更贴紧内容，并与其他块区分，margin 值要相应做优化 */
 .typo h1, .typo h2, .typo h3, .typo h4, .typo h5, .typo h6 {
-    color: #000;
-    margin-top: 1.2em;
-    margin-bottom: 0.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    margin-top: 24px;
+    margin-bottom: 16px;
     font-weight: 600;
     line-height: 1.25;
 }
 
-.typo h1, .typo h2, .typo h3 {
-    padding-bottom: .3em;
-    border-bottom: 1px solid #eaecef;
-}
-
 .typo h1 {
     font-size: 2em;
+    font-weight: 600;
+    padding-bottom: .3em;
+    border-bottom: 1px solid hsla(210, 18%, 87%, 1);
 }
 
 .typo h2 {
     font-size: 1.5em;
+    padding-bottom: .3em;
+    border-bottom: 1px solid hsla(210, 18%, 87%, 1);
 }
 
 .typo h3 {
     font-size: 1.25em;
+    padding-bottom: .3em;
+    border-bottom: 1px solid hsla(210, 18%, 87%, 1);
 }
 
 .typo h4 {
@@ -266,7 +274,7 @@
 
 .typo h6 {
     font-size: .85em;
-    color: #6a737d;
+    color: #57606a;
 }
 
 /* 在文章中，应该还原 ul 和 ol 的样式 */
@@ -313,6 +321,5 @@
 }
 
 .typo em, legend, caption {
-    color: #000;
     font-weight: inherit;
 }
