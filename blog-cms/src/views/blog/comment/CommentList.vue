@@ -189,10 +189,27 @@
 				this.queryInfo.pageNum = newPage
 				this.getCommentList()
 			},
-			//切换评论公开状态
+			//切换评论公开状态（如果切换成隐藏，则该评论的所有子评论都修改为同样的隐藏状态）
 			commentPublishedChanged(row) {
-				updatePublished(row.id, row.published).then(res => {
-					this.msgSuccess(res.msg);
+				let replyCommentList = []
+				replyCommentList.push(row)
+				if (!row.published) {
+					//切换成隐藏状态
+					this.getAllReplyCommentList(row, replyCommentList)
+				}
+
+				replyCommentList.forEach(comment => {
+					updatePublished(comment.id, row.published).then(res => {
+						comment.published = row.published
+						this.msgSuccess(res.msg)
+					})
+				})
+			},
+			//递归展开所有子评论
+			getAllReplyCommentList(comment, replyCommentList) {
+				comment.replyComments.forEach(replyComment => {
+					replyCommentList.push(replyComment)
+					this.getAllReplyCommentList(replyComment, replyCommentList)
 				})
 			},
 			//切换评论邮件提醒状态
