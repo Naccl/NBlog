@@ -150,19 +150,15 @@
 		methods: {
 			getCommentList() {
 				getCommentListByQuery(this.queryInfo).then(res => {
-					if (res.code === 200) {
-						this.commentList = res.data.list
-						this.total = res.data.total
-					}
+					this.commentList = res.data.list
+					this.total = res.data.total
 				})
 			},
 			getBlogList() {
 				getBlogList().then(res => {
-					if (res.code === 200) {
-						this.blogList = res.data
-						this.blogList.unshift({id: -2, title: '友人帐'})
-						this.blogList.unshift({id: -1, title: '关于我'})
-					}
+					this.blogList = res.data
+					this.blogList.unshift({id: -2, title: '友人帐'})
+					this.blogList.unshift({id: -1, title: '关于我'})
 				})
 			},
 			search() {
@@ -196,17 +192,13 @@
 			//切换评论公开状态
 			commentPublishedChanged(row) {
 				updatePublished(row.id, row.published).then(res => {
-					if (res.code === 200) {
-						this.msgSuccess(res.msg);
-					}
+					this.msgSuccess(res.msg);
 				})
 			},
 			//切换评论邮件提醒状态
 			commentNoticeChanged(row) {
 				updateNotice(row.id, row.notice).then(res => {
-					if (res.code === 200) {
-						this.msgSuccess(res.msg);
-					}
+					this.msgSuccess(res.msg);
 				})
 			},
 			deleteCommentById(id) {
@@ -217,10 +209,8 @@
 					dangerouslyUseHTMLString: true
 				}).then(() => {
 					deleteCommentById(id).then(res => {
-						if (res.code === 200) {
-							this.msgSuccess(res.msg)
-							this.getCommentList()
-						}
+						this.msgSuccess(res.msg)
+						this.getCommentList()
 					})
 				}).catch(() => {
 					this.$message({
@@ -250,11 +240,9 @@
 							content: this.editForm.content,
 						}
 						editComment(form).then(res => {
-							if (res.code === 200) {
-								this.msgSuccess(res.msg)
-								this.editDialogVisible = false
-								this.getCommentList()
-							}
+							this.msgSuccess(res.msg)
+							this.editDialogVisible = false
+							this.getCommentList()
 						})
 					}
 				})

@@ -73,10 +73,8 @@
 					query.date = query.date[0] + ',' + query.date[1]
 				}
 				getLoginLogList(query).then(res => {
-					if (res.code === 200) {
-						this.logList = res.data.list
-						this.total = res.data.total
-					}
+					this.logList = res.data.list
+					this.total = res.data.total
 				})
 			},
 			handleSizeChange(newSize) {
@@ -89,10 +87,8 @@
 			},
 			deleteLogById(id) {
 				deleteLoginLogById(id).then(res => {
-					if (res.code === 200) {
-						this.msgSuccess(res.msg)
-						this.getData()
-					}
+					this.msgSuccess(res.msg)
+					this.getData()
 				})
 			},
 			search() {

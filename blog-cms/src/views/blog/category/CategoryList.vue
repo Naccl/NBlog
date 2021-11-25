@@ -92,10 +92,8 @@
 		methods: {
 			getData() {
 				getData(this.queryInfo).then(res => {
-					if (res.code === 200) {
-						this.categoryList = res.data.list
-						this.total = res.data.total
-					}
+					this.categoryList = res.data.list
+					this.total = res.data.total
 				})
 			},
 			//监听 pageSize 改变事件
@@ -119,11 +117,9 @@
 				this.$refs.addFormRef.validate(valid => {
 					if (valid) {
 						addCategory(this.addForm).then(res => {
-							if (res.code === 200) {
-								this.msgSuccess(res.msg)
-								this.addDialogVisible = false
-								this.getData()
-							}
+							this.msgSuccess(res.msg)
+							this.addDialogVisible = false
+							this.getData()
 						})
 					}
 				})
@@ -132,11 +128,9 @@
 				this.$refs.editFormRef.validate(valid => {
 					if (valid) {
 						editCategory(this.editForm).then(res => {
-							if (res.code === 200) {
-								this.msgSuccess(res.msg)
-								this.editDialogVisible = false
-								this.getData()
-							}
+							this.msgSuccess(res.msg)
+							this.editDialogVisible = false
+							this.getData()
 						})
 					}
 				})
@@ -149,10 +143,8 @@
 			},
 			deleteCategoryById(id) {
 				deleteCategoryById(id).then(res => {
-					if (res.code === 200) {
-						this.msgSuccess(res.msg)
-						this.getData()
-					}
+					this.msgSuccess(res.msg)
+					this.getData()
 				})
 			}
 		}

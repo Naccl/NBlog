@@ -46,26 +46,20 @@
 		methods: {
 			getMoment(id) {
 				getMomentById(id).then(res => {
-					if (res.code === 200) {
-						this.form = res.data
-					}
+					this.form = res.data
 				})
 			},
 			submit(published) {
 				this.form.published = published
 				if (this.$route.params.id) {
 					updateMoment(this.form).then(res => {
-						if (res.code === 200) {
-							this.msgSuccess(res.msg)
-							this.$router.push('/blog/moment/list')
-						}
+						this.msgSuccess(res.msg)
+						this.$router.push('/blog/moment/list')
 					})
 				} else {
 					saveMoment(this.form).then(res => {
-						if (res.code === 200) {
-							this.msgSuccess(res.msg)
-							this.$router.push('/blog/moment/list')
-						}
+						this.msgSuccess(res.msg)
+						this.$router.push('/blog/moment/list')
 					})
 				}
 			}

@@ -55,10 +55,8 @@
 		methods: {
 			getMomentList() {
 				getMomentListByQuery(this.queryInfo).then(res => {
-					if (res.code === 200) {
-						this.momentList = res.data.list
-						this.total = res.data.total
-					}
+					this.momentList = res.data.list
+					this.total = res.data.total
 				})
 			},
 			//监听 pageSize 改变事件
@@ -73,9 +71,7 @@
 			},
 			momentPublishedChanged(row) {
 				updatePublished(row.id, row.published).then(res => {
-					if (res.code === 200) {
-						this.msgSuccess(res.msg)
-					}
+					this.msgSuccess(res.msg)
 				})
 			},
 			goEditMomentPage(id) {
@@ -83,10 +79,8 @@
 			},
 			deleteMomentById(id) {
 				deleteMomentById(id).then(res => {
-					if (res.code === 200) {
-						this.msgSuccess(res.msg)
-						this.getMomentList()
-					}
+					this.msgSuccess(res.msg)
+					this.getMomentList()
 				})
 			}
 		}

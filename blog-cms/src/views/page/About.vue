@@ -55,12 +55,10 @@
 		methods: {
 			getData() {
 				getAbout().then(res => {
-					if (res.code === 200) {
-						this.form.title = res.data.title
-						this.form.musicId = res.data.musicId
-						this.form.content = res.data.content
-						this.form.commentEnabled = res.data.commentEnabled === 'true' ? true : false
-					}
+					this.form.title = res.data.title
+					this.form.musicId = res.data.musicId
+					this.form.content = res.data.content
+					this.form.commentEnabled = res.data.commentEnabled === 'true' ? true : false
 				})
 			},
 			submit() {
@@ -72,9 +70,7 @@
 							return this.msgError("歌曲ID有误")
 						}
 						updateAbout(this.form).then(res => {
-							if (res.code === 200) {
-								this.msgSuccess(res.msg)
-							}
+							this.msgSuccess(res.msg)
 						})
 					} else {
 						return this.msgError('请填写必要的表单')

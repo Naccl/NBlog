@@ -83,12 +83,10 @@
 					if (valid) {
 						this.loading = true
 						login(this.loginForm).then(res => {
-							if (res.code === 200) {
-								this.msgSuccess(res.msg);
-								window.localStorage.setItem('token', res.data.token)
-								window.localStorage.setItem('user', JSON.stringify(res.data.user))
-								this.$router.push('/')
-							}
+							this.msgSuccess(res.msg);
+							window.localStorage.setItem('token', res.data.token)
+							window.localStorage.setItem('user', JSON.stringify(res.data.user))
+							this.$router.push('/')
 						})
 						this.loading = false
 					}

@@ -368,30 +368,28 @@
 		methods: {
 			getData() {
 				getDashboard().then(res => {
-					if (res.code === 200) {
-						this.pv = res.data.pv
-						this.uv = res.data.uv
-						this.blogCount = res.data.blogCount
-						this.commentCount = res.data.commentCount
-						//渲染分类数据
-						this.categoryOption.legend.data = res.data.category.legend
-						this.categoryOption.series[0].data = res.data.category.series
-						this.initCategoryEcharts()
-						//渲染标签数据
-						this.tagOption.legend.data = res.data.tag.legend
-						this.tagOption.series[0].data = res.data.tag.series
-						this.initTagEcharts()
-						//渲染访客地图数据
-						let mapData = this.convertData(res.data.cityVisitor)
-						this.mapOption.series[1].data = mapData
-						this.mapOption.series[2].data = mapData.splice(0, 5)
-						this.initMapEcharts()
-						//渲染一周访问量数据
-						this.visitRecordOption.xAxis.data = res.data.visitRecord.date
-						this.visitRecordOption.series[0].data = res.data.visitRecord.pv
-						this.visitRecordOption.series[1].data = res.data.visitRecord.uv
-						this.initVisitRecordEcharts()
-					}
+					this.pv = res.data.pv
+					this.uv = res.data.uv
+					this.blogCount = res.data.blogCount
+					this.commentCount = res.data.commentCount
+					//渲染分类数据
+					this.categoryOption.legend.data = res.data.category.legend
+					this.categoryOption.series[0].data = res.data.category.series
+					this.initCategoryEcharts()
+					//渲染标签数据
+					this.tagOption.legend.data = res.data.tag.legend
+					this.tagOption.series[0].data = res.data.tag.series
+					this.initTagEcharts()
+					//渲染访客地图数据
+					let mapData = this.convertData(res.data.cityVisitor)
+					this.mapOption.series[1].data = mapData
+					this.mapOption.series[2].data = mapData.splice(0, 5)
+					this.initMapEcharts()
+					//渲染一周访问量数据
+					this.visitRecordOption.xAxis.data = res.data.visitRecord.date
+					this.visitRecordOption.series[0].data = res.data.visitRecord.pv
+					this.visitRecordOption.series[1].data = res.data.visitRecord.uv
+					this.initVisitRecordEcharts()
 				})
 			},
 			initCategoryEcharts() {

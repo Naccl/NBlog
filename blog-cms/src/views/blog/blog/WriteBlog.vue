@@ -155,19 +155,15 @@
 		methods: {
 			getData() {
 				getCategoryAndTag().then(res => {
-					if (res.code === 200) {
-						this.categoryList = res.data.categories
-						this.tagList = res.data.tags
-					}
+					this.categoryList = res.data.categories
+					this.tagList = res.data.tags
 				})
 			},
 			getBlog(id) {
 				getBlogById(id).then(res => {
-					if (res.code === 200) {
-						this.computeCategoryAndTag(res.data)
-						this.form = res.data
-						this.radio = this.form.published ? (this.form.password !== '' ? 3 : 1) : 2
-					}
+					this.computeCategoryAndTag(res.data)
+					this.form = res.data
+					this.radio = this.form.published ? (this.form.password !== '' ? 3 : 1) : 2
 				})
 			},
 			computeCategoryAndTag(blog) {
@@ -199,17 +195,13 @@
 							this.form.category = null
 							this.form.tags = null
 							updateBlog(this.form).then(res => {
-								if (res.code === 200) {
-									this.msgSuccess(res.msg)
-									this.$router.push('/blog/list')
-								}
+								this.msgSuccess(res.msg)
+								this.$router.push('/blog/list')
 							})
 						} else {
 							saveBlog(this.form).then(res => {
-								if (res.code === 200) {
-									this.msgSuccess(res.msg)
-									this.$router.push('/blog/list')
-								}
+								this.msgSuccess(res.msg)
+								this.$router.push('/blog/list')
 							})
 						}
 					} else {

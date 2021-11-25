@@ -80,10 +80,8 @@
 					query.date = query.date[0] + ',' + query.date[1]
 				}
 				getVisitorList(query).then(res => {
-					if (res.code === 200) {
-						this.visitorList = res.data.list
-						this.total = res.data.total
-					}
+					this.visitorList = res.data.list
+					this.total = res.data.total
 				})
 			},
 			handleSizeChange(newSize) {
@@ -96,10 +94,8 @@
 			},
 			deleteVisitorById(visitor) {
 				deleteVisitor(visitor.id, visitor.uuid).then(res => {
-					if (res.code === 200) {
-						this.msgSuccess(res.msg)
-						this.getData()
-					}
+					this.msgSuccess(res.msg)
+					this.getData()
 				})
 			},
 			showLog(uuid) {

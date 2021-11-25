@@ -135,10 +135,8 @@
 		methods: {
 			getData() {
 				getJobList(this.queryInfo).then(res => {
-					if (res.code === 200) {
-						this.jobList = res.data.list
-						this.total = res.data.total
-					}
+					this.jobList = res.data.list
+					this.total = res.data.total
 				})
 			},
 			handleSizeChange(newSize) {
@@ -158,9 +156,7 @@
 					dangerouslyUseHTMLString: true
 				}).then(() => {
 					updateJobStatus(row.jobId, row.status).then(res => {
-						if (res.code === 200) {
-							this.msgSuccess(res.msg)
-						}
+						this.msgSuccess(res.msg)
 					})
 				}).catch(() => {
 					row.status = !row.status
@@ -173,9 +169,7 @@
 					type: 'warning'
 				}).then(() => {
 					runJobOnce(jobId).then(res => {
-						if (res.code === 200) {
-							this.msgSuccess(res.msg)
-						}
+						this.msgSuccess(res.msg)
 					})
 				}).catch(() => {
 					this.$message({
@@ -186,10 +180,8 @@
 			},
 			deleteJobById(jobId) {
 				deleteJobById(jobId).then(res => {
-					if (res.code === 200) {
-						this.msgSuccess(res.msg)
-						this.getData()
-					}
+					this.msgSuccess(res.msg)
+					this.getData()
 				})
 			},
 			showEditDialog(row) {
@@ -207,11 +199,9 @@
 				this.$refs.addFormRef.validate(valid => {
 					if (valid) {
 						addJob(this.addForm).then(res => {
-							if (res.code === 200) {
-								this.msgSuccess(res.msg)
-								this.addDialogVisible = false
-								this.getData()
-							}
+							this.msgSuccess(res.msg)
+							this.addDialogVisible = false
+							this.getData()
 						})
 					}
 				})
@@ -220,11 +210,9 @@
 				this.$refs.editFormRef.validate(valid => {
 					if (valid) {
 						editJob(this.editForm).then(res => {
-							if (res.code === 200) {
-								this.msgSuccess(res.msg)
-								this.editDialogVisible = false
-								this.getData()
-							}
+							this.msgSuccess(res.msg)
+							this.editDialogVisible = false
+							this.getData()
 						})
 					}
 				})

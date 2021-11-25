@@ -93,12 +93,10 @@
 		methods: {
 			getData() {
 				getSiteSettingData().then(res => {
-					if (res.code === 200) {
-						this.typeMap = res.data
-						res.data.type2.forEach(item => {
-							item.value = JSON.parse(item.value)
-						})
-					}
+					this.typeMap = res.data
+					res.data.type2.forEach(item => {
+						item.value = JSON.parse(item.value)
+					})
 				})
 			},
 			addFavorite() {
@@ -173,11 +171,9 @@
 				updateArr.push(...result.type2)
 				updateArr.push(...result.type3)
 				update(updateArr, this.deleteIds).then(res => {
-					if (res.code === 200) {
-						this.deleteIds = []
-						this.getData()
-						this.msgSuccess(res.msg)
-					}
+					this.deleteIds = []
+					this.getData()
+					this.msgSuccess(res.msg)
 				})
 			}
 		}

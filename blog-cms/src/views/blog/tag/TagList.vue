@@ -132,10 +132,8 @@
 		methods: {
 			getData() {
 				getData(this.queryInfo).then(res => {
-					if (res.code === 200) {
-						this.tagList = res.data.list
-						this.total = res.data.total
-					}
+					this.tagList = res.data.list
+					this.total = res.data.total
 				})
 			},
 			//监听 pageSize 改变事件
@@ -160,11 +158,9 @@
 				this.$refs.addFormRef.validate(valid => {
 					if (valid) {
 						addTag(this.addForm).then(res => {
-							if (res.code === 200) {
-								this.msgSuccess(res.msg)
-								this.addDialogVisible = false
-								this.getData()
-							}
+							this.msgSuccess(res.msg)
+							this.addDialogVisible = false
+							this.getData()
 						})
 					}
 				})
@@ -173,11 +169,9 @@
 				this.$refs.editFormRef.validate(valid => {
 					if (valid) {
 						editTag(this.editForm).then(res => {
-							if (res.code === 200) {
-								this.msgSuccess(res.msg)
-								this.editDialogVisible = false
-								this.getData()
-							}
+							this.msgSuccess(res.msg)
+							this.editDialogVisible = false
+							this.getData()
 						})
 					}
 				})
@@ -188,10 +182,8 @@
 			},
 			deleteTagById(id) {
 				deleteTagById(id).then(res => {
-					if (res.code === 200) {
-						this.msgSuccess(res.msg)
-						this.getData()
-					}
+					this.msgSuccess(res.msg)
+					this.getData()
 				})
 			}
 		}

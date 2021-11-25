@@ -164,32 +164,24 @@
 		methods: {
 			getInfo() {
 				getFriendInfo().then(res => {
-					if (res.code === 200) {
-						this.infoForm = res.data
-					}
+					this.infoForm = res.data
 				})
 			},
 			updateContent() {
 				updateContent(this.infoForm.content).then(res => {
-					if (res.code === 200) {
-						this.msgSuccess(res.msg)
-						this.getInfo()
-					}
+					this.msgSuccess(res.msg)
+					this.getInfo()
 				})
 			},
 			commentEnabledChanged() {
 				updateCommentEnabled(this.infoForm.commentEnabled).then(res => {
-					if (res.code === 200) {
-						this.msgSuccess(res.msg)
-					}
+					this.msgSuccess(res.msg)
 				})
 			},
 			getFriendList() {
 				getFriendsByQuery(this.queryInfo).then(res => {
-					if (res.code === 200) {
-						this.friendList = res.data.list
-						this.total = res.data.total
-					}
+					this.friendList = res.data.list
+					this.total = res.data.total
 				})
 			},
 			handleSizeChange(newSize) {
@@ -202,17 +194,13 @@
 			},
 			friendPublishedChanged(row) {
 				updatePublished(row.id, row.published).then(res => {
-					if (res.code === 200) {
-						this.msgSuccess(res.msg)
-					}
+					this.msgSuccess(res.msg)
 				})
 			},
 			deleteFriendById(id) {
 				deleteFriendById(id).then(res => {
-					if (res.code === 200) {
-						this.getFriendList()
-						this.msgSuccess(res.msg)
-					}
+					this.getFriendList()
+					this.msgSuccess(res.msg)
 				})
 			},
 			showEditDialog(row) {
@@ -230,11 +218,9 @@
 				this.$refs.addFormRef.validate(valid => {
 					if (valid) {
 						saveFriend(this.addForm).then(res => {
-							if (res.code === 200) {
-								this.getFriendList()
-								this.msgSuccess(res.msg)
-								this.addDialogVisible = false
-							}
+							this.getFriendList()
+							this.msgSuccess(res.msg)
+							this.addDialogVisible = false
 						})
 					}
 				})
@@ -243,11 +229,9 @@
 				this.$refs.editFormRef.validate(valid => {
 					if (valid) {
 						updateFriend(this.editForm).then(res => {
-							if (res.code === 200) {
-								this.getFriendList()
-								this.msgSuccess(res.msg)
-								this.editDialogVisible = false
-							}
+							this.getFriendList()
+							this.msgSuccess(res.msg)
+							this.editDialogVisible = false
 						})
 					}
 				})

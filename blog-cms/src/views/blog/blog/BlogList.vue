@@ -132,11 +132,9 @@
 		methods: {
 			getData() {
 				getDataByQuery(this.queryInfo).then(res => {
-					if (res.code === 200) {
-						this.blogList = res.data.blogs.list
-						this.categoryList = res.data.categories
-						this.total = res.data.blogs.total
-					}
+					this.blogList = res.data.blogs.list
+					this.categoryList = res.data.categories
+					this.total = res.data.blogs.total
 				})
 			},
 			search() {
@@ -147,17 +145,13 @@
 			//切换博客置顶状态
 			blogTopChanged(row) {
 				updateTop(row.id, row.top).then(res => {
-					if (res.code === 200) {
-						this.msgSuccess(res.msg);
-					}
+					this.msgSuccess(res.msg);
 				})
 			},
 			//切换博客推荐状态
 			blogRecommendChanged(row) {
 				updateRecommend(row.id, row.recommend).then(res => {
-					if (res.code === 200) {
-						this.msgSuccess(res.msg);
-					}
+					this.msgSuccess(res.msg);
 				})
 			},
 			//编辑博客可见性
@@ -192,11 +186,9 @@
 					this.visForm.password = ''
 				}
 				updateVisibility(this.blogId, this.visForm).then(res => {
-					if (res.code === 200) {
-						this.msgSuccess(res.msg)
-						this.getData()
-						this.dialogVisible = false
-					}
+					this.msgSuccess(res.msg)
+					this.getData()
+					this.dialogVisible = false
 				})
 			},
 			//监听 pageSize 改变事件
@@ -220,10 +212,8 @@
 					dangerouslyUseHTMLString: true
 				}).then(() => {
 					deleteBlogById(id).then(res => {
-						if (res.code === 200) {
-							this.msgSuccess(res.msg)
-							this.getData()
-						}
+						this.msgSuccess(res.msg)
+						this.getData()
 					})
 				}).catch(() => {
 					this.$message({
