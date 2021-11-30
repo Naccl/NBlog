@@ -62,7 +62,8 @@
 				}
 			},
 			logout() {
-				window.localStorage.clear()
+				window.localStorage.removeItem('token')
+				window.localStorage.removeItem('user')
 				this.$router.push('/login')
 				this.msgSuccess('退出成功')
 			}
