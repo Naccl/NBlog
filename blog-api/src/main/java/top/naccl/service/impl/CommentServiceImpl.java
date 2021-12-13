@@ -10,6 +10,7 @@ import top.naccl.model.vo.PageComment;
 import top.naccl.service.CommentService;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -39,6 +40,11 @@ public class CommentServiceImpl implements CommentService {
 		for (PageComment c : comments) {
 			List<PageComment> tmpComments = new ArrayList<>();
 			getReplyComments(tmpComments, c.getReplyComments());
+			//对于两列评论来说，按时间顺序排列应该比树形更合理些
+			//排序一下
+			Comparator<PageComment> comparator = (c1, c2) -> c1.getCreateTime().compareTo(c2.getCreateTime());
+			tmpComments.sort(comparator);
+
 			c.setReplyComments(tmpComments);
 		}
 		return comments;
