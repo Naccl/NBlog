@@ -229,6 +229,8 @@
 
 .typo pre {
     font-size: 14px;
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
 }
 
 /* 保证块/段落之间的空白隔行 */

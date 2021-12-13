@@ -38,6 +38,19 @@ body::-webkit-scrollbar-track-piece {
     background-color: transparent;
 }
 
+#app ::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.copy-to-clipboard-button {
+    background: inherit !important;
+    box-shadow: none !important;
+}
+
+.copy-to-clipboard-button span {
+    background: rgb(239 239 239 / 31%) !important;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
