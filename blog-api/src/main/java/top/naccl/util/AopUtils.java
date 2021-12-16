@@ -6,8 +6,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @Description: AOP工具类
@@ -15,6 +17,12 @@ import java.util.Map;
  * @Date: 2020-12-02
  */
 public class AopUtils {
+	private static Set<String> ignoreParams = new HashSet<String>() {
+		{
+			add("jwt");
+		}
+	};
+
 	/**
 	 * 获取请求参数
 	 *
@@ -26,7 +34,7 @@ public class AopUtils {
 		String[] parameterNames = ((MethodSignature) joinPoint.getSignature()).getParameterNames();
 		Object[] args = joinPoint.getArgs();
 		for (int i = 0; i < args.length; i++) {
-			if (!isFilterObject(args[i])) {
+			if (!isIgnoreParams(parameterNames[i]) && !isFilterObject(args[i])) {
 				map.put(parameterNames[i], args[i]);
 			}
 		}
@@ -41,5 +49,16 @@ public class AopUtils {
 	 */
 	private static boolean isFilterObject(final Object o) {
 		return o instanceof HttpServletRequest || o instanceof HttpServletResponse || o instanceof MultipartFile;
+	}
+
+	/**
+	 * 判断是否忽略参数
+	 *
+	 * @param params
+	 * @return
+	 */
+	private static boolean isIgnoreParams(String params) {
+		System.out.println(ignoreParams.contains(params));
+		return ignoreParams.contains(params);
 	}
 }
