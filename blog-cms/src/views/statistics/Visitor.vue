@@ -12,10 +12,10 @@
 
 		<el-table :data="visitorList">
 			<el-table-column label="序号" type="index" width="50"></el-table-column>
-			<el-table-column label="访客标识" prop="uuid" width="320"></el-table-column>
-			<el-table-column label="ip" prop="ip"></el-table-column>
+			<el-table-column label="访客标识" prop="uuid" show-overflow-tooltip></el-table-column>
+			<el-table-column label="ip" prop="ip" show-overflow-tooltip></el-table-column>
 			<el-table-column label="ip来源" prop="ipSource" show-overflow-tooltip></el-table-column>
-			<el-table-column label="操作系统" prop="os"></el-table-column>
+			<el-table-column label="操作系统" prop="os" show-overflow-tooltip></el-table-column>
 			<el-table-column label="浏览器" prop="browser" show-overflow-tooltip></el-table-column>
 			<el-table-column label="首次访问" width="170">
 				<template v-slot="scope">{{ scope.row.createTime | dateFormat }}</template>

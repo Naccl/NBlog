@@ -14,9 +14,8 @@
 			<el-table-column label="序号" type="index" width="50"></el-table-column>
 			<el-table-column label="日志id" prop="logId" width="80"></el-table-column>
 			<el-table-column label="任务id" prop="jobId" width="80"></el-table-column>
-			<el-table-column label="bean" prop="beanName"></el-table-column>
-			<el-table-column label="方法名" prop="methodName"></el-table-column>
-			<el-table-column label="参数" prop="params"></el-table-column>
+			<el-table-column label="bean" prop="beanName" show-overflow-tooltip></el-table-column>
+			<el-table-column label="方法名" prop="methodName" show-overflow-tooltip></el-table-column>
 			<el-table-column label="结果" width="80">
 				<template v-slot="scope">
 					<el-tag v-if="scope.row.status" size="small" effect="dark">成功</el-tag>

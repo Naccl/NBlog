@@ -22,6 +22,9 @@
 						<el-form-item label="访客标识">
 							<span>{{ props.row.uuid }}</span>
 						</el-form-item>
+						<el-form-item label="请求方式">
+							<span>{{ props.row.method }}</span>
+						</el-form-item>
 						<el-form-item label="请求接口">
 							<span>{{ props.row.uri }}</span>
 						</el-form-item>
@@ -40,12 +43,11 @@
 					<el-link type="primary" href="" :underline="false" @click.prevent="showThis(scope.row.uuid)">{{ scope.row.uuid }}</el-link>
 				</template>
 			</el-table-column>
-			<el-table-column label="请求方式" prop="method" width="80"></el-table-column>
 			<el-table-column label="访问行为" prop="behavior"></el-table-column>
 			<el-table-column label="访问内容" prop="content" show-overflow-tooltip></el-table-column>
 			<el-table-column label="ip" prop="ip"></el-table-column>
 			<el-table-column label="ip来源" prop="ipSource" show-overflow-tooltip></el-table-column>
-			<el-table-column label="操作系统" prop="os"></el-table-column>
+			<el-table-column label="操作系统" prop="os" show-overflow-tooltip></el-table-column>
 			<el-table-column label="浏览器" prop="browser" show-overflow-tooltip></el-table-column>
 			<el-table-column label="访问时间" width="170">
 				<template v-slot="scope">{{ scope.row.createTime | dateFormat }}</template>
