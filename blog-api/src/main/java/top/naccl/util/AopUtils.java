@@ -58,7 +58,6 @@ public class AopUtils {
 	 * @return
 	 */
 	private static boolean isIgnoreParams(String params) {
-		System.out.println(ignoreParams.contains(params));
 		return ignoreParams.contains(params);
 	}
 }
