@@ -55,10 +55,9 @@
 
 /* 块/段落引用 */
 .typo blockquote {
-    position: relative;
-    border-left: 1px solid #1abc9c;
+    margin: 1em 0;
     padding-left: 1em;
-    margin: 0em 1em;
+    border-left: 4px solid #42b983;
 }
 
 @media only screen and ( max-width: 640px ) {
