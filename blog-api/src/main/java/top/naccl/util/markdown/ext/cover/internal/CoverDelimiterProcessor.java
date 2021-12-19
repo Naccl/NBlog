@@ -1,6 +1,8 @@
 package top.naccl.util.markdown.ext.cover.internal;
 
 import org.commonmark.node.Node;
+import org.commonmark.node.Nodes;
+import org.commonmark.node.SourceSpans;
 import org.commonmark.node.Text;
 import org.commonmark.parser.delimiter.DelimiterProcessor;
 import org.commonmark.parser.delimiter.DelimiterRun;
@@ -27,28 +29,29 @@ public class CoverDelimiterProcessor implements DelimiterProcessor {
         return 2;
     }
 
-    @Override
-    public int getDelimiterUse(DelimiterRun opener, DelimiterRun closer) {
-        if (opener.length() >= 2 && closer.length() >= 2) {
-            // Use exactly two delimiters even if we have more, and don't care about internal openers/closers.
-            return 2;
-        } else {
-            return 0;
-        }
-    }
+	@Override
+	public int process(DelimiterRun openingRun, DelimiterRun closingRun) {
+		if (openingRun.length() >= 2 && closingRun.length() >= 2) {
+			// Use exactly two delimiters even if we have more, and don't care about internal openers/closers.
+			Text opener = openingRun.getOpener();
 
-    @Override
-    public void process(Text opener, Text closer, int delimiterCount) {
-        // Wrap nodes between delimiters in cover.
-        Node cover = new Cover();
+			// Wrap nodes between delimiters in cover.
+			Node cover = new Cover();
 
-        Node tmp = opener.getNext();
-        while (tmp != null && tmp != closer) {
-            Node next = tmp.getNext();
-            cover.appendChild(tmp);
-            tmp = next;
-        }
+			SourceSpans sourceSpans = new SourceSpans();
+			sourceSpans.addAllFrom(openingRun.getOpeners(2));
 
-        opener.insertAfter(cover);
-    }
+			for (Node node : Nodes.between(opener, closingRun.getCloser())) {
+				cover.appendChild(node);
+				sourceSpans.addAll(node.getSourceSpans());
+			}
+
+			sourceSpans.addAllFrom(closingRun.getClosers(2));
+			cover.setSourceSpans(sourceSpans.getSourceSpans());
+
+			opener.insertAfter(cover);
+			return 2;
+		}
+		return 0;
+	}
 }
