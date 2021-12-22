@@ -8,7 +8,7 @@
 				<div class="content" align="center">
 					<div class="header">{{ introduction.name }}</div>
 					<!--彩色滚动字体-->
-					<div id="rollText" class="m-margin-top" style="font-size: 15px;" v-if="introduction.rollText.length!=0"></div>
+					<div id="rollText" class="m-margin-top" v-if="introduction.rollText.length!=0"></div>
 				</div>
 				<div class="extra content" align="center">
 					<a :href="introduction.github" v-if="introduction.github" target="_blank" class="ui circular icon button">
@@ -131,4 +131,11 @@
 	.el-collapse-item .el-collapse-item__content {
 		padding-bottom: 10px;
 	}
+
+  #rollText {
+    font-size: 15px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 </style>
