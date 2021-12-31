@@ -21,6 +21,11 @@
     text-align: justify;
 }
 
+/*重置 aplayer 中歌词的样式*/
+.typo .aplayer .aplayer-lrc p {
+    text-align: unset;
+}
+
 /* 重设 HTML5 标签, IE 需要在 js 中 createElement(TAG) */
 .typo article, aside, details, figcaption, figure, footer, header, menu, nav, section {
     display: block;
@@ -341,4 +346,41 @@
 
 .typo em, legend, caption {
     font-weight: inherit;
+}
+
+/*自定义图片的大小，使用方法: ![pic.jpg](https://yourimgurl.com/pic.jpg#w50) */
+.typo img[src*="#w90"] {
+    width: 90%;
+}
+
+.typo img[src*="#w80"] {
+    width: 80%;
+}
+
+.typo img[src*="#w70"] {
+    width: 70%;
+}
+
+.typo img[src*="#w60"] {
+    width: 60%;
+}
+
+.typo img[src*="#w50"] {
+    width: 50%;
+}
+
+.typo img[src*="#w40"] {
+    width: 40%;
+}
+
+.typo img[src*="#w30"] {
+    width: 30%;
+}
+
+.typo img[src*="#w20"] {
+    width: 20%;
+}
+
+.typo img[src*="#w10"] {
+    width: 10%;
 }
