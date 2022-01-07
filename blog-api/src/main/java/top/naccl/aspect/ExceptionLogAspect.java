@@ -68,18 +68,15 @@ public class ExceptionLogAspect {
 	}
 
 	private String getDescriptionFromAnnotations(JoinPoint joinPoint) {
-		String description = "";
 		Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
 		OperationLogger operationLogger = method.getAnnotation(OperationLogger.class);
 		if (operationLogger != null) {
-			description = operationLogger.value();
-			return description;
+			return operationLogger.value();
 		}
 		VisitLogger visitLogger = method.getAnnotation(VisitLogger.class);
 		if (visitLogger != null) {
-			description = visitLogger.behavior();
-			return description;
+			return visitLogger.value().getBehavior();
 		}
-		return description;
+		return "";
 	}
 }

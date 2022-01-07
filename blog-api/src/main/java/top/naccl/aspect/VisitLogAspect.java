@@ -12,6 +12,8 @@ import top.naccl.annotation.VisitLogger;
 import top.naccl.config.RedisKeyConfig;
 import top.naccl.entity.VisitLog;
 import top.naccl.entity.Visitor;
+import top.naccl.enums.VisitBehavior;
+import top.naccl.model.dto.VisitLogRemark;
 import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.Result;
 import top.naccl.service.RedisService;
@@ -25,7 +27,6 @@ import top.naccl.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -63,7 +64,7 @@ public class VisitLogAspect {
 	@Around("logPointcut(visitLogger)")
 	public Object logAround(ProceedingJoinPoint joinPoint, VisitLogger visitLogger) throws Throwable {
 		currentTime.set(System.currentTimeMillis());
-		Object result = joinPoint.proceed();
+		Result result = (Result) joinPoint.proceed();
 		int times = (int) (System.currentTimeMillis() - currentTime.get());
 		currentTime.remove();
 		//获取请求对象
@@ -151,17 +152,16 @@ public class VisitLogAspect {
 	 * @param times
 	 * @return
 	 */
-	private VisitLog handleLog(ProceedingJoinPoint joinPoint, VisitLogger visitLogger, HttpServletRequest request, Object result,
+	private VisitLog handleLog(ProceedingJoinPoint joinPoint, VisitLogger visitLogger, HttpServletRequest request, Result result,
 	                           int times, String identification) {
 		String uri = request.getRequestURI();
 		String method = request.getMethod();
-		String behavior = visitLogger.behavior();
-		String content = visitLogger.content();
 		String ip = IpAddressUtils.getIpAddress(request);
 		String userAgent = request.getHeader("User-Agent");
 		Map<String, Object> requestParams = AopUtils.getRequestParams(joinPoint);
-		Map<String, String> map = judgeBehavior(behavior, content, requestParams, result);
-		VisitLog log = new VisitLog(identification, uri, method, behavior, map.get("content"), map.get("remark"), ip, times, userAgent);
+		VisitLogRemark visitLogRemark = judgeBehavior(visitLogger.value(), requestParams, result);
+		VisitLog log = new VisitLog(identification, uri, method, visitLogger.value().getBehavior(),
+				visitLogRemark.getContent(), visitLogRemark.getRemark(), ip, times, userAgent);
 		log.setParam(StringUtils.substring(JacksonUtils.writeValueAsString(requestParams), 0, 2000));
 		return log;
 	}
@@ -170,49 +170,49 @@ public class VisitLogAspect {
 	 * 根据访问行为，设置对应的访问内容或备注
 	 *
 	 * @param behavior
-	 * @param content
 	 * @param requestParams
 	 * @param result
 	 * @return
 	 */
-	private Map<String, String> judgeBehavior(String behavior, String content, Map<String, Object> requestParams, Object result) {
-		Map<String, String> map = new HashMap<>();
+	private VisitLogRemark judgeBehavior(VisitBehavior behavior, Map<String, Object> requestParams, Result result) {
 		String remark = "";
-		if (behavior.equals("访问页面") && (content.equals("首页") || content.equals("动态"))) {
-			int pageNum = (int) requestParams.get("pageNum");
-			remark = "第" + pageNum + "页";
-		} else if (behavior.equals("查看博客")) {
-			Result res = (Result) result;
-			if (res.getCode() == 200) {
-				BlogDetail blog = (BlogDetail) res.getData();
-				String title = blog.getTitle();
-				content = title;
-				remark = "文章标题：" + title;
-			}
-		} else if (behavior.equals("搜索博客")) {
-			Result res = (Result) result;
-			if (res.getCode() == 200) {
-				String query = (String) requestParams.get("query");
-				content = query;
-				remark = "搜索内容：" + query;
-			}
-		} else if (behavior.equals("查看分类")) {
-			String categoryName = (String) requestParams.get("categoryName");
-			int pageNum = (int) requestParams.get("pageNum");
-			content = categoryName;
-			remark = "分类名称：" + categoryName + "，第" + pageNum + "页";
-		} else if (behavior.equals("查看标签")) {
-			String tagName = (String) requestParams.get("tagName");
-			int pageNum = (int) requestParams.get("pageNum");
-			content = tagName;
-			remark = "标签名称：" + tagName + "，第" + pageNum + "页";
-		} else if (behavior.equals("点击友链")) {
-			String nickname = (String) requestParams.get("nickname");
-			content = nickname;
-			remark = "友链名称：" + nickname;
+		String content = behavior.getContent();
+		switch (behavior) {
+			case INDEX:
+			case MOMENT:
+				remark = "第" + requestParams.get("pageNum") + "页";
+				break;
+			case BLOG:
+				if (result.getCode() == 200) {
+					BlogDetail blog = (BlogDetail) result.getData();
+					String title = blog.getTitle();
+					content = title;
+					remark = "文章标题：" + title;
+				}
+				break;
+			case SEARCH:
+				if (result.getCode() == 200) {
+					String query = (String) requestParams.get("query");
+					content = query;
+					remark = "搜索内容：" + query;
+				}
+				break;
+			case CATEGORY:
+				String categoryName = (String) requestParams.get("categoryName");
+				content = categoryName;
+				remark = "分类名称：" + categoryName + "，第" + requestParams.get("pageNum") + "页";
+				break;
+			case TAG:
+				String tagName = (String) requestParams.get("tagName");
+				content = tagName;
+				remark = "标签名称：" + tagName + "，第" + requestParams.get("pageNum") + "页";
+				break;
+			case CLICK_FRIEND:
+				String nickname = (String) requestParams.get("nickname");
+				content = nickname;
+				remark = "友链名称：" + nickname;
+				break;
 		}
-		map.put("remark", remark);
-		map.put("content", content);
-		return map;
+		return new VisitLogRemark(content, remark);
 	}
 }

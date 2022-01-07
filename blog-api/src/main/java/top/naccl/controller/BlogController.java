@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.naccl.annotation.VisitLogger;
 import top.naccl.entity.User;
+import top.naccl.enums.VisitBehavior;
 import top.naccl.model.dto.BlogPassword;
 import top.naccl.model.vo.BlogDetail;
 import top.naccl.model.vo.BlogInfo;
@@ -40,7 +41,7 @@ public class BlogController {
 	 * @param pageNum 页码
 	 * @return
 	 */
-	@VisitLogger(behavior = "访问页面", content = "首页")
+	@VisitLogger(VisitBehavior.INDEX)
 	@GetMapping("/blogs")
 	public Result blogs(@RequestParam(defaultValue = "1") Integer pageNum) {
 		PageResult<BlogInfo> pageResult = blogService.getBlogInfoListByIsPublished(pageNum);
@@ -54,7 +55,7 @@ public class BlogController {
 	 * @param jwt 密码保护文章的访问Token
 	 * @return
 	 */
-	@VisitLogger(behavior = "查看博客")
+	@VisitLogger(VisitBehavior.BLOG)
 	@GetMapping("/blog")
 	public Result getBlog(@RequestParam Long id,
 	                      @RequestHeader(value = "Authorization", defaultValue = "") String jwt) {
@@ -96,7 +97,7 @@ public class BlogController {
 	 * @param blogPassword 博客id、密码
 	 * @return
 	 */
-	@VisitLogger(behavior = "校验博客密码")
+	@VisitLogger(VisitBehavior.CHECK_PASSWORD)
 	@PostMapping("/checkBlogPassword")
 	public Result checkBlogPassword(@RequestBody BlogPassword blogPassword) {
 		String password = blogService.getBlogPassword(blogPassword.getBlogId());
@@ -115,7 +116,7 @@ public class BlogController {
 	 * @param query 关键字字符串
 	 * @return
 	 */
-	@VisitLogger(behavior = "搜索博客")
+	@VisitLogger(VisitBehavior.SEARCH)
 	@GetMapping("/searchBlog")
 	public Result searchBlog(@RequestParam String query) {
 		//校验关键字字符串合法性

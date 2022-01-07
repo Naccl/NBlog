@@ -12,6 +12,7 @@ import top.naccl.annotation.AccessLimit;
 import top.naccl.annotation.VisitLogger;
 import top.naccl.entity.Moment;
 import top.naccl.entity.User;
+import top.naccl.enums.VisitBehavior;
 import top.naccl.model.vo.PageResult;
 import top.naccl.model.vo.Result;
 import top.naccl.service.MomentService;
@@ -37,7 +38,7 @@ public class MomentController {
 	 * @param jwt     博主访问Token
 	 * @return
 	 */
-	@VisitLogger(behavior = "访问页面", content = "动态")
+	@VisitLogger(VisitBehavior.MOMENT)
 	@GetMapping("/moments")
 	public Result moments(@RequestParam(defaultValue = "1") Integer pageNum,
 	                      @RequestHeader(value = "Authorization", defaultValue = "") String jwt) {
@@ -69,7 +70,7 @@ public class MomentController {
 	 * @return
 	 */
 	@AccessLimit(seconds = 86400, maxCount = 1, msg = "不可以重复点赞哦")
-	@VisitLogger(behavior = "点赞动态")
+	@VisitLogger(VisitBehavior.LIKE_MOMENT)
 	@PostMapping("/moment/like/{id}")
 	public Result like(@PathVariable Long id) {
 		momentService.addLikeByMomentId(id);
