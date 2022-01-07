@@ -73,6 +73,14 @@ function deploy_springboot()
   mvn clean package -Dmaven.test.skip=true
   echo_msg 0 "scp target jar to server"
   scp target/blog-api-0.0.1.jar ${server}:${server_path}
+  read -p "restart $module_name right now? [y/n]: " restart
+  case $restart in
+    y)
+      ssh $server "cd ${server_path} && sh run.sh"
+      ;;
+    *)
+      ;;
+  esac
 }
 
 function deploy_vue()
