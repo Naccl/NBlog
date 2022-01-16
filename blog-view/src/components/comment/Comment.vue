@@ -101,6 +101,10 @@
 		top: -48px;
 	}
 
+	.comments .comment:first-child {
+		margin-top: 0 !important;
+	}
+
 	.comment .comments .comment {
 		box-shadow: 0 0 5px rgb(0, 0, 0, 0.1);
 		border-radius: 5px;
