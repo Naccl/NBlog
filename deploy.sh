@@ -112,4 +112,4 @@ function git_merge()
 }
 
 menu
-read -n 1 -p "Press any key to end..."
+read -n 1 -p "Press any key to exit..."
