@@ -3,7 +3,7 @@ package top.naccl.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import top.naccl.config.RedisKeyConfig;
+import top.naccl.constant.RedisKeyConstants;
 import top.naccl.entity.SiteSetting;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.SiteSettingMapper;
@@ -61,7 +61,7 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 
 	@Override
 	public Map<String, Object> getSiteInfo() {
-		String redisKey = RedisKeyConfig.SITE_INFO_MAP;
+		String redisKey = RedisKeyConstants.SITE_INFO_MAP;
 		Map<String, Object> siteInfoMapFromRedis = redisService.getMapByValue(redisKey);
 		if (siteInfoMapFromRedis != null) {
 			return siteInfoMapFromRedis;
@@ -165,6 +165,6 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 	 * 删除站点信息缓存
 	 */
 	private void deleteSiteInfoRedisCache() {
-		redisService.deleteCacheByKey(RedisKeyConfig.SITE_INFO_MAP);
+		redisService.deleteCacheByKey(RedisKeyConstants.SITE_INFO_MAP);
 	}
 }

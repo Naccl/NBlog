@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import top.naccl.config.RedisKeyConfig;
+import top.naccl.constant.RedisKeyConstants;
 import top.naccl.entity.CityVisitor;
 import top.naccl.model.vo.Result;
 import top.naccl.service.DashboardService;
@@ -30,7 +30,7 @@ public class DashboardAdminController {
 	@GetMapping("/dashboard")
 	public Result dashboard() {
 		int todayPV = dashboardService.countVisitLogByToday();
-		int todayUV = redisService.countBySet(RedisKeyConfig.IDENTIFICATION_SET);
+		int todayUV = redisService.countBySet(RedisKeyConstants.IDENTIFICATION_SET);
 		int blogCount = dashboardService.getBlogCount();
 		int commentCount = dashboardService.getCommentCount();
 		Map<String, List> categoryBlogCountMap = dashboardService.getCategoryBlogCountMap();

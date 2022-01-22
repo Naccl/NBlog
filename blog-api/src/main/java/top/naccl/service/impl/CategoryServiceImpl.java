@@ -3,7 +3,7 @@ package top.naccl.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import top.naccl.config.RedisKeyConfig;
+import top.naccl.constant.RedisKeyConstants;
 import top.naccl.entity.Category;
 import top.naccl.exception.NotFoundException;
 import top.naccl.exception.PersistenceException;
@@ -35,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public List<Category> getCategoryNameList() {
-		String redisKey = RedisKeyConfig.CATEGORY_NAME_LIST;
+		String redisKey = RedisKeyConstants.CATEGORY_NAME_LIST;
 		List<Category> categoryListFromRedis = redisService.getListByValue(redisKey);
 		if (categoryListFromRedis != null) {
 			return categoryListFromRedis;
@@ -51,7 +51,7 @@ public class CategoryServiceImpl implements CategoryService {
 		if (categoryMapper.saveCategory(category) != 1) {
 			throw new PersistenceException("分类添加失败");
 		}
-		redisService.deleteCacheByKey(RedisKeyConfig.CATEGORY_NAME_LIST);
+		redisService.deleteCacheByKey(RedisKeyConstants.CATEGORY_NAME_LIST);
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class CategoryServiceImpl implements CategoryService {
 		if (categoryMapper.deleteCategoryById(id) != 1) {
 			throw new PersistenceException("删除分类失败");
 		}
-		redisService.deleteCacheByKey(RedisKeyConfig.CATEGORY_NAME_LIST);
+		redisService.deleteCacheByKey(RedisKeyConstants.CATEGORY_NAME_LIST);
 	}
 
 	@Transactional
@@ -83,8 +83,8 @@ public class CategoryServiceImpl implements CategoryService {
 		if (categoryMapper.updateCategory(category) != 1) {
 			throw new PersistenceException("分类更新失败");
 		}
-		redisService.deleteCacheByKey(RedisKeyConfig.CATEGORY_NAME_LIST);
+		redisService.deleteCacheByKey(RedisKeyConstants.CATEGORY_NAME_LIST);
 		//修改了分类名，可能有首页文章关联了分类，也要更新首页缓存
-		redisService.deleteCacheByKey(RedisKeyConfig.HOME_BLOG_INFO_LIST);
+		redisService.deleteCacheByKey(RedisKeyConstants.HOME_BLOG_INFO_LIST);
 	}
 }
