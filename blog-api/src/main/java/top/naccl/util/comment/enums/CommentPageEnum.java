@@ -1,4 +1,4 @@
-package top.naccl.util.comment;
+package top.naccl.util.comment.enums;
 
 /**
  * 评论页面枚举类

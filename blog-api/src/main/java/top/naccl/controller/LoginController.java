@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import top.naccl.constant.JwtConstants;
 import top.naccl.entity.User;
 import top.naccl.model.dto.LoginInfo;
 import top.naccl.model.vo.Result;
@@ -36,7 +37,7 @@ public class LoginController {
 			return Result.create(403, "无权限");
 		}
 		user.setPassword(null);
-		String jwt = JwtUtils.generateToken("admin:" + user.getUsername());
+		String jwt = JwtUtils.generateToken(JwtConstants.ADMIN_PREFIX + user.getUsername());
 		Map<String, Object> map = new HashMap<>();
 		map.put("user", user);
 		map.put("token", jwt);

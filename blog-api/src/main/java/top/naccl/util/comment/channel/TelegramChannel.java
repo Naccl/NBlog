@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import top.naccl.config.properties.BlogProperties;
 import top.naccl.model.dto.Comment;
 import top.naccl.util.TelegramUtils;
-import top.naccl.util.comment.CommentPageEnum;
+import top.naccl.util.comment.enums.CommentPageEnum;
 import top.naccl.util.comment.CommentUtils;
 
 import java.text.SimpleDateFormat;

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.naccl.annotation.AccessLimit;
 import top.naccl.annotation.VisitLogger;
+import top.naccl.constant.JwtConstants;
 import top.naccl.entity.Moment;
 import top.naccl.entity.User;
 import top.naccl.enums.VisitBehavior;
@@ -46,8 +47,9 @@ public class MomentController {
 		if (JwtUtils.judgeTokenIsExist(jwt)) {
 			try {
 				String subject = JwtUtils.getTokenBody(jwt).getSubject();
-				if (subject.startsWith("admin:")) {//博主身份Token
-					String username = subject.replace("admin:", "");
+				if (subject.startsWith(JwtConstants.ADMIN_PREFIX)) {
+					//博主身份Token
+					String username = subject.replace(JwtConstants.ADMIN_PREFIX, "");
 					User admin = (User) userService.loadUserByUsername(username);
 					if (admin != null) {
 						adminIdentity = true;
