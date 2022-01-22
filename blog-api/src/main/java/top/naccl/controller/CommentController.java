@@ -3,8 +3,6 @@ package top.naccl.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,9 +24,9 @@ import top.naccl.service.impl.UserServiceImpl;
 import top.naccl.util.HashUtils;
 import top.naccl.util.IpAddressUtils;
 import top.naccl.util.JwtUtils;
-import top.naccl.util.MailUtils;
 import top.naccl.util.QQInfoUtils;
 import top.naccl.util.StringUtils;
+import top.naccl.util.comment.CommentUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -53,27 +51,7 @@ public class CommentController {
 	@Autowired
 	FriendService friendService;
 	@Autowired
-	MailProperties mailProperties;
-	@Autowired
-	MailUtils mailUtils;
-	private String blogName;
-	private String cmsUrl;
-	private String websiteUrl;
-
-	@Value("${custom.blog.name}")
-	public void setBlogName(String blogName) {
-		this.blogName = blogName;
-	}
-
-	@Value("${custom.url.cms}")
-	public void setCmsUrl(String cmsUrl) {
-		this.cmsUrl = cmsUrl;
-	}
-
-	@Value("${custom.url.website}")
-	public void setWebsiteUrl(String websiteUrl) {
-		this.websiteUrl = websiteUrl;
-	}
+	CommentUtils commentUtils;
 
 	/**
 	 * 根据页面分页查询评论列表
@@ -172,7 +150,7 @@ public class CommentController {
 	}
 
 	/**
-	 * 提交评论 又长又臭 能用就不改了:) https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/1stLaw4Coding.jpg
+	 * 提交评论 又长又臭 能用就不改了:)
 	 * 单个ip，30秒内允许提交1次评论
 	 *
 	 * @param comment 评论DTO
@@ -289,7 +267,7 @@ public class CommentController {
 			}
 		}
 		commentService.saveComment(comment);
-		judgeSendMail(comment, isVisitorComment, parentComment);
+		commentUtils.judgeSendNotify(comment, isVisitorComment, parentComment);
 		return Result.ok("评论成功");
 	}
 
@@ -342,7 +320,8 @@ public class CommentController {
 		}
 		comment.setAdminComment(false);
 		comment.setCreateTime(new Date());
-		comment.setPublished(true);//默认不需要审核
+		//默认不需要审核
+		comment.setPublished(true);
 		comment.setWebsite(website);
 		comment.setEmail(comment.getEmail().trim());
 		comment.setIp(IpAddressUtils.getIpAddress(request));
@@ -355,108 +334,11 @@ public class CommentController {
 	 */
 	private void setCommentRandomAvatar(Comment comment) {
 		//设置随机头像
-		long nicknameHash = HashUtils.getMurmurHash32(comment.getNickname());//根据评论昵称取Hash，保证每一个昵称对应一个头像
-		long num = nicknameHash % 6 + 1;//计算对应的头像
+		//根据评论昵称取Hash，保证每一个昵称对应一个头像
+		long nicknameHash = HashUtils.getMurmurHash32(comment.getNickname());
+		//计算对应的头像
+		long num = nicknameHash % 6 + 1;
 		String avatar = "/img/comment-avatar/" + num + ".jpg";
 		comment.setAvatar(avatar);
-	}
-
-	/**
-	 * 判断是否发送邮件
-	 * 6种情况：
-	 * 1.我以父评论提交：不用邮件提醒
-	 * 2.我回复我自己：不用邮件提醒
-	 * 3.我回复访客的评论：只提醒该访客
-	 * 4.访客以父评论提交：只提醒我自己
-	 * 5.访客回复我的评论：只提醒我自己
-	 * 6.访客回复访客的评论(即使是他自己先前的评论)：提醒我自己和他回复的评论
-	 *
-	 * @param comment          当前评论
-	 * @param isVisitorComment 是否访客评论
-	 * @param parentComment    父评论
-	 */
-	private void judgeSendMail(Comment comment, boolean isVisitorComment, top.naccl.entity.Comment parentComment) {
-		if (parentComment != null && !parentComment.getAdminComment() && parentComment.getNotice()) {
-			//我回复访客的评论，且对方接收提醒，邮件提醒对方(3)
-			//访客回复访客的评论(即使是他自己先前的评论)，且对方接收提醒，邮件提醒对方(6)
-			sendMailToParentComment(parentComment, comment);
-		}
-		if (isVisitorComment) {
-			//访客以父评论提交，只邮件提醒我自己(4)
-			//访客回复我的评论，邮件提醒我自己(5)
-			//访客回复访客的评论，不管对方是否接收提醒，都要提醒我有新评论(6)
-			sendMailToMe(comment);
-		}
-	}
-
-	/**
-	 * 发送邮件提醒回复对象
-	 *
-	 * @param parentComment 父评论
-	 * @param comment       当前评论
-	 */
-	private void sendMailToParentComment(top.naccl.entity.Comment parentComment, Comment comment) {
-		String path = "";
-		String title = "";
-		if (comment.getPage() == 0) {
-			//普通博客
-			title = parentComment.getBlog().getTitle();
-			path = "/blog/" + comment.getBlogId();
-		} else if (comment.getPage() == 1) {
-			//关于我页面
-			title = "关于我";
-			path = "/about";
-		} else if (comment.getPage() == 2) {
-			//友链页面
-			title = "友人帐";
-			path = "/friends";
-		}
-		Map<String, Object> map = new HashMap<>();
-		map.put("parentNickname", parentComment.getNickname());
-		map.put("nickname", comment.getNickname());
-		map.put("title", title);
-		map.put("time", comment.getCreateTime());
-		map.put("parentContent", parentComment.getContent());
-		map.put("content", comment.getContent());
-		map.put("url", websiteUrl + path);
-		String toAccount = parentComment.getEmail();
-		String subject = "您在 " + blogName + " 的评论有了新回复";
-		mailUtils.sendHtmlTemplateMail(map, toAccount, subject, "guest.html");
-	}
-
-	/**
-	 * 发送邮件提醒我自己
-	 *
-	 * @param comment 当前评论
-	 */
-	private void sendMailToMe(Comment comment) {
-		String path = "";
-		String title = "";
-		if (comment.getPage() == 0) {
-			//普通博客
-			title = blogService.getTitleByBlogId(comment.getBlogId());
-			path = "/blog/" + comment.getBlogId();
-		} else if (comment.getPage() == 1) {
-			//关于我页面
-			title = "关于我";
-			path = "/about";
-		} else if (comment.getPage() == 2) {
-			//友链页面
-			title = "友人帐";
-			path = "/friends";
-		}
-		Map<String, Object> map = new HashMap<>();
-		map.put("title", title);
-		map.put("time", comment.getCreateTime());
-		map.put("nickname", comment.getNickname());
-		map.put("content", comment.getContent());
-		map.put("ip", comment.getIp());
-		map.put("email", comment.getEmail());
-		map.put("status", comment.getPublished() ? "公开" : "待审核");
-		map.put("url", websiteUrl + path);
-		map.put("manageUrl", cmsUrl + "/comments");
-		String toAccount = mailProperties.getUsername();
-		String subject = blogName + " 收到新评论";
-		mailUtils.sendHtmlTemplateMail(map, toAccount, subject, "owner.html");
 	}
 }

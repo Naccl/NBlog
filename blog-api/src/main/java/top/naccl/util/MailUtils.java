@@ -19,8 +19,8 @@ import java.util.Map;
  * @Author: Naccl
  * @Date: 2020-10-10
  */
-@Component
 @EnableAsync
+@Component
 public class MailUtils {
 	@Autowired
 	private JavaMailSender javaMailSender;
