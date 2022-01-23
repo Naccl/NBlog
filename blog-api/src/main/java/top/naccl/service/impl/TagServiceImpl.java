@@ -3,7 +3,7 @@ package top.naccl.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import top.naccl.config.RedisKeyConfig;
+import top.naccl.constant.RedisKeyConstants;
 import top.naccl.entity.Tag;
 import top.naccl.exception.NotFoundException;
 import top.naccl.exception.PersistenceException;
@@ -32,7 +32,7 @@ public class TagServiceImpl implements TagService {
 
 	@Override
 	public List<Tag> getTagListNotId() {
-		String redisKey = RedisKeyConfig.TAG_CLOUD_LIST;
+		String redisKey = RedisKeyConstants.TAG_CLOUD_LIST;
 		List<Tag> tagListFromRedis = redisService.getListByValue(redisKey);
 		if (tagListFromRedis != null) {
 			return tagListFromRedis;
@@ -53,7 +53,7 @@ public class TagServiceImpl implements TagService {
 		if (tagMapper.saveTag(tag) != 1) {
 			throw new PersistenceException("标签添加失败");
 		}
-		redisService.deleteCacheByKey(RedisKeyConfig.TAG_CLOUD_LIST);
+		redisService.deleteCacheByKey(RedisKeyConstants.TAG_CLOUD_LIST);
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class TagServiceImpl implements TagService {
 		if (tagMapper.deleteTagById(id) != 1) {
 			throw new PersistenceException("标签删除失败");
 		}
-		redisService.deleteCacheByKey(RedisKeyConfig.TAG_CLOUD_LIST);
+		redisService.deleteCacheByKey(RedisKeyConstants.TAG_CLOUD_LIST);
 	}
 
 	@Transactional
@@ -85,8 +85,8 @@ public class TagServiceImpl implements TagService {
 		if (tagMapper.updateTag(tag) != 1) {
 			throw new PersistenceException("标签更新失败");
 		}
-		redisService.deleteCacheByKey(RedisKeyConfig.TAG_CLOUD_LIST);
+		redisService.deleteCacheByKey(RedisKeyConstants.TAG_CLOUD_LIST);
 		//修改了标签名或颜色，可能有首页文章关联了标签，也要更新首页缓存
-		redisService.deleteCacheByKey(RedisKeyConfig.HOME_BLOG_INFO_LIST);
+		redisService.deleteCacheByKey(RedisKeyConstants.HOME_BLOG_INFO_LIST);
 	}
 }

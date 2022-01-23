@@ -21,7 +21,7 @@ import top.naccl.service.impl.UserServiceImpl;
 import top.naccl.util.JwtUtils;
 import top.naccl.util.StringUtils;
 import top.naccl.util.comment.CommentUtils;
-import top.naccl.util.comment.enums.CommentOpenStateEnum;
+import top.naccl.enums.CommentOpenStateEnum;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;

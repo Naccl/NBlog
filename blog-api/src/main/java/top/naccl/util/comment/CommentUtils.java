@@ -19,8 +19,8 @@ import top.naccl.util.QQInfoUtils;
 import top.naccl.util.StringUtils;
 import top.naccl.util.comment.channel.ChannelFactory;
 import top.naccl.util.comment.channel.CommentNotifyChannel;
-import top.naccl.util.comment.enums.CommentOpenStateEnum;
-import top.naccl.util.comment.enums.CommentPageEnum;
+import top.naccl.enums.CommentOpenStateEnum;
+import top.naccl.enums.CommentPageEnum;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -242,7 +242,7 @@ public class CommentUtils {
 			if (QQInfoUtils.isQQNumber(commentNickname)) {
 				comment.setQq(commentNickname);
 				comment.setNickname(QQInfoUtils.getQQNickname(commentNickname));
-				comment.setAvatar(QQInfoUtils.getQQAvatarURLByGithubUpload(commentNickname));
+				comment.setAvatar(QQInfoUtils.getQQAvatarUrl(commentNickname));
 			} else {
 				comment.setNickname(comment.getNickname().trim());
 				setCommentRandomAvatar(comment);

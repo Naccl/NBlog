@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import top.naccl.config.properties.BlogProperties;
 import top.naccl.model.dto.Comment;
 import top.naccl.util.MailUtils;
-import top.naccl.util.comment.enums.CommentPageEnum;
+import top.naccl.enums.CommentPageEnum;
 import top.naccl.util.comment.CommentUtils;
 
 import java.util.HashMap;
