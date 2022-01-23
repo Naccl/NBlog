@@ -37,4 +37,12 @@ public class TelegramProperties {
 	 * 是否使用代理
 	 */
 	private Boolean useProxy;
+	/**
+	 * 是否使用反向代理
+	 */
+	private Boolean useReverseProxy;
+	/**
+	 * 反向代理URL
+	 */
+	private String reverseProxyUrl;
 }
