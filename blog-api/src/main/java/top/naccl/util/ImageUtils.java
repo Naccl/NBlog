@@ -2,19 +2,21 @@ package top.naccl.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import top.naccl.config.properties.BlogProperties;
+import top.naccl.config.properties.GithubProperties;
+import top.naccl.config.properties.UploadProperties;
 import top.naccl.exception.BadRequestException;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Base64;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -25,54 +27,41 @@ import java.util.UUID;
  */
 @Component
 public class ImageUtils {
-	private static RestTemplate restTemplate = new RestTemplate();
-
-	//GitHub上传文件API
+	/**
+	 * GitHub上传文件API
+	 */
 	private static final String githubUploadApi = "https://api.github.com/repos/%s/%s/contents%s/%s";
-	//GitHub上传文件API
+	/**
+	 * jsDelivr的CDN链接
+	 */
 	private static final String cdnUrl4Github = "https://cdn.jsdelivr.net/gh/%s/%s%s/%s";
 
-	//服务访问地址，用于返回图片url
-	private static String serverUploadPath;
-	//服务器文件上传路径
-	private static String serverUrl;
-	//GitHub token
-	private static String githubToken;
-	//GitHub用户名
-	private static String githubUsername;
-	//GitHub仓库名
-	private static String githubRepos;
-	//GitHub仓库路径
-	private static String githubReposPath;
+	private static RestTemplate restTemplate;
 
-	@Value("${upload.path}")
-	public void setServerUploadPath(String serverUploadPath) {
-		this.serverUploadPath = serverUploadPath;
+	private static BlogProperties blogProperties;
+
+	private static UploadProperties uploadProperties;
+
+	private static GithubProperties githubProperties;
+
+	@Autowired
+	public void setRestTemplate(RestTemplate restTemplate) {
+		ImageUtils.restTemplate = restTemplate;
 	}
 
-	@Value("${custom.url.api}")
-	public void setServerUrl(String serverUrl) {
-		this.serverUrl = serverUrl;
+	@Autowired
+	public void setBlogProperties(BlogProperties blogProperties) {
+		ImageUtils.blogProperties = blogProperties;
 	}
 
-	@Value("${upload.github.token}")
-	public void setGithubToken(String githubToken) {
-		this.githubToken = githubToken;
+	@Autowired
+	public void setUploadProperties(UploadProperties uploadProperties) {
+		ImageUtils.uploadProperties = uploadProperties;
 	}
 
-	@Value("${upload.github.username}")
-	public void setGithubUsername(String githubUsername) {
-		this.githubUsername = githubUsername;
-	}
-
-	@Value("${upload.github.repos}")
-	public void setGithubRepos(String githubRepos) {
-		this.githubRepos = githubRepos;
-	}
-
-	@Value("${upload.github.repos.path}")
-	public void setGithubReposPath(String githubReposPath) {
-		this.githubReposPath = githubReposPath;
+	@Autowired
+	public void setGithubProperties(GithubProperties githubProperties) {
+		ImageUtils.githubProperties = githubProperties;
 	}
 
 	@AllArgsConstructor
@@ -92,32 +81,32 @@ public class ImageUtils {
 	}
 
 	public static String saveImage(ImageResource image) throws IOException {
-		File folder = new File(serverUploadPath);
+		File folder = new File(uploadProperties.getPath());
 		if (!folder.exists()) {
 			folder.mkdirs();
 		}
 		String fileName = UUID.randomUUID() + "." + image.getType();
-		FileOutputStream fileOutputStream = new FileOutputStream(serverUploadPath + fileName);
+		FileOutputStream fileOutputStream = new FileOutputStream(uploadProperties.getPath() + fileName);
 		fileOutputStream.write(image.getData());
 		fileOutputStream.close();
-		return serverUrl + "/image/" + fileName;
+		return blogProperties.getApi() + "/image/" + fileName;
 	}
 
 	public static String push2Github(ImageResource image) {
 		String fileName = UUID.randomUUID() + "." + image.getType();
-		String url = String.format(githubUploadApi, githubUsername, githubRepos, githubReposPath, fileName);
+		String url = String.format(githubUploadApi, githubProperties.getUsername(), githubProperties.getRepos(), githubProperties.getReposPath(), fileName);
 		String imgBase64 = Base64.getEncoder().encodeToString(image.getData());
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.put("Authorization", Collections.singletonList("token " + githubToken));
+		headers.add("Authorization", "token " + githubProperties.getToken());
 
-		HashMap<String, String> body = new HashMap<>();
+		HashMap<String, String> body = new HashMap<>(2);
 		body.put("message", "Add files via NBlog");
 		body.put("content", imgBase64);
 
 		HttpEntity httpEntity = new HttpEntity(body, headers);
 		restTemplate.put(url, httpEntity);
 
-		return String.format(cdnUrl4Github, githubUsername, githubRepos, githubReposPath, fileName);
+		return String.format(cdnUrl4Github, githubProperties.getUsername(), githubProperties.getRepos(), githubProperties.getReposPath(), fileName);
 	}
 }
