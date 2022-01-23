@@ -1,4 +1,4 @@
-package top.naccl.util.comment.enums;
+package top.naccl.enums;
 
 /**
  * 评论开放状态枚举类

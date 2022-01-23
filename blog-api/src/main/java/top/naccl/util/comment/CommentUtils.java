@@ -19,8 +19,8 @@ import top.naccl.util.QQInfoUtils;
 import top.naccl.util.StringUtils;
 import top.naccl.util.comment.channel.ChannelFactory;
 import top.naccl.util.comment.channel.CommentNotifyChannel;
-import top.naccl.util.comment.enums.CommentOpenStateEnum;
-import top.naccl.util.comment.enums.CommentPageEnum;
+import top.naccl.enums.CommentOpenStateEnum;
+import top.naccl.enums.CommentPageEnum;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
