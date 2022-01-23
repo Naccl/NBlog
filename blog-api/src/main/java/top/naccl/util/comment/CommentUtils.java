@@ -48,6 +48,10 @@ public class CommentUtils {
 	private static BlogService blogService;
 
 	private CommentNotifyChannel notifyChannel;
+	/**
+	 * 新评论是否默认公开
+	 */
+	private Boolean commentDefaultOpen;
 
 	@Autowired
 	public void setBlogService(BlogService blogService) {
@@ -57,6 +61,11 @@ public class CommentUtils {
 	@Value("${comment.notify.channel}")
 	public void setNotifyChannel(String channelName) {
 		this.notifyChannel = ChannelFactory.getChannel(channelName);
+	}
+
+	@Value("${comment.default-open}")
+	public void setCommentDefaultOpen(Boolean commentDefaultOpen) {
+		this.commentDefaultOpen = commentDefaultOpen;
 	}
 
 	/**
@@ -260,8 +269,7 @@ public class CommentUtils {
 		}
 		comment.setAdminComment(false);
 		comment.setCreateTime(new Date());
-		//默认不需要审核
-		comment.setPublished(true);
+		comment.setPublished(commentDefaultOpen);
 		comment.setWebsite(website);
 		comment.setEmail(comment.getEmail().trim());
 		comment.setIp(IpAddressUtils.getIpAddress(request));
