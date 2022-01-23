@@ -1,8 +1,8 @@
 package top.naccl.util;
 
 import org.springframework.web.client.RestTemplate;
+import top.naccl.util.upload.UploadUtils;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -32,32 +32,34 @@ public class QQInfoUtils {
 		return nickname;
 	}
 
-	private static ImageUtils.ImageResource getImageResourceByQQ(String qq) {
-		return ImageUtils.getImageByRequest(String.format(QQ_AVATAR_URL, qq));
+	/**
+	 * 从网络获取QQ头像数据
+	 *
+	 * @param qq
+	 * @return
+	 */
+	private static UploadUtils.ImageResource getImageResourceByQQ(String qq) {
+		return UploadUtils.getImageByRequest(String.format(QQ_AVATAR_URL, qq));
 	}
 
 	/**
-	 * 将QQ头像下载到本地，并返回访问本地图片的URL
+	 * 获取QQ头像URL
 	 *
 	 * @param qq
-	 * @return 访问本地图片的URL
-	 * @throws IOException
+	 * @return
+	 * @throws Exception
 	 */
-	public static String getQQAvatarURLByServerUpload(String qq) throws IOException {
-		return ImageUtils.saveImage(getImageResourceByQQ(qq));
+	public static String getQQAvatarUrl(String qq) throws Exception {
+		return UploadUtils.upload(getImageResourceByQQ(qq));
 	}
 
 	/**
-	 * 将QQ头像上传至GitHub仓库，并返回CDN链接
+	 * 判断是否QQ号
 	 *
-	 * @param qq
-	 * @return 指向该图片的jsDelivr CDN链接
+	 * @param number
+	 * @return
 	 */
-	public static String getQQAvatarURLByGithubUpload(String qq) {
-		return ImageUtils.push2Github(getImageResourceByQQ(qq));
-	}
-
-	public static boolean isQQNumber(String nickname) {
-		return nickname.matches("^[1-9][0-9]{4,10}$");
+	public static boolean isQQNumber(String number) {
+		return number.matches("^[1-9][0-9]{4,10}$");
 	}
 }
