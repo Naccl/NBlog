@@ -1,16 +1,17 @@
 package top.naccl.util.comment.channel;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import top.naccl.config.properties.BlogProperties;
 import top.naccl.config.properties.TelegramProperties;
+import top.naccl.enums.CommentPageEnum;
 import top.naccl.model.dto.Comment;
 import top.naccl.util.TelegramUtils;
-import top.naccl.enums.CommentPageEnum;
 import top.naccl.util.comment.CommentUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.Map;
 
 /**
  * Telegram提醒方式
@@ -18,15 +19,23 @@ import java.text.SimpleDateFormat;
  * @author: Naccl
  * @date: 2022-01-22
  */
+@Slf4j
 @Lazy
 @Component
 public class TelegramChannel implements CommentNotifyChannel {
-	@Autowired
 	private TelegramUtils telegramUtils;
-	@Autowired
+
 	private BlogProperties blogProperties;
-	@Autowired
+
 	private TelegramProperties telegramProperties;
+
+	public TelegramChannel(TelegramUtils telegramUtils, BlogProperties blogProperties, TelegramProperties telegramProperties) {
+		this.telegramUtils = telegramUtils;
+		this.blogProperties = blogProperties;
+		this.telegramProperties = telegramProperties;
+		log.info("TelegramChannel instantiating");
+		telegramUtils.setWebhook();
+	}
 
 	/**
 	 * 发送Telegram消息提醒我自己
@@ -35,12 +44,10 @@ public class TelegramChannel implements CommentNotifyChannel {
 	 */
 	@Override
 	public void notifyMyself(Comment comment) {
+		String url = telegramProperties.getApi() + telegramProperties.getToken() + TelegramUtils.SEND_MESSAGE;
 		String content = getContent(comment);
-		if (telegramProperties.getUseReverseProxy()) {
-			telegramUtils.send2ReverseProxy(content);
-		} else {
-			telegramUtils.send2TelegramApi(content);
-		}
+		Map<String, Object> messageBody = telegramUtils.getMessageBody(content);
+		telegramUtils.sendByAutoCheckReverseProxy(url, messageBody);
 	}
 
 	private String getContent(Comment comment) {
