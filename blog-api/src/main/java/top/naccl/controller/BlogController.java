@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.naccl.annotation.VisitLogger;
+import top.naccl.constant.JwtConstants;
 import top.naccl.entity.User;
 import top.naccl.enums.VisitBehavior;
 import top.naccl.model.dto.BlogPassword;
@@ -65,13 +66,15 @@ public class BlogController {
 			if (JwtUtils.judgeTokenIsExist(jwt)) {
 				try {
 					String subject = JwtUtils.getTokenBody(jwt).getSubject();
-					if (subject.startsWith("admin:")) {//博主身份Token
-						String username = subject.replace("admin:", "");
+					if (subject.startsWith(JwtConstants.ADMIN_PREFIX)) {
+						//博主身份Token
+						String username = subject.replace(JwtConstants.ADMIN_PREFIX, "");
 						User admin = (User) userService.loadUserByUsername(username);
 						if (admin == null) {
 							return Result.create(403, "博主身份Token已失效，请重新登录！");
 						}
-					} else {//经密码验证后的Token
+					} else {
+						//经密码验证后的Token
 						Long tokenBlogId = Long.parseLong(subject);
 						//博客id不匹配，验证不通过，可能博客id改变或客户端传递了其它密码保护文章的Token
 						if (!tokenBlogId.equals(id)) {

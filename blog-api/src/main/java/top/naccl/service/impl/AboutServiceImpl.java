@@ -3,7 +3,7 @@ package top.naccl.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import top.naccl.config.RedisKeyConfig;
+import top.naccl.constant.RedisKeyConstants;
 import top.naccl.entity.About;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.AboutMapper;
@@ -30,7 +30,7 @@ public class AboutServiceImpl implements AboutService {
 
 	@Override
 	public Map<String, String> getAboutInfo() {
-		String redisKey = RedisKeyConfig.ABOUT_INFO_MAP;
+		String redisKey = RedisKeyConstants.ABOUT_INFO_MAP;
 		Map<String, String> aboutInfoMapFromRedis = redisService.getMapByValue(redisKey);
 		if (aboutInfoMapFromRedis != null) {
 			return aboutInfoMapFromRedis;
@@ -83,6 +83,6 @@ public class AboutServiceImpl implements AboutService {
 	 * 删除关于我页面缓存
 	 */
 	private void deleteAboutRedisCache() {
-		redisService.deleteCacheByKey(RedisKeyConfig.ABOUT_INFO_MAP);
+		redisService.deleteCacheByKey(RedisKeyConstants.ABOUT_INFO_MAP);
 	}
 }

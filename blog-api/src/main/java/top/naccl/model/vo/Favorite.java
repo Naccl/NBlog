@@ -1,4 +1,4 @@
-package top.naccl.model.bean;
+package top.naccl.model.vo;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * @Description: GitHub徽标
+ * @Description: 自定义爱好
  * @Author: Naccl
  * @Date: 2020-08-09
  */
@@ -14,10 +14,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Badge {
+public class Favorite {
 	private String title;
-	private String url;
-	private String subject;
-	private String value;
-	private String color;
+	private String content;
 }

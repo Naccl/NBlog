@@ -126,6 +126,12 @@
             <artifactId>yauaa</artifactId>
             <version>5.20</version>
         </dependency>
+        <!-- configuration processor -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
 
         <!-- devtools -->
         <dependency>

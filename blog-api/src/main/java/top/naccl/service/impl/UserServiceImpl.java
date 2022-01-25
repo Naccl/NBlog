@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import top.naccl.exception.NotFoundException;
 import top.naccl.mapper.UserMapper;
 import top.naccl.entity.User;
 import top.naccl.service.UserService;
@@ -37,6 +38,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		}
 		if (!HashUtils.matchBC(password, user.getPassword())) {
 			throw new UsernameNotFoundException("密码错误");
+		}
+		return user;
+	}
+
+	@Override
+	public User findUserById(Long id) {
+		User user = userMapper.findById(id);
+		if (user == null) {
+			throw new NotFoundException("用户不存在");
 		}
 		return user;
 	}

@@ -13,4 +13,6 @@ import top.naccl.entity.User;
 @Repository
 public interface UserMapper {
 	User findByUsername(String username);
+
+	User findById(Long id);
 }

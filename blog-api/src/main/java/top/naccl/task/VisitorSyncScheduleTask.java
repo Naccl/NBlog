@@ -3,7 +3,7 @@ package top.naccl.task;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import top.naccl.config.RedisKeyConfig;
+import top.naccl.constant.RedisKeyConstants;
 import top.naccl.entity.CityVisitor;
 import top.naccl.entity.VisitRecord;
 import top.naccl.model.dto.VisitLogUuidTime;
@@ -47,7 +47,7 @@ public class VisitorSyncScheduleTask {
 	 */
 	public void syncVisitInfoToDatabase() {
 		//清空当天Redis的访客标识Set，以便统计每日UV
-		redisService.deleteCacheByKey(RedisKeyConfig.IDENTIFICATION_SET);
+		redisService.deleteCacheByKey(RedisKeyConstants.IDENTIFICATION_SET);
 		//获取昨天的所有访问日志
 		List<VisitLogUuidTime> yesterdayLogList = visitLogService.getUUIDAndCreateTimeByYesterday();
 		//用Set去重得到当天所有访客的uuid

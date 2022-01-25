@@ -3,7 +3,7 @@ package top.naccl.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import top.naccl.config.RedisKeyConfig;
+import top.naccl.constant.RedisKeyConstants;
 import top.naccl.entity.Friend;
 import top.naccl.entity.SiteSetting;
 import top.naccl.exception.PersistenceException;
@@ -85,7 +85,7 @@ public class FriendServiceImpl implements FriendService {
 
 	@Override
 	public FriendInfo getFriendInfo(boolean cache, boolean md) {
-		String redisKey = RedisKeyConfig.FRIEND_INFO_MAP;
+		String redisKey = RedisKeyConstants.FRIEND_INFO_MAP;
 		if (cache) {
 			FriendInfo friendInfoFromRedis = redisService.getObjectByValue(redisKey, FriendInfo.class);
 			if (friendInfoFromRedis != null) {
@@ -137,6 +137,6 @@ public class FriendServiceImpl implements FriendService {
 	 * 删除友链页面缓存
 	 */
 	private void deleteFriendInfoRedisCache() {
-		redisService.deleteCacheByKey(RedisKeyConfig.FRIEND_INFO_MAP);
+		redisService.deleteCacheByKey(RedisKeyConstants.FRIEND_INFO_MAP);
 	}
 }

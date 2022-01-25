@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import top.naccl.model.bean.Favorite;
 
 import java.util.ArrayList;
 import java.util.List;

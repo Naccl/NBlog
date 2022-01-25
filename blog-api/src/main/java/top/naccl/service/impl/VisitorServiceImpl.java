@@ -3,7 +3,7 @@ package top.naccl.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import top.naccl.config.RedisKeyConfig;
+import top.naccl.constant.RedisKeyConstants;
 import top.naccl.entity.Visitor;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.VisitorMapper;
@@ -69,7 +69,7 @@ public class VisitorServiceImpl implements VisitorService {
 	@Override
 	public void deleteVisitor(Long id, String uuid) {
 		//删除Redis中该访客的uuid
-		redisService.deleteValueBySet(RedisKeyConfig.IDENTIFICATION_SET, uuid);
+		redisService.deleteValueBySet(RedisKeyConstants.IDENTIFICATION_SET, uuid);
 		if (visitorMapper.deleteVisitorById(id) != 1) {
 			throw new PersistenceException("删除访客失败");
 		}

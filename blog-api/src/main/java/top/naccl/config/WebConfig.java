@@ -1,12 +1,12 @@
 package top.naccl.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import top.naccl.config.properties.UploadProperties;
 import top.naccl.interceptor.AccessLimitInterceptor;
 
 /**
@@ -18,24 +18,8 @@ import top.naccl.interceptor.AccessLimitInterceptor;
 public class WebConfig implements WebMvcConfigurer {
 	@Autowired
 	AccessLimitInterceptor accessLimitInterceptor;
-	private String accessPath;
-	private String resourcesLocations;
-
-	/**
-	 * @param accessPath 请求地址映射
-	 */
-	@Value("${upload.access.path}")
-	public void setAccessPath(String accessPath) {
-		this.accessPath = accessPath;
-	}
-
-	/**
-	 * @param resourcesLocations 本地文件路径映射
-	 */
-	@Value("${upload.resources.locations}")
-	public void setResourcesLocations(String resourcesLocations) {
-		this.resourcesLocations = resourcesLocations;
-	}
+	@Autowired
+	UploadProperties uploadProperties;
 
 	/**
 	 * 跨域请求
@@ -68,6 +52,6 @@ public class WebConfig implements WebMvcConfigurer {
 	 */
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler(accessPath).addResourceLocations(resourcesLocations);
+		registry.addResourceHandler(uploadProperties.getAccessPath()).addResourceLocations(uploadProperties.getResourcesLocations());
 	}
 }
