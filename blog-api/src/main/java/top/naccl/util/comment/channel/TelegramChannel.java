@@ -7,7 +7,7 @@ import top.naccl.config.properties.BlogProperties;
 import top.naccl.config.properties.TelegramProperties;
 import top.naccl.enums.CommentPageEnum;
 import top.naccl.model.dto.Comment;
-import top.naccl.util.TelegramUtils;
+import top.naccl.util.telegram.TelegramUtils;
 import top.naccl.util.comment.CommentUtils;
 
 import java.text.SimpleDateFormat;
@@ -60,6 +60,7 @@ public class TelegramChannel implements CommentNotifyChannel {
 						"<pre>%s</pre>\n" +
 						"\n" +
 						"<b>其他信息：</b>\n" +
+						"评论ID：<code>%d</code>\n" +
 						"IP：%s\n" +
 						"时间：<u>%s</u>\n" +
 						"邮箱：<code>%s</code>\n" +
@@ -68,11 +69,12 @@ public class TelegramChannel implements CommentNotifyChannel {
 				commentPageEnum.getTitle(),
 				comment.getNickname(),
 				comment.getContent(),
+				comment.getId(),
 				comment.getIp(),
 				new SimpleDateFormat("yyyy-MM-dd hh:mm").format(comment.getCreateTime()),
 				comment.getEmail(),
 				comment.getPublished() ? "公开" : "待审核",
-				blogProperties.getCms() + "/comments"
+				blogProperties.getCms() + "/blog/comment/list"
 		);
 	}
 }

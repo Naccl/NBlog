@@ -12,6 +12,7 @@ import top.naccl.model.vo.FriendInfo;
 import top.naccl.service.AboutService;
 import top.naccl.service.BlogService;
 import top.naccl.service.FriendService;
+import top.naccl.service.UserService;
 import top.naccl.util.HashUtils;
 import top.naccl.util.IpAddressUtils;
 import top.naccl.util.MailUtils;
@@ -44,6 +45,8 @@ public class CommentUtils {
 	private AboutService aboutService;
 	@Autowired
 	private FriendService friendService;
+	@Autowired
+	private UserService userService;
 
 	private static BlogService blogService;
 
@@ -221,13 +224,12 @@ public class CommentUtils {
 	}
 
 	/**
-	 * 设置博主评论属性
+	 * 通用博主评论属性
 	 *
-	 * @param comment 当前收到的评论
-	 * @param request 用于获取ip
+	 * @param comment 评论DTO
 	 * @param admin   博主信息
 	 */
-	public void setAdminComment(Comment comment, HttpServletRequest request, User admin) {
+	private void setGeneralAdminComment(Comment comment, User admin) {
 		comment.setAdminComment(true);
 		comment.setCreateTime(new Date());
 		comment.setPublished(true);
@@ -235,8 +237,32 @@ public class CommentUtils {
 		comment.setWebsite("/");
 		comment.setNickname(admin.getNickname());
 		comment.setEmail(admin.getEmail());
-		comment.setIp(IpAddressUtils.getIpAddress(request));
 		comment.setNotice(false);
+	}
+
+	/**
+	 * 为[Telegram快捷回复]方式设置评论属性
+	 *
+	 * @param comment 评论DTO
+	 */
+	public void setAdminCommentByTelegramAction(Comment comment) {
+		//查出博主信息，默认id为1的记录就是博主
+		User admin = userService.findUserById(1L);
+
+		setGeneralAdminComment(comment, admin);
+		comment.setIp("via Telegram");
+	}
+
+	/**
+	 * 设置博主评论属性
+	 *
+	 * @param comment 当前收到的评论
+	 * @param request 用于获取ip
+	 * @param admin   博主信息
+	 */
+	public void setAdminComment(Comment comment, HttpServletRequest request, User admin) {
+		setGeneralAdminComment(comment, admin);
+		comment.setIp(IpAddressUtils.getIpAddress(request));
 	}
 
 	/**
