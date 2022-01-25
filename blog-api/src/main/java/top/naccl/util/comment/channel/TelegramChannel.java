@@ -12,6 +12,7 @@ import top.naccl.util.comment.CommentUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Telegram提醒方式
@@ -29,10 +30,16 @@ public class TelegramChannel implements CommentNotifyChannel {
 
 	private TelegramProperties telegramProperties;
 
+	private SimpleDateFormat simpleDateFormat;
+
 	public TelegramChannel(TelegramUtils telegramUtils, BlogProperties blogProperties, TelegramProperties telegramProperties) {
 		this.telegramUtils = telegramUtils;
 		this.blogProperties = blogProperties;
 		this.telegramProperties = telegramProperties;
+
+		this.simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		this.simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+
 		log.info("TelegramChannel instantiating");
 		telegramUtils.setWebhook();
 	}
@@ -71,7 +78,7 @@ public class TelegramChannel implements CommentNotifyChannel {
 				comment.getContent(),
 				comment.getId(),
 				comment.getIp(),
-				new SimpleDateFormat("yyyy-MM-dd hh:mm").format(comment.getCreateTime()),
+				simpleDateFormat.format(comment.getCreateTime()),
 				comment.getEmail(),
 				comment.getPublished() ? "公开" : "待审核",
 				blogProperties.getCms() + "/blog/comment/list"

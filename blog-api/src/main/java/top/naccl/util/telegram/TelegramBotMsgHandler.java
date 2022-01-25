@@ -16,6 +16,7 @@ import top.naccl.util.comment.CommentUtils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * TelegramBot命令处理
@@ -40,6 +41,8 @@ public class TelegramBotMsgHandler {
 	@Autowired
 	private TelegramProperties telegramProperties;
 
+	private SimpleDateFormat simpleDateFormat;
+
 	private static final String CONTENT_UNKNOWN = "";
 
 	private static final String CMD_HELP = "/help";
@@ -59,6 +62,11 @@ public class TelegramBotMsgHandler {
 			"/moment [内容] - 发布动态\n" +
 			"\n" +
 			"例如：/reply 123 好！";
+
+	public TelegramBotMsgHandler() {
+		this.simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		this.simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+	}
 
 	/**
 	 * 处理指令
@@ -219,7 +227,7 @@ public class TelegramBotMsgHandler {
 					comment.getContent(),
 					comment.getId(),
 					comment.getIp(),
-					new SimpleDateFormat("yyyy-MM-dd hh:mm").format(comment.getCreateTime()),
+					simpleDateFormat.format(comment.getCreateTime()),
 					comment.getEmail(),
 					comment.getPublished() ? "公开" : "待审核",
 					blogProperties.getCms() + "/blog/comment/list"
@@ -250,7 +258,7 @@ public class TelegramBotMsgHandler {
 						"时间：<u>%s</u>\n" +
 						"状态：%s [<a href=\"%s\">管理动态</a>]\n",
 				content,
-				new SimpleDateFormat("yyyy-MM-dd hh:mm").format(moment.getCreateTime()),
+				simpleDateFormat.format(moment.getCreateTime()),
 				moment.getPublished() ? "公开" : "隐藏",
 				blogProperties.getCms() + "/blog/moment/list"
 		);
