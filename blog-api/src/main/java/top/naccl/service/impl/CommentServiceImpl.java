@@ -84,6 +84,14 @@ public class CommentServiceImpl implements CommentService {
 	@Transactional
 	@Override
 	public void updateCommentPublishedById(Long commentId, Boolean published) {
+		//如果是隐藏评论，则所有子评论都要修改成隐藏状态
+		if (!published) {
+			List<Comment> comments = getAllReplyComments(commentId);
+			for (Comment c : comments) {
+				hideComment(c);
+			}
+		}
+
 		if (commentMapper.updateCommentPublishedById(commentId, published) != 1) {
 			throw new PersistenceException("操作失败");
 		}
@@ -148,6 +156,21 @@ public class CommentServiceImpl implements CommentService {
 		}
 		if (commentMapper.deleteCommentById(comment.getId()) != 1) {
 			throw new PersistenceException("评论删除失败");
+		}
+	}
+
+	/**
+	 * 递归隐藏子评论
+	 *
+	 * @param comment 需要隐藏子评论的父评论
+	 * @return
+	 */
+	private void hideComment(Comment comment) {
+		for (Comment c : comment.getReplyComments()) {
+			hideComment(c);
+		}
+		if (commentMapper.updateCommentPublishedById(comment.getId(), false) != 1) {
+			throw new PersistenceException("操作失败");
 		}
 	}
 

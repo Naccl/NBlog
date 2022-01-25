@@ -191,19 +191,23 @@
 			},
 			//切换评论公开状态（如果切换成隐藏，则该评论的所有子评论都修改为同样的隐藏状态）
 			commentPublishedChanged(row) {
-				let replyCommentList = []
-				replyCommentList.push(row)
-				if (!row.published) {
-					//切换成隐藏状态
-					this.getAllReplyCommentList(row, replyCommentList)
-				}
-
-				replyCommentList.forEach(comment => {
-					updatePublished(comment.id, row.published).then(res => {
-						comment.published = row.published
+				if (row.published) {
+					updatePublished(row.id, row.published).then(res => {
 						this.msgSuccess(res.msg)
 					})
-				})
+				} else {
+					//切换成隐藏状态
+					let replyCommentList = []
+					replyCommentList.push(row)
+					this.getAllReplyCommentList(row, replyCommentList)
+
+					updatePublished(row.id, row.published).then(res => {
+						this.msgSuccess(res.msg)
+						replyCommentList.forEach(comment => {
+							comment.published = row.published
+						})
+					})
+				}
 			},
 			//递归展开所有子评论
 			getAllReplyCommentList(comment, replyCommentList) {
