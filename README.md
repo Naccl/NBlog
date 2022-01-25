@@ -1,6 +1,6 @@
 <p align="center">
 	<a href="https://naccl.top/" target="_blank">
-		<img src="./NBlog.png" alt="NBlog logo" style="width: 200px; height: 200px">
+		<img src="./pic/NBlog.png" alt="NBlog logo" style="width: 200px; height: 200px">
 	</a>
 </p>
 <p align="center">
@@ -11,6 +11,7 @@
 	<img src="https://img.shields.io/badge/license-MIT-blue">
 	<img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FNaccl%2FNBlog&count_bg=%2344CC11&title_bg=%23555555&icon=notist.svg&icon_color=%231296DB&title=hits&edge_flat=false">
 </p>
+
 
 
 
@@ -67,7 +68,7 @@ JS 依赖及参考的 css：[axios](https://github.com/axios/axios)、[moment](h
 
 ### 后台 UI
 
-后台 CMS 部分基于 [vue-admin-template](https://github.com/PanJiaChen/vue-admin-template) 二次修改后的 [my-vue-admin-template](https://github.com/Naccl/my-vue-admin-template) 模板进行开发（于2021年11月1日重构过一次，[重构 commit](https://github.com/Naccl/NBlog/commit/b33641fe34b2bed34e8237bacf67146cd64be4cf)）
+后台 CMS 部分基于 [vue-admin-template](https://github.com/PanJiaChen/vue-admin-template) 二次修改后的 [my-vue-admin-template](https://github.com/Naccl/my-vue-admin-template) 模板进行开发（[于2021年11月1日重构](https://github.com/Naccl/NBlog/commit/b33641fe34b2bed34e8237bacf67146cd64be4cf)）
 
 UI 框架为 [Element UI](https://github.com/ElemeFE/element)
 
@@ -80,6 +81,26 @@ UI 框架为 [Element UI](https://github.com/ElemeFE/element)
 [Element UI](https://github.com/ElemeFE/element)：部分使用，一些小组件，弥补了 Semantic UI 的不足，便于快速实现效果
 
 文章排版：基于 [typo.css](https://github.com/sofish/typo.css) 修改
+
+
+
+## 最近更新
+
+支持 Telegram Bot 快捷操作
+
+| 桌面                                                         | Phone                                                        | Phone                                                        |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![桌面客户端效果图](./pic/TelegramBot.png "桌面客户端效果图") | ![手机客户端效果图1](./pic/TgBotPhone1.png "手机客户端效果图1") | ![手机客户端效果图2](./pic/TgBotPhone2.png "手机客户端效果图2") |
+
+若要启用该功能，参考以下步骤：
+
+1. 向 @BotFather 申请一个 Bot，得到该 Bot 的`token`，格式如`1234567890:qwertyuiopasdfghjklzxcvbnm`
+2. 与该 Bot 私聊，随便发个消息，然后打开此链接`https://api.telegram.org/bot<botToken>/getUpdates`（替换链接中的 token），在`result -> message -> chat -> id`得到`chatId`
+3. 将获取的`token`和`chatId`填入`application-dev.properties`，并启用`comment.notify.channel=tg`
+4. 由于目前仅提供 webhook 的方式获取消息更新，所以`application-dev.properties`中的`blog.api`需要填写后端 API 的地址，并且**必须是`https`(Telegram 的要求)**，也就是说如果你没有公网 IP 或内网穿透或反向代理，那么在本地环境是无法测试的，建议直接扔服务器上
+5. 因为 GFW 的存在，正常无法访问 TG 的 API，因此提供了两种方式
+   1. 代理：配置`http.proxy.server`，通过你的代理发送请求
+   2. 反向代理：可以直接使用我跑在 Cloudflare Workers 上的反代，默认配置即可，但建议自行搭建，示例反代随时可能关闭🙃。示例代码已放在`blog-api/cfworker-tg-api-open.js`，CV 即可 run
 
 
 
@@ -96,10 +117,10 @@ UI 框架为 [Element UI](https://github.com/ElemeFE/element)
 
 ## 注意事项
 
-最近逐渐有些小伙伴关注此项目，表示不知如何部署，或部署过程中有一些问题不知如何解决，在这里把过程中可能遇到的一些问题描述一下：
+一些常见问题：
 
-- 本人使用的 MySQL 版本为 8.x，5.x 版本未经测试，但确保数据库字符集为`utf8mb4`的情况下通常没有问题（”站点设置“及”文章详情“等许多表字段需要`utf8mb4`格式字符集来支持emoji表情，否则在导入 sql 文件时，即使成功导入，也会有部分字段内容不完整，导致前端页面渲染数据时报错）
-- 确保 Maven 能够成功导入现版本依赖（已知 [yauaa](https://github.com/nielsbasjes/yauaa) 依赖在用更高版本替换后，以现在的写法运行会报错）
+- MySQL 确保数据库字符集为`utf8mb4`的情况下通常没有问题（”站点设置“及”文章详情“等许多表字段需要`utf8mb4`格式字符集来支持 emoji 表情，否则在导入 sql 文件时，即使成功导入，也会有部分字段内容不完整，导致前端页面渲染数据时报错）
+- 确保 Maven 能够成功导入现版本依赖，请勿升级或降低依赖版本
 - 数据库中默认用户名密码为`Admin`，`123456`，因为是个人博客，没打算做修改密码的页面，可在`top.naccl.util.HashUtils`下的`main`方法手动生成密码存入数据库
 - 注意修改`application-dev.properties`的配置信息
   - Redis 若没有密码，留空即可
@@ -113,20 +134,18 @@ UI 框架为 [Element UI](https://github.com/ElemeFE/element)
 - 在前台访问`/login`路径登录后，可以以博主身份（带有博主标识）回复评论，且不需要填写昵称和邮箱即可提交
 - 在 Markdown 中加入`<meting-js server="netease" type="song" id="歌曲id" theme="#25CCF7"></meting-js>` （注意以正文形式添加，而不是代码片段）可以在文章中添加 [APlayer](https://github.com/DIYgod/APlayer) 音乐播放器，`netease`为网易云音乐，其它配置及具体用法参考 [MetingJS](https://github.com/metowolf/MetingJS)
 - 提供了两种隐藏文字效果：在 Markdown 中使用`@@`包住文字，文字会被渲染成“黑幕”效果，鼠标悬浮在上面时才会显示；使用`%%`包住文字，文字会被“蓝色覆盖层”遮盖，只有鼠标选中状态才会反色显示。例如：`@@隐藏文字@@`，`%%隐藏文字%%`
-- 大部分个性化配置可以在后台“站点设置”中修改，小部分由于考虑到首屏加载速度（如首页大图）需要修改前端源码，通过 IDE 全局查找应该可以很快定位
+- 大部分个性化配置可以在后台“站点设置”中修改，小部分由于考虑到首屏加载速度（如首页大图）需要修改前端源码
 
 
 
 ## And...
 
-由于一些技术是现学现用的，难免有些考虑不周，望大佬们能够指出错误
-
 自用博客，长期维护，欢迎勘误
 
 
 
-## 致谢
+## Thanks
 
 感谢 [JetBrains](https://www.jetbrains.com/) 提供的非商业开源软件 License
 
-此项目本是学习过程中的产物，参考了许多优秀的教程和项目，由于比较零散，难以统计，如大佬能看到此，请及时与我联系，以便表示感谢
+感谢上面提到的每个开源项目
