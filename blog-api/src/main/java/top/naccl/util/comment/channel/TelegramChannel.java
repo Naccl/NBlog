@@ -7,6 +7,7 @@ import top.naccl.config.properties.BlogProperties;
 import top.naccl.config.properties.TelegramProperties;
 import top.naccl.enums.CommentPageEnum;
 import top.naccl.model.dto.Comment;
+import top.naccl.util.StringUtils;
 import top.naccl.util.telegram.TelegramUtils;
 import top.naccl.util.comment.CommentUtils;
 
@@ -69,8 +70,10 @@ public class TelegramChannel implements CommentNotifyChannel {
 						"<b>其他信息：</b>\n" +
 						"评论ID：<code>%d</code>\n" +
 						"IP：%s\n" +
+						"%s" +
 						"时间：<u>%s</u>\n" +
 						"邮箱：<code>%s</code>\n" +
+						"%s" +
 						"状态：%s [<a href=\"%s\">管理评论</a>]\n",
 				blogProperties.getView() + commentPageEnum.getPath(),
 				commentPageEnum.getTitle(),
@@ -78,8 +81,10 @@ public class TelegramChannel implements CommentNotifyChannel {
 				comment.getContent(),
 				comment.getId(),
 				comment.getIp(),
+				StringUtils.isEmpty(comment.getQq()) ? "" : "QQ：" + comment.getQq() + "\n",
 				simpleDateFormat.format(comment.getCreateTime()),
 				comment.getEmail(),
+				StringUtils.isEmpty(comment.getWebsite()) ? "" : "网站：" + comment.getWebsite() + "\n",
 				comment.getPublished() ? "公开" : "待审核",
 				blogProperties.getCms() + "/blog/comment/list"
 		);
