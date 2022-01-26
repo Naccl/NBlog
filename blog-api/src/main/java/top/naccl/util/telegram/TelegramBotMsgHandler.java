@@ -206,6 +206,8 @@ public class TelegramBotMsgHandler {
 
 			//保存评论
 			commentService.saveComment(comment);
+			//提醒回复对象
+			commentUtils.judgeSendNotify(comment, false, parentComment);
 
 			CommentPageEnum commentPageEnum = CommentUtils.getCommentPageEnum(comment);
 			return String.format(
