@@ -21,6 +21,7 @@ public class Introduction {
 	private String avatar;
 	private String name;
 	private String github;
+	private String telegram;
 	private String qq;
 	private String bilibili;
 	private String netease;

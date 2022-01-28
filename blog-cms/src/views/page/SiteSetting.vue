@@ -8,7 +8,7 @@
 					</div>
 					<el-form label-position="right" label-width="100px">
 						<el-form-item :label="item.nameZh" v-for="item in typeMap.type1" :key="item.id">
-							<el-input v-model="item.value"></el-input>
+							<el-input v-model="item.value" size="mini"></el-input>
 						</el-form-item>
 					</el-form>
 				</el-card>
@@ -19,17 +19,17 @@
 						<span>资料卡</span>
 					</div>
 					<el-form label-position="right" label-width="100px">
-						<el-form-item :label="item.nameZh" v-for="item in typeMap.type3" :key="item.id">
+						<el-form-item :label="item.nameZh" v-for="item in typeMap.type2" :key="item.id">
 							<div v-if="item.nameEn=='favorite'">
 								<el-col :span="20">
-									<el-input v-model="item.value"></el-input>
+									<el-input v-model="item.value" size="mini"></el-input>
 								</el-col>
 								<el-col :span="4">
-									<el-button type="danger" icon="el-icon-delete" @click="deleteFavorite(item)">删除</el-button>
+									<el-button type="danger" size="mini" icon="el-icon-delete" @click="deleteFavorite(item)">删除</el-button>
 								</el-col>
 							</div>
 							<div v-else>
-								<el-input v-model="item.value"></el-input>
+								<el-input v-model="item.value" size="mini"></el-input>
 							</div>
 						</el-form-item>
 						<el-button type="primary" size="mini" icon="el-icon-plus" @click="addFavorite">添加自定义</el-button>
@@ -43,24 +43,24 @@
 				<div slot="header">
 					<span>页脚徽标</span>
 				</div>
-				<el-form :inline="true" v-for="badge in typeMap.type2" :key="badge.id">
+				<el-form :inline="true" v-for="badge in typeMap.type3" :key="badge.id">
 					<el-form-item label="title">
-						<el-input v-model="badge.value.title"></el-input>
+						<el-input v-model="badge.value.title" size="mini"></el-input>
 					</el-form-item>
 					<el-form-item label="url">
-						<el-input v-model="badge.value.url"></el-input>
+						<el-input v-model="badge.value.url" size="mini"></el-input>
 					</el-form-item>
 					<el-form-item label="subject">
-						<el-input v-model="badge.value.subject"></el-input>
+						<el-input v-model="badge.value.subject" size="mini"></el-input>
 					</el-form-item>
 					<el-form-item label="value">
-						<el-input v-model="badge.value.value"></el-input>
+						<el-input v-model="badge.value.value" size="mini"></el-input>
 					</el-form-item>
 					<el-form-item label="color">
-						<el-input v-model="badge.value.color"></el-input>
+						<el-input v-model="badge.value.color" size="mini"></el-input>
 					</el-form-item>
 					<el-form-item>
-						<el-button type="danger" icon="el-icon-delete" @click="deleteBadge(badge)">删除</el-button>
+						<el-button type="danger" size="mini" icon="el-icon-delete" @click="deleteBadge(badge)">删除</el-button>
 					</el-form-item>
 				</el-form>
 				<el-button type="primary" size="mini" icon="el-icon-plus" @click="addBadge">添加 badge</el-button>
@@ -94,26 +94,26 @@
 			getData() {
 				getSiteSettingData().then(res => {
 					this.typeMap = res.data
-					res.data.type2.forEach(item => {
+					res.data.type3.forEach(item => {
 						item.value = JSON.parse(item.value)
 					})
 				})
 			},
 			addFavorite() {
-				this.typeMap.type3.push({
+				this.typeMap.type2.push({
 					key: Date.now(),
 					nameEn: "favorite",
 					nameZh: "自定义",
-					type: 3,
+					type: 2,
 					value: "{\"title\":\"\",\"content\":\"\"}"
 				})
 			},
 			addBadge() {
-				this.typeMap.type2.push({
+				this.typeMap.type3.push({
 					key: Date.now(),
 					nameEn: "badge",
 					nameZh: "徽标",
-					type: 2,
+					type: 3,
 					value: {
 						color: "",
 						subject: "",
@@ -124,7 +124,7 @@
 				})
 			},
 			deleteFavorite(favorite) {
-				let arr = this.typeMap.type3
+				let arr = this.typeMap.type2
 				if (favorite.id) {
 					this.deleteIds.push(favorite.id)
 					arr.forEach((item, index) => {
@@ -143,7 +143,7 @@
 				}
 			},
 			deleteBadge(badge) {
-				let arr = this.typeMap.type2
+				let arr = this.typeMap.type3
 				if (badge.id) {
 					this.deleteIds.push(badge.id)
 					arr.forEach((item, index) => {
@@ -163,7 +163,7 @@
 			},
 			submit() {
 				const result = _.cloneDeep(this.typeMap)
-				result.type2.forEach(item => {
+				result.type3.forEach(item => {
 					item.value = JSON.stringify(item.value)
 				})
 				let updateArr = []
