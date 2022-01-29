@@ -70,20 +70,18 @@ public class IpAddressUtils {
 	/**
 	 * 在服务启动时加载 ip2region.db 到内存中
 	 * 解决打包jar后找不到 ip2region.db 的问题
+	 *
+	 * @throws Exception 出现异常应该直接抛出终止程序启动，避免后续invoke时出现更多错误
 	 */
 	@PostConstruct
-	private void initIp2regionResource() {
-		try {
-			InputStream inputStream = new ClassPathResource("/ipdb/ip2region.db").getInputStream();
-			//将 ip2region.db 转为 ByteArray
-			byte[] dbBinStr = FileCopyUtils.copyToByteArray(inputStream);
-			DbConfig dbConfig = new DbConfig();
-			searcher = new DbSearcher(dbConfig, dbBinStr);
-			//二进制方式初始化 DBSearcher，需要使用基于内存的查找算法 memorySearch
-			method = searcher.getClass().getMethod("memorySearch", String.class);
-		} catch (Exception e) {
-			log.error("initIp2regionResource exception:", e);
-		}
+	private void initIp2regionResource() throws Exception {
+		InputStream inputStream = new ClassPathResource("/ipdb/ip2region.db").getInputStream();
+		//将 ip2region.db 转为 ByteArray
+		byte[] dbBinStr = FileCopyUtils.copyToByteArray(inputStream);
+		DbConfig dbConfig = new DbConfig();
+		searcher = new DbSearcher(dbConfig, dbBinStr);
+		//二进制方式初始化 DBSearcher，需要使用基于内存的查找算法 memorySearch
+		method = searcher.getClass().getMethod("memorySearch", String.class);
 	}
 
 	/**
@@ -95,7 +93,7 @@ public class IpAddressUtils {
 	public static String getCityInfo(String ip) {
 		if (ip == null || !Util.isIpAddress(ip)) {
 			log.error("Error: Invalid ip address");
-			return null;
+			return "";
 		}
 		try {
 			DataBlock dataBlock = (DataBlock) method.invoke(searcher, ip);
@@ -103,11 +101,11 @@ public class IpAddressUtils {
 			if (!StringUtils.isEmpty(ipInfo)) {
 				ipInfo = ipInfo.replace("|0", "");
 				ipInfo = ipInfo.replace("0|", "");
+				return ipInfo;
 			}
-			return ipInfo;
 		} catch (Exception e) {
 			log.error("getCityInfo exception:", e);
 		}
-		return null;
+		return "";
 	}
 }
