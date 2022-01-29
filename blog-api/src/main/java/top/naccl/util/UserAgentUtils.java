@@ -20,8 +20,8 @@ public class UserAgentUtils {
 		this.uaa = UserAgentAnalyzer
 				.newBuilder()
 				.hideMatcherLoadStats()
-				.withField("OperatingSystemNameVersionMajor")
-				.withField("AgentNameVersion")
+				.withField(UserAgent.OPERATING_SYSTEM_NAME_VERSION_MAJOR)
+				.withField(UserAgent.AGENT_NAME_VERSION)
 				.build();
 	}
 
@@ -33,8 +33,8 @@ public class UserAgentUtils {
 	 */
 	public Map<String, String> parseOsAndBrowser(String userAgent) {
 		UserAgent agent = uaa.parse(userAgent);
-		String os = agent.getValue("OperatingSystemNameVersionMajor");
-		String browser = agent.getValue("AgentNameVersion");
+		String os = agent.getValue(UserAgent.OPERATING_SYSTEM_NAME_VERSION_MAJOR);
+		String browser = agent.getValue(UserAgent.AGENT_NAME_VERSION);
 		Map<String, String> map = new HashMap<>();
 		map.put("os", os);
 		map.put("browser", browser);
