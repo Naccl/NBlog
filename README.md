@@ -90,7 +90,8 @@ UI 框架为 [Element UI](https://github.com/ElemeFE/element)
 
 | 桌面                                                         | Phone                                                        | Phone                                                        |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![桌面客户端效果图](./pic/TelegramBot.png "桌面客户端效果图") | ![手机客户端效果图1](./pic/TgBotPhone1.png "手机客户端效果图1") | ![手机客户端效果图2](./pic/TgBotPhone2.png "手机客户端效果图2") |
+| ![桌面客户端效果图](./pic/TelegramBot.png "桌面客户端效果图") [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FNaccl%2FNBlog.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FNaccl%2FNBlog?ref=badge_shield)
+| ![手机客户端效果图1](./pic/TgBotPhone1.png "手机客户端效果图1") | ![手机客户端效果图2](./pic/TgBotPhone2.png "手机客户端效果图2") |
 
 若要启用该功能，参考以下步骤：
 
@@ -149,3 +150,7 @@ UI 框架为 [Element UI](https://github.com/ElemeFE/element)
 感谢 [JetBrains](https://www.jetbrains.com/) 提供的非商业开源软件 License
 
 感谢上面提到的每个开源项目
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FNaccl%2FNBlog.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FNaccl%2FNBlog?ref=badge_large)
