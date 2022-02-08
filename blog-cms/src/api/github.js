@@ -5,7 +5,8 @@ import {Message} from 'element-ui'
 
 const request = axios.create({
 	baseURL: 'https://api.github.com',
-	timeout: 10000,
+	//对于较大的文件，可能需要更多的超时时间
+	timeout: 30000,
 })
 
 // request interceptor
