@@ -62,12 +62,12 @@
 			//监听 pageSize 改变事件
 			handleSizeChange(newSize) {
 				this.queryInfo.pageSize = newSize
-				this.getData()
+				this.getMomentList()
 			},
 			//监听页码改变的事件
 			handleCurrentChange(newPage) {
 				this.queryInfo.pageNum = newPage
-				this.getData()
+				this.getMomentList()
 			},
 			momentPublishedChanged(row) {
 				updatePublished(row.id, row.published).then(res => {
