@@ -64,61 +64,61 @@
 		z-index: 10 !important;
 	}
 
-	.toc {
+	.m-toc .toc {
 		overflow-y: auto
 	}
 
-	.toc > ul {
+	.m-toc .toc > ul {
 		overflow: hidden;
 		position: relative
 	}
 
-	.toc > ul li {
+	.m-toc .toc > ul li {
 		list-style: none
 	}
 
-	.toc-list {
+	.m-toc .toc-list {
 		list-style-type: none;
 		margin: 0;
 		padding-left: 10px
 	}
 
-	.toc-list li a {
+	.m-toc .toc-list li a {
 		display: block;
 		padding: 4px 0;
 		font-weight: 300;
 	}
 
-	.toc-list li a:hover {
+	.m-toc .toc-list li a:hover {
 		color: #fbbd08;
 	}
 
-	a.toc-link {
+	.m-toc a.toc-link {
 		color: currentColor;
 		height: 100%
 	}
 
-	.is-collapsible {
+	.m-toc .is-collapsible {
 		max-height: 1000px;
 		overflow: hidden;
 		transition: all 300ms ease-in-out
 	}
 
-	.is-collapsed {
+	.m-toc .is-collapsed {
 		max-height: 0
 	}
 
-	.is-position-fixed {
+	.m-toc .is-position-fixed {
 		position: sticky !important;
 		top: 60px
 	}
 
-	.is-active-link {
+	.m-toc .is-active-link {
 		font-weight: 700;
 		color: #fbbd08 !important;
 	}
 
-	.toc-link::before {
+	.m-toc .toc-link::before {
 		background-color: #EEE;
 		content: ' ';
 		display: inline-block;
@@ -129,7 +129,7 @@
 		width: 2px
 	}
 
-	.is-active-link::before {
+	.m-toc .is-active-link::before {
 		background-color: #54BC4B
 	}
 </style>

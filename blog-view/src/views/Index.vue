@@ -41,7 +41,7 @@
 			<MyAPlayer/>
 		</div>
 		<!--回到顶部-->
-		<el-backtop style="box-shadow: none;background: none;">
+		<el-backtop style="box-shadow: none;background: none;z-index: 9999;">
 			<img src="/img/paper-plane.png" style="width: 40px;height: 40px;">
 		</el-backtop>
 		<!--底部footer-->
