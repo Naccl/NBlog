@@ -7,9 +7,13 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.EnableRetry;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import top.naccl.config.properties.BlogProperties;
 import top.naccl.config.properties.TelegramProperties;
@@ -24,6 +28,7 @@ import java.util.Map;
  * @date: 2022-01-22
  */
 @Slf4j
+@EnableRetry
 @EnableAsync
 @Lazy
 @Component
@@ -75,10 +80,16 @@ public class TelegramUtils {
 
 	/**
 	 * 根据配置检查是否通过反代发送请求
+	 * 发生异常时重试
 	 *
 	 * @param url  the URL
 	 * @param data body of post
 	 */
+	@Retryable(
+			include = {RestClientException.class},
+			maxAttempts = 5,
+			backoff = @Backoff(delay = 5000L, multiplier = 2)
+	)
 	@Async
 	public void sendByAutoCheckReverseProxy(String url, Map<String, Object> data) {
 		if (telegramProperties.getUseReverseProxy()) {
