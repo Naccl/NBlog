@@ -6,13 +6,11 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 import top.naccl.config.properties.BlogProperties;
 import top.naccl.constant.PageConstants;
+import top.naccl.constant.RedisKeyConstants;
 import top.naccl.entity.User;
 import top.naccl.model.dto.Comment;
 import top.naccl.model.vo.FriendInfo;
-import top.naccl.service.AboutService;
-import top.naccl.service.BlogService;
-import top.naccl.service.FriendService;
-import top.naccl.service.UserService;
+import top.naccl.service.*;
 import top.naccl.util.HashUtils;
 import top.naccl.util.IpAddressUtils;
 import top.naccl.util.MailUtils;
@@ -47,6 +45,8 @@ public class CommentUtils {
 	private FriendService friendService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	RedisService redisService;
 
 	private static BlogService blogService;
 
@@ -277,7 +277,15 @@ public class CommentUtils {
 			if (QQInfoUtils.isQQNumber(commentNickname)) {
 				comment.setQq(commentNickname);
 				comment.setNickname(QQInfoUtils.getQQNickname(commentNickname));
-				comment.setAvatar(QQInfoUtils.getQQAvatarUrl(commentNickname));
+				String githubAvatarUrl = (String) redisService.getValueByHashKey(RedisKeyConstants.QQ_AVATAR_GITHUB_URL, commentNickname);
+				if (StringUtils.isEmpty(githubAvatarUrl)){
+					String qqAvatarUrl = QQInfoUtils.getQQAvatarUrl(commentNickname);
+					comment.setAvatar(qqAvatarUrl);
+					redisService.saveKVToHash(RedisKeyConstants.QQ_AVATAR_GITHUB_URL, commentNickname,qqAvatarUrl);
+				}else {
+					comment.setAvatar(githubAvatarUrl);
+				}
+
 			} else {
 				comment.setNickname(comment.getNickname().trim());
 				setCommentRandomAvatar(comment);
