@@ -108,7 +108,7 @@
 		max-height: 0
 	}
 
-	.m-toc .is-position-fixed {
+	.m-toc.is-position-fixed {
 		position: sticky !important;
 		top: 60px
 	}
