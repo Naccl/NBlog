@@ -12,9 +12,9 @@
 
 		<el-table :data="logList">
 			<el-table-column label="序号" type="index" width="50"></el-table-column>
-			<el-table-column label="日志id" prop="logId" width="80"></el-table-column>
-			<el-table-column label="任务id" prop="jobId" width="80"></el-table-column>
-			<el-table-column label="bean" prop="beanName" show-overflow-tooltip></el-table-column>
+			<el-table-column label="日志ID" prop="logId" width="80"></el-table-column>
+			<el-table-column label="任务ID" prop="jobId" width="80"></el-table-column>
+			<el-table-column label="Bean" prop="beanName" show-overflow-tooltip></el-table-column>
 			<el-table-column label="方法名" prop="methodName" show-overflow-tooltip></el-table-column>
 			<el-table-column label="结果" width="80">
 				<template v-slot="scope">
@@ -51,13 +51,13 @@
 			<el-form :model="detail" ref="detailFormRef" label-width="120px" size="mini">
 				<el-row>
 					<el-col :span="12">
-						<el-form-item label="日志编号：">{{ detail.logId }}</el-form-item>
-						<el-form-item label="任务编号：">{{ detail.jobId }}</el-form-item>
+						<el-form-item label="日志ID：">{{ detail.logId }}</el-form-item>
+						<el-form-item label="任务ID：">{{ detail.jobId }}</el-form-item>
 						<el-form-item label="执行耗时：">{{ detail.times }} 毫秒</el-form-item>
 						<el-form-item label="执行时间：">{{ detail.createTime | dateFormat }}</el-form-item>
 					</el-col>
 					<el-col :span="12">
-						<el-form-item label="bean：">{{ detail.beanName }}</el-form-item>
+						<el-form-item label="Bean：">{{ detail.beanName }}</el-form-item>
 						<el-form-item label="方法名：">{{ detail.methodName }}</el-form-item>
 						<el-form-item label="参数：">{{ detail.params }}</el-form-item>
 						<el-form-item label="任务结果：">

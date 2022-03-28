@@ -27,8 +27,8 @@
 			<el-table-column label="操作者" prop="username"></el-table-column>
 			<el-table-column label="请求方式" prop="method" width="80"></el-table-column>
 			<el-table-column label="描述" prop="description" show-overflow-tooltip></el-table-column>
-			<el-table-column label="ip" prop="ip"></el-table-column>
-			<el-table-column label="ip来源" prop="ipSource" show-overflow-tooltip></el-table-column>
+			<el-table-column label="IP" prop="ip"></el-table-column>
+			<el-table-column label="IP来源" prop="ipSource" show-overflow-tooltip></el-table-column>
 			<el-table-column label="操作系统" prop="os"></el-table-column>
 			<el-table-column label="浏览器" prop="browser" show-overflow-tooltip></el-table-column>
 			<el-table-column label="操作耗时" width="110">

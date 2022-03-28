@@ -24,7 +24,7 @@
 			</el-table-column>
 			<el-table-column label="邮箱" prop="email" show-overflow-tooltip></el-table-column>
 			<el-table-column label="网站" prop="website" show-overflow-tooltip></el-table-column>
-			<el-table-column label="ip" prop="ip" width="130"></el-table-column>
+			<el-table-column label="IP" prop="ip" width="130"></el-table-column>
 			<el-table-column label="评论内容" prop="content" show-overflow-tooltip></el-table-column>
 			<el-table-column label="QQ" prop="qq" width="115"></el-table-column>
 			<el-table-column label="所在页面" show-overflow-tooltip>
@@ -77,7 +77,7 @@
 				<el-form-item label="网站" prop="website">
 					<el-input v-model="editForm.website"></el-input>
 				</el-form-item>
-				<el-form-item label="ip" prop="ip">
+				<el-form-item label="IP" prop="ip">
 					<el-input v-model="editForm.ip"></el-input>
 				</el-form-item>
 				<el-form-item label="评论内容" prop="content">
