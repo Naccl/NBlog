@@ -10,16 +10,16 @@
 		</el-row>
 
 		<el-table :data="commentList" row-key="id" :tree-props="{children: 'replyComments'}">
-			<el-table-column label="序号" type="index" width="50"></el-table-column>
+			<el-table-column label="评论ID" prop="id"></el-table-column>
+			<el-table-column label="头像" width="70">
+				<template v-slot="scope">
+					<el-avatar shape="square" :size="50" fit="contain" :src="scope.row.avatar"></el-avatar>
+				</template>
+			</el-table-column>
 			<el-table-column label="昵称" prop="nickname">
 				<template v-slot="scope">
 					{{ scope.row.nickname }}
 					<el-tag v-if="scope.row.adminComment" size="mini" effect="dark" style="margin-left: 5px">我</el-tag>
-				</template>
-			</el-table-column>
-			<el-table-column label="头像" width="80">
-				<template v-slot="scope">
-					<el-avatar shape="square" :size="60" fit="contain" :src="scope.row.avatar"></el-avatar>
 				</template>
 			</el-table-column>
 			<el-table-column label="邮箱" prop="email" show-overflow-tooltip></el-table-column>
@@ -272,6 +272,8 @@
 	}
 </script>
 
-<style scoped>
-
+<style>
+.el-table .el-table__indent {
+	padding-left: 0 !important;
+}
 </style>
