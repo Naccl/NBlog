@@ -9,7 +9,7 @@
 			</el-col>
 		</el-row>
 
-		<el-table :data="commentList" row-key="id" :tree-props="{children: 'replyComments'}">
+		<el-table :data="commentList" row-key="id" :tree-props="{children: 'replyComments'}" indent="0">
 			<el-table-column label="评论ID" prop="id"></el-table-column>
 			<el-table-column label="头像" width="70">
 				<template v-slot="scope">
@@ -272,8 +272,6 @@
 	}
 </script>
 
-<style>
-.el-table .el-table__indent {
-	padding-left: 0 !important;
-}
+<style scoped>
+
 </style>
