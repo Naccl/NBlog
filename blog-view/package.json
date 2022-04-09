@@ -12,7 +12,7 @@
     "axios": "0.24.0",
     "core-js": "3.6.5",
     "element-ui": "2.13.2",
-    "moment": "2.27.0",
+    "moment": "2.29.2",
     "nprogress": "0.2.0",
     "sanitize-html": "2.3.3",
     "semantic-ui-css": "2.4.1",
