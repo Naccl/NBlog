@@ -10,7 +10,11 @@ import top.naccl.constant.RedisKeyConstants;
 import top.naccl.entity.User;
 import top.naccl.model.dto.Comment;
 import top.naccl.model.vo.FriendInfo;
-import top.naccl.service.*;
+import top.naccl.service.AboutService;
+import top.naccl.service.BlogService;
+import top.naccl.service.FriendService;
+import top.naccl.service.RedisService;
+import top.naccl.service.UserService;
 import top.naccl.util.HashUtils;
 import top.naccl.util.IpAddressUtils;
 import top.naccl.util.MailUtils;
@@ -46,7 +50,7 @@ public class CommentUtils {
 	@Autowired
 	private UserService userService;
 	@Autowired
-	RedisService redisService;
+	private RedisService redisService;
 
 	private static BlogService blogService;
 
@@ -272,20 +276,12 @@ public class CommentUtils {
 	 * @param request 用于获取ip
 	 */
 	public void setVisitorComment(Comment comment, HttpServletRequest request) {
-		String commentNickname = comment.getNickname();
+		String nickname = comment.getNickname();
 		try {
-			if (QQInfoUtils.isQQNumber(commentNickname)) {
-				comment.setQq(commentNickname);
-				comment.setNickname(QQInfoUtils.getQQNickname(commentNickname));
-				String githubAvatarUrl = (String) redisService.getValueByHashKey(RedisKeyConstants.QQ_AVATAR_GITHUB_URL, commentNickname);
-				if (StringUtils.isEmpty(githubAvatarUrl)){
-					String qqAvatarUrl = QQInfoUtils.getQQAvatarUrl(commentNickname);
-					comment.setAvatar(qqAvatarUrl);
-					redisService.saveKVToHash(RedisKeyConstants.QQ_AVATAR_GITHUB_URL, commentNickname,qqAvatarUrl);
-				}else {
-					comment.setAvatar(githubAvatarUrl);
-				}
-
+			if (QQInfoUtils.isQQNumber(nickname)) {
+				comment.setQq(nickname);
+				comment.setNickname(QQInfoUtils.getQQNickname(nickname));
+				setCommentQQAvatar(comment);
 			} else {
 				comment.setNickname(comment.getNickname().trim());
 				setCommentRandomAvatar(comment);
@@ -307,5 +303,21 @@ public class CommentUtils {
 		comment.setWebsite(website);
 		comment.setEmail(comment.getEmail().trim());
 		comment.setIp(IpAddressUtils.getIpAddress(request));
+	}
+
+	/**
+	 * 设置QQ头像
+	 *
+	 * @param comment 当前收到的评论
+	 * @throws Exception 上传QQ头像时可能抛出的异常
+	 */
+	private void setCommentQQAvatar(Comment comment) throws Exception {
+		String nickname = comment.getNickname();
+		String uploadAvatarUrl = (String) redisService.getValueByHashKey(RedisKeyConstants.QQ_AVATAR_URL_MAP, nickname);
+		if (StringUtils.isEmpty(uploadAvatarUrl)) {
+			uploadAvatarUrl = QQInfoUtils.getQQAvatarUrl(nickname);
+			redisService.saveKVToHash(RedisKeyConstants.QQ_AVATAR_URL_MAP, nickname, uploadAvatarUrl);
+		}
+		comment.setAvatar(uploadAvatarUrl);
 	}
 }
