@@ -75,7 +75,7 @@ public class DashboardServiceImpl implements DashboardService {
 		//分类对应的博客数量List
 		List<CategoryBlogCount> series = new ArrayList<>();
 		if (categoryBlogCountList.size() == categoryList.size()) {
-			Map<Long, String> m = new HashMap<>();
+			Map<Long, String> m = new HashMap<>(16);
 			for (Category c : categoryList) {
 				m.put(c.getId(), c.getName());
 			}
@@ -84,7 +84,7 @@ public class DashboardServiceImpl implements DashboardService {
 				series.add(c);
 			}
 		} else {
-			Map<Long, Integer> m = new HashMap<>();
+			Map<Long, Integer> m = new HashMap<>(16);
 			for (CategoryBlogCount c : categoryBlogCountList) {
 				m.put(c.getId(), c.getValue());
 			}
@@ -100,7 +100,7 @@ public class DashboardServiceImpl implements DashboardService {
 				series.add(categoryBlogCount);
 			}
 		}
-		Map<String, List> map = new HashMap<>();
+		Map<String, List> map = new HashMap<>(4);
 		map.put("legend", legend);
 		map.put("series", series);
 		return map;
@@ -120,7 +120,7 @@ public class DashboardServiceImpl implements DashboardService {
 		//标签对应的博客数量List
 		List<TagBlogCount> series = new ArrayList<>();
 		if (tagBlogCountList.size() == tagList.size()) {
-			Map<Long, String> m = new HashMap<>();
+			Map<Long, String> m = new HashMap<>(64);
 			for (Tag t : tagList) {
 				m.put(t.getId(), t.getName());
 			}
@@ -129,7 +129,7 @@ public class DashboardServiceImpl implements DashboardService {
 				series.add(t);
 			}
 		} else {
-			Map<Long, Integer> m = new HashMap<>();
+			Map<Long, Integer> m = new HashMap<>(64);
 			for (TagBlogCount t : tagBlogCountList) {
 				m.put(t.getId(), t.getValue());
 			}
@@ -145,7 +145,7 @@ public class DashboardServiceImpl implements DashboardService {
 				series.add(tagBlogCount);
 			}
 		}
-		Map<String, List> map = new HashMap<>();
+		Map<String, List> map = new HashMap<>(4);
 		map.put("legend", legend);
 		map.put("series", series);
 		return map;
@@ -163,7 +163,7 @@ public class DashboardServiceImpl implements DashboardService {
 			pv.add(visitRecord.getPv());
 			uv.add(visitRecord.getUv());
 		}
-		Map<String, List> map = new HashMap<>();
+		Map<String, List> map = new HashMap<>(8);
 		map.put("date", date);
 		map.put("pv", pv);
 		map.put("uv", uv);

@@ -36,7 +36,7 @@ public class AboutServiceImpl implements AboutService {
 			return aboutInfoMapFromRedis;
 		}
 		List<About> abouts = aboutMapper.getList();
-		Map<String, String> aboutInfoMap = new HashMap<>();
+		Map<String, String> aboutInfoMap = new HashMap<>(16);
 		for (About about : abouts) {
 			if ("content".equals(about.getNameEn())) {
 				about.setValue(MarkdownUtils.markdownToHtmlExtensions(about.getValue()));
@@ -50,7 +50,7 @@ public class AboutServiceImpl implements AboutService {
 	@Override
 	public Map<String, String> getAboutSetting() {
 		List<About> abouts = aboutMapper.getList();
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap<>(16);
 		for (About about : abouts) {
 			map.put(about.getNameEn(), about.getValue());
 		}

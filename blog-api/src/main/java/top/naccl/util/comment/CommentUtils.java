@@ -107,7 +107,7 @@ public class CommentUtils {
 	 */
 	private void sendMailToParentComment(top.naccl.entity.Comment parentComment, Comment comment) {
 		CommentPageEnum commentPageEnum = getCommentPageEnum(comment);
-		Map<String, Object> map = new HashMap<>(7);
+		Map<String, Object> map = new HashMap<>(16);
 		map.put("parentNickname", parentComment.getNickname());
 		map.put("nickname", comment.getNickname());
 		map.put("title", commentPageEnum.getTitle());

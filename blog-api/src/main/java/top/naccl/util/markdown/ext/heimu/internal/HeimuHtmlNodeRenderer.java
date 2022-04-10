@@ -23,7 +23,7 @@ public class HeimuHtmlNodeRenderer extends AbstractHeimuNodeRenderer {
 
 	@Override
 	public void render(Node node) {
-		Map<String, String> attributes = new HashMap<>();
+		Map<String, String> attributes = new HashMap<>(4);
 		attributes.put("class", "m-text-heimu");
 		attributes.put("title", "你知道的太多了");
 		html.tag("span", context.extendAttributes(node, "span", attributes));

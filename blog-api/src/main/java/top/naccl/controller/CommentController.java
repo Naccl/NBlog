@@ -99,9 +99,9 @@ public class CommentController {
 		//查询该页面公开评论的数量
 		Integer openComment = commentService.countByPageAndIsPublished(page, blogId, true);
 		PageHelper.startPage(pageNum, pageSize);
-		PageInfo<PageComment> pageInfo = new PageInfo<>(commentService.getPageCommentList(page, blogId, (long) -1));
+		PageInfo<PageComment> pageInfo = new PageInfo<>(commentService.getPageCommentList(page, blogId, -1L));
 		PageResult<PageComment> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>(8);
 		map.put("allComment", allComment);
 		map.put("closeComment", allComment - openComment);
 		map.put("comments", pageResult);

@@ -41,7 +41,6 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 	@Override
 	public Map<String, List<SiteSetting>> getList() {
 		List<SiteSetting> siteSettings = siteSettingMapper.getList();
-		Map<String, List<SiteSetting>> map = new HashMap<>();
 		List<SiteSetting> type1 = new ArrayList<>();
 		List<SiteSetting> type2 = new ArrayList<>();
 		List<SiteSetting> type3 = new ArrayList<>();
@@ -60,6 +59,7 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 					break;
 			}
 		}
+		Map<String, List<SiteSetting>> map = new HashMap<>(8);
 		map.put("type1", type1);
 		map.put("type2", type2);
 		map.put("type3", type3);
@@ -74,8 +74,7 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 			return siteInfoMapFromRedis;
 		}
 		List<SiteSetting> siteSettings = siteSettingMapper.getList();
-		Map<String, Object> map = new HashMap<>();
-		Map<String, Object> siteInfo = new HashMap<>();
+		Map<String, Object> siteInfo = new HashMap<>(2);
 		List<Badge> badges = new ArrayList<>();
 		Introduction introduction = new Introduction();
 		List<Favorite> favorites = new ArrayList<>();
@@ -140,6 +139,7 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 		}
 		introduction.setFavorites(favorites);
 		introduction.setRollText(rollTexts);
+		Map<String, Object> map = new HashMap<>(8);
 		map.put("introduction", introduction);
 		map.put("siteInfo", siteInfo);
 		map.put("badges", badges);

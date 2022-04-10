@@ -72,7 +72,7 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
 		response.setContentType("application/json;charset=utf-8");
 		User user = (User) authResult.getPrincipal();
 		user.setPassword(null);
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>(4);
 		map.put("user", user);
 		map.put("token", jwt);
 		Result result = Result.ok("登录成功", map);
