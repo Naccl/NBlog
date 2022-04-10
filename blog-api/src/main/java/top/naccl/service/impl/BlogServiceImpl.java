@@ -149,6 +149,18 @@ public class BlogServiceImpl implements BlogService {
 		for (int i = 0; i < blogInfos.size(); i++) {
 			BlogInfo blogInfo = JacksonUtils.convertValue(blogInfos.get(i), BlogInfo.class);
 			Long blogId = blogInfo.getId();
+			/**
+			 * 这里如果出现异常，通常是手动修改过 MySQL 而没有通过后台管理，导致 Redis 和 MySQL 不同步
+			 * 从 Redis 中查出了 null，强转 int 时出现 NullPointerException
+			 * 直接抛出异常比带着 bug 继续跑要好得多
+			 *
+			 * 解决步骤：
+			 * 1.结束程序
+			 * 2.删除 Redis DB 中 blogViewsMap 这个 key（或者直接清空对应的整个 DB）
+			 * 3.重新启动程序
+			 *
+			 * 具体请查看: https://github.com/Naccl/NBlog/issues/58
+			 */
 			int view = (int) redisService.getValueByHashKey(redisKey, blogId);
 			blogInfo.setViews(view);
 			blogInfos.set(i, blogInfo);
@@ -325,7 +337,11 @@ public class BlogServiceImpl implements BlogService {
 		if (blog == null) {
 			throw new NotFoundException("博客不存在");
 		}
-		//将浏览量设置为Redis中的最新值
+		/**
+		 * 将浏览量设置为Redis中的最新值
+		 * 这里如果出现异常，查看第 152 行注释说明
+		 * @see BlogServiceImpl#setBlogViewsFromRedisToPageResult
+		 */
 		int view = (int) redisService.getValueByHashKey(RedisKeyConstants.BLOG_VIEWS_MAP, blog.getId());
 		blog.setViews(view);
 		return blog;
@@ -343,7 +359,11 @@ public class BlogServiceImpl implements BlogService {
 			throw new NotFoundException("该博客不存在");
 		}
 		blog.setContent(MarkdownUtils.markdownToHtmlExtensions(blog.getContent()));
-		//将浏览量设置为Redis中的最新值
+		/**
+		 * 将浏览量设置为Redis中的最新值
+		 * 这里如果出现异常，查看第 152 行注释说明
+		 * @see BlogServiceImpl#setBlogViewsFromRedisToPageResult
+		 */
 		int view = (int) redisService.getValueByHashKey(RedisKeyConstants.BLOG_VIEWS_MAP, blog.getId());
 		blog.setViews(view);
 		return blog;
