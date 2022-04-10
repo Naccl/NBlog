@@ -35,7 +35,7 @@ public class UserAgentUtils {
 		UserAgent agent = uaa.parse(userAgent);
 		String os = agent.getValue(UserAgent.OPERATING_SYSTEM_NAME_VERSION_MAJOR);
 		String browser = agent.getValue(UserAgent.AGENT_NAME_VERSION);
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap<>(4);
 		map.put("os", os);
 		map.put("browser", browser);
 		return map;

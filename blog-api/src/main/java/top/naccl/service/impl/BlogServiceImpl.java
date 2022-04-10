@@ -197,7 +197,6 @@ public class BlogServiceImpl implements BlogService {
 		if (mapFromRedis != null) {
 			return mapFromRedis;
 		}
-		Map<String, Object> map = new HashMap<>();
 		List<String> groupYearMonth = blogMapper.getGroupYearMonthByIsPublished();
 		Map<String, List<ArchiveBlog>> archiveBlogMap = new LinkedHashMap<>();
 		for (String s : groupYearMonth) {
@@ -213,6 +212,7 @@ public class BlogServiceImpl implements BlogService {
 			archiveBlogMap.put(s, archiveBlogs);
 		}
 		Integer count = countBlogByIsPublished();
+		Map<String, Object> map = new HashMap<>(4);
 		map.put("blogMap", archiveBlogMap);
 		map.put("count", count);
 		redisService.saveMapToValue(redisKey, map);
@@ -235,7 +235,7 @@ public class BlogServiceImpl implements BlogService {
 
 	private Map<Long, Integer> getBlogViewsMap() {
 		List<BlogView> blogViewList = blogMapper.getBlogViewsList();
-		Map<Long, Integer> blogViewsMap = new HashMap<>();
+		Map<Long, Integer> blogViewsMap = new HashMap<>(128);
 		for (BlogView blogView : blogViewList) {
 			blogViewsMap.put(blogView.getId(), blogView.getViews());
 		}

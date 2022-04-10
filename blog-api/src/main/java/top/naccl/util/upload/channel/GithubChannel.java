@@ -51,7 +51,7 @@ public class GithubChannel implements FileUploadChannel {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "token " + githubProperties.getToken());
 
-		HashMap<String, String> body = new HashMap<>(2);
+		HashMap<String, String> body = new HashMap<>(4);
 		body.put("message", "Add files via NBlog");
 		body.put("content", imgBase64);
 

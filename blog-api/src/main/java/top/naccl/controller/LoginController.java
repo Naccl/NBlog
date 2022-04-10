@@ -38,7 +38,7 @@ public class LoginController {
 		}
 		user.setPassword(null);
 		String jwt = JwtUtils.generateToken(JwtConstants.ADMIN_PREFIX + user.getUsername());
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>(4);
 		map.put("user", user);
 		map.put("token", jwt);
 		return Result.ok("登录成功", map);

@@ -23,7 +23,7 @@ public class CoverHtmlNodeRenderer extends AbstractCoverNodeRenderer {
 
     @Override
     public void render(Node node) {
-        Map<String, String> attributes = new HashMap<>();
+        Map<String, String> attributes = new HashMap<>(2);
         attributes.put("class", "m-text-cover");
         html.tag("span", context.extendAttributes(node, "span", attributes));
         renderChildren(node);
