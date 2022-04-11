@@ -23,7 +23,6 @@ import top.naccl.model.vo.SearchBlog;
 import top.naccl.service.BlogService;
 import top.naccl.service.RedisService;
 import top.naccl.service.TagService;
-import top.naccl.task.RedisSyncScheduleTask;
 import top.naccl.util.JacksonUtils;
 import top.naccl.util.markdown.MarkdownUtils;
 
@@ -46,8 +45,6 @@ public class BlogServiceImpl implements BlogService {
 	TagService tagService;
 	@Autowired
 	RedisService redisService;
-	@Autowired
-	RedisSyncScheduleTask redisSyncScheduleTask;
 	//随机博客显示5条
 	private static final int randomBlogLimitNum = 5;
 	//最新推荐博客显示3条
@@ -244,7 +241,7 @@ public class BlogServiceImpl implements BlogService {
 		return blogViewsMap;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void deleteBlogById(Long id) {
 		if (blogMapper.deleteBlogById(id) != 1) {
@@ -254,7 +251,7 @@ public class BlogServiceImpl implements BlogService {
 		redisService.deleteByHashKey(RedisKeyConstants.BLOG_VIEWS_MAP, id);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void deleteBlogTagByBlogId(Long blogId) {
 		if (blogMapper.deleteBlogTagByBlogId(blogId) == 0) {
@@ -262,7 +259,7 @@ public class BlogServiceImpl implements BlogService {
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void saveBlog(top.naccl.model.dto.Blog blog) {
 		if (blogMapper.saveBlog(blog) != 1) {
@@ -272,7 +269,7 @@ public class BlogServiceImpl implements BlogService {
 		deleteBlogRedisCache();
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void saveBlogTag(Long blogId, Long tagId) {
 		if (blogMapper.saveBlogTag(blogId, tagId) != 1) {
@@ -280,7 +277,7 @@ public class BlogServiceImpl implements BlogService {
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void updateBlogRecommendById(Long blogId, Boolean recommend) {
 		if (blogMapper.updateBlogRecommendById(blogId, recommend) != 1) {
@@ -288,7 +285,7 @@ public class BlogServiceImpl implements BlogService {
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void updateBlogVisibilityById(Long blogId, BlogVisibility blogVisibility) {
 		if (blogMapper.updateBlogVisibilityById(blogId, blogVisibility) != 1) {
@@ -299,7 +296,7 @@ public class BlogServiceImpl implements BlogService {
 		redisService.deleteCacheByKey(RedisKeyConstants.ARCHIVE_BLOG_MAP);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void updateBlogTopById(Long blogId, Boolean top) {
 		if (blogMapper.updateBlogTopById(blogId, top) != 1) {
@@ -313,7 +310,7 @@ public class BlogServiceImpl implements BlogService {
 		redisService.incrementByHashKey(RedisKeyConstants.BLOG_VIEWS_MAP, blogId, 1);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void updateViews(Long blogId, Integer views) {
 		if (blogMapper.updateViews(blogId, views) != 1) {
@@ -358,7 +355,7 @@ public class BlogServiceImpl implements BlogService {
 		return blogMapper.getBlogPassword(blogId);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void updateBlog(top.naccl.model.dto.Blog blog) {
 		if (blogMapper.updateBlog(blog) != 1) {

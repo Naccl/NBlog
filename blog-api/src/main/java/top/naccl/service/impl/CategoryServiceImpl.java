@@ -45,7 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryList;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void saveCategory(Category category) {
 		if (categoryMapper.saveCategory(category) != 1) {
@@ -68,7 +68,7 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryMapper.getCategoryByName(name);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void deleteCategoryById(Long id) {
 		if (categoryMapper.deleteCategoryById(id) != 1) {
@@ -77,7 +77,7 @@ public class CategoryServiceImpl implements CategoryService {
 		redisService.deleteCacheByKey(RedisKeyConstants.CATEGORY_NAME_LIST);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void updateCategory(Category category) {
 		if (categoryMapper.updateCategory(category) != 1) {

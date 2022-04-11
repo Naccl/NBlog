@@ -47,7 +47,7 @@ public class TagServiceImpl implements TagService {
 		return tagMapper.getTagListByBlogId(blogId);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void saveTag(Tag tag) {
 		if (tagMapper.saveTag(tag) != 1) {
@@ -70,7 +70,7 @@ public class TagServiceImpl implements TagService {
 		return tagMapper.getTagByName(name);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void deleteTagById(Long id) {
 		if (tagMapper.deleteTagById(id) != 1) {
@@ -79,7 +79,7 @@ public class TagServiceImpl implements TagService {
 		redisService.deleteCacheByKey(RedisKeyConstants.TAG_CLOUD_LIST);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void updateTag(Tag tag) {
 		if (tagMapper.updateTag(tag) != 1) {

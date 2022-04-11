@@ -52,8 +52,8 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
 		return schedulerJobMapper.getJobList();
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	@Transactional
 	public void saveJob(ScheduleJob scheduleJob) {
 		if (schedulerJobMapper.saveJob(scheduleJob) != 1) {
 			throw new PersistenceException("添加失败");
@@ -61,8 +61,8 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
 		ScheduleUtils.createScheduleJob(scheduler, scheduleJob);
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	@Transactional
 	public void updateJob(ScheduleJob scheduleJob) {
 		if (schedulerJobMapper.updateJob(scheduleJob) != 1) {
 			throw new PersistenceException("更新失败");
@@ -70,8 +70,8 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
 		ScheduleUtils.updateScheduleJob(scheduler, scheduleJob);
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	@Transactional
 	public void deleteJobById(Long jobId) {
 		ScheduleUtils.deleteScheduleJob(scheduler, jobId);
 		if (schedulerJobMapper.deleteJobById(jobId) != 1) {
@@ -84,8 +84,8 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
 		ScheduleUtils.run(scheduler, schedulerJobMapper.getJobById(jobId));
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	@Transactional
 	public void updateJobStatusById(Long jobId, Boolean status) {
 		if (status) {
 			ScheduleUtils.resumeJob(scheduler, jobId);
@@ -102,15 +102,15 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
 		return scheduleJobLogMapper.getJobLogListByDate(startDate, endDate);
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	@Transactional
 	public void saveJobLog(ScheduleJobLog jobLog) {
 		if (scheduleJobLogMapper.saveJobLog(jobLog) != 1) {
 			throw new PersistenceException("日志添加失败");
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void deleteJobLogByLogId(Long logId) {
 		if (scheduleJobLogMapper.deleteJobLogByLogId(logId) != 1) {

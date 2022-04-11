@@ -152,6 +152,7 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 		return siteSettingMapper.getWebTitleSuffix();
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void updateSiteSetting(List<LinkedHashMap> siteSettings, List<Integer> deleteIds) {
 		for (Integer id : deleteIds) {
@@ -171,21 +172,18 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 		deleteSiteInfoRedisCache();
 	}
 
-	@Transactional
 	public void saveOneSiteSetting(SiteSetting siteSetting) {
 		if (siteSettingMapper.saveSiteSetting(siteSetting) != 1) {
 			throw new PersistenceException("配置添加失败");
 		}
 	}
 
-	@Transactional
 	public void updateOneSiteSetting(SiteSetting siteSetting) {
 		if (siteSettingMapper.updateSiteSetting(siteSetting) != 1) {
 			throw new PersistenceException("配置修改失败");
 		}
 	}
 
-	@Transactional
 	public void deleteOneSiteSettingById(Integer id) {
 		if (siteSettingMapper.deleteSiteSettingById(id) != 1) {
 			throw new PersistenceException("配置删除失败");

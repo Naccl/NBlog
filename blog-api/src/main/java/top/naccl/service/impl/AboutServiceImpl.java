@@ -66,7 +66,7 @@ public class AboutServiceImpl implements AboutService {
 		deleteAboutRedisCache();
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void updateOneAbout(String nameEn, String value) {
 		if (aboutMapper.updateAbout(nameEn, value) != 1) {
 			throw new PersistenceException("修改失败");

@@ -30,7 +30,7 @@ public class OperationLogServiceImpl implements OperationLogService {
 		return operationLogMapper.getOperationLogListByDate(startDate, endDate);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void saveOperationLog(OperationLog log) {
 		String ipSource = IpAddressUtils.getCityInfo(log.getIp());
@@ -45,7 +45,7 @@ public class OperationLogServiceImpl implements OperationLogService {
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void deleteOperationLogById(Long id) {
 		if (operationLogMapper.deleteOperationLogById(id) != 1) {
