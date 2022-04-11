@@ -36,7 +36,7 @@ public class VisitLogServiceImpl implements VisitLogService {
 		return visitLogMapper.getUUIDAndCreateTimeByYesterday();
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void saveVisitLog(VisitLog log) {
 		String ipSource = IpAddressUtils.getCityInfo(log.getIp());
@@ -51,7 +51,7 @@ public class VisitLogServiceImpl implements VisitLogService {
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void deleteVisitLogById(Long id) {
 		if (visitLogMapper.deleteVisitLogById(id) != 1) {

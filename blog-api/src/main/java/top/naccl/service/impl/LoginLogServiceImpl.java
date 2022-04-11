@@ -30,7 +30,7 @@ public class LoginLogServiceImpl implements LoginLogService {
 		return loginLogMapper.getLoginLogListByDate(startDate, endDate);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void saveLoginLog(LoginLog log) {
 		String ipSource = IpAddressUtils.getCityInfo(log.getIp());
@@ -45,7 +45,7 @@ public class LoginLogServiceImpl implements LoginLogService {
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void deleteLoginLogById(Long id) {
 		if (loginLogMapper.deleteLoginLogById(id) != 1) {
