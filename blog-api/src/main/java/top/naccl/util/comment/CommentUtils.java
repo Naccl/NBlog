@@ -281,7 +281,7 @@ public class CommentUtils {
 			if (QQInfoUtils.isQQNumber(nickname)) {
 				comment.setQq(nickname);
 				comment.setNickname(QQInfoUtils.getQQNickname(nickname));
-				setCommentQQAvatar(comment);
+				setCommentQQAvatar(comment, nickname);
 			} else {
 				comment.setNickname(comment.getNickname().trim());
 				setCommentRandomAvatar(comment);
@@ -304,17 +304,17 @@ public class CommentUtils {
 	}
 
 	/**
-	 * 设置QQ头像
+	 * 设置QQ头像，复用已上传过的QQ头像，不再重复上传
 	 *
 	 * @param comment 当前收到的评论
+	 * @param qq      QQ号
 	 * @throws Exception 上传QQ头像时可能抛出的异常
 	 */
-	private void setCommentQQAvatar(Comment comment) throws Exception {
-		String nickname = comment.getNickname();
-		String uploadAvatarUrl = (String) redisService.getValueByHashKey(RedisKeyConstants.QQ_AVATAR_URL_MAP, nickname);
+	private void setCommentQQAvatar(Comment comment, String qq) throws Exception {
+		String uploadAvatarUrl = (String) redisService.getValueByHashKey(RedisKeyConstants.QQ_AVATAR_URL_MAP, qq);
 		if (StringUtils.isEmpty(uploadAvatarUrl)) {
-			uploadAvatarUrl = QQInfoUtils.getQQAvatarUrl(nickname);
-			redisService.saveKVToHash(RedisKeyConstants.QQ_AVATAR_URL_MAP, nickname, uploadAvatarUrl);
+			uploadAvatarUrl = QQInfoUtils.getQQAvatarUrl(qq);
+			redisService.saveKVToHash(RedisKeyConstants.QQ_AVATAR_URL_MAP, qq, uploadAvatarUrl);
 		}
 		comment.setAvatar(uploadAvatarUrl);
 	}
