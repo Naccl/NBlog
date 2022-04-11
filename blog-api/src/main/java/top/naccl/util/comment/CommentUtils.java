@@ -292,15 +292,13 @@ public class CommentUtils {
 			setCommentRandomAvatar(comment);
 		}
 
-		//set website
-		String website = comment.getWebsite().trim();
-		if (!"".equals(website) && !website.startsWith("http://") && !website.startsWith("https://")) {
-			website = "http://" + website;
+		//check website
+		if (!isValidUrl(comment.getWebsite())) {
+			comment.setWebsite("");
 		}
 		comment.setAdminComment(false);
 		comment.setCreateTime(new Date());
 		comment.setPublished(commentDefaultOpen);
-		comment.setWebsite(website);
 		comment.setEmail(comment.getEmail().trim());
 		comment.setIp(IpAddressUtils.getIpAddress(request));
 	}
@@ -319,5 +317,15 @@ public class CommentUtils {
 			redisService.saveKVToHash(RedisKeyConstants.QQ_AVATAR_URL_MAP, nickname, uploadAvatarUrl);
 		}
 		comment.setAvatar(uploadAvatarUrl);
+	}
+
+	/**
+	 * URL合法性校验
+	 *
+	 * @param url url
+	 * @return 是否合法
+	 */
+	private static boolean isValidUrl(String url) {
+		return url.matches("^https?://([^!@#$%^&*?.\\s-]([^!@#$%^&*?.\\s]{0,63}[^!@#$%^&*?.\\s])?\\.)+[a-z]{2,6}/?");
 	}
 }

@@ -55,9 +55,9 @@
 					<i slot="prefix" class="el-input__icon el-icon-message"></i>
 				</el-input>
 			</el-form-item>
-			<el-form-item>
+			<el-form-item prop="website">
 				<el-popover ref="websitePopover" placement="bottom" trigger="focus" content="可以让我参观一下吗😊"></el-popover>
-				<el-input v-model="commentForm.website" placeholder="https://（可选）" v-popover:websitePopover>
+				<el-input v-model="commentForm.website" placeholder="https://（可选）" :validate-event="false" v-popover:websitePopover>
 					<i slot="prefix" class="el-input__icon el-icon-map-location"></i>
 				</el-input>
 			</el-form-item>
@@ -73,12 +73,18 @@
 
 <script>
 	import {mapState} from 'vuex'
-	import {checkEmail} from "@/common/reg";
+	import {checkEmail, checkUrl} from "@/common/reg";
 	import {SET_PARENT_COMMENT_ID} from "@/store/mutations-types";
 	import tvMapper from '@/plugins/tvMapper.json'
 	import aruMapper from '@/plugins/aruMapper.json'
 	import paopaoMapper from '@/plugins/paopaoMapper.json'
 
+	const validateWebsite = (rule, value, callback) => {
+		if (value) {
+			return checkUrl(rule, value, callback)
+		}
+		callback()
+	}
 	export default {
 		name: "CommentForm",
 		computed: {
@@ -96,6 +102,10 @@
 						{required: true, message: '请输入评论邮箱'},
 						{validator: checkEmail}
 					],
+					website: [
+						{required: false},
+						{validator: validateWebsite}
+					]
 				},
 				emojiShow: false,
 				activeEmojiTab: 0,
