@@ -169,11 +169,11 @@
 				localStorage.setItem(`hintShow${id}`, '1')
 			},
 			imgUrl(file) {
-				return this.isCDN ? `https://cdn.jsdelivr.net/gh/${this.userInfo.login}/${this.activeRepos}/${file.path}` : file.download_url
+				return this.isCDN ? `https://fastly.jsdelivr.net/gh/${this.userInfo.login}/${this.activeRepos}/${file.path}` : file.download_url
 			},
 			copy(type, file) {
 				// type 1 cdn link  2 Markdown
-				let imgUrl = `https://cdn.jsdelivr.net/gh/${this.userInfo.login}/${this.activeRepos}/${file.path}`
+				let imgUrl = `https://fastly.jsdelivr.net/gh/${this.userInfo.login}/${this.activeRepos}/${file.path}`
 				let copyCont = imgUrl
 				if (type == 2) {
 					copyCont = `![${file.name}](${imgUrl})`

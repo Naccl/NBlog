@@ -1,10 +1,10 @@
 <template>
 	<header ref="header">
 		<div class="view">
-			<img ref="imgbg1" src="https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg1.jpg" style="display: none;">
-			<div class="bg1" style="background-image: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg1.jpg');"></div>
-			<div class="bg2" style="background-image: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg2.jpg');"></div>
-			<div class="bg3" style="background-image: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg3.jpg');" v-show="loaded"></div>
+			<img ref="imgbg1" src="https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/bg1.jpg" style="display: none;">
+			<div class="bg1" style="background-image: url('https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/bg1.jpg');"></div>
+			<div class="bg2" style="background-image: url('https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/bg2.jpg');"></div>
+			<div class="bg3" style="background-image: url('https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/bg3.jpg');" v-show="loaded"></div>
 		</div>
 		<div class="text-malfunction" data-word="Naccl's Blog">
 			<div class="line"></div>
@@ -12,8 +12,8 @@
 		<div class="wrapper">
 			<i class="ali-iconfont icon-down" @click="scrollToMain"></i>
 		</div>
-		<div class="wave1"></div>
-		<div class="wave2"></div>
+		<div class="wave1" style="background: url('https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/wave1.png') repeat-x;"></div>
+		<div class="wave2" style="background: url('https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/wave2.png') repeat-x;"></div>
 	</header>
 </template>
 
@@ -280,13 +280,11 @@
 	}
 
 	.wave1 {
-		background: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/wave1.png') repeat-x;
 		height: 75px;
 		width: 100%;
 	}
 
 	.wave2 {
-		background: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/wave2.png') repeat-x;
 		height: 90px;
 		width: calc(100% + 100px);
 		left: -100px;

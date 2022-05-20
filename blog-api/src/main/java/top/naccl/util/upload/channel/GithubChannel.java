@@ -29,7 +29,7 @@ public class GithubChannel implements FileUploadChannel {
 	/**
 	 * jsDelivr的CDN链接
 	 */
-	private static final String cdnUrl4Github = "https://cdn.jsdelivr.net/gh/%s/%s%s/%s";
+	private static final String cdnUrl4Github = "https://fastly.jsdelivr.net/gh/%s/%s%s/%s";
 
 	@Autowired
 	private GithubProperties githubProperties;
