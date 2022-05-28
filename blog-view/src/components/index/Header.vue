@@ -1,12 +1,12 @@
 <template>
 	<header ref="header">
 		<div class="view">
-			<img ref="imgbg1" src="https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg1.jpg" style="display: none;">
-			<div class="bg1" style="background-image: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg1.jpg');"></div>
-			<div class="bg2" style="background-image: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg2.jpg');"></div>
-			<div class="bg3" style="background-image: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/bg3.jpg');" v-show="loaded"></div>
+			<img ref="imgbg1" src="/index/header/bg1.jpeg" style="display: none;">
+			<div class="bg1" style="background-image: url('/index/header/bg1.jpeg');"></div>
+			<div class="bg2" style="background-image: url('/index/header/bg1.jpeg');"></div>
+			<div class="bg3" style="background-image: url('/index/header/bg1.jpeg');" v-show="loaded"></div>
 		</div>
-		<div class="text-malfunction" data-word="Naccl's Blog">
+		<div class="text-malfunction" data-word="willWang's Blog">
 			<div class="line"></div>
 		</div>
 		<div class="wrapper">
@@ -127,9 +127,9 @@
 	.text-malfunction {
 		position: absolute;
 		top: 40%;
-		left: 51.5%;
+		left: 49.5%;
 		transform: translate(-50%, -50%) scale(2.5);
-		width: 220px;
+		width: 250px;
 		font-size: 34px;
 		font-family: sans-serif;
 		color: transparent;
@@ -137,7 +137,7 @@
 
 	.line {
 		position: absolute;
-		width: 200px;
+		width: 248px;
 		left: -1px;
 		height: 1px;
 		background: black;
@@ -280,13 +280,13 @@
 	}
 
 	.wave1 {
-		background: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/wave1.png') repeat-x;
+		background: url('https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/wave1.png') repeat-x;
 		height: 75px;
 		width: 100%;
 	}
 
 	.wave2 {
-		background: url('https://cdn.jsdelivr.net/gh/Naccl/blog-resource/img/wave2.png') repeat-x;
+		background: url('https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/wave2.png') repeat-x;
 		height: 90px;
 		width: calc(100% + 100px);
 		left: -100px;
