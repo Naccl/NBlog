@@ -2,6 +2,7 @@ package top.naccl.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -149,7 +150,8 @@ public class BlogServiceImpl implements BlogService {
 		for (int i = 0; i < blogInfos.size(); i++) {
 			BlogInfo blogInfo = JacksonUtils.convertValue(blogInfos.get(i), BlogInfo.class);
 			Long blogId = blogInfo.getId();
-			int view = (int) redisService.getValueByHashKey(redisKey, blogId);
+			Object viewNum = redisService.getValueByHashKey(redisKey, blogId);
+			Integer view = ObjectUtils.isNotEmpty(viewNum) ? Integer.valueOf(String.valueOf(viewNum)) : 0;
 			blogInfo.setViews(view);
 			blogInfos.set(i, blogInfo);
 		}
@@ -326,7 +328,8 @@ public class BlogServiceImpl implements BlogService {
 			throw new NotFoundException("博客不存在");
 		}
 		//将浏览量设置为Redis中的最新值
-		int view = (int) redisService.getValueByHashKey(RedisKeyConstants.BLOG_VIEWS_MAP, blog.getId());
+		Object viewNum = redisService.getValueByHashKey(RedisKeyConstants.BLOG_VIEWS_MAP, blog.getId());
+		Integer view = ObjectUtils.isNotEmpty(viewNum) ? Integer.valueOf(String.valueOf(viewNum)) : 0;
 		blog.setViews(view);
 		return blog;
 	}
@@ -344,7 +347,8 @@ public class BlogServiceImpl implements BlogService {
 		}
 		blog.setContent(MarkdownUtils.markdownToHtmlExtensions(blog.getContent()));
 		//将浏览量设置为Redis中的最新值
-		int view = (int) redisService.getValueByHashKey(RedisKeyConstants.BLOG_VIEWS_MAP, blog.getId());
+		Object viewNum = redisService.getValueByHashKey(RedisKeyConstants.BLOG_VIEWS_MAP, blog.getId());
+		Integer view = ObjectUtils.isNotEmpty(viewNum) ? Integer.valueOf(String.valueOf(viewNum)) : 0;
 		blog.setViews(view);
 		return blog;
 	}
