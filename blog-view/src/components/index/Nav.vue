@@ -11,9 +11,11 @@
 				<span class="el-dropdown-link item" :class="{'m-mobile-hide': mobileHide,'active':$route.name==='category'}">
 					<i class="idea icon"></i>分类<i class="caret down icon"></i>
 				</span>
-				<el-dropdown-menu slot="dropdown">
-					<el-dropdown-item :command="category.name" v-for="(category,index) in categoryList" :key="index">{{ category.name }}</el-dropdown-item>
-				</el-dropdown-menu>
+        <template v-slot:dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item :command="category.name" v-for="(category,index) in categoryList" :key="index">{{ category.name }}</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
 			</el-dropdown>
 			<router-link to="/archives" class="item" :class="{'m-mobile-hide': mobileHide,'active':$route.name==='archives'}">
 				<i class="clone icon"></i>归档
@@ -27,11 +29,11 @@
 			<router-link to="/about" class="item" :class="{'m-mobile-hide': mobileHide,'active':$route.name==='about'}">
 				<i class="info icon"></i>关于我
 			</router-link>
-			<el-autocomplete v-model="queryString" :fetch-suggestions="debounceQuery" placeholder="Search..."
-			                 class="right item m-search" :class="{'m-mobile-hide': mobileHide}"
-			                 popper-class="m-search-item" @select="handleSelect">
-				<i class="search icon el-input__icon" slot="suffix"></i>
-				<template slot-scope="{ item }">
+			<el-autocomplete v-model="queryString" :fetch-suggestions="debounceQuery" placeholder="Search..." class="right item m-search" :class="{'m-mobile-hide': mobileHide}" popper-class="m-search-item" @select="handleSelect">
+        <template v-slot:suffix>
+          <i class="search icon el-input__icon"></i>
+        </template>
+				<template v-slot:item>
 					<div class="title">{{ item.title }}</div>
 					<span class="content">{{ item.content }}</span>
 				</template>
@@ -48,7 +50,7 @@
 	import {mapState} from 'vuex'
 
 	export default {
-		name: "Nav",
+		name: "blogNav",
 		props: {
 			blogName: {
 				type: String,

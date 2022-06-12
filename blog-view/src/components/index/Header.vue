@@ -21,7 +21,7 @@
 	import {mapState} from 'vuex'
 
 	export default {
-		name: "Header",
+		name: "blogHeader",
 		data() {
 			return {
 				loaded: false
@@ -50,7 +50,7 @@
 			header.addEventListener('mouseenter', (e) => {
 				startingPoint = e.clientX
 			})
-			header.addEventListener('mouseout', (e) => {
+			header.addEventListener('mouseout', () => {
 				header.classList.remove('moving')
 				header.style.setProperty('--percentage', 0.5)
 			})

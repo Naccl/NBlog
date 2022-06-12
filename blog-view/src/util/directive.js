@@ -1,11 +1,13 @@
-import Vue from 'vue'
+import { createApp } from "vue";
+
+const app = createApp()
 
 /**
  * 防抖 单位时间只触发最后一次
  * 例：<el-button v-debounce="[reset,`click`,300]">刷新</el-button>
  * 简写：<el-button v-debounce="[reset]">刷新</el-button>
  */
-Vue.directive('debounce', {
+app.directive('debounce', {
 	inserted: function (el, binding) {
 		let [fn, event = "click", time = 300] = binding.value
 		let timer
@@ -21,7 +23,7 @@ Vue.directive('debounce', {
  * 例：<el-button v-throttle="[reset,`click`,300]">刷新</el-button>
  * 传递参数：<el-button v-throttle="[()=>reset(param),`click`,300]">刷新</el-button>
  */
-Vue.directive('throttle', {
+app.directive('throttle', {
 	inserted: function (el, binding) {
 		let [fn, event = "click", time = 300] = binding.value
 		let now, preTime

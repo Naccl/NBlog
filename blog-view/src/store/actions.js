@@ -7,7 +7,7 @@ import {
 } from "./mutations-types";
 
 import {getCommentListByQuery, submitComment} from "@/api/comment";
-import {Message, Notification} from "element-ui";
+import {ElMessage, ElNotification} from "element-plus";
 import router from "../router";
 import tvMapper from '@/plugins/tvMapper.json'
 import aruMapper from '@/plugins/aruMapper.json'
@@ -64,7 +64,7 @@ export default {
 				commit(SAVE_COMMENT_RESULT, res.data)
 			}
 		}).catch(() => {
-			Message.error("请求失败")
+			ElMessage.error("请求失败")
 		})
 	},
 	submitCommentForm({rootState, dispatch, commit}, token) {
@@ -74,7 +74,7 @@ export default {
 		form.parentCommentId = rootState.parentCommentId
 		submitComment(token, form).then(res => {
 			if (res.code === 200) {
-				Notification({
+				ElNotification({
 					title: res.msg,
 					type: 'success'
 				})
@@ -82,14 +82,14 @@ export default {
 				commit(RESET_COMMENT_FORM)
 				dispatch('getCommentList')
 			} else {
-				Notification({
+				ElNotification({
 					title: '评论失败',
 					message: res.msg,
 					type: 'error'
 				})
 			}
 		}).catch(() => {
-			Notification({
+			ElNotification({
 				title: '评论失败',
 				message: '异常错误',
 				type: 'error'
