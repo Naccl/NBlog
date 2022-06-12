@@ -58,7 +58,7 @@ public class TelegramUtils {
 		//与 TelegramBotController#getUpdate 请求地址一致
 		String webhook = blogProperties.getApi() + "/tg/" + telegramProperties.getToken();
 
-		Map<String, Object> data = new HashMap<>(1);
+		Map<String, Object> data = new HashMap<>(2);
 		data.put("url", webhook);
 
 		sendByAutoCheckReverseProxy(url, data);
@@ -71,7 +71,7 @@ public class TelegramUtils {
 	 * @return
 	 */
 	public Map<String, Object> getMessageBody(String content) {
-		Map<String, Object> body = new HashMap<>(3);
+		Map<String, Object> body = new HashMap<>(4);
 		body.put("chat_id", telegramProperties.getChatId());
 		body.put("parse_mode", PARSE_MODE);
 		body.put("text", content);
@@ -122,7 +122,7 @@ public class TelegramUtils {
 		headers.add("content-type", MediaType.APPLICATION_JSON_VALUE);
 		headers.add("User-Agent", "");
 
-		Map<String, Object> body = new HashMap<>(2);
+		Map<String, Object> body = new HashMap<>(4);
 		body.put("to", url);
 		body.put("data", data);
 		HttpEntity httpEntity = new HttpEntity(body, headers);

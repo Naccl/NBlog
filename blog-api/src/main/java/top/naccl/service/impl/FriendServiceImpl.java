@@ -41,7 +41,7 @@ public class FriendServiceImpl implements FriendService {
 		return friendMapper.getFriendVOList();
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void updateFriendPublishedById(Long friendId, Boolean published) {
 		if (friendMapper.updateFriendPublishedById(friendId, published) != 1) {
@@ -49,7 +49,7 @@ public class FriendServiceImpl implements FriendService {
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void saveFriend(Friend friend) {
 		friend.setViews(0);
@@ -59,7 +59,7 @@ public class FriendServiceImpl implements FriendService {
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void updateFriend(top.naccl.model.dto.Friend friend) {
 		if (friendMapper.updateFriend(friend) != 1) {
@@ -67,7 +67,7 @@ public class FriendServiceImpl implements FriendService {
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void deleteFriend(Long id) {
 		if (friendMapper.deleteFriend(id) != 1) {
@@ -75,7 +75,7 @@ public class FriendServiceImpl implements FriendService {
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void updateViewsByNickname(String nickname) {
 		if (friendMapper.updateViewsByNickname(nickname) != 1) {
@@ -115,7 +115,7 @@ public class FriendServiceImpl implements FriendService {
 		return friendInfo;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void updateFriendInfoContent(String content) {
 		if (siteSettingMapper.updateFriendInfoContent(content) != 1) {
@@ -124,7 +124,7 @@ public class FriendServiceImpl implements FriendService {
 		deleteFriendInfoRedisCache();
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void updateFriendInfoCommentEnabled(Boolean commentEnabled) {
 		if (siteSettingMapper.updateFriendInfoCommentEnabled(commentEnabled) != 1) {

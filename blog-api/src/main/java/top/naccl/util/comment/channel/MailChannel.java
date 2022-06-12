@@ -37,7 +37,7 @@ public class MailChannel implements CommentNotifyChannel {
 	@Override
 	public void notifyMyself(Comment comment) {
 		CommentPageEnum commentPageEnum = CommentUtils.getCommentPageEnum(comment);
-		Map<String, Object> map = new HashMap<>(9);
+		Map<String, Object> map = new HashMap<>(16);
 		map.put("title", commentPageEnum.getTitle());
 		map.put("time", comment.getCreateTime());
 		map.put("nickname", comment.getNickname());

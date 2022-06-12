@@ -38,7 +38,7 @@ public class DashboardAdminController {
 		Map<String, List> visitRecordMap = dashboardService.getVisitRecordMap();
 		List<CityVisitor> cityVisitorList = dashboardService.getCityVisitorList();
 
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>(16);
 		map.put("pv", todayPV);
 		map.put("uv", todayUV);
 		map.put("blogCount", blogCount);

@@ -42,7 +42,7 @@ public class CommentServiceImpl implements CommentService {
 			getReplyComments(tmpComments, c.getReplyComments());
 			//对于两列评论来说，按时间顺序排列应该比树形更合理些
 			//排序一下
-			Comparator<PageComment> comparator = (c1, c2) -> c1.getCreateTime().compareTo(c2.getCreateTime());
+			Comparator<PageComment> comparator = Comparator.comparing(PageComment::getCreateTime);
 			tmpComments.sort(comparator);
 
 			c.setReplyComments(tmpComments);
@@ -63,7 +63,6 @@ public class CommentServiceImpl implements CommentService {
 	 * 将所有子评论递归取出到一个List中
 	 *
 	 * @param comments
-	 * @return
 	 */
 	private void getReplyComments(List<PageComment> tmpComments, List<PageComment> comments) {
 		for (PageComment c : comments) {
@@ -81,7 +80,7 @@ public class CommentServiceImpl implements CommentService {
 		return comments;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void updateCommentPublishedById(Long commentId, Boolean published) {
 		//如果是隐藏评论，则所有子评论都要修改成隐藏状态
@@ -97,7 +96,7 @@ public class CommentServiceImpl implements CommentService {
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void updateCommentNoticeById(Long commentId, Boolean notice) {
 		if (commentMapper.updateCommentNoticeById(commentId, notice) != 1) {
@@ -105,7 +104,7 @@ public class CommentServiceImpl implements CommentService {
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void deleteCommentById(Long commentId) {
 		List<Comment> comments = getAllReplyComments(commentId);
@@ -117,13 +116,13 @@ public class CommentServiceImpl implements CommentService {
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void deleteCommentsByBlogId(Long blogId) {
 		commentMapper.deleteCommentsByBlogId(blogId);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void updateComment(Comment comment) {
 		if (commentMapper.updateComment(comment) != 1) {
@@ -136,7 +135,7 @@ public class CommentServiceImpl implements CommentService {
 		return commentMapper.countByPageAndIsPublished(page, blogId, isPublished);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void saveComment(top.naccl.model.dto.Comment comment) {
 		if (commentMapper.saveComment(comment) != 1) {
@@ -148,7 +147,6 @@ public class CommentServiceImpl implements CommentService {
 	 * 递归删除子评论
 	 *
 	 * @param comment 需要删除子评论的父评论
-	 * @return
 	 */
 	private void delete(Comment comment) {
 		for (Comment c : comment.getReplyComments()) {
@@ -163,7 +161,6 @@ public class CommentServiceImpl implements CommentService {
 	 * 递归隐藏子评论
 	 *
 	 * @param comment 需要隐藏子评论的父评论
-	 * @return
 	 */
 	private void hideComment(Comment comment) {
 		for (Comment c : comment.getReplyComments()) {

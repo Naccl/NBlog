@@ -6,12 +6,14 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 import top.naccl.config.properties.BlogProperties;
 import top.naccl.constant.PageConstants;
+import top.naccl.constant.RedisKeyConstants;
 import top.naccl.entity.User;
 import top.naccl.model.dto.Comment;
 import top.naccl.model.vo.FriendInfo;
 import top.naccl.service.AboutService;
 import top.naccl.service.BlogService;
 import top.naccl.service.FriendService;
+import top.naccl.service.RedisService;
 import top.naccl.service.UserService;
 import top.naccl.util.HashUtils;
 import top.naccl.util.IpAddressUtils;
@@ -47,6 +49,8 @@ public class CommentUtils {
 	private FriendService friendService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RedisService redisService;
 
 	private static BlogService blogService;
 
@@ -107,7 +111,7 @@ public class CommentUtils {
 	 */
 	private void sendMailToParentComment(top.naccl.entity.Comment parentComment, Comment comment) {
 		CommentPageEnum commentPageEnum = getCommentPageEnum(comment);
-		Map<String, Object> map = new HashMap<>(7);
+		Map<String, Object> map = new HashMap<>(16);
 		map.put("parentNickname", parentComment.getNickname());
 		map.put("nickname", comment.getNickname());
 		map.put("title", commentPageEnum.getTitle());
@@ -272,12 +276,12 @@ public class CommentUtils {
 	 * @param request 用于获取ip
 	 */
 	public void setVisitorComment(Comment comment, HttpServletRequest request) {
-		String commentNickname = comment.getNickname();
+		String nickname = comment.getNickname();
 		try {
-			if (QQInfoUtils.isQQNumber(commentNickname)) {
-				comment.setQq(commentNickname);
-				comment.setNickname(QQInfoUtils.getQQNickname(commentNickname));
-				comment.setAvatar(QQInfoUtils.getQQAvatarUrl(commentNickname));
+			if (QQInfoUtils.isQQNumber(nickname)) {
+				comment.setQq(nickname);
+				comment.setNickname(QQInfoUtils.getQQNickname(nickname));
+				setCommentQQAvatar(comment, nickname);
 			} else {
 				comment.setNickname(comment.getNickname().trim());
 				setCommentRandomAvatar(comment);
@@ -288,16 +292,40 @@ public class CommentUtils {
 			setCommentRandomAvatar(comment);
 		}
 
-		//set website
-		String website = comment.getWebsite().trim();
-		if (!"".equals(website) && !website.startsWith("http://") && !website.startsWith("https://")) {
-			website = "http://" + website;
+		//check website
+		if (!isValidUrl(comment.getWebsite())) {
+			comment.setWebsite("");
 		}
 		comment.setAdminComment(false);
 		comment.setCreateTime(new Date());
 		comment.setPublished(commentDefaultOpen);
-		comment.setWebsite(website);
 		comment.setEmail(comment.getEmail().trim());
 		comment.setIp(IpAddressUtils.getIpAddress(request));
+	}
+
+	/**
+	 * 设置QQ头像，复用已上传过的QQ头像，不再重复上传
+	 *
+	 * @param comment 当前收到的评论
+	 * @param qq      QQ号
+	 * @throws Exception 上传QQ头像时可能抛出的异常
+	 */
+	private void setCommentQQAvatar(Comment comment, String qq) throws Exception {
+		String uploadAvatarUrl = (String) redisService.getValueByHashKey(RedisKeyConstants.QQ_AVATAR_URL_MAP, qq);
+		if (StringUtils.isEmpty(uploadAvatarUrl)) {
+			uploadAvatarUrl = QQInfoUtils.getQQAvatarUrl(qq);
+			redisService.saveKVToHash(RedisKeyConstants.QQ_AVATAR_URL_MAP, qq, uploadAvatarUrl);
+		}
+		comment.setAvatar(uploadAvatarUrl);
+	}
+
+	/**
+	 * URL合法性校验
+	 *
+	 * @param url url
+	 * @return 是否合法
+	 */
+	private static boolean isValidUrl(String url) {
+		return url.matches("^https?://([^!@#$%^&*?.\\s-]([^!@#$%^&*?.\\s]{0,63}[^!@#$%^&*?.\\s])?\\.)+[a-z]{2,6}/?");
 	}
 }

@@ -42,10 +42,10 @@ public class VisitorServiceImpl implements VisitorService {
 
 	@Override
 	public boolean hasUUID(String uuid) {
-		return visitorMapper.hasUUID(uuid) == 0 ? false : true;
+		return visitorMapper.hasUUID(uuid) != 0;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void saveVisitor(Visitor visitor) {
 		String ipSource = IpAddressUtils.getCityInfo(visitor.getIp());
@@ -60,12 +60,13 @@ public class VisitorServiceImpl implements VisitorService {
 		}
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void updatePVAndLastTimeByUUID(VisitLogUuidTime dto) {
 		visitorMapper.updatePVAndLastTimeByUUID(dto);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void deleteVisitor(Long id, String uuid) {
 		//删除Redis中该访客的uuid

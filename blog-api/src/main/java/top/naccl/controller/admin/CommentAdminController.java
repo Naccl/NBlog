@@ -49,7 +49,7 @@ public class CommentAdminController {
 	                       @RequestParam(defaultValue = "10") Integer pageSize) {
 		String orderBy = "create_time desc";
 		PageHelper.startPage(pageNum, pageSize, orderBy);
-		List<Comment> comments = commentService.getListByPageAndParentCommentId(page, blogId, (long) -1);
+		List<Comment> comments = commentService.getListByPageAndParentCommentId(page, blogId, -1L);
 		PageInfo<Comment> pageInfo = new PageInfo<>(comments);
 		return Result.ok("请求成功", pageInfo);
 	}

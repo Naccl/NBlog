@@ -13,8 +13,8 @@
 		<el-table :data="logList">
 			<el-table-column label="序号" type="index" width="50"></el-table-column>
 			<el-table-column label="用户名称" prop="username"></el-table-column>
-			<el-table-column label="ip" prop="ip"></el-table-column>
-			<el-table-column label="ip来源" prop="ipSource" show-overflow-tooltip></el-table-column>
+			<el-table-column label="IP" prop="ip"></el-table-column>
+			<el-table-column label="IP来源" prop="ipSource" show-overflow-tooltip></el-table-column>
 			<el-table-column label="操作系统" prop="os"></el-table-column>
 			<el-table-column label="浏览器" prop="browser" show-overflow-tooltip></el-table-column>
 			<el-table-column label="登录状态">
