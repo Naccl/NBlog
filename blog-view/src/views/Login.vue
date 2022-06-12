@@ -11,7 +11,7 @@
 					<el-input v-model="loginForm.username" prefix-icon="el-icon-user-solid"></el-input>
 				</el-form-item>
 				<el-form-item prop="password">
-					<el-input v-model="loginForm.password" prefix-icon="el-icon-lock" show-password @keyup.native.enter="login"></el-input>
+					<el-input v-model="loginForm.password" prefix-icon="el-icon-lock" show-password @keyup.enter="login"></el-input>
 				</el-form-item>
 				<el-form-item class="btns">
 					<el-button type="primary" @click="login">登录</el-button>
@@ -26,7 +26,7 @@
 	import {login} from "@/api/login";
 
 	export default {
-		name: "Login",
+		name: "blogLogin",
 		data() {
 			return {
 				loginForm: {

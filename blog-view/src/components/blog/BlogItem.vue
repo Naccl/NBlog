@@ -16,7 +16,7 @@
 					<div class="row m-padded-tb-small">
 						<div class="ui horizontal link list m-center">
 							<div class="item m-datetime">
-								<i class="small calendar icon"></i><span>{{ item.createTime | dateFormat('YYYY-MM-DD')}}</span>
+								<i class="small calendar icon"></i><span>{{ dateFormat(item.createTime,'YYYY-MM-DD') }}</span>
 							</div>
 							<div class="item m-views">
 								<i class="small eye icon"></i><span>{{ item.views }}</span>
@@ -54,8 +54,10 @@
 </template>
 
 <script>
-	export default {
-		name: "BlogItem",
+  import {dateFormat} from "@/util/dateTimeFormatUtils";
+
+  export default {
+		name: "blogItem",
 		props: {
 			blogList: {
 				type: Array,
@@ -65,7 +67,8 @@
 		methods: {
 			toBlog(blog) {
 				this.$store.dispatch('goBlogPage', blog)
-			}
+			},
+      dateFormat:dateFormat
 		}
 	}
 </script>

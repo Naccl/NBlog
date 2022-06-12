@@ -14,7 +14,7 @@
 	import {mapState} from 'vuex'
 
 	export default {
-		name: "Tocbot",
+		name: "blogTocbot",
 		computed: {
 			...mapState(['isBlogRenderComplete'])
 		},

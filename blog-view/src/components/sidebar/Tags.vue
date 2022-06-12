@@ -12,7 +12,7 @@
 
 <script>
 	export default {
-		name: "Tags",
+		name: "blogTags",
 		props: {
 			tagList: {
 				type: Array,

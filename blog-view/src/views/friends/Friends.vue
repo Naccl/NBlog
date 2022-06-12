@@ -5,8 +5,7 @@
 		</div>
 		<div class="ui attached segment">
 			<div class="ui link three doubling cards">
-				<a :href="item.website" target="_blank" rel="external nofollow noopener" class="card" :style="randomRGB()"
-				   v-for="(item,index) in friendList" :key="index" @click="addViews(item.nickname)">
+				<a :href="item.website" target="_blank" rel="external nofollow noopener" class="card" :style="randomRGB()" v-for="(item,index) in friendList" :key="index" @click="addViews(item.nickname)">
 					<div class="image">
 						<img :src="item.avatar" onerror="this.src = '/img/error.png'">
 					</div>
@@ -34,7 +33,7 @@
 	import CommentList from "@/components/comment/CommentList";
 
 	export default {
-		name: "Friends",
+		name: "blogFriends",
 		components: {CommentList},
 		data() {
 			return {

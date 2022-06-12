@@ -18,7 +18,7 @@
 	import CommentList from "@/components/comment/CommentList";
 
 	export default {
-		name: "About",
+		name: "blogAbout",
 		components: {CommentList},
 		data() {
 			return {

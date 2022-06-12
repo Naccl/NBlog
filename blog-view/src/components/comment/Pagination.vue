@@ -1,7 +1,6 @@
 <template>
 	<!--评论分页-->
-	<el-pagination @current-change="handleCurrentChange" :current-page="commentQuery.pageNum" :page-count="commentTotalPage"
-	               layout="prev, pager, next" background hide-on-single-page class="pagination">
+	<el-pagination @current-change="handleCurrentChange" :current-page="commentQuery.pageNum" :page-count="commentTotalPage" layout="prev, pager, next" background hide-on-single-page class="pagination">
 	</el-pagination>
 </template>
 
@@ -10,7 +9,7 @@
 	import {SET_COMMENT_QUERY_PAGE_NUM, SET_PARENT_COMMENT_ID} from "@/store/mutations-types";
 
 	export default {
-		name: "Pagination",
+		name: "BlogPagination",
 		computed: {
 			...mapState(['commentQuery', 'commentTotalPage'])
 		},
