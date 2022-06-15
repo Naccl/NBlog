@@ -66,6 +66,8 @@ Vue 项目基于 @vue/cli4.x 构建
 
 JS 依赖及参考的 css：[axios](https://github.com/axios/axios)、[moment](https://github.com/moment/moment)、[nprogress](https://github.com/rstacruz/nprogress)、[v-viewer](https://github.com/fengyuanchen/viewerjs)、[prismjs](https://github.com/PrismJS/prism)、[APlayer](https://github.com/DIYgod/APlayer)、[MetingJS](https://github.com/metowolf/MetingJS)、[lodash](https://github.com/lodash/lodash)、[mavonEditor](https://github.com/hinesboy/mavonEditor)、[echarts](https://github.com/apache/echarts)、[tocbot](https://github.com/tscanlin/tocbot)、[iCSS](https://github.com/chokcoco/iCSS)
 
+**由 [@willWang8023](https://github.com/willWang8023) 维护的 Vue3 版本请查看 [blog-view-vue3](https://github.com/willWang8023/blog-view-vue3)**
+
 
 
 ### 后台 UI
@@ -119,8 +121,8 @@ UI 框架为 [Element UI](https://github.com/ElemeFE/element)
 
 一些常见问题：
 
-- MySQL 确保数据库字符集为`utf8mb4`的情况下通常没有问题（”站点设置“及”文章详情“等许多表字段需要`utf8mb4`格式字符集来支持 emoji 表情，否则在导入 sql 文件时，即使成功导入，也会有部分字段内容不完整，导致前端页面渲染数据时报错）
-- 确保 Maven 能够成功导入现版本依赖，请勿升级或降低依赖版本
+- MySQL 确保数据库字符集为`utf8mb4`（”站点设置“及”文章详情“等许多表字段需要`utf8mb4`格式字符集来支持 emoji 表情，否则在导入 sql 文件时，即使成功导入，也会有部分字段内容不完整，导致前端页面渲染数据时报错）
+- 确保 Maven 和 NPM 能够成功导入现版本依赖，请勿升级或降低依赖版本
 - 数据库中默认用户名密码为`Admin`，`123456`，因为是个人博客，没打算做修改密码的页面，可在`top.naccl.util.HashUtils`下的`main`方法手动生成密码存入数据库
 - 注意修改`application-dev.properties`的配置信息
   - 注意修改`token.secretKey`，否则无法保证 token 安全性
@@ -141,10 +143,6 @@ UI 框架为 [Element UI](https://github.com/ElemeFE/element)
 ## LICENSE
 
 [MIT](https://github.com/Naccl/NBlog/blob/master/LICENSE)
-
-此开源协议表示你可以使用此项目做任何你想做的事，而无需再次过问
-
-我只想保留版权，但即使你不这么做，我也不会顺着网线去找你
 
 
 
