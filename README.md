@@ -46,16 +46,6 @@ Spring Boot + Vue「前后端分离，人不分离」博客系统
 
 邮件模板参考自 [Typecho-CommentToMail-Template](https://github.com/MisakaTAT/Typecho-CommentToMail-Template)
 
-基于 JDK8 开发，8以上要添加依赖：
-
-```xml
-<dependency>
-    <groupId>javax.xml.bind</groupId>
-    <artifactId>jaxb-api</artifactId>
-    <version>2.3.0</version>
-</dependency>
-```
-
 
 
 ## 前端
