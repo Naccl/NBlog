@@ -6,12 +6,12 @@ import org.springframework.transaction.annotation.Transactional;
 import top.naccl.entity.ExceptionLog;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.ExceptionLogMapper;
+import top.naccl.model.dto.UserAgentDTO;
 import top.naccl.service.ExceptionLogService;
 import top.naccl.util.IpAddressUtils;
 import top.naccl.util.UserAgentUtils;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Description: 异常日志业务层实现
@@ -34,12 +34,10 @@ public class ExceptionLogServiceImpl implements ExceptionLogService {
 	@Override
 	public void saveExceptionLog(ExceptionLog log) {
 		String ipSource = IpAddressUtils.getCityInfo(log.getIp());
-		Map<String, String> userAgentMap = userAgentUtils.parseOsAndBrowser(log.getUserAgent());
-		String os = userAgentMap.get("os");
-		String browser = userAgentMap.get("browser");
+		UserAgentDTO userAgentDTO = userAgentUtils.parseOsAndBrowser(log.getUserAgent());
 		log.setIpSource(ipSource);
-		log.setOs(os);
-		log.setBrowser(browser);
+		log.setOs(userAgentDTO.getOs());
+		log.setBrowser(userAgentDTO.getBrowser());
 		if (exceptionLogMapper.saveExceptionLog(log) != 1) {
 			throw new PersistenceException("日志添加失败");
 		}

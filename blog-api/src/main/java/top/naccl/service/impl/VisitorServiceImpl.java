@@ -7,6 +7,7 @@ import top.naccl.constant.RedisKeyConstants;
 import top.naccl.entity.Visitor;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.VisitorMapper;
+import top.naccl.model.dto.UserAgentDTO;
 import top.naccl.model.dto.VisitLogUuidTime;
 import top.naccl.service.RedisService;
 import top.naccl.service.VisitorService;
@@ -14,7 +15,6 @@ import top.naccl.util.IpAddressUtils;
 import top.naccl.util.UserAgentUtils;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Description: 访客统计业务层实现
@@ -49,12 +49,10 @@ public class VisitorServiceImpl implements VisitorService {
 	@Override
 	public void saveVisitor(Visitor visitor) {
 		String ipSource = IpAddressUtils.getCityInfo(visitor.getIp());
-		Map<String, String> userAgentMap = userAgentUtils.parseOsAndBrowser(visitor.getUserAgent());
-		String os = userAgentMap.get("os");
-		String browser = userAgentMap.get("browser");
+		UserAgentDTO userAgentDTO = userAgentUtils.parseOsAndBrowser(visitor.getUserAgent());
 		visitor.setIpSource(ipSource);
-		visitor.setOs(os);
-		visitor.setBrowser(browser);
+		visitor.setOs(userAgentDTO.getOs());
+		visitor.setBrowser(userAgentDTO.getBrowser());
 		if (visitorMapper.saveVisitor(visitor) != 1) {
 			throw new PersistenceException("访客添加失败");
 		}

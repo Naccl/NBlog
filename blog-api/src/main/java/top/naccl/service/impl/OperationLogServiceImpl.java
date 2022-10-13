@@ -6,12 +6,12 @@ import org.springframework.transaction.annotation.Transactional;
 import top.naccl.entity.OperationLog;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.OperationLogMapper;
+import top.naccl.model.dto.UserAgentDTO;
 import top.naccl.service.OperationLogService;
 import top.naccl.util.IpAddressUtils;
 import top.naccl.util.UserAgentUtils;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Description: 操作日志业务层实现
@@ -34,12 +34,10 @@ public class OperationLogServiceImpl implements OperationLogService {
 	@Override
 	public void saveOperationLog(OperationLog log) {
 		String ipSource = IpAddressUtils.getCityInfo(log.getIp());
-		Map<String, String> userAgentMap = userAgentUtils.parseOsAndBrowser(log.getUserAgent());
-		String os = userAgentMap.get("os");
-		String browser = userAgentMap.get("browser");
+		UserAgentDTO userAgentDTO = userAgentUtils.parseOsAndBrowser(log.getUserAgent());
 		log.setIpSource(ipSource);
-		log.setOs(os);
-		log.setBrowser(browser);
+		log.setOs(userAgentDTO.getOs());
+		log.setBrowser(userAgentDTO.getBrowser());
 		if (operationLogMapper.saveOperationLog(log) != 1) {
 			throw new PersistenceException("日志添加失败");
 		}
