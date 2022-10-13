@@ -19,6 +19,8 @@ public class UserAgentUtils {
 	public UserAgentUtils() {
 		this.uaa = UserAgentAnalyzer
 				.newBuilder()
+				.useJava8CompatibleCaching()
+				.withCache(10000)
 				.hideMatcherLoadStats()
 				.withField(UserAgent.OPERATING_SYSTEM_NAME_VERSION_MAJOR)
 				.withField(UserAgent.AGENT_NAME_VERSION)

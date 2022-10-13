@@ -58,7 +58,6 @@ public class ExceptionLogAspect {
 		String method = request.getMethod();
 		String ip = IpAddressUtils.getIpAddress(request);
 		String userAgent = request.getHeader("User-Agent");
-		//todo 使用swagger后，可以直接使用注解上的内容作为 ExceptionLog 的 description
 		String description = getDescriptionFromAnnotations(joinPoint);
 		String error = StringUtils.getStackTrace(e);
 		ExceptionLog log = new ExceptionLog(uri, method, description, error, ip, userAgent);
