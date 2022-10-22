@@ -10,7 +10,7 @@
 	import {SET_IS_BLOG_TO_HOME} from "../../store/mutations-types";
 
 	export default {
-		name: "Home",
+		name: "blogHome",
 		components: {BlogList},
 		data() {
 			return {
@@ -43,6 +43,7 @@
 						this.blogList = res.data.list
 						this.totalPage = res.data.totalPage
 						this.$nextTick(() => {
+              // eslint-disable-next-line no-undef
 							Prism.highlightAll()
 						})
 						this.getBlogListFinish = true

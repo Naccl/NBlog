@@ -6,7 +6,11 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "dev": "vue-cli-service serve --mode dev",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "devBuild": "vue-cli-service build --mode dev",
+    "testBuild": "vue-cli-service build --mode test"
   },
   "dependencies": {
     "axios": "0.24.0",
@@ -18,20 +22,40 @@
     "sanitize-html": "2.3.3",
     "semantic-ui-css": "2.4.1",
     "v-viewer": "1.5.1",
-    "vue": "2.6.11",
-    "vue-router": "3.3.4",
-    "vuex": "3.5.1"
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.15",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "4.4.0",
-    "@vue/cli-plugin-router": "4.4.0",
-    "@vue/cli-plugin-vuex": "4.4.0",
-    "@vue/cli-service": "4.4.0",
-    "vue-template-compiler": "2.6.11"
+    "@babel/core": "^7.18.2",
+    "@babel/eslint-parser": "^7.12.16",
+    "@babel/preset-env": "^7.18.2",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "babel-loader": "^8.2.5",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "webpack": "^5.73.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not dead"
+    "not dead",
+    "not ie 11"
   ]
 }

@@ -17,9 +17,11 @@
 						</div>
 						<!--中间-->
 						<div class="ten wide column">
-							<keep-alive include="Home">
-								<router-view/>
-							</keep-alive>
+              <router-view v-slot="{Component}">
+                <keep-alive include="Home">
+                  <component :is="Component"/>
+                </keep-alive>
+              </router-view>
 						</div>
 						<!--右侧-->
 						<div class="three wide column m-mobile-hide">
@@ -64,7 +66,7 @@
 	import {SAVE_CLIENT_SIZE, SAVE_INTRODUCTION, SAVE_SITE_INFO, RESTORE_COMMENT_FORM} from "@/store/mutations-types";
 
 	export default {
-		name: "Index",
+		name: "blogIndex",
 		components: {Header, BlogPasswordDialog, Tocbot, MyAPlayer, RandomBlog, Tags, Nav, Footer, Introduction},
 		data() {
 			return {

@@ -12,7 +12,7 @@
 					<div class="ui card">
 						<div class="content m-top">
 							<span style="font-weight: 700">{{ $store.state.introduction.name }}</span>
-							<span class="right floated">{{ moment.createTime | dateFromNow }}</span>
+							<span class="right floated">{{ dateFromNow(moment) }}</span>
 						</div>
 						<div class="content typo" :class="{'privacy':!moment.published}" v-viewer v-html="moment.content"></div>
 						<div class="extra content">
@@ -24,8 +24,7 @@
 				</div>
 			</div>
 
-			<el-pagination @current-change="handleCurrentChange" :current-page="pageNum" :page-count="totalPage"
-			               layout="prev, pager, next" background hide-on-single-page class="pagination">
+			<el-pagination @current-change="handleCurrentChange" :current-page="pageNum" :page-count="totalPage" layout="prev, pager, next" background hide-on-single-page class="pagination">
 			</el-pagination>
 		</div>
 	</div>
@@ -33,9 +32,10 @@
 
 <script>
 	import {getMomentListByPageNum, likeMoment} from "@/api/moment";
+  import {dateFromNow} from "@/util/dateTimeFormatUtils";
 
 	export default {
-		name: "Moments",
+		name: "blogMoments",
 		data() {
 			return {
 				//用localStorage本地存储已点赞的动态id数组
@@ -53,7 +53,8 @@
 				return function (id) {
 					return this.likeMomentIds.indexOf(id) > -1
 				}
-			}
+			},
+      dateFromNow:dateFromNow
 		},
 		watch: {
 			likeMomentIds(newValue) {

@@ -1,7 +1,6 @@
 <template>
 	<!--私密文章密码对话框-->
-	<el-dialog title="请输入受保护文章密码" width="30%" :visible.sync="blogPasswordDialogVisible"
-	           :lock-scroll="false" :before-close="blogPasswordDialogClosed">
+	<el-dialog title="请输入受保护文章密码" width="30%" v-model="blogPasswordDialogVisible" :lock-scroll="false" :before-close="blogPasswordDialogClosed">
 		<!--内容主体-->
 		<el-form :model="blogPasswordForm" :rules="formRules" ref="formRef" label-width="80px">
 			<el-form-item label="密码" prop="password">
@@ -9,10 +8,13 @@
 			</el-form-item>
 		</el-form>
 		<!--底部-->
-		<span slot="footer">
-			<el-button @click="blogPasswordDialogClosed">取 消</el-button>
-			<el-button type="primary" @click="submitBlogPassword">确 定</el-button>
-		</span>
+    <template v-slot:footer>
+      <span>
+        <el-button @click="blogPasswordDialogClosed">取 消</el-button>
+        <el-button type="primary" @click="submitBlogPassword">确 定</el-button>
+      </span>
+    </template>
+
 	</el-dialog>
 </template>
 

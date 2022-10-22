@@ -47,7 +47,7 @@
 
 <script>
 	export default {
-		name: "Footer",
+		name: "blogFooter",
 		props: {
 			siteInfo: {
 				type: Object,
