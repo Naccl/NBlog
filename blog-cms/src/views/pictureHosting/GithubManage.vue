@@ -62,7 +62,7 @@
 	import {taskQueue} from "@/util/task-queue";
 
 	export default {
-		name: "Manage",
+		name: "GithubManage",
 		components: {SvgIcon},
 		data() {
 			return {

@@ -46,16 +46,6 @@ Spring Boot + Vue「前后端分离，人不分离」博客系统
 
 邮件模板参考自 [Typecho-CommentToMail-Template](https://github.com/MisakaTAT/Typecho-CommentToMail-Template)
 
-基于 JDK8 开发，8以上要添加依赖：
-
-```xml
-<dependency>
-    <groupId>javax.xml.bind</groupId>
-    <artifactId>jaxb-api</artifactId>
-    <version>2.3.0</version>
-</dependency>
-```
-
 
 
 ## 前端
@@ -65,6 +55,8 @@ Spring Boot + Vue「前后端分离，人不分离」博客系统
 Vue 项目基于 @vue/cli4.x 构建
 
 JS 依赖及参考的 css：[axios](https://github.com/axios/axios)、[moment](https://github.com/moment/moment)、[nprogress](https://github.com/rstacruz/nprogress)、[v-viewer](https://github.com/fengyuanchen/viewerjs)、[prismjs](https://github.com/PrismJS/prism)、[APlayer](https://github.com/DIYgod/APlayer)、[MetingJS](https://github.com/metowolf/MetingJS)、[lodash](https://github.com/lodash/lodash)、[mavonEditor](https://github.com/hinesboy/mavonEditor)、[echarts](https://github.com/apache/echarts)、[tocbot](https://github.com/tscanlin/tocbot)、[iCSS](https://github.com/chokcoco/iCSS)
+
+**由 [@willWang8023](https://github.com/willWang8023) 维护的 Vue3 版本请查看 [blog-view-vue3](https://github.com/willWang8023/blog-view-vue3)**
 
 
 
@@ -100,7 +92,7 @@ UI 框架为 [Element UI](https://github.com/ElemeFE/element)
 4. 由于目前仅提供 webhook 的方式获取消息更新，所以`application-dev.properties`中的`blog.api`需要填写后端 API 的地址，并且**必须是`https`(Telegram 的要求)**，也就是说如果你没有公网 IP 或内网穿透或反向代理，那么在本地环境是无法测试的，建议直接扔服务器上
 5. 国内通常情况下无法访问 TG 的 API，因此提供了两种方式
    1. 正向代理：配置`http.proxy.server`，通过你的代理发送请求
-   2. 反向代理：可以直接使用我跑在 Cloudflare Workers 上的反代，默认配置即可，但建议自行搭建，示例反代随时可能关闭🙃。示例代码已放在`blog-api/cfworker-tg-api-open.js`，CV 即可 run（**22.05.12 更新，近两天大陆绝大多数地区 `*.workers.dev` 域名已被墙，因此若仍想使用此反代方式访问 cf worker，需要将 Worker 绑定路由至自己的域名，详见[相关讨论](https://github.com/XIU2/CloudflareSpeedTest/issues/205)，感恩！**）
+   2. 反向代理：可以直接使用我跑在 Cloudflare Workers 上的反代，默认配置即可。示例代码已放在`blog-api/cfworker-tg-api-open.js`，可自行搭建（**22.05.12 更新，近两天大陆绝大多数地区 `*.workers.dev` 域名已被墙，因此若仍想使用此反代方式访问 cf worker，需要将 Worker 绑定路由至自己的域名，详见[相关讨论](https://github.com/XIU2/CloudflareSpeedTest/issues/205)**）
 
 
 
@@ -119,8 +111,8 @@ UI 框架为 [Element UI](https://github.com/ElemeFE/element)
 
 一些常见问题：
 
-- MySQL 确保数据库字符集为`utf8mb4`的情况下通常没有问题（”站点设置“及”文章详情“等许多表字段需要`utf8mb4`格式字符集来支持 emoji 表情，否则在导入 sql 文件时，即使成功导入，也会有部分字段内容不完整，导致前端页面渲染数据时报错）
-- 确保 Maven 能够成功导入现版本依赖，请勿升级或降低依赖版本
+- MySQL 确保数据库字符集为`utf8mb4`（”站点设置“及”文章详情“等许多表字段需要`utf8mb4`格式字符集来支持 emoji 表情，否则在导入 sql 文件时，即使成功导入，也会有部分字段内容不完整，导致前端页面渲染数据时报错）
+- 确保 Maven 和 NPM 能够成功导入现版本依赖，请勿升级或降低依赖版本
 - 数据库中默认用户名密码为`Admin`，`123456`，因为是个人博客，没打算做修改密码的页面，可在`top.naccl.util.HashUtils`下的`main`方法手动生成密码存入数据库
 - 注意修改`application-dev.properties`的配置信息
   - 注意修改`token.secretKey`，否则无法保证 token 安全性
@@ -141,10 +133,6 @@ UI 框架为 [Element UI](https://github.com/ElemeFE/element)
 ## LICENSE
 
 [MIT](https://github.com/Naccl/NBlog/blob/master/LICENSE)
-
-此开源协议表示你可以使用此项目做任何你想做的事，而无需再次过问
-
-我只想保留版权，但即使你不这么做，我也不会顺着网线去找你
 
 
 
