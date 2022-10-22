@@ -6,12 +6,12 @@ import org.springframework.transaction.annotation.Transactional;
 import top.naccl.entity.LoginLog;
 import top.naccl.exception.PersistenceException;
 import top.naccl.mapper.LoginLogMapper;
+import top.naccl.model.dto.UserAgentDTO;
 import top.naccl.service.LoginLogService;
 import top.naccl.util.IpAddressUtils;
 import top.naccl.util.UserAgentUtils;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Description: 登录日志业务层实现
@@ -30,22 +30,20 @@ public class LoginLogServiceImpl implements LoginLogService {
 		return loginLogMapper.getLoginLogListByDate(startDate, endDate);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void saveLoginLog(LoginLog log) {
 		String ipSource = IpAddressUtils.getCityInfo(log.getIp());
-		Map<String, String> userAgentMap = userAgentUtils.parseOsAndBrowser(log.getUserAgent());
-		String os = userAgentMap.get("os");
-		String browser = userAgentMap.get("browser");
+		UserAgentDTO userAgentDTO = userAgentUtils.parseOsAndBrowser(log.getUserAgent());
 		log.setIpSource(ipSource);
-		log.setOs(os);
-		log.setBrowser(browser);
+		log.setOs(userAgentDTO.getOs());
+		log.setBrowser(userAgentDTO.getBrowser());
 		if (loginLogMapper.saveLoginLog(log) != 1) {
 			throw new PersistenceException("日志添加失败");
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void deleteLoginLogById(Long id) {
 		if (loginLogMapper.deleteLoginLogById(id) != 1) {

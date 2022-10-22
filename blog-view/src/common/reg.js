@@ -7,7 +7,7 @@ export const checkEmail = (rule, value, callback) => {
 }
 
 export const checkUrl = (rule, value, callback) => {
-	const reg = /^(((ht)tps?):\/\/)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?$/
+	const reg = /^(((ht)tps?):\/\/)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?$/
 	if (reg.test(value)) {
 		return callback()
 	}

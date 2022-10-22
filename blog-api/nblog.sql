@@ -358,7 +358,8 @@ CREATE TABLE `visitor`  (
   `last_time` datetime(0) NOT NULL COMMENT '最后访问时间',
   `pv` int(0) NULL DEFAULT NULL COMMENT '访问页数统计',
   `user_agent` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'user-agent用户代理',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `idx_uuid` (`uuid`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

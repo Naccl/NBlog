@@ -10,11 +10,11 @@
 		</el-form>
 
 		<el-table :data="jobList">
-			<el-table-column label="任务id" prop="jobId" width="80"></el-table-column>
-			<el-table-column label="bean" prop="beanName"></el-table-column>
+			<el-table-column label="任务ID" prop="jobId" width="80"></el-table-column>
+			<el-table-column label="Bean" prop="beanName"></el-table-column>
 			<el-table-column label="方法名" prop="methodName"></el-table-column>
 			<el-table-column label="参数" prop="params"></el-table-column>
-			<el-table-column label="cron" prop="cron"></el-table-column>
+			<el-table-column label="Cron" prop="cron"></el-table-column>
 			<el-table-column label="状态" width="80">
 				<template v-slot="scope">
 					<el-switch v-model="scope.row.status" @change="jobStatusChanged(scope.row)"></el-switch>
@@ -72,7 +72,7 @@
 		<el-dialog title="编辑任务" width="50%" :visible.sync="editDialogVisible" :close-on-click-modal="false" @close="editDialogClosed">
 			<!--内容主体-->
 			<el-form :model="editForm" :rules="formRules" ref="editFormRef" label-width="80px">
-				<el-form-item label="bean" prop="beanName">
+				<el-form-item label="Bean" prop="beanName">
 					<el-input v-model="editForm.beanName"></el-input>
 				</el-form-item>
 				<el-form-item label="方法名" prop="methodName">
@@ -81,7 +81,7 @@
 				<el-form-item label="参数" prop="params">
 					<el-input v-model="editForm.params"></el-input>
 				</el-form-item>
-				<el-form-item label="cron" prop="cron">
+				<el-form-item label="Cron" prop="cron">
 					<el-input v-model="editForm.cron"></el-input>
 				</el-form-item>
 				<el-form-item label="备注" prop="remark">

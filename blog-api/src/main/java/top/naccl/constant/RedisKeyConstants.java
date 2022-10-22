@@ -47,4 +47,8 @@ public class RedisKeyConstants {
 	 * 访客标识码key
 	 */
 	public static final String IDENTIFICATION_SET = "identificationSet";
+	/**
+	 * QQ号与对应头像URL key
+	 */
+	public static final String QQ_AVATAR_URL_MAP = "qqAvatarUrlMap";
 }

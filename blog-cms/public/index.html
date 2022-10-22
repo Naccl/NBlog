@@ -6,13 +6,13 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<link rel="icon" href="<%= BASE_URL %>favicon.ico">
 	<title>后台管理 - NBlog</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Naccl/blog-resource/prism/tomorrow-night/prism.min.css">
+	<link rel="stylesheet" href="<%= BASE_URL %>lib/css/prism.css">
 </head>
 <body>
 	<noscript>
 		<strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
 	</noscript>
 	<div id="app"></div>
-	<script src="https://cdn.jsdelivr.net/gh/Naccl/blog-resource/prism/tomorrow-night/prism.min.js" data-manual></script>
+	<script src="<%= BASE_URL %>lib/js/prism.js" data-manual></script>
 </body>
 </html>

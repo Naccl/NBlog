@@ -3,9 +3,7 @@ package top.naccl.util;
 import nl.basjes.parse.useragent.UserAgent;
 import nl.basjes.parse.useragent.UserAgentAnalyzer;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
-import java.util.Map;
+import top.naccl.model.dto.UserAgentDTO;
 
 /**
  * @Description: UserAgent解析工具类
@@ -19,6 +17,8 @@ public class UserAgentUtils {
 	public UserAgentUtils() {
 		this.uaa = UserAgentAnalyzer
 				.newBuilder()
+				.useJava8CompatibleCaching()
+				.withCache(10000)
 				.hideMatcherLoadStats()
 				.withField(UserAgent.OPERATING_SYSTEM_NAME_VERSION_MAJOR)
 				.withField(UserAgent.AGENT_NAME_VERSION)
@@ -31,13 +31,10 @@ public class UserAgentUtils {
 	 * @param userAgent
 	 * @return
 	 */
-	public Map<String, String> parseOsAndBrowser(String userAgent) {
+	public UserAgentDTO parseOsAndBrowser(String userAgent) {
 		UserAgent agent = uaa.parse(userAgent);
 		String os = agent.getValue(UserAgent.OPERATING_SYSTEM_NAME_VERSION_MAJOR);
 		String browser = agent.getValue(UserAgent.AGENT_NAME_VERSION);
-		Map<String, String> map = new HashMap<>();
-		map.put("os", os);
-		map.put("browser", browser);
-		return map;
+		return new UserAgentDTO(os, browser);
 	}
 }

@@ -12,8 +12,8 @@
 		<div class="wrapper">
 			<i class="ali-iconfont icon-down" @click="scrollToMain"></i>
 		</div>
-		<div class="wave1"></div>
-		<div class="wave2"></div>
+		<div class="wave1" style="background: url('https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/wave1.png') repeat-x;"></div>
+		<div class="wave2" style="background: url('https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/wave2.png') repeat-x;"></div>
 	</header>
 </template>
 
@@ -21,7 +21,7 @@
 	import {mapState} from 'vuex'
 
 	export default {
-		name: "Header",
+		name: "blogHeader",
 		data() {
 			return {
 				loaded: false
@@ -50,7 +50,7 @@
 			header.addEventListener('mouseenter', (e) => {
 				startingPoint = e.clientX
 			})
-			header.addEventListener('mouseout', (e) => {
+			header.addEventListener('mouseout', () => {
 				header.classList.remove('moving')
 				header.style.setProperty('--percentage', 0.5)
 			})
@@ -280,13 +280,11 @@
 	}
 
 	.wave1 {
-		background: url('https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/wave1.png') repeat-x;
 		height: 75px;
 		width: 100%;
 	}
 
 	.wave2 {
-		background: url('https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/wave2.png') repeat-x;
 		height: 90px;
 		width: calc(100% + 100px);
 		left: -100px;

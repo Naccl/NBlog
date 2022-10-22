@@ -32,7 +32,7 @@
 	import {getArchives} from "@/api/archives";
 
 	export default {
-		name: "Archives",
+		name: "blogArchives",
 		data() {
 			return {
 				blogMap: {},
