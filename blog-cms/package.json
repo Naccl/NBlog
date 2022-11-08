@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "0.24.0",
     "core-js": "3.6.5",
+    "cos-js-sdk-v5": "^1.4.10",
     "echarts": "4.9.0",
     "element-ui": "2.13.2",
     "lodash": "4.17.19",
