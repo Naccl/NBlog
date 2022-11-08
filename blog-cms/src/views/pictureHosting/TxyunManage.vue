@@ -116,7 +116,7 @@ export default {
 			this.txyunConfig = JSON.parse(txyunConfig)
 			this.txyunConfig.domain = this.txyunConfig.domain.endsWith('/') ? this.txyunConfig.domain : `${this.txyunConfig.domain}/`
 		} else {
-			this.msgError('请先配置又拍云')
+			this.msgError('请先配置腾讯云')
 			this.$router.push('/pictureHosting/setting')
 		}
 		
