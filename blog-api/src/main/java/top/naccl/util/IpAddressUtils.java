@@ -2,7 +2,10 @@ package top.naccl.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.lionsoul.ip2region.xdb.Searcher;
+import org.lionsoul.ip2region.DataBlock;
+import org.lionsoul.ip2region.DbConfig;
+import org.lionsoul.ip2region.DbSearcher;
+import org.lionsoul.ip2region.Util;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
@@ -61,7 +64,7 @@ public class IpAddressUtils {
 		return StringUtils.substringBefore(ip, ",");
 	}
 
-	private static Searcher searcher;
+	private static DbSearcher searcher;
 	private static Method method;
 
 	/**
@@ -72,13 +75,13 @@ public class IpAddressUtils {
 	 */
 	@PostConstruct
 	private void initIp2regionResource() throws Exception {
-		InputStream inputStream = new ClassPathResource("/ipdb/ip2region.xdb").getInputStream();
+		InputStream inputStream = new ClassPathResource("/ipdb/ip2region.db").getInputStream();
 		//将 ip2region.db 转为 ByteArray
 		byte[] dbBinStr = FileCopyUtils.copyToByteArray(inputStream);
-		// 2、使用上述的 dbBinStr 创建一个完全基于内存的查询对象。
-		searcher = new Searcher(null, null, dbBinStr);
+		DbConfig dbConfig = new DbConfig();
+		searcher = new DbSearcher(dbConfig, dbBinStr);
 		//二进制方式初始化 DBSearcher，需要使用基于内存的查找算法 memorySearch
-		method = searcher.getClass().getMethod("search", String.class);
+		method = searcher.getClass().getMethod("memorySearch", String.class);
 	}
 
 	/**
@@ -88,22 +91,21 @@ public class IpAddressUtils {
 	 * @return
 	 */
 	public static String getCityInfo(String ip) {
+		if (ip == null || !Util.isIpAddress(ip)) {
+			log.error("Error: Invalid ip address");
+			return "";
+		}
 		try {
-			String ipInfo = (String) method.invoke(searcher, ip);
+			DataBlock dataBlock = (DataBlock) method.invoke(searcher, ip);
+			String ipInfo = dataBlock.getRegion();
 			if (!StringUtils.isEmpty(ipInfo)) {
 				ipInfo = ipInfo.replace("|0", "");
 				ipInfo = ipInfo.replace("0|", "");
+				return ipInfo;
 			}
-			return ipInfo;
 		} catch (Exception e) {
 			log.error("getCityInfo exception:", e);
 		}
 		return "";
-	}
-	public static void main(String[] args) throws Exception {
-		IpAddressUtils ipAddressUtils = new IpAddressUtils();
-		ipAddressUtils.initIp2regionResource();
-		String cityInfo = IpAddressUtils.getCityInfo("14.215.177.39");
-		System.out.println(cityInfo);
 	}
 }
