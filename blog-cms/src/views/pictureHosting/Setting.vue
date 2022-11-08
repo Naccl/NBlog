@@ -48,6 +48,31 @@
 				<el-button type="info" size="medium" icon="el-icon-close" @click="saveUpyun(false)">清除配置</el-button>
 			</el-form>
 		</el-card>
+
+		<el-card>
+			<div slot="header">
+				<span>腾讯云存储配置</span>
+			</div>
+			<el-form :model="txyunConfig" label-width="100px">
+				<el-form-item label="secret-id">
+					<el-input v-model="txyunConfig.secretId"></el-input>
+				</el-form-item>
+				<el-form-item label="secret-key">
+					<el-input v-model="txyunConfig.secretKey"></el-input>
+				</el-form-item>
+				<el-form-item label="存储空间名">
+					<el-input v-model="txyunConfig.bucketName"></el-input>
+				</el-form-item>
+				<el-form-item label="地域">
+					<el-input v-model="txyunConfig.region"></el-input>
+				</el-form-item>
+				<el-form-item label="CDN访问域名">
+					<el-input v-model="txyunConfig.domain"></el-input>
+				</el-form-item>
+				<el-button type="primary" size="medium" icon="el-icon-check" :disabled="!isTxyunSave" @click="saveTxyun(true)">保存配置</el-button>
+				<el-button type="info" size="medium" icon="el-icon-close" @click="saveTxyun(false)">清除配置</el-button>
+			</el-form>
+		</el-card>
 	</div>
 </template>
 
@@ -70,11 +95,21 @@ export default {
 				bucketName: '',
 				domain: ''
 			},
+			txyunConfig: {
+				secretId: '',
+				secretKey: '',
+				bucketName: '',
+				region: '',
+				domain: ''
+			},
 		}
 	},
 	computed: {
 		isUpyunSave() {
 			return this.upyunConfig.username && this.upyunConfig.password && this.upyunConfig.bucketName && this.upyunConfig.domain
+		},
+		isTxyunSave() {
+			return this.txyunConfig.secretId && this.txyunConfig.secretKey && this.txyunConfig.bucketName && this.txyunConfig.region && this.txyunConfig.domain
 		}
 	},
 	created() {
@@ -90,6 +125,11 @@ export default {
 		const upyunConfig = localStorage.getItem('upyunConfig')
 		if (upyunConfig) {
 			this.upyunConfig = JSON.parse(upyunConfig)
+		}
+
+		const txyunConfig = localStorage.getItem('txyunConfig')
+		if (txyunConfig) {
+			this.txyunConfig = JSON.parse(txyunConfig)
 		}
 
 		const userJson = window.localStorage.getItem('user') || '{}'
@@ -128,6 +168,16 @@ export default {
 				this.msgSuccess('保存成功')
 			} else {
 				localStorage.removeItem('upyunConfig')
+				this.msgSuccess('清除成功')
+			}
+		}
+		,
+		saveTxyun(save) {
+			if (save) {
+				localStorage.setItem('txyunConfig', JSON.stringify(this.txyunConfig))
+				this.msgSuccess('保存成功')
+			} else {
+				localStorage.removeItem('txyunConfig')
 				this.msgSuccess('清除成功')
 			}
 		}
