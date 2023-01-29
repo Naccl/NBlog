@@ -54,13 +54,14 @@ import SvgIcon from "@/components/SvgIcon";
 import {isImgExt} from "@/util/validate";
 import {randomUUID} from "@/util/uuid";
 import {copy} from "@/util/copy";
-import cos from "@/api/cos";
+import COS from 'cos-js-sdk-v5';
 
 export default {
 	name: "TxyunManage",
 	components: {SvgIcon},
 	data() {
 		return {
+			cos: {},
 			txyunConfig: {
 				secretId: '',
 				secretKey: '',
@@ -111,34 +112,36 @@ export default {
 	created() {
 		this.hintShow1 = localStorage.getItem('txyunHintShow1') ? false : true
 		this.hintShow2 = localStorage.getItem('txyunHintShow2') ? false : true
+
 		const txyunConfig = localStorage.getItem('txyunConfig')
 		if (txyunConfig) {
 			this.txyunConfig = JSON.parse(txyunConfig)
 			this.txyunConfig.domain = this.txyunConfig.domain.endsWith('/') ? this.txyunConfig.domain : `${this.txyunConfig.domain}/`
+
+			this.cos = new COS({
+				SecretId: this.txyunConfig.secretId,
+				SecretKey: this.txyunConfig.secretKey,
+			})
 		} else {
 			this.msgError('请先配置腾讯云')
 			this.$router.push('/pictureHosting/setting')
 		}
-		
 	},
 	methods: {
 		//换成懒加载
 		async getReposContents(arr, path) {
 			const {txyunConfig} = this
-			await cos.getBucket({
+			await this.cos.getBucket({
 				Bucket: txyunConfig.bucketName, /* 必须 */
 				Region: txyunConfig.region,     /* 存储桶所在地域，必须字段 */
 				Prefix: path,           /* 非必须 */
 				Delimiter: '/'
 			}).then(data => {
-				console.log('查询成功',data);
 				data.CommonPrefixes.forEach((item) => {
-					item.name = item.Prefix.replace(path, '').slice(0,-1)
+					item.name = item.Prefix.replace(path, '').slice(0, -1)
 					//让所有节点都是非叶子节点
 					arr.push({value: item.name, label: item.name, leaf: false})
 				});
-			}).catch(err => {
-				console.log('查询失败',err);
 			})
 		},
 		// 获取存储空间下指定目录的文件列表
@@ -150,21 +153,18 @@ export default {
 			if (path != '') {
 				path = path.endsWith('/') ? path : `${path}/`
 			}
-			cos.getBucket({
+			this.cos.getBucket({
 				Bucket: txyunConfig.bucketName, /* 必须 */
 				Region: txyunConfig.region,     /* 存储桶所在地域，必须字段 */
 				Prefix: path,           /* 非必须 */
 				Delimiter: '/'
 			}).then(data => {
-				console.log('查询成功',data);
 				data.Contents.filter((item) => !item.Key.endsWith('/') && isImgExt(item.Key)).forEach(item => {
 					item.path = item.Key
 					item.cdn_url = `${txyunConfig.domain}${item.path}`
 					item.name = item.Key.replace(path, '')
 					fileList.push(item)
 				})
-			}).catch(err => {
-				console.log('查询失败',err);
 			})
 			this.fileList = fileList
 		},
@@ -185,22 +185,19 @@ export default {
 		// 删除文件
 		delFile(file) {
 			const {txyunConfig} = this
-			console.log("删除路径：", file.path)
 			this.$confirm("此操作将永久删除该文件, 是否删除?", "提示", {
 				confirmButtonText: '确定',
 				cancelButtonText: '取消',
 				type: 'warning',
 			}).then(() => {
-				cos.deleteObject({
+				this.cos.deleteObject({
 					Bucket: txyunConfig.bucketName, /* 填写自己的bucket，必须字段 */
 					Region: txyunConfig.region,     /* 存储桶所在地域，必须字段 */
 					Key: file.path,              /* 存储在桶里的对象键（例如1.jpg，a/b/test.txt），必须字段 */
-				}).then(data => {
-					console.log('删除成功',data);
+				}).then(() => {
 					this.msgSuccess('删除成功')
 					this.search()
-				}).catch(err => {
-					console.log('删除失败',err);
+				}).catch(() => {
 					this.msgError('删除失败')
 				})
 			}).catch(() => {
@@ -229,22 +226,18 @@ export default {
 			let path = this.realPath;
 			path = path.startsWith('/') ? path.slice(1) : path
 			path = path.endsWith('/') ? path : `${path}/`
-			console.log("上传路径：", path)
-			cos.uploadFile({
+			this.cos.uploadFile({
 				Bucket: txyunConfig.bucketName, /* 必须 */
 				Region: txyunConfig.region,     /* 存储桶所在地域，必须字段 */
 				Key: `${path}${fileName}`,              /* 存储在桶里的对象键（例如:1.jpg，a/b/test.txt，图片.jpg）支持中文，必须字段 */
 				Body: data.file, // 上传文件对象
 				SliceSize: 1024 * 1024 * 5,     /* 触发分块上传的阈值，超过5MB使用分块上传，小于5MB使用简单上传。可自行设置，非必须 */
-				onProgress: function(progressData) {
+				onProgress: function (progressData) {
 					console.log(JSON.stringify(progressData));
 				}
 			}).then(() => {
-				console.log('上传成功');
 				this.msgSuccess('上传成功')
 				data.onSuccess()
-			}).catch(err => {
-				console.log('上传失败', err);
 			})
 		},
 	},
