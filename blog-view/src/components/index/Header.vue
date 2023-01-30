@@ -1,30 +1,32 @@
 <template>
 	<header ref="header">
 		<div class="view">
-			<img ref="imgbg1" src="https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/bg1.jpg" style="display: none;">
-			<div class="bg1" style="background-image: url('https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/bg1.jpg');"></div>
-			<div class="bg2" style="background-image: url('https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/bg2.jpg');"></div>
-			<div class="bg3" style="background-image: url('https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/bg3.jpg');" v-show="loaded"></div>
+			<img ref="imgbg1" :src="defaultSettings.bg1" style="display: none;">
+			<div class="bg1" :style="{backgroundImage:'url('+defaultSettings.bg1+')'}"></div>
+			<div class="bg2" :style="{backgroundImage:'url('+defaultSettings.bg2+')'}"></div>
+			<div class="bg3" :style="{backgroundImage:'url('+defaultSettings.bg3+')'}" v-show="loaded"></div>
 		</div>
-		<div class="text-malfunction" data-word="Naccl's Blog">
+		<div class="text-malfunction" :data-word="defaultSettings.malfunctionText">
 			<div class="line"></div>
 		</div>
 		<div class="wrapper">
 			<i class="ali-iconfont icon-down" @click="scrollToMain"></i>
 		</div>
-		<div class="wave1" style="background: url('https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/wave1.png') repeat-x;"></div>
-		<div class="wave2" style="background: url('https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/wave2.png') repeat-x;"></div>
+		<div class="wave1"></div>
+		<div class="wave2"></div>
 	</header>
 </template>
 
 <script>
 	import {mapState} from 'vuex'
+	import defaultSettings from '@/settings'
 
 	export default {
 		name: "Header",
 		data() {
 			return {
-				loaded: false
+				loaded: false,
+				defaultSettings
 			}
 		},
 		computed: {
@@ -280,11 +282,13 @@
 	}
 
 	.wave1 {
+		background: url('/img/header/wave1.png') repeat-x;
 		height: 75px;
 		width: 100%;
 	}
 
 	.wave2 {
+		background: url('/img/header/wave2.png') repeat-x;
 		height: 90px;
 		width: calc(100% + 100px);
 		left: -100px;
