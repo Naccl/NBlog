@@ -38,7 +38,7 @@
 
 		<!--APlayer-->
 		<div class="m-mobile-hide">
-			<MyAPlayer/>
+			<meting-js :server="siteInfo.playlistServer" :id="siteInfo.playlistId" type="playlist" fixed="true" theme="#25CCF7" v-if="siteInfo.playlistServer && siteInfo.playlistId"></meting-js>
 		</div>
 		<!--回到顶部-->
 		<el-backtop style="box-shadow: none;background: none;z-index: 9999;">
@@ -57,7 +57,6 @@
 	import Introduction from "@/components/sidebar/Introduction";
 	import Tags from "@/components/sidebar/Tags";
 	import RandomBlog from "@/components/sidebar/RandomBlog";
-	import MyAPlayer from "@/components/index/MyAPlayer";
 	import Tocbot from "@/components/sidebar/Tocbot";
 	import BlogPasswordDialog from "@/components/index/BlogPasswordDialog";
 	import {mapState} from 'vuex'
@@ -65,11 +64,14 @@
 
 	export default {
 		name: "Index",
-		components: {Header, BlogPasswordDialog, Tocbot, MyAPlayer, RandomBlog, Tags, Nav, Footer, Introduction},
+		components: {Header, BlogPasswordDialog, Tocbot, RandomBlog, Tags, Nav, Footer, Introduction},
 		data() {
 			return {
 				siteInfo: {
-					blogName: ''
+					blogName: '',
+					webTitleSuffix: '',
+					playlistServer: '',
+					playlistId: ''
 				},
 				categoryList: [],
 				tagList: [],
