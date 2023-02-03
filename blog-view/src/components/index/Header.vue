@@ -7,6 +7,7 @@
 			<div class="bg3" :style="{backgroundImage:'url('+defaultSettings.bg3+')'}" v-show="loaded"></div>
 		</div>
 		<div class="text-malfunction" :data-word="defaultSettings.malfunctionText">
+			{{ defaultSettings.malfunctionText }}
 			<div class="line"></div>
 		</div>
 		<div class="wrapper">
@@ -128,10 +129,10 @@
 
 	.text-malfunction {
 		position: absolute;
+		padding: 0 4px;
 		top: 40%;
 		left: 51.5%;
 		transform: translate(-50%, -50%) scale(2.5);
-		width: 220px;
 		font-size: 34px;
 		font-family: sans-serif;
 		color: transparent;
@@ -139,8 +140,8 @@
 
 	.line {
 		position: absolute;
-		width: 200px;
-		left: -1px;
+		width: calc(100% - 8px);
+		left: -0.5px;
 		height: 1px;
 		background: black;
 		z-index: 50;
@@ -151,7 +152,7 @@
 		content: attr(data-word);
 		position: absolute;
 		top: 0;
-		height: 36px;
+		line-height: 36px;
 		overflow: hidden;
 		filter: contrast(200%);
 	}
