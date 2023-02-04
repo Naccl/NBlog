@@ -186,7 +186,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .el-alert + .el-row, .el-row + .el-row {
 	margin-top: 20px;
 }
