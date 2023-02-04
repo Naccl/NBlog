@@ -159,10 +159,16 @@ const routes = [
 	{
 		path: '/system',
 		name: 'System',
-		redirect: '/system/job',
+		redirect: '/system/account',
 		component: Layout,
 		meta: {title: '系统管理', icon: 'el-icon-s-tools'},
 		children: [
+			{
+				path: 'account',
+				name: 'Account',
+				component: () => import('@/views/system/Account'),
+				meta: {title: '修改账户', icon: 'el-icon-user-solid'}
+			},
 			{
 				path: 'job',
 				name: 'JobList',
