@@ -131,7 +131,7 @@
 		position: absolute;
 		padding: 0 4px;
 		top: 40%;
-		left: 51.5%;
+		left: 50.5%;
 		transform: translate(-50%, -50%) scale(2.5);
 		font-size: 34px;
 		font-family: sans-serif;
@@ -152,7 +152,7 @@
 		content: attr(data-word);
 		position: absolute;
 		top: 0;
-		line-height: 36px;
+		line-height: 50px;
 		overflow: hidden;
 		filter: contrast(200%);
 	}
