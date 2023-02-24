@@ -1,48 +1,30 @@
 <template>
 	<div>
-		<el-row :gutter="20">
-			<el-col :span="12">
-				<el-card>
-					<div slot="header">
-						<span>基础设置</span>
-					</div>
-					<el-form label-position="right" label-width="100px">
-						<el-form-item :label="item.nameZh" v-for="item in typeMap.type1" :key="item.id">
-							<el-input v-model="item.value" size="mini"></el-input>
-						</el-form-item>
-					</el-form>
-				</el-card>
-			</el-col>
-			<el-col :span="12">
-				<el-card>
-					<div slot="header">
-						<span>资料卡</span>
-					</div>
-					<el-form label-position="right" label-width="100px">
-						<el-form-item :label="item.nameZh" v-for="item in typeMap.type2" :key="item.id">
-							<div v-if="item.nameEn=='favorite'">
-								<el-col :span="20">
-									<el-input v-model="item.value" size="mini"></el-input>
-								</el-col>
-								<el-col :span="4">
-									<el-button type="danger" size="mini" icon="el-icon-delete" @click="deleteFavorite(item)">删除</el-button>
-								</el-col>
-							</div>
-							<div v-else>
-								<el-input v-model="item.value" size="mini"></el-input>
-							</div>
-						</el-form-item>
-						<el-button type="primary" size="mini" icon="el-icon-plus" @click="addFavorite">添加自定义</el-button>
-					</el-form>
-				</el-card>
-			</el-col>
-		</el-row>
+		<el-tabs type="border-card">
+			<el-tab-pane label="基础设置">
+				<el-form label-position="right" label-width="100px">
+					<el-form-item :label="item.nameZh" v-for="item in typeMap.type1" :key="item.id">
+						<el-input v-model="item.value" size="mini"></el-input>
+					</el-form-item>
+				</el-form>
+			</el-tab-pane>
 
-		<el-row style="margin-top: 20px">
-			<el-card>
-				<div slot="header">
-					<span>页脚徽标</span>
-				</div>
+			<el-tab-pane label="资料卡">
+				<el-form label-position="right" label-width="100px">
+					<el-form-item :label="item.nameZh" v-for="item in typeMap.type2" :key="item.id">
+						<div v-if="item.nameEn=='favorite'">
+							<el-input v-model="item.value" size="mini" style="margin-right: 10px;width: calc(100% - 100px);"></el-input>
+							<el-button type="danger" size="mini" icon="el-icon-delete" @click="deleteFavorite(item)">删除</el-button>
+						</div>
+						<div v-else>
+							<el-input v-model="item.value" size="mini"></el-input>
+						</div>
+					</el-form-item>
+					<el-button type="primary" size="mini" icon="el-icon-plus" @click="addFavorite">添加自定义</el-button>
+				</el-form>
+			</el-tab-pane>
+
+			<el-tab-pane label="页脚徽标">
 				<el-form :inline="true" v-for="badge in typeMap.type3" :key="badge.id">
 					<el-form-item label="title">
 						<el-input v-model="badge.value.title" size="mini"></el-input>
@@ -64,10 +46,10 @@
 					</el-form-item>
 				</el-form>
 				<el-button type="primary" size="mini" icon="el-icon-plus" @click="addBadge">添加 badge</el-button>
-			</el-card>
-		</el-row>
+			</el-tab-pane>
+		</el-tabs>
 
-		<div style="text-align: right;margin-top: 30px">
+		<div style="text-align: left;margin-top: 20px">
 			<el-button type="primary" icon="el-icon-check" @click="submit">保存</el-button>
 		</div>
 	</div>
