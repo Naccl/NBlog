@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.naccl.mapper.SystemSettingMapper">
+
+    <select id="list" resultType="top.naccl.entity.SystemSetting">
+        select *
+        from system_setting
+    </select>
+
+    <update id="updateValueById">
+        update system_setting
+        set value = #{value}
+        where id = #{id}
+    </update>
+</mapper>

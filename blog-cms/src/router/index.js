@@ -124,6 +124,33 @@ const routes = [
 		]
 	},
 	{
+		path: '/system',
+		name: 'System',
+		redirect: '/system/setting',
+		component: Layout,
+		meta: {title: '系统管理', icon: 'el-icon-s-tools'},
+		children: [
+			{
+				path: 'setting',
+				name: 'systemSetting',
+				component: () => import('@/views/system/Setting'),
+				meta: {title: '系统配置', icon: 'el-icon-setting'}
+			},
+			{
+				path: 'account',
+				name: 'Account',
+				component: () => import('@/views/system/Account'),
+				meta: {title: '修改账户', icon: 'el-icon-user-solid'}
+			},
+			{
+				path: 'job',
+				name: 'JobList',
+				component: () => import('@/views/system/ScheduleJobList'),
+				meta: {title: '定时任务', icon: 'el-icon-alarm-clock'}
+			},
+		]
+	},
+	{
 		path: '/pictureHosting',
 		name: 'PictureHosting',
 		redirect: '/pictureHosting/setting',
@@ -153,27 +180,6 @@ const routes = [
 				name: 'TxyunManage',
 				component: () => import('@/views/pictureHosting/TxyunManage'),
 				meta: {title: '腾讯云', icon: 'el-icon-folder-opened'}
-			},
-		]
-	},
-	{
-		path: '/system',
-		name: 'System',
-		redirect: '/system/account',
-		component: Layout,
-		meta: {title: '系统管理', icon: 'el-icon-s-tools'},
-		children: [
-			{
-				path: 'account',
-				name: 'Account',
-				component: () => import('@/views/system/Account'),
-				meta: {title: '修改账户', icon: 'el-icon-user-solid'}
-			},
-			{
-				path: 'job',
-				name: 'JobList',
-				component: () => import('@/views/system/ScheduleJobList'),
-				meta: {title: '定时任务', icon: 'el-icon-alarm-clock'}
 			},
 		]
 	},

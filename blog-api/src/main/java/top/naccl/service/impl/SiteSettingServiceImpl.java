@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @Description: 站点设置业务层实现
@@ -41,29 +42,7 @@ public class SiteSettingServiceImpl implements SiteSettingService {
 	@Override
 	public Map<String, List<SiteSetting>> getList() {
 		List<SiteSetting> siteSettings = siteSettingMapper.getList();
-		List<SiteSetting> type1 = new ArrayList<>();
-		List<SiteSetting> type2 = new ArrayList<>();
-		List<SiteSetting> type3 = new ArrayList<>();
-		for (SiteSetting s : siteSettings) {
-			switch (s.getType()) {
-				case 1:
-					type1.add(s);
-					break;
-				case 2:
-					type2.add(s);
-					break;
-				case 3:
-					type3.add(s);
-					break;
-				default:
-					break;
-			}
-		}
-		Map<String, List<SiteSetting>> map = new HashMap<>(8);
-		map.put("type1", type1);
-		map.put("type2", type2);
-		map.put("type3", type3);
-		return map;
+		return siteSettings.stream().collect(Collectors.groupingBy(o -> "type" + o.getType(), Collectors.toList()));
 	}
 
 	@Override

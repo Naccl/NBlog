@@ -66,7 +66,11 @@
 		data() {
 			return {
 				deleteIds: [],
-				typeMap: {},
+				typeMap: {
+					type1: [],
+					type2: [],
+					type3: []
+				},
 			}
 		},
 		created() {
