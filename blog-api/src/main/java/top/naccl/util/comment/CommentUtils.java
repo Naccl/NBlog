@@ -24,6 +24,7 @@ import top.naccl.util.comment.channel.ChannelFactory;
 import top.naccl.util.comment.channel.CommentNotifyChannel;
 import top.naccl.enums.CommentOpenStateEnum;
 import top.naccl.enums.CommentPageEnum;
+import top.naccl.util.comment.channel.NoneChannel;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -90,6 +91,9 @@ public class CommentUtils {
 	 * @param parentComment    父评论
 	 */
 	public void judgeSendNotify(Comment comment, boolean isVisitorComment, top.naccl.entity.Comment parentComment) {
+		if (this.notifyChannel instanceof NoneChannel) {
+			return;
+		}
 		if (parentComment != null && !parentComment.getAdminComment() && parentComment.getNotice()) {
 			//我回复访客的评论，且对方接收提醒，邮件提醒对方(3)
 			//访客回复访客的评论(即使是他自己先前的评论)，且对方接收提醒，邮件提醒对方(6)

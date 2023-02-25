@@ -17,11 +17,15 @@ public class ChannelFactory {
 	 * @return
 	 */
 	public static CommentNotifyChannel getChannel(String channelName) {
-		if (CommentConstants.TELEGRAM.equalsIgnoreCase(channelName)) {
-			return SpringContextUtils.getBean("telegramChannel", CommentNotifyChannel.class);
-		} else if (CommentConstants.MAIL.equalsIgnoreCase(channelName)) {
-			return SpringContextUtils.getBean("mailChannel", CommentNotifyChannel.class);
+		switch (channelName) {
+			case CommentConstants.NONE:
+				return SpringContextUtils.getBean(NoneChannel.class);
+			case CommentConstants.TELEGRAM:
+				return SpringContextUtils.getBean(TelegramChannel.class);
+			case CommentConstants.MAIL:
+				return SpringContextUtils.getBean(MailChannel.class);
+			default:
+				throw new RuntimeException("Unsupported value in [application.properties]: [comment.notify.channel]");
 		}
-		throw new RuntimeException("Unsupported value in [application.properties]: [comment.notify.channel]");
 	}
 }

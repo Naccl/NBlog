@@ -8,6 +8,11 @@ package top.naccl.constant;
  */
 public class CommentConstants {
 	/**
+	 * 无评论提醒方式-None
+	 */
+	public static final String NONE = "none";
+
+	/**
 	 * 评论提醒方式-Telegram
 	 */
 	public static final String TELEGRAM = "tg";

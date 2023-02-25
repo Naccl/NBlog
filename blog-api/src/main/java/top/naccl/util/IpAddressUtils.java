@@ -100,10 +100,4 @@ public class IpAddressUtils {
 		}
 		return "";
 	}
-	public static void main(String[] args) throws Exception {
-		IpAddressUtils ipAddressUtils = new IpAddressUtils();
-		ipAddressUtils.initIp2regionResource();
-		String cityInfo = IpAddressUtils.getCityInfo("14.215.177.39");
-		System.out.println(cityInfo);
-	}
 }
