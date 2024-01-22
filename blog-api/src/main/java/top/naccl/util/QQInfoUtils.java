@@ -1,9 +1,10 @@
 package top.naccl.util;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.client.RestTemplate;
+import top.naccl.model.vo.QqResultVO;
+import top.naccl.model.vo.QqVO;
 import top.naccl.util.upload.UploadUtils;
-
-import java.io.UnsupportedEncodingException;
 
 /**
  * @Description: 获取QQ昵称头像信息
@@ -21,8 +22,8 @@ public class QQInfoUtils {
 	 *
 	 * @param qq qq
 	 */
-	public static String getQqNickname(String qq) {
-		QqResultVO qqResultVO = REST_TEMPLATE.getForObject(QQ_NICKNAME_URL, QqResultVO.class, qq);
+	public static String getQQNickname(String qq) {
+		QqResultVO qqResultVO = restTemplate.getForObject(QQ_NICKNAME_URL, QqResultVO.class, qq);
 		if (qqResultVO != null) {
 			return new ObjectMapper().convertValue(qqResultVO.getData(), QqVO.class).getName();
 		}

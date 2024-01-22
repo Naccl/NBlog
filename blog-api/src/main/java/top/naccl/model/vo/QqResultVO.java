@@ -1,4 +1,4 @@
-package cn.raxcl.model.vo;
+package top.naccl.model.vo;
 
 import lombok.Data;
 
