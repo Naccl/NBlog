@@ -1,6 +1,6 @@
 package top.naccl.util;
 
-import org.apache.commons.codec.digest.MurmurHash3;
+import cn.hutool.core.lang.hash.MurmurHash;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.DigestUtils;
 
@@ -17,7 +17,7 @@ public class HashUtils {
 	}
 
 	public static long getMurmurHash32(String str) {
-		int i = MurmurHash3.hash32(str);
+		int i = MurmurHash.hash32(str);
 		long num = i < 0 ? Integer.MAX_VALUE - (long) i : i;
 		return num;
 	}

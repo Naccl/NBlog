@@ -93,9 +93,7 @@
 			//监听点击事件，收起导航菜单
 			document.addEventListener('click', (e) => {
 				//遍历冒泡
-				let flag = e.path.some(item => {
-					if (item === this.$refs.nav) return true
-				})
+				let flag = this.$refs.nav.contains(e.target)
 				//如果导航栏是打开状态，且点击的元素不是Nav的子元素，则收起菜单
 				if (!this.mobileHide && !flag) {
 					this.mobileHide = true

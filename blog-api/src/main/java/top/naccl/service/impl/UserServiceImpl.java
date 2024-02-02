@@ -5,11 +5,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import top.naccl.entity.User;
 import top.naccl.exception.NotFoundException;
 import top.naccl.mapper.UserMapper;
-import top.naccl.entity.User;
 import top.naccl.service.UserService;
 import top.naccl.util.HashUtils;
+import top.naccl.util.JwtUtils;
 
 /**
  * @Description: 用户业务层接口实现类
@@ -49,5 +51,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 			throw new NotFoundException("用户不存在");
 		}
 		return user;
+	}
+
+	@Override
+	public boolean changeAccount(User user, String jwt) {
+		String username = JwtUtils.getTokenBody(jwt).getSubject();
+		user.setPassword(HashUtils.getBC(user.getPassword()));
+		if (userMapper.updateUserByUsername(username, user) != 1) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			return false;
+		}
+		return true;
 	}
 }

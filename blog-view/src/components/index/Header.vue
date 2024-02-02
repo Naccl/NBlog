@@ -12,19 +12,21 @@
 		<div class="wrapper">
 			<i class="ali-iconfont icon-down" @click="scrollToMain"></i>
 		</div>
-		<div class="wave1" style="background: url('https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/wave1.png') repeat-x;"></div>
-		<div class="wave2" style="background: url('https://fastly.jsdelivr.net/gh/Naccl/blog-resource/img/wave2.png') repeat-x;"></div>
+		<div class="wave1"></div>
+		<div class="wave2"></div>
 	</header>
 </template>
 
 <script>
 	import {mapState} from 'vuex'
+	import defaultSettings from '@/settings'
 
 	export default {
 		name: "blogHeader",
 		data() {
 			return {
-				loaded: false
+				loaded: false,
+				defaultSettings
 			}
 		},
 		computed: {
@@ -126,6 +128,7 @@
 
 	.text-malfunction {
 		position: absolute;
+		padding: 0 4px;
 		top: 40%;
 		left: 49.5%;
 		transform: translate(-50%, -50%) scale(2.5);
@@ -149,7 +152,7 @@
 		content: attr(data-word);
 		position: absolute;
 		top: 0;
-		height: 36px;
+		line-height: 50px;
 		overflow: hidden;
 		filter: contrast(200%);
 	}
@@ -280,11 +283,13 @@
 	}
 
 	.wave1 {
+		background: url('/img/header/wave1.png') repeat-x;
 		height: 75px;
 		width: 100%;
 	}
 
 	.wave2 {
+		background: url('/img/header/wave2.png') repeat-x;
 		height: 90px;
 		width: calc(100% + 100px);
 		left: -100px;
