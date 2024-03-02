@@ -1,9 +1,10 @@
 package top.naccl.util;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.client.RestTemplate;
+import top.naccl.model.vo.QqResultVO;
+import top.naccl.model.vo.QqVO;
 import top.naccl.util.upload.UploadUtils;
-
-import java.io.UnsupportedEncodingException;
 
 /**
  * @Description: 获取QQ昵称头像信息
@@ -12,24 +13,21 @@ import java.io.UnsupportedEncodingException;
  */
 public class QQInfoUtils {
 	private static RestTemplate restTemplate = new RestTemplate();
-	private static final String QQ_NICKNAME_URL = "https://r.qzone.qq.com/fcg-bin/cgi_get_portrait.fcg?uins={1}";
+	// 原接口半失效，需要提供cookie才可使用，暂时替换为备用接口，感谢 苏晓晴 大佬友情提供
+	private static final String QQ_NICKNAME_URL = "https://api.toubiec.cn/api/qqinfo_v4.php?qq={1}";
 	private static final String QQ_AVATAR_URL = "https://q.qlogo.cn/g?b=qq&nk=%s&s=100";
 
 	/**
 	 * 获取QQ昵称
 	 *
-	 * @param qq
-	 * @return
-	 * @throws UnsupportedEncodingException
+	 * @param qq qq
 	 */
-	public static String getQQNickname(String qq) throws UnsupportedEncodingException {
-		String res = restTemplate.getForObject(QQ_NICKNAME_URL, String.class, qq);
-		byte[] bytes = res.getBytes("iso-8859-1");
-		String nickname = new String(bytes, "gb18030").split(",")[6].replace("\"", "");
-		if ("".equals(nickname)) {
-			return "nickname";
+	public static String getQQNickname(String qq) {
+		QqResultVO qqResultVO = restTemplate.getForObject(QQ_NICKNAME_URL, QqResultVO.class, qq);
+		if (qqResultVO != null) {
+			return new ObjectMapper().convertValue(qqResultVO.getData(), QqVO.class).getName();
 		}
-		return nickname;
+		return "nickname";
 	}
 
 	/**

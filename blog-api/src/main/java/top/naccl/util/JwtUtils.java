@@ -22,12 +22,12 @@ public class JwtUtils {
 
 	@Value("${token.secretKey}")
 	public void setSecretKey(String secretKey) {
-		this.secretKey = secretKey;
+		JwtUtils.secretKey = secretKey;
 	}
 
 	@Value("${token.expireTime}")
 	public void setExpireTime(long expireTime) {
-		this.expireTime = expireTime;
+		JwtUtils.expireTime = expireTime;
 	}
 
 	/**
