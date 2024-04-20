@@ -77,14 +77,16 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public List<SearchBlog> getSearchBlogListByQueryAndIsPublished(String query) {
 		List<SearchBlog> searchBlogs = blogMapper.getSearchBlogListByQueryAndIsPublished(query);
+		// 数据库的处理是不区分大小写的，那么这里的匹配串处理也应该不区分大小写，否则会出现不准确的结果
+		query = query.toUpperCase();
 		for (SearchBlog searchBlog : searchBlogs) {
-			String content = searchBlog.getContent();
+			String content = searchBlog.getContent().toUpperCase();
 			int contentLength = content.length();
 			int index = content.indexOf(query) - 10;
-			index = index < 0 ? 0 : index;
+			index = Math.max(index, 0);
 			int end = index + 21;//以关键字字符串为中心返回21个字
-			end = end > contentLength - 1 ? contentLength - 1 : end;
-			searchBlog.setContent(content.substring(index, end));
+			end = Math.min(end, contentLength - 1);
+			searchBlog.setContent(searchBlog.getContent().substring(index, end));
 		}
 		return searchBlogs;
 	}
