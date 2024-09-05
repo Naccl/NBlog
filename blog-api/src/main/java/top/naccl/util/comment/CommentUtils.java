@@ -276,21 +276,8 @@ public class CommentUtils {
 	 * @param request 用于获取ip
 	 */
 	public void setVisitorComment(Comment comment, HttpServletRequest request) {
-		String nickname = comment.getNickname();
-		try {
-			if (QQInfoUtils.isQQNumber(nickname)) {
-				comment.setQq(nickname);
-				comment.setNickname(QQInfoUtils.getQQNickname(nickname));
-				setCommentQQAvatar(comment, nickname);
-			} else {
-				comment.setNickname(comment.getNickname().trim());
-				setCommentRandomAvatar(comment);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			comment.setNickname(comment.getNickname().trim());
-			setCommentRandomAvatar(comment);
-		}
+		comment.setNickname(comment.getNickname().trim());
+		setCommentRandomAvatar(comment);
 
 		//check website
 		if (!isValidUrl(comment.getWebsite())) {
