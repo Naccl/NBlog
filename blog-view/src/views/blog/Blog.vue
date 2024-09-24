@@ -42,7 +42,7 @@
 						<i class="small folder open icon"></i><span class="m-text-500">{{ blog.category.name }}</span>
 					</router-link>
 					<!--文章Markdown正文-->
-					<div class="typo js-toc-content m-padded-tb-small match-braces rainbow-braces" v-viewer :class="{'m-big-fontsize':bigFontSize}" v-html="blog.content"></div>
+					<div class="typo js-toc-content m-padded-tb-small match-braces rainbow-braces" v-lazy-container="{selector: 'img'}" v-viewer :class="{'m-big-fontsize':bigFontSize}" v-html="blog.content"></div>
 					<!--赞赏-->
 					<div style="margin: 2em auto">
 						<el-popover placement="top" width="220" trigger="click" v-if="blog.appreciation">
@@ -91,6 +91,7 @@
 	import CommentList from "@/components/comment/CommentList";
 	import {mapState} from "vuex";
 	import {SET_FOCUS_MODE, SET_IS_BLOG_RENDER_COMPLETE} from '@/store/mutations-types';
+	import {letsLazyload} from "@/util/lazyload";
 
 	export default {
 		name: "Blog",
@@ -150,6 +151,7 @@
 				const token = adminToken ? adminToken : (blogToken ? blogToken : '')
 				getBlogById(token, id).then(res => {
 					if (res.code === 200) {
+						res.data.content = letsLazyload(res.data.content)
 						this.blog = res.data
 						document.title = this.blog.title + this.siteInfo.webTitleSuffix
 						//v-html渲染完毕后，渲染代码块样式

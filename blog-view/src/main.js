@@ -20,6 +20,8 @@ import 'viewerjs/dist/viewer.css'
 import Viewer from 'v-viewer'
 //directive
 import './util/directive'
+//懒加载
+import VueLazyload from 'vue-lazyload'
 
 console.log(
 	'%c NBlog %c By Naccl %c https://github.com/Naccl/NBlog',
@@ -30,6 +32,10 @@ console.log(
 
 Vue.use(Element)
 Vue.use(Viewer)
+Vue.use(VueLazyload, {
+	preLoad: 1.2,
+	loading: require('./assets/img/loading.gif'),
+})
 
 Vue.prototype.msgSuccess = function (msg) {
 	this.$message.success(msg)
