@@ -151,7 +151,6 @@
 				const token = adminToken ? adminToken : (blogToken ? blogToken : '')
 				getBlogById(token, id).then(res => {
 					if (res.code === 200) {
-						res.data.content = letsLazyload(res.data.content)
 						this.blog = res.data
 						document.title = this.blog.title + this.siteInfo.webTitleSuffix
 						//v-html渲染完毕后，渲染代码块样式

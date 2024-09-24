@@ -6,6 +6,7 @@ import org.commonmark.ext.gfm.tables.TableBlock;
 import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.ext.heading.anchor.HeadingAnchorExtension;
 import org.commonmark.ext.task.list.items.TaskListItemsExtension;
+import org.commonmark.node.Image;
 import org.commonmark.node.Link;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
@@ -70,6 +71,12 @@ public class MarkdownUtils {
 	private static class CustomAttributeProvider implements AttributeProvider {
 		@Override
 		public void setAttributes(Node node, String tagName, Map<String, String> attributes) {
+			// 为懒加载提供属性
+			if (node instanceof Image) {
+				Image n = (Image) node;
+				attributes.put("data-src", n.getDestination());
+				attributes.remove("src");
+			}
 			//改变a标签的target属性为_blank
 			if (node instanceof Link) {
 				Link n = (Link) node;
