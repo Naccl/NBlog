@@ -34,3 +34,4 @@ build/
 
 .DS_Store
 /blog-cms-tmp
+package-lock.json
