@@ -91,7 +91,6 @@
 	import CommentList from "@/components/comment/CommentList";
 	import {mapState} from "vuex";
 	import {SET_FOCUS_MODE, SET_IS_BLOG_RENDER_COMPLETE} from '@/store/mutations-types';
-	import {letsLazyload} from "@/util/lazyload";
 
 	export default {
 		name: "Blog",

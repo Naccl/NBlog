@@ -19,7 +19,7 @@
 		</div>
 		<!--页面描述-->
 		<div class="ui teal attached segment">
-			<div class="typo content" v-viewer v-html="info.content"></div>
+			<div class="typo content" v-lazy-container="{selector: 'img'}" v-viewer v-html="info.content"></div>
 		</div>
 		<!--评论-->
 		<div class="ui bottom teal attached segment threaded comments">

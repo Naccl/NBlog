@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<!--content-->
-		<BlogItem :blogList="blogList" v-viewer/>
+		<BlogItem :blogList="blogList"/>
 		<!--分页-->
 		<Pagination :getBlogList="getBlogList" :totalPage="totalPage"/>
 	</div>

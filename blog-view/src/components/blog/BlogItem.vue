@@ -34,7 +34,7 @@
 						<i class="small folder open icon"></i><span class="m-text-500">{{ item.category.name }}</span>
 					</router-link>
 					<!--文章Markdown描述-->
-					<div class="typo m-padded-tb-small line-numbers match-braces rainbow-braces" v-html="item.description"></div>
+					<div class="typo m-padded-tb-small line-numbers match-braces rainbow-braces" v-lazy-container="{selector: 'img'}" v-viewer v-html="item.description"></div>
 					<!--阅读全文按钮-->
 					<div class="row m-padded-tb-small m-margin-top">
 						<a href="javascript:;" @click.prevent="toBlog(item)" class="color-btn">阅读全文</a>
