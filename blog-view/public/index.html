@@ -21,5 +21,15 @@
     </script>
 	<script src="<%= BASE_URL %>lib/js/Meting.min.js"></script>
 	<script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/tocbot/4.6.0/tocbot.min.js"></script>
+	<!-- 行内公式 -->
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+		  tex2jax: {
+			inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+			processEscapes: true
+		  }
+		});
+	  </script>
+	  <script type="text/javascript" async src="<%= BASE_URL %>lib/js/MathJax-2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>

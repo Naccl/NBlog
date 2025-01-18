@@ -158,6 +158,7 @@
 						this.$nextTick(() => {
 							this.formatCodeHighlight()
 							this.formatMermaidGraph()
+							this.formatMath()
 							//将文章渲染完成状态置为 true
 							this.$store.commit(SET_IS_BLOG_RENDER_COMPLETE, true)
 						})
@@ -204,7 +205,15 @@
 			for (var element of elements) {
 				Prism.highlightElement(element, false);
 			}
-		  }
+		  },
+
+		  formatMath(){
+			if(this.MathJax.isMathjaxConfig){
+				this.MathJax.initMathjaxConfig();
+			}
+			//ck-content是对应要渲染数学公式的dom的class
+			this.MathJax.MathQueue('ck-content');
+          },
 		}
 	}
 </script>
