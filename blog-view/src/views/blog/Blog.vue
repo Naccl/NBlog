@@ -91,6 +91,8 @@
 	import CommentList from "@/components/comment/CommentList";
 	import {mapState} from "vuex";
 	import {SET_FOCUS_MODE, SET_IS_BLOG_RENDER_COMPLETE} from '@/store/mutations-types';
+	import mermaid from 'mermaid';
+
 
 	export default {
 		name: "Blog",
@@ -154,10 +156,12 @@
 						document.title = this.blog.title + this.siteInfo.webTitleSuffix
 						//v-html渲染完毕后，渲染代码块样式
 						this.$nextTick(() => {
-							Prism.highlightAll()
+							this.formatCodeHighlight()
+							this.formatMermaidGraph()
 							//将文章渲染完成状态置为 true
 							this.$store.commit(SET_IS_BLOG_RENDER_COMPLETE, true)
 						})
+
 					} else {
 						this.msgError(res.msg)
 					}
@@ -167,7 +171,40 @@
 			},
 			changeFocusMode() {
 				this.$store.commit(SET_FOCUS_MODE, !this.focusMode)
+			},
+
+			formatMermaidGraph() {
+            let mermaidNodes = document.getElementsByClassName('language-mermaid')
+            for (
+              let i = 0, mermaidNodesLen = mermaidNodes.length;
+              i < mermaidNodesLen;
+              i++
+            ) {
+              this.formatMermaidItem(mermaidNodes[i], mermaidNodes[i].textContent, i)
+            }
+          },
+
+          formatMermaidItem(node, html, i) {
+            var insertSvg = function (svgCode, bindFunctions) {
+              node.innerHTML = svgCode
+            }
+            var graph = mermaid.render('mermaid' + i, html, insertSvg)
+          },
+
+          getMarkDown(res) {
+              this.htmlUrl = res.data
+              this.$nextTick(() => {
+                this.initMermaid()
+              })
+          },
+
+		  formatCodeHighlight() {
+			//忽略mermaid图表
+			var elements = document.querySelectorAll('code[class^="language-"]:not(.language-mermaid)');
+			for (var element of elements) {
+				Prism.highlightElement(element, false);
 			}
+		  }
 		}
 	}
 </script>
@@ -184,4 +221,5 @@
 		margin-top: -55px;
 		visibility: hidden;
 	}
+
 </style>
