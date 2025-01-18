@@ -12,6 +12,7 @@
     "axios": "0.24.0",
     "core-js": "3.6.5",
     "element-ui": "2.13.2",
+    "mermaid": "8.14.0",
     "moment": "2.27.0",
     "nprogress": "0.2.0",
     "sanitize-html": "2.3.3",
