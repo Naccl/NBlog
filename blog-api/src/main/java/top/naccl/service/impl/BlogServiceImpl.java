@@ -26,10 +26,7 @@ import top.naccl.util.JacksonUtils;
 import top.naccl.util.markdown.MarkdownUtils;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Description: 博客文章业务层实现
@@ -130,7 +127,8 @@ public class BlogServiceImpl implements BlogService {
 		PageHelper.startPage(pageNum, pageSize, orderBy);
 		List<BlogInfo> blogInfos = processBlogInfosPassword(blogMapper.getBlogInfoListByIsPublished());
 		PageInfo<BlogInfo> pageInfo = new PageInfo<>(blogInfos);
-		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
+//		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), pageInfo.getList());
+		PageResult<BlogInfo> pageResult = new PageResult<>(pageInfo.getPages(), new ArrayList<>(pageInfo.getList()));
 		setBlogViewsFromRedisToPageResult(pageResult);
 		//添加首页缓存
 		redisService.saveKVToHash(redisKey, pageNum, pageResult);
