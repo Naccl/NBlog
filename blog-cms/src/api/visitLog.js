@@ -19,3 +19,14 @@ export function deleteVisitLogById(id) {
 		}
 	})
 }
+
+export function exportVisitLog(queryInfo) {
+	return axios({
+		url: 'visitLog/export',
+		method: 'GET',
+		params: {
+			...queryInfo
+		},
+		responseType: 'blob'
+	})
+}

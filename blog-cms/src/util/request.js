@@ -38,6 +38,10 @@ request.interceptors.request.use(config => {
 // 响应拦截
 request.interceptors.response.use(response => {
 		NProgress.done()
+		// 如果是blob类型（如下载文件），直接返回response
+		if (response.config.responseType === 'blob') {
+			return response
+		}
 		const res = response.data
 		if (res.code !== 200) {
 			let msg = res.msg || 'Error'

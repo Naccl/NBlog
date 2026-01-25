@@ -13,6 +13,8 @@ import top.naccl.entity.VisitLog;
 import top.naccl.model.vo.Result;
 import top.naccl.service.VisitLogService;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @Description: 访问日志后台管理
  * @Author: Naccl
@@ -60,5 +62,25 @@ public class VisitLogController {
 	public Result delete(@RequestParam Long id) {
 		visitLogService.deleteVisitLogById(id);
 		return Result.ok("删除成功");
+	}
+
+	/**
+	 * 导出访问日志到Excel
+	 *
+	 * @param uuid      访客标识码
+	 * @param date      访问时间范围
+	 * @param response  HTTP响应
+	 */
+	@GetMapping("/visitLog/export")
+	public void exportVisitLog(@RequestParam(defaultValue = "") String uuid,
+	                           @RequestParam(defaultValue = "") String[] date,
+	                           HttpServletResponse response) {
+		String startDate = null;
+		String endDate = null;
+		if (date.length == 2) {
+			startDate = date[0];
+			endDate = date[1];
+		}
+		visitLogService.exportVisitLogToExcel(StringUtils.trim(uuid), startDate, endDate, response);
 	}
 }

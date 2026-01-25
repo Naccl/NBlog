@@ -4,6 +4,7 @@ import org.springframework.scheduling.annotation.Async;
 import top.naccl.entity.VisitLog;
 import top.naccl.model.dto.VisitLogUuidTime;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public interface VisitLogService {
@@ -15,4 +16,6 @@ public interface VisitLogService {
 	void saveVisitLog(VisitLog log);
 
 	void deleteVisitLogById(Long id);
+
+	void exportVisitLogToExcel(String uuid, String startDate, String endDate, HttpServletResponse response);
 }

@@ -13,6 +13,9 @@
 			<el-form-item>
 				<el-button type="primary" size="small" icon="el-icon-search" @click="search">搜索</el-button>
 			</el-form-item>
+			<el-form-item>
+				<el-button type="success" size="small" icon="el-icon-download" @click="exportData">导出</el-button>
+			</el-form-item>
 		</el-form>
 
 		<el-table :data="logList">
@@ -71,7 +74,7 @@
 
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
-	import {getVisitLogList, deleteVisitLogById} from "@/api/visitLog";
+	import {getVisitLogList, deleteVisitLogById, exportVisitLog} from "@/api/visitLog";
 	import DateTimeRangePicker from "@/components/DateTimeRangePicker";
 
 	export default {
@@ -131,6 +134,35 @@
 			},
 			setDate(value) {
 				this.queryInfo.date = value
+			},
+			exportData() {
+				let query = {...this.queryInfo}
+				if (query.date && query.date.length === 2) {
+					query.date = query.date[0] + ',' + query.date[1]
+				}
+				exportVisitLog(query).then(res => {
+					// 创建下载链接
+					const blob = new Blob([res.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+					const fileName = '访问日志_' + this.$moment(new Date()).format('YYYYMMDDHHmmss') + '.xlsx'
+					if ('download' in document.createElement('a')) {
+						// 非IE下载
+						const elink = document.createElement('a')
+						elink.download = fileName
+						elink.style.display = 'none'
+						elink.href = URL.createObjectURL(blob)
+						document.body.appendChild(elink)
+						elink.click()
+						URL.revokeObjectURL(elink.href)
+						document.body.removeChild(elink)
+					} else {
+						// IE10+下载
+						navigator.msSaveBlob(blob, fileName)
+					}
+					this.msgSuccess('导出成功')
+				}).catch(error => {
+					console.error('导出失败:', error)
+					this.msgError('导出失败: ' + (error.message || '未知错误'))
+				})
 			},
 		}
 	}
