@@ -13,6 +13,9 @@
 			<el-form-item>
 				<el-button type="primary" size="small" icon="el-icon-search" @click="search">搜索</el-button>
 			</el-form-item>
+			<el-form-item>
+				<el-button type="success" size="small" icon="el-icon-download" @click="exportVisitLog">导出</el-button>
+			</el-form-item>
 		</el-form>
 
 		<el-table :data="logList">
@@ -70,9 +73,9 @@
 </template>
 
 <script>
-	import Breadcrumb from "@/components/Breadcrumb";
-	import {getVisitLogList, deleteVisitLogById} from "@/api/visitLog";
-	import DateTimeRangePicker from "@/components/DateTimeRangePicker";
+	import { deleteVisitLogById, getVisitLogList } from "@/api/visitLog";
+import Breadcrumb from "@/components/Breadcrumb";
+import DateTimeRangePicker from "@/components/DateTimeRangePicker";
 
 	export default {
 		name: "VisitLog",
@@ -132,6 +135,50 @@
 			setDate(value) {
 				this.queryInfo.date = value
 			},
+			exportVisitLog() {
+				// 使用axios下载文件，避免a标签跨域问题
+				let params = {
+					uuid: this.queryInfo.uuid
+				}
+				if (this.queryInfo.date && this.queryInfo.date.length === 2) {
+					params.date = this.queryInfo.date
+				}
+				
+				// 创建临时axios实例，绕过响应拦截器
+				const axios = require('axios')
+				const token = window.localStorage.getItem('token')
+				
+				axios.get('http://localhost:8090/admin/visitLog/export', {
+					params: params,
+					headers: {
+						'Authorization': token
+					},
+					responseType: 'blob'
+				}).then(response => {
+					// 处理下载
+					const blob = new Blob([response.data], {
+						type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+					})
+					const url = window.URL.createObjectURL(blob)
+					const a = document.createElement('a')
+					a.href = url
+					// 从响应头获取文件名
+					const contentDisposition = response.headers['content-disposition']
+					let fileName = '访问日志.xlsx'
+					if (contentDisposition) {
+						const matches = contentDisposition.match(/filename\*=utf-8''(.*)/)
+						if (matches && matches.length > 1) {
+							fileName = decodeURIComponent(matches[1])
+						}
+					}
+					a.download = fileName
+					a.click()
+					window.URL.revokeObjectURL(url)
+				}).catch(error => {
+					console.error('导出失败:', error)
+					this.$message.error('导出失败，请稍后重试')
+				})
+			}
 		}
 	}
 </script>
