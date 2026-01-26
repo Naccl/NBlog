@@ -150,6 +150,18 @@
             <artifactId>hutool-crypto</artifactId>
             <version>5.8.11</version>
         </dependency>
+        <!-- hutool-all 包含Excel导出功能 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.11</version>
+        </dependency>
+        <!-- poi 用于Excel操作 -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.3</version>
+        </dependency>
 
         <!-- devtools -->
         <dependency>
