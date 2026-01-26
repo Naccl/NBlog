@@ -100,6 +100,12 @@
             <artifactId>commonmark-ext-task-list-items</artifactId>
             <version>0.18.1</version>
         </dependency>
+        <!-- EasyExcel -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>2.2.10</version>
+        </dependency>
         <!-- redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
